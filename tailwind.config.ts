@@ -19,8 +19,9 @@ export default {
 		},
 		extend: {
 			fontFamily: {
-				heading: ['Orbitron', 'monospace'],
-				body: ['Fira Code', 'monospace'],
+				heading: ['Orbitron', 'BPG Nino Mtavruli', 'monospace'],
+				body: ['Fira Code', 'BPG Glaho', 'monospace'],
+				georgian: ['BPG Nino Mtavruli', 'BPG Glaho', 'serif'],
 			},
 			colors: {
 				border: 'hsl(var(--border))',

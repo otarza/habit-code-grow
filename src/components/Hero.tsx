@@ -23,7 +23,7 @@ export function Hero() {
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <div className="max-w-4xl mx-auto">
           {/* Main Headline */}
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-text-inverse mb-6 leading-tight">
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-georgian font-bold text-text-inverse mb-6 leading-tight">
             გახდი შეუჩერებელი{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-secondary to-accent">
               კოდის წერის და AI
