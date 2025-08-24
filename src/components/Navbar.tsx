@@ -25,9 +25,6 @@ export function Navbar() {
               src={bitcampLogo} 
               alt="Bitcamp" 
             />
-            <span className="ml-3 text-xl font-bold text-text-primary">
-              Programming Mentorship
-            </span>
           </div>
 
           {/* Desktop Navigation */}
