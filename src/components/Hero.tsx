@@ -23,18 +23,18 @@ export function Hero() {
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <div className="max-w-4xl mx-auto">
           {/* Main Headline */}
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-georgian font-bold text-text-inverse mb-6 leading-tight">
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-text-inverse mb-6 leading-tight">
             გახდი შეუჩერებელი{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-secondary to-accent">
-              კოდის წერის და AI
+              Coding Habits
             </span>{" "}
-            — უნარების ათვისებით
+            — For Life
           </h1>
           
           {/* Subheadline */}
           <p className="text-xl md:text-2xl text-text-inverse/90 mb-8 leading-relaxed max-w-3xl mx-auto">
-            Not just another course. A mentorship system that helps you code daily, 
-            grow discipline, and become an independent lifelong learner.
+            ეს არ არის უბრალოდ კურსი. ეს არის პიროვნული ტრანსფორმაციის უალტერნატივო პროცესი, 
+            შეიძინე დისციპლინა და გახდი დამოუკიდებელი ნებისმიერი რამის შესწავლაში.
           </p>
           
           {/* Trust Indicator */}
