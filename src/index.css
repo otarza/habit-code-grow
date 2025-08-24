@@ -1,40 +1,79 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
+/* Programming Mentorship Design System
+Primary: Deep Blue #1B2A4E (trust, stability)
+Accent 1: Vibrant Teal #00BFA6 (growth, momentum)  
+Accent 2: Bright Orange #FF7A00 (action, urgency)
+Neutrals: Light Gray #F4F6F9, Charcoal #2B2B2B
 */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-
+    /* Brand Colors */
+    --brand-deep-blue: 220 48% 20%;
+    --brand-teal: 172 100% 37%;
+    --brand-orange: 28 100% 50%;
+    --brand-light-gray: 220 18% 97%;
+    --brand-charcoal: 0 0% 17%;
+    
+    /* Background & Surface */
+    --background: 220 18% 97%;
+    --foreground: 0 0% 17%;
+    --surface: 0 0% 100%;
+    --surface-muted: 220 14% 94%;
+    
+    /* Primary (Deep Blue) */
+    --primary: 220 48% 20%;
+    --primary-foreground: 0 0% 100%;
+    --primary-hover: 220 48% 15%;
+    --primary-light: 220 48% 92%;
+    
+    /* Secondary (Teal) */
+    --secondary: 172 100% 37%;
+    --secondary-foreground: 0 0% 100%;
+    --secondary-hover: 172 100% 32%;
+    --secondary-light: 172 100% 92%;
+    
+    /* Accent (Orange) */
+    --accent: 28 100% 50%;
+    --accent-foreground: 0 0% 100%;
+    --accent-hover: 28 100% 45%;
+    --accent-light: 28 100% 95%;
+    
+    /* Gradients */
+    --gradient-hero: linear-gradient(135deg, hsl(220 48% 20%), hsl(172 100% 37%));
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(220 14% 98%));
+    --gradient-cta: linear-gradient(135deg, hsl(28 100% 50%), hsl(28 100% 45%));
+    --gradient-progress: linear-gradient(90deg, hsl(172 100% 37%), hsl(172 80% 42%));
+    
+    /* Text */
+    --text-primary: 0 0% 17%;
+    --text-secondary: 0 0% 45%;
+    --text-muted: 0 0% 60%;
+    --text-inverse: 0 0% 100%;
+    
+    /* Interactive */
+    --border: 220 14% 89%;
+    --input: 220 14% 89%;
+    --ring: 172 100% 37%;
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-
+    --card-foreground: 0 0% 17%;
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --popover-foreground: 0 0% 17%;
+    --muted: 220 14% 94%;
+    --muted-foreground: 0 0% 45%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    
+    /* Shadows */
+    --shadow-soft: 0 4px 20px -2px hsl(220 48% 20% / 0.08);
+    --shadow-medium: 0 8px 32px -4px hsl(220 48% 20% / 0.12);
+    --shadow-strong: 0 16px 48px -8px hsl(220 48% 20% / 0.16);
+    --shadow-glow: 0 0 32px hsl(172 100% 37% / 0.3);
 
     --radius: 0.5rem;
 
@@ -100,6 +139,63 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-body;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading;
+  }
+}
+
+@layer components {
+  /* Challenge Icons */
+  .challenge-21 {
+    @apply text-secondary;
+  }
+  
+  .challenge-30 {
+    @apply text-primary;
+  }
+  
+  .challenge-100 {
+    @apply text-accent;
+  }
+  
+  /* Progress Bars */
+  .progress-bar {
+    @apply bg-muted rounded-full overflow-hidden;
+  }
+  
+  .progress-fill {
+    @apply bg-gradient-to-r from-secondary to-secondary-hover h-full transition-all duration-500;
+  }
+  
+  /* Streak Visualization */
+  .streak-counter {
+    @apply bg-gradient-to-br from-secondary-light to-secondary/10 border-secondary/20 border rounded-lg p-3;
+  }
+  
+  /* Card Hover Effects */
+  .card-hover {
+    @apply transition-all duration-300 hover:shadow-medium hover:-translate-y-1;
+  }
+  
+  /* Testimonial Cards */
+  .testimonial-card {
+    @apply bg-surface border border-border rounded-xl p-6 shadow-soft;
+  }
+  
+  /* CTA Glow Effect */
+  .cta-glow {
+    @apply relative;
+  }
+  
+  .cta-glow::before {
+    content: '';
+    @apply absolute inset-0 bg-gradient-cta opacity-0 rounded-lg blur-xl transition-opacity duration-300;
+  }
+  
+  .cta-glow:hover::before {
+    @apply opacity-30;
   }
 }
