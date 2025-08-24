@@ -26,9 +26,9 @@ export function Hero() {
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-text-inverse mb-6 leading-tight">
             გახდი შეუჩერებელი{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-secondary to-accent">
-              Coding Habits
+              კოდის წერის და AI
             </span>{" "}
-            — For Life
+            — უნარების ათვისებით
           </h1>
           
           {/* Subheadline */}
