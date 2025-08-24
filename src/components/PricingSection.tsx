@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Check, BookOpen, Users, Star } from "lucide-react";
+import { PixelGrid } from "@/components/PixelBackground";
 
 export function PricingSection() {
   const services = [
@@ -63,7 +64,8 @@ export function PricingSection() {
   ];
 
   return (
-    <section id="pricing" className="py-20 bg-surface">
+    <section id="pricing" className="relative py-20 bg-surface pixel-bg">
+      <PixelGrid />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-text-primary mb-6">

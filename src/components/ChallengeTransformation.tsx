@@ -1,6 +1,7 @@
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Calendar, Dumbbell, Mountain, TrendingUp, Award, Target } from "lucide-react";
+import { PixelBackground } from "@/components/PixelBackground";
 
 export function ChallengeTransformation() {
   const transformationStages = [
@@ -67,7 +68,8 @@ export function ChallengeTransformation() {
   ];
 
   return (
-    <section className="py-20 bg-background">
+    <section className="relative py-20 bg-background pixel-bg">
+      <PixelBackground />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-text-primary mb-6">

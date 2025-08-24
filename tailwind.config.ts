@@ -19,8 +19,8 @@ export default {
 		},
 		extend: {
 			fontFamily: {
-				heading: ['Poppins', 'sans-serif'],
-				body: ['Inter', 'sans-serif'],
+				heading: ['Orbitron', 'monospace'],
+				body: ['Fira Code', 'monospace'],
 			},
 			colors: {
 				border: 'hsl(var(--border))',
@@ -90,7 +90,7 @@ export default {
 				'gradient-card': 'var(--gradient-card)',
 				'gradient-cta': 'var(--gradient-cta)',
 				'gradient-premium': 'var(--gradient-premium)',
-				'gradient-chrome': 'var(--gradient-chrome)',
+				'gradient-pixel': 'var(--gradient-pixel)',
 			},
 			boxShadow: {
 				'soft': 'var(--shadow-soft)',
@@ -98,7 +98,7 @@ export default {
 				'strong': 'var(--shadow-strong)',
 				'glow': 'var(--shadow-glow)',
 				'premium': 'var(--shadow-premium)',
-				'chrome': 'var(--shadow-chrome)',
+				'pixel': 'var(--shadow-pixel)',
 			},
 			borderRadius: {
 				lg: 'var(--radius)',

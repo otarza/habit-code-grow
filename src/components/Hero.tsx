@@ -1,10 +1,14 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Download } from "lucide-react";
+import { PixelBackground } from "@/components/PixelBackground";
 import heroCoding from "@/assets/hero-coding.jpg";
 
 export function Hero() {
   return (
     <section className="relative min-h-screen flex items-center bg-gradient-hero overflow-hidden">
+      {/* Pixel Art Background Animation */}
+      <PixelBackground />
+      
       {/* Background Image Overlay */}
       <div className="absolute inset-0 z-0">
         <img 
@@ -47,11 +51,11 @@ export function Hero() {
           
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
-            <Button variant="hero" size="xl" className="group">
+            <Button variant="hero" size="xl" className="group pixel-btn">
               Join the 21-Day Challenge
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </Button>
-            <Button variant="outline" size="lg" className="border-text-inverse/30 text-text-inverse hover:bg-text-inverse hover:text-primary">
+            <Button variant="outline" size="lg" className="pixel-btn border-text-inverse/30 text-text-inverse hover:bg-text-inverse hover:text-primary">
               <Download className="w-5 h-5" />
               Get the Free Habit Tracker
             </Button>

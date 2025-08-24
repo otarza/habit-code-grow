@@ -1,79 +1,79 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800&family=Fira+Code:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Educational Light Theme - Professional Programming Mentorship Platform
-Clean light base with vibrant accents for professional, educational feel
-Crisp whites, deep blues, and vibrant greens for excellent contrast and readability
+/* BITCAMP Pixel Art Design System - Inspired by Logo
+Retro gaming aesthetic with pixel art elements and 8-bit color palette
+Red pyramid, dark navy, with vibrant pixel art accents and animations
 */
 
 @layer base {
   :root {
-    /* Light Theme - Professional & Educational */
-    --background: 210 10% 98%;
-    --foreground: 210 19% 12%;
-    --surface: 210 5% 100%;
-    --surface-muted: 210 10% 96%;
+    /* Pixel Art Theme - Inspired by BITCAMP Logo */
+    --background: 210 15% 96%;
+    --foreground: 220 50% 15%;
+    --surface: 0 0% 100%;
+    --surface-muted: 210 15% 92%;
     
-    /* Primary (Deep Blue) */
-    --primary: 217 91% 35%;
-    --primary-foreground: 210 10% 98%;
-    --primary-hover: 217 91% 30%;
-    --primary-light: 217 91% 95%;
+    /* Primary (BITCAMP Dark Navy) */
+    --primary: 220 50% 15%;
+    --primary-foreground: 0 0% 100%;
+    --primary-hover: 220 50% 12%;
+    --primary-light: 220 50% 95%;
     
-    /* Secondary (Vibrant Green) */
-    --secondary: 142 76% 36%;
-    --secondary-foreground: 210 10% 98%;
-    --secondary-hover: 142 76% 32%;
-    --secondary-light: 142 76% 95%;
+    /* Secondary (Logo Red Pyramid) */
+    --secondary: 0 75% 55%;
+    --secondary-foreground: 0 0% 100%;
+    --secondary-hover: 0 75% 50%;
+    --secondary-light: 0 75% 95%;
     
-    /* Accent (Orange/Amber) */
-    --accent: 25 95% 48%;
-    --accent-foreground: 210 10% 98%;
-    --accent-hover: 25 95% 43%;
-    --accent-light: 25 95% 95%;
+    /* Accent (Bright Pixel Green) */
+    --accent: 120 75% 45%;
+    --accent-foreground: 0 0% 100%;
+    --accent-hover: 120 75% 40%;
+    --accent-light: 120 75% 95%;
     
-    /* Premium (Dark Charcoal with Silver accents) */
-    --premium: 210 19% 20%;
-    --premium-foreground: 210 10% 98%;
-    --premium-hover: 210 19% 15%;
-    --premium-light: 210 19% 95%;
+    /* Premium (Pixel Gold) */
+    --premium: 45 85% 55%;
+    --premium-foreground: 220 50% 15%;
+    --premium-hover: 45 85% 50%;
+    --premium-light: 45 85% 95%;
     
-    /* Gradients */
-    --gradient-hero: linear-gradient(135deg, hsl(217 91% 35%) 0%, hsl(210 19% 20%) 100%);
-    --gradient-card: linear-gradient(145deg, hsl(210 5% 100%), hsl(210 10% 98%));
-    --gradient-cta: linear-gradient(135deg, hsl(217 91% 35%), hsl(217 91% 30%));
-    --gradient-premium: linear-gradient(135deg, hsl(210 19% 20%), hsl(210 19% 15%));
-    --gradient-chrome: conic-gradient(from 45deg, hsl(210 10% 40%), hsl(210 10% 70%), hsl(210 10% 40%));
+    /* Pixel Art Gradients */
+    --gradient-hero: linear-gradient(135deg, hsl(220 50% 15%) 0%, hsl(0 75% 55%) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(210 15% 98%));
+    --gradient-cta: linear-gradient(135deg, hsl(0 75% 55%), hsl(0 75% 50%));
+    --gradient-premium: linear-gradient(135deg, hsl(45 85% 55%), hsl(45 85% 50%));
+    --gradient-pixel: linear-gradient(90deg, hsl(0 75% 55%), hsl(45 85% 55%), hsl(120 75% 45%));
     
-    /* Text */
-    --text-primary: 210 19% 12%;
-    --text-secondary: 210 10% 35%;
-    --text-muted: 210 5% 50%;
-    --text-inverse: 210 10% 98%;
+    /* Text Colors */
+    --text-primary: 220 50% 15%;
+    --text-secondary: 220 30% 35%;
+    --text-muted: 220 15% 55%;
+    --text-inverse: 0 0% 100%;
     
-    /* Interactive */
-    --border: 210 10% 85%;
-    --input: 210 10% 92%;
-    --ring: 217 91% 35%;
-    --card: 210 5% 100%;
-    --card-foreground: 210 19% 12%;
-    --popover: 210 5% 100%;
-    --popover-foreground: 210 19% 12%;
-    --muted: 210 10% 96%;
-    --muted-foreground: 210 10% 35%;
+    /* Interactive Elements */
+    --border: 220 15% 80%;
+    --input: 220 15% 90%;
+    --ring: 0 75% 55%;
+    --card: 0 0% 100%;
+    --card-foreground: 220 50% 15%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 50% 15%;
+    --muted: 210 15% 92%;
+    --muted-foreground: 220 30% 35%;
     --destructive: 0 84% 60%;
-    --destructive-foreground: 210 10% 98%;
+    --destructive-foreground: 0 0% 100%;
     
-    /* Shadows */
-    --shadow-soft: 0 4px 20px -2px hsl(210 19% 12% / 0.08);
-    --shadow-medium: 0 8px 32px -4px hsl(210 19% 12% / 0.12);
-    --shadow-strong: 0 16px 48px -8px hsl(210 19% 12% / 0.16);
-    --shadow-glow: 0 0 32px hsl(217 91% 35% / 0.3);
-    --shadow-premium: 0 0 32px hsl(210 19% 20% / 0.4);
-    --shadow-chrome: 0 0 50px hsl(210 19% 20% / 0.2);
+    /* Pixel Art Shadows */
+    --shadow-soft: 0 4px 20px -2px hsl(220 50% 15% / 0.08);
+    --shadow-medium: 0 8px 32px -4px hsl(220 50% 15% / 0.12);
+    --shadow-strong: 0 16px 48px -8px hsl(220 50% 15% / 0.16);
+    --shadow-glow: 0 0 32px hsl(0 75% 55% / 0.4);
+    --shadow-premium: 0 0 32px hsl(45 85% 55% / 0.4);
+    --shadow-pixel: 4px 4px 0px hsl(220 50% 15% / 0.3);
 
     --radius: 0.5rem;
 
@@ -125,26 +125,20 @@ Crisp whites, deep blues, and vibrant greens for excellent contrast and readabil
 }
 
 @layer components {
-  /* Premium Chrome Animation */
-  .premium-chrome {
-    @apply relative overflow-hidden;
+  /* Pixel Art Animations */
+  @keyframes pixel-float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-8px); }
   }
   
-  .premium-chrome::before {
-    content: '';
-    @apply absolute inset-0 opacity-30;
-    background: conic-gradient(from 45deg, transparent, hsl(210 19% 30%), transparent);
-    animation: chrome-spin 3s linear infinite;
+  @keyframes pixel-glow {
+    0%, 100% { box-shadow: 0 0 5px hsl(0 75% 55% / 0.5); }
+    50% { box-shadow: 0 0 20px hsl(0 75% 55% / 0.8), 0 0 30px hsl(0 75% 55% / 0.4); }
   }
   
-  .premium-chrome::after {
-    content: '';
-    @apply absolute inset-[1px] bg-card rounded-lg;
-    z-index: 1;
-  }
-  
-  .premium-chrome > * {
-    @apply relative z-10;
+  @keyframes pixel-slide {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100vw); }
   }
   
   @keyframes chrome-spin {
@@ -152,63 +146,144 @@ Crisp whites, deep blues, and vibrant greens for excellent contrast and readabil
     100% { transform: rotate(360deg); }
   }
   
-  /* Challenge Icons */
+  /* Pixel Art Elements */
+  .pixel-border {
+    border: 3px solid hsl(var(--primary));
+    border-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='12' height='12' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h4v4H0zm8 0h4v4H8zm-8 8h4v4H0zm8 0h4v4H8z' fill='%23334155'/%3E%3C/svg%3E") 3;
+  }
+  
+  .pixel-shadow {
+    box-shadow: 4px 4px 0px hsl(var(--primary) / 0.3);
+  }
+  
+  .pixel-btn {
+    @apply pixel-border pixel-shadow transition-all duration-200;
+  }
+  
+  .pixel-btn:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0px hsl(var(--primary) / 0.4);
+  }
+  
+  /* Animated Background Elements */
+  .floating-pixels {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: hsl(var(--secondary));
+    animation: pixel-float 3s ease-in-out infinite;
+  }
+  
+  .floating-pixels:nth-child(2) {
+    background: hsl(var(--accent));
+    animation-delay: -1s;
+    animation-duration: 4s;
+  }
+  
+  .floating-pixels:nth-child(3) {
+    background: hsl(var(--premium));
+    animation-delay: -2s;
+    animation-duration: 5s;
+  }
+  
+  /* Premium Chrome Effect with Pixel Art Twist */
+  .premium-chrome {
+    @apply relative overflow-hidden pixel-border;
+    background: linear-gradient(45deg, hsl(var(--premium)), hsl(var(--premium-hover)));
+  }
+  
+  .premium-chrome::before {
+    content: '';
+    @apply absolute inset-0 opacity-30;
+    background: conic-gradient(from 45deg, transparent, hsl(var(--premium)), transparent);
+    animation: chrome-spin 3s linear infinite;
+  }
+  
+  
+  .premium-chrome::after {
+    content: '';
+    @apply absolute inset-[2px] bg-card rounded-lg;
+    z-index: 1;
+  }
+  
+  .premium-chrome > * {
+    @apply relative z-10;
+  }
+  
+  /* Challenge Icons - Pixel Style */
   .challenge-21 {
     @apply text-secondary;
+    filter: drop-shadow(2px 2px 0px hsl(var(--secondary) / 0.3));
   }
   
   .challenge-30 {
     @apply text-primary;
+    filter: drop-shadow(2px 2px 0px hsl(var(--primary) / 0.3));
   }
   
   .challenge-100 {
     @apply text-accent;
+    filter: drop-shadow(2px 2px 0px hsl(var(--accent) / 0.3));
   }
   
-  /* Progress Timeline */
-  .timeline-progress {
-    @apply relative;
-  }
-  
-  .timeline-progress::before {
-    content: '';
-    @apply absolute left-6 top-0 w-0.5 h-full bg-border;
-  }
-  
-  .timeline-active::before {
-    @apply bg-gradient-to-b from-secondary via-primary to-accent;
-  }
-  
-  /* Card Effects */
+  /* Pixel Art Cards */
   .card-hover {
-    @apply transition-all duration-300 hover:shadow-strong hover:-translate-y-2;
+    @apply transition-all duration-200 hover:shadow-pixel;
+  }
+  
+  .card-hover:hover {
+    transform: translate(-2px, -2px);
   }
   
   .premium-glow {
-    @apply shadow-chrome;
-    box-shadow: 0 0 50px hsl(210 19% 20% / 0.2), inset 0 1px 0 hsl(210 10% 90% / 0.8);
+    @apply shadow-premium pixel-border;
+    background: linear-gradient(135deg, hsl(var(--premium)), hsl(var(--premium-hover)));
   }
   
   .premium-glow:hover {
-    @apply shadow-chrome;
-    box-shadow: 0 0 80px hsl(210 19% 20% / 0.3), inset 0 1px 0 hsl(210 10% 90% / 0.9);
+    animation: pixel-glow 2s ease-in-out infinite;
   }
   
-  /* Testimonial Cards */
-  .testimonial-card {
-    @apply bg-surface border border-border rounded-xl p-6 shadow-soft;
-  }
-  
-  /* Course Card Styling */
+  /* Course Card Styling - Pixel Art */
   .course-free {
-    @apply bg-gradient-to-br from-secondary/5 to-secondary/10 border-secondary/20;
+    @apply bg-gradient-to-br from-secondary/5 to-secondary/10 pixel-border;
+    border-color: hsl(var(--secondary) / 0.3);
   }
   
   .course-challenge {
-    @apply bg-gradient-to-br from-primary/5 to-primary/10 border-primary/20;
+    @apply bg-gradient-to-br from-primary/5 to-primary/10 pixel-border;
+    border-color: hsl(var(--primary) / 0.3);
   }
   
   .course-premium {
-    @apply bg-gradient-to-br from-premium/5 to-premium/10 border-premium/20;
+    @apply bg-gradient-to-br from-premium/5 to-premium/10 pixel-border;
+    border-color: hsl(var(--premium) / 0.3);
+  }
+  
+  /* Pixel Art Background Animations */
+  .pixel-bg {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .pixel-bg::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 8px;
+    height: 8px;
+    background: hsl(var(--secondary));
+    animation: pixel-slide 8s linear infinite;
+    box-shadow: 
+      0 50px 0 hsl(var(--accent)),
+      0 100px 0 hsl(var(--premium)),
+      0 150px 0 hsl(var(--secondary)),
+      50px 0 0 hsl(var(--accent)),
+      50px 50px 0 hsl(var(--premium)),
+      50px 100px 0 hsl(var(--secondary)),
+      100px 0 0 hsl(var(--premium)),
+      100px 50px 0 hsl(var(--secondary)),
+      100px 100px 0 hsl(var(--accent));
   }
 }
