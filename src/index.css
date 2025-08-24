@@ -4,76 +4,86 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Programming Mentorship Design System
-Primary: Deep Blue #1B2A4E (trust, stability)
-Accent 1: Vibrant Teal #00BFA6 (growth, momentum)  
-Accent 2: Bright Orange #FF7A00 (action, urgency)
-Neutrals: Light Gray #F4F6F9, Charcoal #2B2B2B
+/* Bitcamp Design System - Logo-Inspired Palette
+Primary: Deep Navy #1A2332 (matches logo text, trust)
+Secondary: Warm Coral #E74C3C (matches logo pyramid, energy)  
+Accent: Golden Amber #F39C12 (warmth, success)
+Support: Sage Green #2ECC71 (growth, progress)
+Neutrals: Soft Cream #FDFEFE, Charcoal #2C3E50
 */
 
 @layer base {
   :root {
-    /* Brand Colors */
-    --brand-deep-blue: 220 48% 20%;
-    --brand-teal: 172 100% 37%;
-    --brand-orange: 28 100% 50%;
-    --brand-light-gray: 220 18% 97%;
-    --brand-charcoal: 0 0% 17%;
+    /* Brand Colors - Logo Inspired */
+    --brand-navy: 210 25% 15%;
+    --brand-coral: 6 78% 57%;
+    --brand-amber: 35 81% 51%;
+    --brand-sage: 145 63% 49%;
+    --brand-cream: 200 13% 99%;
+    --brand-charcoal: 210 29% 24%;
     
     /* Background & Surface */
-    --background: 220 18% 97%;
-    --foreground: 0 0% 17%;
+    --background: 200 13% 99%;
+    --foreground: 210 29% 24%;
     --surface: 0 0% 100%;
-    --surface-muted: 220 14% 94%;
+    --surface-muted: 210 16% 93%;
     
-    /* Primary (Deep Blue) */
-    --primary: 220 48% 20%;
+    /* Primary (Deep Navy) */
+    --primary: 210 25% 15%;
     --primary-foreground: 0 0% 100%;
-    --primary-hover: 220 48% 15%;
-    --primary-light: 220 48% 92%;
+    --primary-hover: 210 25% 12%;
+    --primary-light: 210 25% 95%;
     
-    /* Secondary (Teal) */
-    --secondary: 172 100% 37%;
+    /* Secondary (Warm Coral) */
+    --secondary: 6 78% 57%;
     --secondary-foreground: 0 0% 100%;
-    --secondary-hover: 172 100% 32%;
-    --secondary-light: 172 100% 92%;
+    --secondary-hover: 6 78% 52%;
+    --secondary-light: 6 78% 95%;
     
-    /* Accent (Orange) */
-    --accent: 28 100% 50%;
+    /* Accent (Golden Amber) */
+    --accent: 35 81% 51%;
     --accent-foreground: 0 0% 100%;
-    --accent-hover: 28 100% 45%;
-    --accent-light: 28 100% 95%;
+    --accent-hover: 35 81% 46%;
+    --accent-light: 35 81% 95%;
+    
+    /* Support (Sage Green) */
+    --success: 145 63% 49%;
+    --success-foreground: 0 0% 100%;
+    --success-hover: 145 63% 44%;
+    --success-light: 145 63% 95%;
     
     /* Gradients */
-    --gradient-hero: linear-gradient(135deg, hsl(220 48% 20%), hsl(172 100% 37%));
-    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(220 14% 98%));
-    --gradient-cta: linear-gradient(135deg, hsl(28 100% 50%), hsl(28 100% 45%));
-    --gradient-progress: linear-gradient(90deg, hsl(172 100% 37%), hsl(172 80% 42%));
+    --gradient-hero: linear-gradient(135deg, hsl(210 25% 15%), hsl(6 78% 57%));
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(210 16% 97%));
+    --gradient-cta: linear-gradient(135deg, hsl(6 78% 57%), hsl(6 78% 52%));
+    --gradient-progress: linear-gradient(90deg, hsl(145 63% 49%), hsl(145 63% 44%));
+    --gradient-amber: linear-gradient(135deg, hsl(35 81% 51%), hsl(35 81% 46%));
     
     /* Text */
-    --text-primary: 0 0% 17%;
-    --text-secondary: 0 0% 45%;
-    --text-muted: 0 0% 60%;
+    --text-primary: 210 29% 24%;
+    --text-secondary: 210 15% 50%;
+    --text-muted: 210 10% 65%;
     --text-inverse: 0 0% 100%;
     
     /* Interactive */
-    --border: 220 14% 89%;
-    --input: 220 14% 89%;
-    --ring: 172 100% 37%;
+    --border: 210 16% 87%;
+    --input: 210 16% 87%;
+    --ring: 6 78% 57%;
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 17%;
+    --card-foreground: 210 29% 24%;
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 17%;
-    --muted: 220 14% 94%;
-    --muted-foreground: 0 0% 45%;
+    --popover-foreground: 210 29% 24%;
+    --muted: 210 16% 93%;
+    --muted-foreground: 210 15% 50%;
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
     
     /* Shadows */
-    --shadow-soft: 0 4px 20px -2px hsl(220 48% 20% / 0.08);
-    --shadow-medium: 0 8px 32px -4px hsl(220 48% 20% / 0.12);
-    --shadow-strong: 0 16px 48px -8px hsl(220 48% 20% / 0.16);
-    --shadow-glow: 0 0 32px hsl(172 100% 37% / 0.3);
+    --shadow-soft: 0 4px 20px -2px hsl(210 25% 15% / 0.08);
+    --shadow-medium: 0 8px 32px -4px hsl(210 25% 15% / 0.12);
+    --shadow-strong: 0 16px 48px -8px hsl(210 25% 15% / 0.16);
+    --shadow-glow: 0 0 32px hsl(6 78% 57% / 0.25);
+    --shadow-amber: 0 0 32px hsl(35 81% 51% / 0.3);
 
     --radius: 0.5rem;
 
