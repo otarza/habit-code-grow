@@ -4,76 +4,76 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Educational Dark Theme - Serious Programming Mentorship Platform
-Dark base with bright accent highlights for professional, educational feel
-Deep blacks, electric blues, and vibrant greens for contrast and energy
+/* Educational Light Theme - Professional Programming Mentorship Platform
+Clean light base with vibrant accents for professional, educational feel
+Crisp whites, deep blues, and vibrant greens for excellent contrast and readability
 */
 
 @layer base {
   :root {
-    /* Dark Theme - Default */
-    --background: 210 19% 8%;
-    --foreground: 210 10% 95%;
-    --surface: 210 19% 10%;
-    --surface-muted: 210 19% 12%;
+    /* Light Theme - Professional & Educational */
+    --background: 210 10% 98%;
+    --foreground: 210 19% 12%;
+    --surface: 210 5% 100%;
+    --surface-muted: 210 10% 96%;
     
-    /* Primary (Electric Blue) */
-    --primary: 217 91% 60%;
-    --primary-foreground: 210 19% 8%;
-    --primary-hover: 217 91% 55%;
-    --primary-light: 217 91% 85%;
+    /* Primary (Deep Blue) */
+    --primary: 217 91% 35%;
+    --primary-foreground: 210 10% 98%;
+    --primary-hover: 217 91% 30%;
+    --primary-light: 217 91% 95%;
     
     /* Secondary (Vibrant Green) */
     --secondary: 142 76% 36%;
-    --secondary-foreground: 210 19% 8%;
+    --secondary-foreground: 210 10% 98%;
     --secondary-hover: 142 76% 32%;
-    --secondary-light: 142 76% 85%;
+    --secondary-light: 142 76% 95%;
     
     /* Accent (Orange/Amber) */
-    --accent: 25 95% 53%;
-    --accent-foreground: 210 19% 8%;
-    --accent-hover: 25 95% 48%;
-    --accent-light: 25 95% 85%;
+    --accent: 25 95% 48%;
+    --accent-foreground: 210 10% 98%;
+    --accent-hover: 25 95% 43%;
+    --accent-light: 25 95% 95%;
     
-    /* Premium (Chrome/Silver) */
-    --premium: 210 10% 80%;
-    --premium-foreground: 210 19% 8%;
-    --premium-hover: 210 10% 85%;
-    --premium-light: 210 10% 95%;
+    /* Premium (Dark Charcoal with Silver accents) */
+    --premium: 210 19% 20%;
+    --premium-foreground: 210 10% 98%;
+    --premium-hover: 210 19% 15%;
+    --premium-light: 210 19% 95%;
     
     /* Gradients */
-    --gradient-hero: linear-gradient(135deg, hsl(210 19% 8%) 0%, hsl(210 19% 12%) 100%);
-    --gradient-card: linear-gradient(145deg, hsl(210 19% 10%), hsl(210 19% 12%));
-    --gradient-cta: linear-gradient(135deg, hsl(217 91% 60%), hsl(217 91% 55%));
-    --gradient-premium: linear-gradient(135deg, hsl(210 10% 80%), hsl(210 10% 85%));
-    --gradient-chrome: conic-gradient(from 45deg, hsl(210 10% 60%), hsl(210 10% 90%), hsl(210 10% 60%));
+    --gradient-hero: linear-gradient(135deg, hsl(210 10% 98%) 0%, hsl(210 10% 94%) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(210 5% 100%), hsl(210 10% 98%));
+    --gradient-cta: linear-gradient(135deg, hsl(217 91% 35%), hsl(217 91% 30%));
+    --gradient-premium: linear-gradient(135deg, hsl(210 19% 20%), hsl(210 19% 15%));
+    --gradient-chrome: conic-gradient(from 45deg, hsl(210 10% 40%), hsl(210 10% 70%), hsl(210 10% 40%));
     
     /* Text */
-    --text-primary: 210 10% 95%;
-    --text-secondary: 210 5% 75%;
-    --text-muted: 210 5% 60%;
-    --text-inverse: 210 19% 8%;
+    --text-primary: 210 19% 12%;
+    --text-secondary: 210 10% 35%;
+    --text-muted: 210 5% 50%;
+    --text-inverse: 210 10% 98%;
     
     /* Interactive */
-    --border: 210 19% 18%;
-    --input: 210 19% 18%;
-    --ring: 217 91% 60%;
-    --card: 210 19% 10%;
-    --card-foreground: 210 10% 95%;
-    --popover: 210 19% 10%;
-    --popover-foreground: 210 10% 95%;
-    --muted: 210 19% 12%;
-    --muted-foreground: 210 5% 75%;
+    --border: 210 10% 85%;
+    --input: 210 10% 92%;
+    --ring: 217 91% 35%;
+    --card: 210 5% 100%;
+    --card-foreground: 210 19% 12%;
+    --popover: 210 5% 100%;
+    --popover-foreground: 210 19% 12%;
+    --muted: 210 10% 96%;
+    --muted-foreground: 210 10% 35%;
     --destructive: 0 84% 60%;
-    --destructive-foreground: 210 10% 95%;
+    --destructive-foreground: 210 10% 98%;
     
     /* Shadows */
-    --shadow-soft: 0 4px 20px -2px hsl(210 19% 0% / 0.4);
-    --shadow-medium: 0 8px 32px -4px hsl(210 19% 0% / 0.5);
-    --shadow-strong: 0 16px 48px -8px hsl(210 19% 0% / 0.6);
-    --shadow-glow: 0 0 32px hsl(217 91% 60% / 0.4);
-    --shadow-premium: 0 0 32px hsl(210 10% 80% / 0.3);
-    --shadow-chrome: 0 0 50px hsl(210 10% 80% / 0.5);
+    --shadow-soft: 0 4px 20px -2px hsl(210 19% 12% / 0.08);
+    --shadow-medium: 0 8px 32px -4px hsl(210 19% 12% / 0.12);
+    --shadow-strong: 0 16px 48px -8px hsl(210 19% 12% / 0.16);
+    --shadow-glow: 0 0 32px hsl(217 91% 35% / 0.3);
+    --shadow-premium: 0 0 32px hsl(210 19% 20% / 0.4);
+    --shadow-chrome: 0 0 50px hsl(210 19% 20% / 0.2);
 
     --radius: 0.5rem;
 
@@ -94,19 +94,19 @@ Deep blacks, electric blues, and vibrant greens for contrast and energy
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
-  /* Light mode override - rarely used */
-  .light {
-    --background: 210 10% 95%;
-    --foreground: 210 19% 12%;
-    --surface: 210 10% 98%;
-    --surface-muted: 210 10% 92%;
-    --card: 210 10% 98%;
-    --card-foreground: 210 19% 12%;
-    --text-primary: 210 19% 12%;
-    --text-secondary: 210 10% 40%;
-    --text-muted: 210 5% 50%;
-    --border: 210 10% 85%;
-    --input: 210 10% 85%;
+  /* Dark mode override - rarely used */
+  .dark {
+    --background: 210 19% 8%;
+    --foreground: 210 10% 95%;
+    --surface: 210 19% 10%;
+    --surface-muted: 210 19% 12%;
+    --card: 210 19% 10%;
+    --card-foreground: 210 10% 95%;
+    --text-primary: 210 10% 95%;
+    --text-secondary: 210 5% 75%;
+    --text-muted: 210 5% 60%;
+    --border: 210 19% 18%;
+    --input: 210 19% 18%;
   }
 }
 
@@ -132,8 +132,8 @@ Deep blacks, electric blues, and vibrant greens for contrast and energy
   
   .premium-chrome::before {
     content: '';
-    @apply absolute inset-0 opacity-20;
-    background: conic-gradient(from 45deg, transparent, hsl(210 10% 90%), transparent);
+    @apply absolute inset-0 opacity-30;
+    background: conic-gradient(from 45deg, transparent, hsl(210 19% 30%), transparent);
     animation: chrome-spin 3s linear infinite;
   }
   
@@ -186,12 +186,12 @@ Deep blacks, electric blues, and vibrant greens for contrast and energy
   
   .premium-glow {
     @apply shadow-chrome;
-    box-shadow: 0 0 50px hsl(210 10% 80% / 0.3), inset 0 1px 0 hsl(210 10% 90% / 0.2);
+    box-shadow: 0 0 50px hsl(210 19% 20% / 0.2), inset 0 1px 0 hsl(210 10% 90% / 0.8);
   }
   
   .premium-glow:hover {
     @apply shadow-chrome;
-    box-shadow: 0 0 80px hsl(210 10% 80% / 0.5), inset 0 1px 0 hsl(210 10% 90% / 0.3);
+    box-shadow: 0 0 80px hsl(210 19% 20% / 0.3), inset 0 1px 0 hsl(210 10% 90% / 0.9);
   }
   
   /* Testimonial Cards */
@@ -201,11 +201,11 @@ Deep blacks, electric blues, and vibrant greens for contrast and energy
   
   /* Course Card Styling */
   .course-free {
-    @apply bg-gradient-to-br from-secondary/10 to-secondary/5 border-secondary/30;
+    @apply bg-gradient-to-br from-secondary/5 to-secondary/10 border-secondary/20;
   }
   
   .course-challenge {
-    @apply bg-gradient-to-br from-primary/10 to-primary/5 border-primary/30;
+    @apply bg-gradient-to-br from-primary/5 to-primary/10 border-primary/20;
   }
   
   .course-premium {
