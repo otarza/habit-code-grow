@@ -52,12 +52,6 @@ export default {
 					hover: 'hsl(var(--accent-hover))',
 					light: 'hsl(var(--accent-light))'
 				},
-				premium: {
-					DEFAULT: 'hsl(var(--premium))',
-					foreground: 'hsl(var(--premium-foreground))',
-					hover: 'hsl(var(--premium-hover))',
-					light: 'hsl(var(--premium-light))'
-				},
 				destructive: {
 					DEFAULT: 'hsl(var(--destructive))',
 					foreground: 'hsl(var(--destructive-foreground))'
@@ -89,16 +83,13 @@ export default {
 				'gradient-hero': 'var(--gradient-hero)',
 				'gradient-card': 'var(--gradient-card)',
 				'gradient-cta': 'var(--gradient-cta)',
-				'gradient-premium': 'var(--gradient-premium)',
-				'gradient-chrome': 'var(--gradient-chrome)',
+				'gradient-progress': 'var(--gradient-progress)',
 			},
 			boxShadow: {
 				'soft': 'var(--shadow-soft)',
 				'medium': 'var(--shadow-medium)',
 				'strong': 'var(--shadow-strong)',
 				'glow': 'var(--shadow-glow)',
-				'premium': 'var(--shadow-premium)',
-				'chrome': 'var(--shadow-chrome)',
 			},
 			borderRadius: {
 				lg: 'var(--radius)',

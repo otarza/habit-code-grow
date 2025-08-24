@@ -4,93 +4,86 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Bitcamp Design System - Educational Dark Theme
-Primary: Deep Charcoal #1A1F2E (authority, depth)
-Secondary: Electric Blue #00D4FF (innovation, tech)  
-Accent: Bright Cyan #00FFD1 (progress, achievement)
-Premium: Gold Chrome #FFD700 (premium, excellence)
-Neutrals: Pure Black #000000, Steel Gray #2A3441, Light Gray #E5E7EB
+/* Bitcamp Design System - Logo-Inspired Palette
+Primary: Deep Navy #1A2332 (matches logo text, trust)
+Secondary: Warm Coral #E74C3C (matches logo pyramid, energy)  
+Accent: Golden Amber #F39C12 (warmth, success)
+Support: Sage Green #2ECC71 (growth, progress)
+Neutrals: Soft Cream #FDFEFE, Charcoal #2C3E50
 */
 
 @layer base {
   :root {
-    /* Brand Colors - Educational Authority */
-    --brand-charcoal: 223 25% 14%;
-    --brand-electric: 192 100% 50%;
-    --brand-cyan: 162 100% 50%;
-    --brand-gold: 51 100% 50%;
-    --brand-black: 0 0% 0%;
-    --brand-steel: 215 20% 18%;
+    /* Brand Colors - Logo Inspired */
+    --brand-navy: 210 25% 15%;
+    --brand-coral: 6 78% 57%;
+    --brand-amber: 35 81% 51%;
+    --brand-sage: 145 63% 49%;
+    --brand-cream: 200 13% 99%;
+    --brand-charcoal: 210 29% 24%;
     
     /* Background & Surface */
-    --background: 223 25% 14%;
-    --foreground: 0 0% 98%;
-    --surface: 215 20% 18%;
-    --surface-muted: 215 15% 12%;
+    --background: 200 13% 99%;
+    --foreground: 210 29% 24%;
+    --surface: 0 0% 100%;
+    --surface-muted: 210 16% 93%;
     
-    /* Primary (Deep Charcoal) */
-    --primary: 223 25% 14%;
-    --primary-foreground: 0 0% 98%;
-    --primary-hover: 223 25% 10%;
-    --primary-light: 223 25% 25%;
+    /* Primary (Deep Navy) */
+    --primary: 210 25% 15%;
+    --primary-foreground: 0 0% 100%;
+    --primary-hover: 210 25% 12%;
+    --primary-light: 210 25% 95%;
     
-    /* Secondary (Electric Blue) */
-    --secondary: 192 100% 50%;
-    --secondary-foreground: 0 0% 98%;
-    --secondary-hover: 192 100% 45%;
-    --secondary-light: 192 30% 25%;
+    /* Secondary (Warm Coral) */
+    --secondary: 6 78% 57%;
+    --secondary-foreground: 0 0% 100%;
+    --secondary-hover: 6 78% 52%;
+    --secondary-light: 6 78% 95%;
     
-    /* Accent (Bright Cyan) */
-    --accent: 162 100% 50%;
-    --accent-foreground: 0 0% 98%;
-    --accent-hover: 162 100% 45%;
-    --accent-light: 162 30% 25%;
+    /* Accent (Golden Amber) */
+    --accent: 35 81% 51%;
+    --accent-foreground: 0 0% 100%;
+    --accent-hover: 35 81% 46%;
+    --accent-light: 35 81% 95%;
     
-    /* Premium (Gold Chrome) */
-    --premium: 51 100% 50%;
-    --premium-foreground: 223 25% 14%;
-    --premium-hover: 51 100% 45%;
-    --premium-light: 51 30% 25%;
-    
-    /* Success (Bright Cyan variant) */
-    --success: 162 100% 50%;
-    --success-foreground: 0 0% 98%;
-    --success-hover: 162 100% 45%;
-    --success-light: 162 30% 25%;
+    /* Support (Sage Green) */
+    --success: 145 63% 49%;
+    --success-foreground: 0 0% 100%;
+    --success-hover: 145 63% 44%;
+    --success-light: 145 63% 95%;
     
     /* Gradients */
-    --gradient-hero: linear-gradient(135deg, hsl(223 25% 14%), hsl(215 20% 18%), hsl(223 25% 10%));
-    --gradient-card: linear-gradient(145deg, hsl(215 20% 18%), hsl(215 15% 12%));
-    --gradient-cta: linear-gradient(135deg, hsl(192 100% 50%), hsl(162 100% 50%));
-    --gradient-premium: linear-gradient(135deg, hsl(51 100% 50%), hsl(45 100% 55%), hsl(38 100% 60%));
-    --gradient-chrome: linear-gradient(45deg, hsl(51 100% 50%), hsl(45 100% 55%), hsl(51 100% 50%), hsl(51 80% 70%));
+    --gradient-hero: linear-gradient(135deg, hsl(210 25% 15%), hsl(6 78% 57%));
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(210 16% 97%));
+    --gradient-cta: linear-gradient(135deg, hsl(6 78% 57%), hsl(6 78% 52%));
+    --gradient-progress: linear-gradient(90deg, hsl(145 63% 49%), hsl(145 63% 44%));
+    --gradient-amber: linear-gradient(135deg, hsl(35 81% 51%), hsl(35 81% 46%));
     
     /* Text */
-    --text-primary: 0 0% 98%;
-    --text-secondary: 0 0% 75%;
-    --text-muted: 0 0% 55%;
-    --text-inverse: 223 25% 14%;
+    --text-primary: 210 29% 24%;
+    --text-secondary: 210 15% 50%;
+    --text-muted: 210 10% 65%;
+    --text-inverse: 0 0% 100%;
     
     /* Interactive */
-    --border: 215 15% 25%;
-    --input: 215 15% 25%;
-    --ring: 192 100% 50%;
-    --card: 215 20% 18%;
-    --card-foreground: 0 0% 98%;
-    --popover: 215 20% 18%;
-    --popover-foreground: 0 0% 98%;
-    --muted: 215 15% 12%;
-    --muted-foreground: 0 0% 65%;
+    --border: 210 16% 87%;
+    --input: 210 16% 87%;
+    --ring: 6 78% 57%;
+    --card: 0 0% 100%;
+    --card-foreground: 210 29% 24%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 210 29% 24%;
+    --muted: 210 16% 93%;
+    --muted-foreground: 210 15% 50%;
     --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 98%;
+    --destructive-foreground: 0 0% 100%;
     
     /* Shadows */
-    --shadow-soft: 0 4px 20px -2px hsl(0 0% 0% / 0.3);
-    --shadow-medium: 0 8px 32px -4px hsl(0 0% 0% / 0.4);
-    --shadow-strong: 0 16px 48px -8px hsl(0 0% 0% / 0.5);
-    --shadow-glow: 0 0 32px hsl(192 100% 50% / 0.4);
-    --shadow-premium: 0 0 40px hsl(51 100% 50% / 0.6);
-    --shadow-chrome: 0 0 20px hsl(51 100% 50% / 0.8), 0 0 40px hsl(51 100% 50% / 0.4);
+    --shadow-soft: 0 4px 20px -2px hsl(210 25% 15% / 0.08);
+    --shadow-medium: 0 8px 32px -4px hsl(210 25% 15% / 0.12);
+    --shadow-strong: 0 16px 48px -8px hsl(210 25% 15% / 0.16);
+    --shadow-glow: 0 0 32px hsl(6 78% 57% / 0.25);
+    --shadow-amber: 0 0 32px hsl(35 81% 51% / 0.3);
 
     --radius: 0.5rem;
 
@@ -157,8 +150,6 @@ Neutrals: Pure Black #000000, Steel Gray #2A3441, Light Gray #E5E7EB
 
   body {
     @apply bg-background text-foreground font-body;
-    background: linear-gradient(135deg, hsl(223 25% 14%) 0%, hsl(215 20% 16%) 50%, hsl(215 15% 12%) 100%);
-    min-height: 100vh;
   }
   
   h1, h2, h3, h4, h5, h6 {
@@ -191,7 +182,7 @@ Neutrals: Pure Black #000000, Steel Gray #2A3441, Light Gray #E5E7EB
   
   /* Streak Visualization */
   .streak-counter {
-    @apply bg-gradient-to-br from-secondary-light to-surface border-secondary/30 border rounded-lg p-3;
+    @apply bg-gradient-to-br from-secondary-light to-secondary/10 border-secondary/20 border rounded-lg p-3;
   }
   
   /* Card Hover Effects */
@@ -216,55 +207,5 @@ Neutrals: Pure Black #000000, Steel Gray #2A3441, Light Gray #E5E7EB
   
   .cta-glow:hover::before {
     @apply opacity-30;
-  }
-  
-  /* Premium Card Effect */
-  .premium-card {
-    @apply relative overflow-hidden;
-    background: linear-gradient(145deg, hsl(0 0% 0%), hsl(215 15% 8%));
-    border: 1px solid transparent;
-  }
-  
-  .premium-card::before {
-    content: '';
-    @apply absolute inset-0 rounded-lg;
-    background: var(--gradient-chrome);
-    padding: 2px;
-    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    mask-composite: subtract;
-    -webkit-mask-composite: subtract;
-    animation: shimmer 3s ease-in-out infinite;
-  }
-  
-  .premium-card::after {
-    content: '';
-    @apply absolute inset-0 bg-gradient-chrome opacity-10 rounded-lg blur-sm;
-    animation: glow 2s ease-in-out infinite alternate;
-  }
-  
-  @keyframes shimmer {
-    0%, 100% { opacity: 0.8; }
-    50% { opacity: 1; }
-  }
-  
-  @keyframes glow {
-    0% { opacity: 0.1; }
-    100% { opacity: 0.3; }
-  }
-  
-  /* Challenge Transformation Steps */
-  .transformation-step {
-    @apply relative;
-  }
-  
-  .transformation-step::after {
-    content: '';
-    @apply absolute top-1/2 -right-6 w-8 h-0.5 bg-gradient-to-r from-secondary to-accent;
-    transform: translateY(-50%);
-  }
-  
-  .transformation-step:last-child::after {
-    display: none;
   }
 }

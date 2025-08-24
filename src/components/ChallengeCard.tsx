@@ -81,7 +81,7 @@ export function ChallengeCard({
         </ul>
         
         <Button
-          variant={popular ? "hero" : type === "21" ? "secondary" : "default"}
+          variant={popular ? "hero" : type === "21" ? "teal" : "default"}
           size="lg"
           className="w-full"
           onClick={onCtaClick}
