@@ -37,11 +37,11 @@ export function Hero() {
           <div className="flex items-center justify-center gap-4 mb-12">
             <div className="flex items-center gap-2 bg-surface/10 backdrop-blur-sm rounded-full px-4 py-2">
               <div className="w-2 h-2 bg-secondary rounded-full animate-pulse"></div>
-              <span className="text-text-inverse/80 text-sm">5+ years refining this system</span>
+              <span className="text-text-inverse/80 text-sm">5+ წელი ვქმნიდით სრულყოფილ სისტემას</span>
             </div>
             <div className="flex items-center gap-2 bg-surface/10 backdrop-blur-sm rounded-full px-4 py-2">
               <div className="w-2 h-2 bg-accent rounded-full animate-pulse"></div>
-              <span className="text-text-inverse/80 text-sm">Evidence-based learning</span>
+              <span className="text-text-inverse/80 text-sm">პრაქტიკაზე დაფუძნებული სწავლება</span>
             </div>
           </div>
           
