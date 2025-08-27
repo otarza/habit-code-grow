@@ -1,22 +1,24 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Download } from "lucide-react";
-import { PixelBackground } from "@/components/PixelBackground";
+import { EpicPixelBackground } from "@/components/EpicPixelBackground";
 import heroCoding from "@/assets/hero-coding.jpg";
 
 export function Hero() {
   return (
     <section className="relative min-h-screen flex items-center bg-gradient-hero overflow-hidden">
-      {/* Pixel Art Background Animation */}
-      <PixelBackground />
+      {/* Epic Pixel Art Background Animation */}
+      <EpicPixelBackground />
       
       {/* Background Image Overlay */}
       <div className="absolute inset-0 z-0">
         <img 
           src={heroCoding} 
           alt="Focused developers coding" 
-          className="w-full h-full object-cover opacity-10"
+          className="w-full h-full object-cover opacity-5"
         />
-        <div className="absolute inset-0 bg-gradient-hero opacity-90"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-primary/90 to-gray-900"></div>
+        {/* Additional depth overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
       </div>
       
       {/* Content */}
