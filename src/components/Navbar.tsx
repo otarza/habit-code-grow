@@ -7,11 +7,11 @@ export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
   const navigationItems = [
-    { name: "How It Works", href: "#how-it-works" },
-    { name: "21-Day Challenge", href: "#21-day" },
-    { name: "Pricing", href: "#pricing" },
-    { name: "Success Stories", href: "#success" },
-    { name: "About", href: "#about" },
+    { name: "როგორ მუშაობს", href: "#how-it-works" },
+    { name: "ჩელენჯების პროგრამა", href: "#21-day" },
+    { name: "ფასები", href: "#pricing" },
+    { name: "წარმატება", href: "#success" },
+    { name: "ინფორმაცია", href: "#about" },
   ];
 
   return (
@@ -45,7 +45,7 @@ export function Navbar() {
           {/* Desktop CTA */}
           <div className="hidden md:block">
             <Button variant="hero" size="sm">
-              Start Your 21-Day Streak
+              დაიწყე 21 დღიანი ჩელენჯით
             </Button>
           </div>
 

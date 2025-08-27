@@ -12,36 +12,36 @@ export function ProblemSolution() {
               <div className="w-12 h-12 bg-destructive/10 rounded-xl flex items-center justify-center">
                 <AlertTriangle className="w-6 h-6 text-destructive" />
               </div>
-              <h2 className="text-3xl font-bold text-text-primary">The Real Problem</h2>
+              <h2 className="text-3xl font-bold text-text-primary">შენი პრობლემა</h2>
             </div>
             
             <div className="space-y-6">
               <p className="text-lg text-text-secondary leading-relaxed">
-                Most learners quit around week two. The issue isn't with the courses, tutorials, or your intelligence.
+                სწავლის დაწყებიდან მალევე ნებდები. შენ არც ზარმაცი ხარ და არც ინტელექტი გაკლია. აი რა გაფერხებს:
               </p>
               
               <div className="space-y-4">
                 <div className="flex items-start gap-4 p-4 bg-destructive/5 rounded-lg border border-destructive/20">
                   <div className="w-2 h-2 bg-destructive rounded-full mt-2 flex-shrink-0"></div>
                   <div>
-                    <h4 className="font-semibold text-text-primary mb-1">Missing Daily Structure</h4>
-                    <p className="text-text-secondary">No system for consistent practice and growth</p>
+                    <h4 className="font-semibold text-text-primary mb-1">ყოველდღიურად მუშაობა გიჭირს</h4>
+                    <p className="text-text-secondary">არ გაქვს შემუშავებული სისტემა მუდმივი განვითარებისა და ზრდისთვის</p>
                   </div>
                 </div>
                 
                 <div className="flex items-start gap-4 p-4 bg-destructive/5 rounded-lg border border-destructive/20">
                   <div className="w-2 h-2 bg-destructive rounded-full mt-2 flex-shrink-0"></div>
                   <div>
-                    <h4 className="font-semibold text-text-primary mb-1">Overwhelm & Isolation</h4>
-                    <p className="text-text-secondary">Learning alone without guidance or accountability</p>
+                    <h4 className="font-semibold text-text-primary mb-1">მარტო ხარ</h4>
+                    <p className="text-text-secondary">არავისთან ხარ პასუხიმგებელი. სხვა კურსებზე კი ლექტორს სულ არ აინტერესებს ისწავლი თუ არა. </p>
                   </div>
                 </div>
                 
                 <div className="flex items-start gap-4 p-4 bg-destructive/5 rounded-lg border border-destructive/20">
                   <div className="w-2 h-2 bg-destructive rounded-full mt-2 flex-shrink-0"></div>
                   <div>
-                    <h4 className="font-semibold text-text-primary mb-1">No Habit Foundation</h4>
-                    <p className="text-text-secondary">Motivation fades without sustainable daily practices</p>
+                    <h4 className="font-semibold text-text-primary mb-1">არავინ გეხმარება ჩვევების ჩამოყალიბებაში</h4>
+                    <p className="text-text-secondary">მოტივაცია ქრება თუ ყოველდღიურად არ მუშაობ საკუთარ თავზე</p>
                   </div>
                 </div>
               </div>
@@ -54,12 +54,12 @@ export function ProblemSolution() {
               <div className="w-12 h-12 bg-secondary/10 rounded-xl flex items-center justify-center">
                 <Target className="w-6 h-6 text-secondary" />
               </div>
-              <h2 className="text-3xl font-bold text-text-primary">Our Solution</h2>
+              <h2 className="text-3xl font-bold text-text-primary">ჩვენ გეხმარებით</h2>
             </div>
             
             <div className="space-y-6">
               <p className="text-lg text-text-secondary leading-relaxed">
-                A 3-stage mentorship system that installs daily coding through structured challenges, live guidance, and community accountability.
+                3 ეტაპიანი სამენტორო სისტემა რომელიც შეგძენს საჭირო ჩვევებს, გაგიმყარებს მიღებულ ცოდნას და განვითარება გახდება შენი ყოველდღიურობის განუყოფელი ნაწილი. სიცოცხლის ბოლომდე!
               </p>
               
               <div className="space-y-4">
@@ -69,8 +69,8 @@ export function ProblemSolution() {
                       <span className="text-secondary-foreground font-bold text-sm">21</span>
                     </div>
                     <div>
-                      <h4 className="font-semibold text-text-primary mb-2">Build the Foundation</h4>
-                      <p className="text-text-secondary">Daily 30-60 minute sessions with simple tracking and accountability</p>
+                      <h4 className="font-semibold text-text-primary mb-2">შექმენი ფუნდამენტი</h4>
+                      <p className="text-text-secondary">21 დღის განმაბლობაში, ყოველდღიური, 30-60 წუთიანი სასწავლო სესიებით ჩამოგიყალიბდება ჩვევა - ის რაც ასე ძალიან გჭირდება წარმატებისთვის</p>
                     </div>
                   </div>
                 </Card>
@@ -81,8 +81,8 @@ export function ProblemSolution() {
                       <span className="text-primary-foreground font-bold text-sm">30</span>
                     </div>
                     <div>
-                      <h4 className="font-semibold text-text-primary mb-2">Lock It In</h4>
-                      <p className="text-text-secondary">Stabilize your habit and make consistency feel natural</p>
+                      <h4 className="font-semibold text-text-primary mb-2">ჩაუჯექი</h4>
+                      <p className="text-text-secondary">30 დღიან ჩელენჯში უკვე გამომუშავებული ჩვევის გამყარება ხდება ისე რომ კოდის წერა და AI - იარაღების გამოყენება ბუნებრივი პროცესია შენთვის</p>
                     </div>
                   </div>
                 </Card>
@@ -93,8 +93,8 @@ export function ProblemSolution() {
                       <span className="text-accent-foreground font-bold text-sm">100</span>
                     </div>
                     <div>
-                      <h4 className="font-semibold text-text-primary mb-2">Make It Your Identity</h4>
-                      <p className="text-text-secondary">Integrate coding into everyday life permanently</p>
+                      <h4 className="font-semibold text-text-primary mb-2">ჩააჭირე</h4>
+                      <p className="text-text-secondary">100 დღიან ჩელენჯში შენი სამყარო იცვლება და ახალი უნარები შენი ყოველდღიურობის განუყოფელი ნაწილი ხდება</p>
                     </div>
                   </div>
                 </Card>
@@ -103,7 +103,7 @@ export function ProblemSolution() {
               <div className="flex items-center gap-3 p-4 bg-secondary/10 rounded-lg">
                 <TrendingUp className="w-6 h-6 text-secondary" />
                 <p className="font-semibold text-text-primary">
-                  Goal: You become independent — no mentor dependency
+                  მიზანი: გახდი დამოუკიდებელი ტექნოლოგიების ათვისებაში
                 </p>
               </div>
             </div>

@@ -8,17 +8,17 @@ export function PricingSection() {
     {
       id: "free-courses",
       icon: BookOpen,
-      title: "Free Courses",
-      description: "Well-structured video courses for anyone to start their programming journey",
+      title: "უფასო კურსები",
+      description: "კარგად ორგანიზებული ვიდეო კურსები თუ გინდა რომ შენით ისწავლო, მენტორის და მხარდაჭერის გარეშე",
       features: [
-        "Complete beginner-friendly curriculum",
-        "Step-by-step video tutorials", 
-        "Practice exercises and projects",
-        "Community forum access",
-        "Lifetime access to all content"
+        "დამწყებებზე მორგებული კურსები",
+        "ვიდეო გაკვეთილები", 
+        "სავარჯიშოები და პროექტები",
+        "მოხვდი BitCamp - ის მრავალათასიან ჯგუფში",
+        "საკუთარი თავის იმედად"
       ],
-      price: "Free",
-      ctaText: "Start Learning",
+      price: "მიიღე",
+      ctaText: "დაიწყე სწავლა",
       ctaAction: "start-free",
       popular: false,
       cardClass: "course-free"
@@ -26,18 +26,18 @@ export function PricingSection() {
     {
       id: "challenges",
       icon: Users,
-      title: "Challenge Programs",
-      description: "21, 30, and 100-day structured challenges with mentorship and accountability",
+      title: "ჩელენჯების პროგრამა",
+      description: "21, 30, და 100 დღიანი სტრუქტურირებული ჩელენჯების პროგრამა, მენტორის დახმარებითა და ჩვევის ჩამოყალიბებით",
       features: [
-        "Daily structured learning sessions",
-        "Personal mentor check-ins",
-        "Discord community support",
-        "Live weekly sessions",
-        "Progress tracking and milestones",
-        "Certificate of completion"
+        "ყოველდღიური მუშაობა საკუთარ თავზე",
+        "მენტორი გეხმიანება ყოველდღიურად",
+        "Discord - ის დახურული საზოგადოება",
+        "ყოველკვირეული სამეცადინო სესიები",
+        "პროგრესის შეფასება",
+        "სერტიფიკატები"
       ],
-      price: "Book Consultation",
-      ctaText: "Schedule Consultation",
+      price: "დაიწყე ტრანსფორმაცია",
+      ctaText: "ჩაეწერე კონსულტაციაზე",
       ctaAction: "book-consultation",
       popular: true,
       cardClass: "course-challenge"
@@ -45,18 +45,18 @@ export function PricingSection() {
     {
       id: "mentorship",
       icon: Star,
-      title: "Individual Mentorship",
-      description: "Premium 1-on-1 study sessions with personalized guidance and advanced techniques",
+      title: "ინდივიდუალური მენტორი",
+      description: "პრემიუმ მომსახურება მათთვის ვისაც სურს მიიღოს მაქსიმალური ეფექტი, უმოკლეს დროში. პირადი სესიები, 1-1 - ზე. მენტორი მხოლოდ შენზე ზრუნავს",
       features: [
-        "Weekly 1-on-1 video sessions",
-        "Personalized learning roadmap",
-        "Code review and feedback",
-        "Career guidance and planning",
-        "Priority support and access",
-        "Advanced project collaboration"
+        "ყოველდღიური სამეცადინო სესიები მენტორთან ერთად",
+        "პირადად შენთვის შედგენილი სასწავლო პროგრამა",
+        "დავალებების დეტალური შემოწმება და მენტორთან ერთად მუშაობა",
+        "ემოციური და ფსიქოლოგიური მხარდაჭერა",
+        "წვდომა მენტორის პირად ტელეფონის ნომერზე",
+        "კომპლექსურ პროექტებზე კოლაბორაცია"
       ],
-      price: "Premium",
-      ctaText: "Apply for Mentorship",
+      price: "მხოლოდ რჩეულთათვის",
+      ctaText: "ჩანიშნე გასაუბრება",
       ctaAction: "apply-mentorship",
       popular: false,
       cardClass: "course-premium premium-chrome"
@@ -69,10 +69,10 @@ export function PricingSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-text-primary mb-6">
-            Choose Your Learning Path
+            გადაწყვიტე რა გზას დაადგე
           </h2>
           <p className="text-xl text-text-secondary max-w-3xl mx-auto leading-relaxed">
-            From free courses to premium mentorship, we have options for every stage of your programming journey.
+            უფასო კურსებიდან პრემიუმ სამენტორო მომსახურებამდე - ყველაფერს გთავაზობთ, სულო და გულო!
           </p>
         </div>
         
@@ -87,7 +87,7 @@ export function PricingSection() {
                 {service.popular && (
                   <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
                     <span className="bg-gradient-cta text-text-inverse px-4 py-1 rounded-full text-sm font-semibold">
-                      Most Popular
+                      პოპულარული
                     </span>
                   </div>
                 )}
@@ -132,7 +132,7 @@ export function PricingSection() {
         
         <div className="text-center mt-12">
           <p className="text-text-secondary">
-            <strong>100% Satisfaction Guarantee:</strong> Not satisfied with your progress? Full refund within 30 days.
+            <strong>100% კმაყოფილების გარანტია:</strong> შენ ოღონდ დაიწყე და აღარ გაჩერდე! გპირდებით გამოგივა.
           </p>
         </div>
       </div>

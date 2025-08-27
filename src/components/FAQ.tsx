@@ -7,28 +7,24 @@ export function FAQ() {
 
   const faqs = [
     {
-      question: "Do I need prior coding experience?",
-      answer: "Not at all! Beginners are welcome. We focus on building the habit first, which is often harder than learning syntax. Many students start with zero experience and successfully complete their challenges."
+      question: "0 - დან დაწყებას შევძლებ?",
+      answer: " რა თქმა უნდა! პირველ რიგში ვფოკუსირდებით ჩვევის ჩამოყალიბებაზე, რაც ხშირად უფრო ძნელია ვიდრე პროგრამირების სწავლა. სტუდენტების უმეტესობა იწყებს 0 ცოდნით და წარმატებით ამთავრებს ჩელენჯებს."
     },
     {
-      question: "How much time do I need per day?",
-      answer: "Just 30-60 minutes daily. Consistency beats intensity. We'd rather you code for 30 minutes every day than 4 hours once a week. The system is designed to fit into busy schedules."
+      question: "რა დრო დამჭირდება ყოველდღიურად?",
+      answer: "დასაწყებად მხოლოდ 30-60 წუთიც საკმარისია. მთავარია ყოველდღიურობა. სჯობს ყოველდღე იმეცადინო 1 საათი ვიდრე რომელიმე დღეები გამოტოვო და შემდეგ ერთიანად იმეცადინო 4 საათი. ჩვენი ჩელენჯების სისტემა იდეალურად ერგება საქმიანი ადამიანების ცხოვრებას და გრაფიკს."
     },
     {
-      question: "What if I get stuck or have questions?",
-      answer: "You get personalized support through weekly live Q&A sessions on Google Meet, 24/7 Discord community help, and direct mentor guidance for your specific roadblocks. You're never learning alone."
+      question: "რა მოხდება მაშინ როცა შეკითხვები გამიჩნდება?",
+      answer: "შეგიძლია მიიღო ყოველდღიური მხარდაჭერა ჩვენი მენტორებისგან. ესწრები სამეცადინო სესიებს სადაც მენტორი გეხმარება ნებისმიერი პრობლემის გადაჭრაში, გიხსნის და გამეცადინებს კომპლექსური საკითხების გააზრებაში, შენთან ერთად აკეთებს დავალებებს."
     },
     {
-      question: "What happens if I miss a day?",
-      answer: "Life happens! We help you recover and maintain momentum. The goal isn't perfection, it's building a sustainable long-term habit. We have specific strategies for getting back on track."
+      question: "რა მოხდება თუ რომელიმე დღე ჩავაგდე?",
+      answer: "ცხოვრებაში ყველაფერი ხდება! ჩვენ დაგეხმარებით რომ აღიდგინო წარმატებისთვის საჭირო ტემპი და მომენტუმი. პერფექციონიზმი არ არის ჩვენი მიზანი. ჩვენ გვჭირდება გრძელვადიანი ჩვევების ჩამოყალიბება. ამიტომ გვაქვს სპეციალურად ასეთი სიტუაციებისთვის შემუშავებული სტრატეგიები."
     },
     {
-      question: "Is there a money-back guarantee?",
-      answer: "Yes! If you complete your chosen challenge and don't feel you've made meaningful progress, we'll provide a full refund. We're confident in our system because we've seen it work for hundreds of students."
-    },
-    {
-      question: "How is this different from other coding courses?",
-      answer: "Most courses focus on content. We focus on building the habit of daily practice first. We use evidence-based learning techniques, provide live mentorship, and our goal is your independence - not dependency on us."
+      question: "რით განსხვავდებით სხვა კურსებისგან?",
+      answer: "სხვა კურსების უმეტესობა გთავაზობთ წინასწარ დაწერილ ლექციებსა და გაკვეთილებს სადაც ლექტორი მოვალეობის მოხდის მიზნით გიხსნით რაღაცას და გემშვიდობებათ. ჩვენ ვიყენებთ შენგან მიღებულ ინფორმაციას იმისთვის რომ დაგიგეგმოთ სასწავლო პროცესი და თან შენი გეგმა მუდმივად ახლდება იმის მიხედვით თუ რაზე დაგჭირდება აქცენტის გაკეთება და ყურადღების მიქცევა. ჩვენ ვფოკუსირდებით ყოველდღიური ჩვევების ჩამოყალიბებაზე. შედეგად ჩვენთან მიღებული ცოდნა, გამოცდილება და უნარები გაგყვებათ მთელი ცხოვრების განმავლობაში. ლაივ სამენტორო სესიბზე გასწავლით როგორ უნდა გადაჭრა პრობლემები და შემდეგ შენი ხელით აკეთებ ყველაფერს - რაც საბოლოოდ გაქცევს დამოუკიდებელ პროფესიონალად."
     }
   ];
 
@@ -37,10 +33,10 @@ export function FAQ() {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-text-primary mb-6">
-            Frequently Asked Questions
+            ხშირად დასმული კითხვები
           </h2>
           <p className="text-xl text-text-secondary">
-            Everything you need to know about building unstoppable coding habits
+            ყველაფერი რაც უნდა იცოდე შეუჩერებელი ჩვევების ჩამოსაყალიბებლად
           </p>
         </div>
 
@@ -79,20 +75,20 @@ export function FAQ() {
         {/* Contact CTA */}
         <div className="text-center mt-12">
           <p className="text-text-secondary mb-4">
-            Still have questions? We're here to help.
+            კიდევ გაქვს კითხვები? სიამოვნებით გაგიწევთ კონსულტაციას.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a 
               href="mailto:hello@bitcamp.ge"
               className="inline-flex items-center justify-center px-6 py-3 border border-primary text-primary hover:bg-primary hover:text-primary-foreground rounded-lg transition-colors"
             >
-              Email Us
+              მოგვწერე
             </a>
             <a 
               href="#"
               className="inline-flex items-center justify-center px-6 py-3 bg-secondary text-secondary-foreground hover:bg-secondary-hover rounded-lg transition-colors"
             >
-              Join Discord Community
+              ეწვიე ჩვენს Facebook გვერდს
             </a>
           </div>
         </div>

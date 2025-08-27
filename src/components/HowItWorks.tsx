@@ -5,38 +5,38 @@ export function HowItWorks() {
   const steps = [
     {
       icon: Calendar,
-      title: "Daily Structure",
-      description: "30-60 minute focused coding sessions with clear goals and progress tracking",
+      title: "ყოველდღიურობა",
+      description: "30-60 წუთიანი ფოკუსირებული, ყოველდღიური მუშაობა საკუთარ თავზე უფრო მეტს გაძლევს ვიდრე შაბათ-კვირას ღამეების თენება. მუდმივად ფორმაში ყოფნა და საკუთარი პროგრესის შეგრძნება გაძლევს თავდაჯერებას.",
       color: "text-secondary"
     },
     {
       icon: Users,
-      title: "Weekly Live Sessions",
-      description: "Saturday Google Meet calls for mini-lessons, Q&A, and community connection",
+      title: "სამეცადინო სესიები",
+      description: "ინდივიდუალურად შენთვის შედგენილი მინი გაკვეთილები მხოლოდ იმ თემებზე რაც შენთვისაა მნიშვნელოვანი და არა ზოგადად ჯგუფისთვის.",
       color: "text-primary"
     },
     {
       icon: MessageSquare,
-      title: "Discord Community",
-      description: "24/7 support, daily accountability check-ins, and peer encouragement",
+      title: "მუდმივი მხარდაჭერა",
+      description: "სასწავლო სერვერი, მეგობრულობა, ერთმანეთზე ზრუნვის კულტურა და შემართება ქმნის წარმატებისთვის საჭირო უალტერნატივო გარემოს",
       color: "text-accent"
     },
     {
       icon: Target,
-      title: "Personalized Guidance",
-      description: "Individual help for your specific roadblocks - not one-size-fits-all",
+      title: "ინდივიდუალური სასწავლო პროცესი",
+      description: "ყველა სტუდენტს თავისი გზა აქვს. შენ ვერ ჩამორჩები და ვერ გაასწრებ ვერავის რადგან შენი ტემპი გაქვს და მხოლოდ შენს გუშინდელ თავს ედრები. ჩვენი საგანმანათლებლო სისტემა უზრუნველყოფს იმას რომ შენი ბილიკი მხოლოდ შენია და სხვებზე არ ხარ დამოკიდებული",
       color: "text-secondary"
     },
     {
       icon: Brain,
-      title: "Evidence-Based Learning",
-      description: "Techniques inspired by 'A Mind for Numbers' - spacing, interleaving, retrieval practice",
+      title: "მეცნიერულად დადასტურებული",
+      description: "ნეირო-ტექნიკები ინსპირირებულია ისეთი წყაროებიდან როგორიცაა 'A Mind for Numbers' - რაც საშუალებას იძლევა ისწავლო ყველაზე კომპლექსური საკითხები, მაშნაც კი თუ ფიქრობ რომ არ გაქვს \"ტექნიკური ან მათემატიკური\" ტვინი",
       color: "text-primary"
     },
     {
       icon: Trophy,
-      title: "Independence Goal",
-      description: "Success is when you don't need the mentor anymore - lifelong learning habits",
+      title: "მიზანი - დამოუკიდებლობა",
+      description: "წარმატება ნიშნავს იმას რომ შენ აღწევ იმ მომენტს როცა აღარ გჭირდება მენტორის დახმარება - შენი ჩვევები ცხოვრების ბოლომდე შენთან რჩება, შეუპოვრობა კი შენი უსასრულო განვითარების უმძლავრეს იარაღად იქცევა. დამოუკიდებელ პროფესიონალად ჩამოყალიბება შენი მთავარი მიზანია.",
       color: "text-accent"
     }
   ];
@@ -46,47 +46,64 @@ export function HowItWorks() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-text-primary mb-6">
-            How It Works
+            როგორ მუშაობს
           </h2>
           <p className="text-xl text-text-secondary max-w-3xl mx-auto leading-relaxed">
-            A proven 4-pillar system that transforms scattered learning into 
-            consistent daily progress through structure, community, and mentorship.
+            ყოველდღიური პროგრესი, სტრუქტურა, მეგობრული საზოგადოება, მხარდაჭერისა და ზრუნვის კულტურა, მეცნიერულად დადასტურებული სწავლის ტექნიკები, მსოფლიო დონის მენტორობა 
           </p>
         </div>
 
         {/* Timeline Visual */}
         <div className="relative max-w-4xl mx-auto mb-16">
-          <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-secondary via-primary to-accent rounded-full"></div>
+          {/* Desktop Timeline Line */}
+          <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-secondary via-primary to-accent rounded-full"></div>
+          {/* Mobile Timeline Line */}
+          <div className="md:hidden absolute left-6 w-1 h-full bg-gradient-to-b from-secondary via-primary to-accent rounded-full"></div>
           
-          <div className="space-y-16">
+          <div className="space-y-8 md:space-y-16">
             {steps.map((step, index) => (
-              <div key={index} className={`flex items-center ${index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'}`}>
-                <div className={`w-1/2 ${index % 2 === 0 ? 'pr-8 text-right' : 'pl-8 text-left'}`}>
-                  <Card className="p-6 shadow-soft hover:shadow-medium transition-all duration-300">
-                    <div className={`flex items-center gap-4 mb-4 ${index % 2 === 0 ? 'flex-row-reverse' : 'flex-row'}`}>
-                      <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${
+              <div key={index} className={`flex items-center ${
+                // Desktop: alternating layout, Mobile: consistent left layout
+                index % 2 === 0 ? 'md:flex-row flex-row' : 'md:flex-row-reverse flex-row'
+              }`}>
+                <div className={`${
+                  // Desktop: half width with proper padding and alignment, Mobile: full width minus circle space
+                  index % 2 === 0 
+                    ? 'md:w-1/2 md:pr-8 md:text-right w-full pl-16 text-left' 
+                    : 'md:w-1/2 md:pl-8 md:text-left w-full pl-16 text-left'
+                }`}>
+                  <Card className="p-4 md:p-6 shadow-soft hover:shadow-medium transition-all duration-300">
+                    <div className={`flex items-center gap-3 md:gap-4 mb-3 md:mb-4 ${
+                      // Desktop: alternating icon position, Mobile: consistent left position
+                      index % 2 === 0 ? 'md:flex-row-reverse flex-row' : 'md:flex-row flex-row'
+                    }`}>
+                      <div className={`w-10 h-10 md:w-12 md:h-12 rounded-xl flex items-center justify-center flex-shrink-0 ${
                         step.color === 'text-secondary' ? 'bg-secondary/10' :
                         step.color === 'text-primary' ? 'bg-primary/10' :
                         'bg-accent/10'
                       }`}>
-                        <step.icon className={`w-6 h-6 ${step.color}`} />
+                        <step.icon className={`w-5 h-5 md:w-6 md:h-6 ${step.color}`} />
                       </div>
-                      <h3 className="text-xl font-bold text-text-primary">{step.title}</h3>
+                      <h3 className="text-lg md:text-xl font-bold text-text-primary">{step.title}</h3>
                     </div>
-                    <p className="text-text-secondary leading-relaxed">{step.description}</p>
+                    <p className="text-sm md:text-base text-text-secondary leading-relaxed">{step.description}</p>
                   </Card>
                 </div>
                 
                 {/* Center Circle */}
-                <div className="relative z-10">
-                  <div className={`w-6 h-6 rounded-full border-4 border-surface ${
+                <div className={`relative z-10 ${
+                  // Desktop: centered, Mobile: positioned on left
+                  'md:static absolute left-0 top-1/2 md:transform-none transform -translate-y-1/2'
+                }`}>
+                  <div className={`w-4 h-4 md:w-6 md:h-6 rounded-full border-2 md:border-4 border-surface ${
                     step.color === 'text-secondary' ? 'bg-secondary' :
                     step.color === 'text-primary' ? 'bg-primary' :
                     'bg-accent'
                   }`}></div>
                 </div>
                 
-                <div className="w-1/2"></div>
+                {/* Desktop spacer */}
+                <div className="hidden md:block w-1/2"></div>
               </div>
             ))}
           </div>
@@ -95,7 +112,7 @@ export function HowItWorks() {
         {/* Why This Works */}
         <div className="bg-gradient-to-br from-primary-light to-primary/5 rounded-2xl p-8 border border-primary/20">
           <h3 className="text-2xl font-bold text-text-primary mb-6 text-center">
-            Why This System Works
+            რა ღირებულებები ამუშავებს ამ სისტემას?
           </h3>
           
           <div className="grid md:grid-cols-3 gap-6">
@@ -103,24 +120,24 @@ export function HowItWorks() {
               <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
                 <span className="text-2xl font-bold text-primary">5+</span>
               </div>
-              <h4 className="font-semibold text-text-primary mb-2">Years Refined</h4>
-              <p className="text-text-secondary text-sm">Continuously improved through real student feedback</p>
+              <h4 className="font-semibold text-text-primary mb-2">დავხარჯეთ მის შექმნასა და დახვეწაში</h4>
+              <p className="text-text-secondary text-sm">მუდმივად ვავითარებთ სტუდენტებისგან მიღებული გამოცდილებების კვალდაკვალ</p>
             </div>
             
             <div className="text-center">
               <div className="w-16 h-16 bg-secondary/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
                 <Calendar className="w-8 h-8 text-secondary" />
               </div>
-              <h4 className="font-semibold text-text-primary mb-2">Habit First</h4>
-              <p className="text-text-secondary text-sm">Consistency beats intensity - build sustainable practices</p>
+              <h4 className="font-semibold text-text-primary mb-2">ჩვევა უპირველეს ყოვლისა</h4>
+              <p className="text-text-secondary text-sm">ჩვევის ჩამოყალიბებაზე ზრუნვა გაცილებით მნიშვნელოვანია ვიდრე ნებისმიერი კურსი</p>
             </div>
             
             <div className="text-center">
               <div className="w-16 h-16 bg-accent/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
                 <Trophy className="w-8 h-8 text-accent" />
               </div>
-              <h4 className="font-semibold text-text-primary mb-2">Independence</h4>
-              <p className="text-text-secondary text-sm">Goal is your self-sufficiency, not dependency</p>
+              <h4 className="font-semibold text-text-primary mb-2">დამოუკიდებლობა</h4>
+              <p className="text-text-secondary text-sm">მხოლოდ დამოუკიდებელ ადამიანებს შეუძლიათ საკუთარი სამყაროს შეცვლა უკეთესობისკენ</p>
             </div>
           </div>
         </div>

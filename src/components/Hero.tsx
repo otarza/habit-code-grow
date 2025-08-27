@@ -24,13 +24,13 @@ export function Hero() {
         <div className="max-w-4xl mx-auto">
           {/* Main Headline */}
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-text-inverse mb-6 leading-tight">
-            გახდი შეუჩერებელი{" "}
+            მზად ხარ ტრანსფორმაციისთვის?{" "}
           </h1>
           
           {/* Subheadline */}
           <p className="text-xl md:text-2xl text-text-inverse/90 mb-8 leading-relaxed max-w-3xl mx-auto">
-            ეს არ არის უბრალოდ კურსი. ეს არის პიროვნული ტრანსფორმაციის უალტერნატივო პროცესი, 
-            შეიძინე დისციპლინა და გახდი დამოუკიდებელი ნებისმიერი რამის შესწავლაში.
+            ეს არ არის უბრალოდ კურსი. ეს არის პიროვნული ტრანსფორმაციის უალტერნატივო პროცესი. 
+            შეიძინე დისციპლინა და გახდი დამოუკიდებელი ნებისმიერი ტექნოლოგიური საკითხის შესწავლაში!
           </p>
           
           {/* Trust Indicator */}
@@ -48,28 +48,24 @@ export function Hero() {
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
             <Button variant="hero" size="xl" className="group pixel-btn">
-              Join the 21-Day Challenge
+              დაიწყე 21 დღიანი ჩელენჯი
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </Button>
-            <Button variant="outline" size="lg" className="pixel-btn border-text-inverse/30 text-text-inverse hover:bg-text-inverse hover:text-primary">
-              <Download className="w-5 h-5" />
-              Get the Free Habit Tracker
             </Button>
           </div>
           
           {/* Social Proof */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-3xl mx-auto">
             <div className="text-center">
-              <div className="text-3xl font-bold text-secondary mb-2">21+</div>
-              <div className="text-text-inverse/80">Days Average Streak</div>
+              <div className="text-3xl font-bold text-secondary mb-2">21+ დღე</div>
+              <div className="text-text-inverse/80">ჩვევის ჩამოსაყალიბებლად</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-accent mb-2">500+</div>
-              <div className="text-text-inverse/80">Students Transformed</div>
+              <div className="text-3xl font-bold text-accent mb-2">5000+</div>
+              <div className="text-text-inverse/80">სტუდენტი 5 წელში</div>
             </div>
             <div className="text-center">
               <div className="text-3xl font-bold text-secondary mb-2">95%</div>
-              <div className="text-text-inverse/80">Habit Success Rate</div>
+              <div className="text-text-inverse/80">წარმატების ალბათობა</div>
             </div>
           </div>
         </div>

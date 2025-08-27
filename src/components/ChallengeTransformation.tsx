@@ -1,214 +1,157 @@
 import { Card } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
-import { Calendar, Dumbbell, Mountain, TrendingUp, Award, Target } from "lucide-react";
+import { Calendar, Target, Trophy, ArrowRight } from "lucide-react";
 import { PixelBackground } from "@/components/PixelBackground";
 
 export function ChallengeTransformation() {
-  const transformationStages = [
+  const challengeStages = [
     {
-      day: "Day 1-7",
-      phase: "Foundation Building",
+      days: 21,
+      title: "შექმენი ფუნდამენტი",
+      subtitle: "ჩვევის ჩამოყალიბება",
       icon: Calendar,
       color: "text-secondary",
-      bgColor: "from-secondary/20 to-secondary/10",
-      borderColor: "border-secondary/30",
-      description: "Getting started and building the daily habit",
-      skills: ["Basic syntax understanding", "Setting up development environment", "First simple programs"],
-      mindset: "Excited but overwhelmed",
-      confidence: 20,
-      timeInvested: "3-5 hours",
-      challenges: ["Information overload", "Setup frustrations", "Imposter syndrome"],
-      progress: 20
+      bgColor: "course-free",
+      description: "21 დღის განმავლობაში, ყოველდღიური 30-60 წუთიანი სესიებით ჩამოყალიბდება ის ჩვევა, რაც აუცილებელია წარმატებისთვის",
+      habits: [
+        "ყოველდღიური კოდირება",
+        "პრობლემების სისტემატური გადაწყვეტა",
+        "სწავლის რუტინის ჩამოყალიბება"
+      ],
+      outcome: "კოდირება გახდება შენი ყოველდღიური რუტინის ნაწილი"
     },
     {
-      day: "Day 8-21",
-      phase: "Habit Formation",
+      days: 30,
+      title: "ჩაუჯექი",
+      subtitle: "ჩვევის გამყარება", 
       icon: Target,
-      color: "text-secondary",
-      bgColor: "from-secondary/20 to-secondary/10",
-      borderColor: "border-secondary/30",
-      description: "Solidifying daily practice and core concepts",
-      skills: ["Control flow mastery", "Function creation", "Problem-solving patterns"],
-      mindset: "Building momentum",
-      confidence: 45,
-      timeInvested: "20-30 hours",
-      challenges: ["Maintaining consistency", "Complex problem solving", "Debugging skills"],
-      progress: 45
-    },
-    {
-      day: "Day 22-30",
-      phase: "Skill Development",
-      icon: Dumbbell,
       color: "text-primary",
-      bgColor: "from-primary/20 to-primary/10",
-      borderColor: "border-primary/30",
-      description: "Advanced concepts and real-world applications",
-      skills: ["Data structures", "Object-oriented programming", "API integration"],
-      mindset: "Confident and curious",
-      confidence: 70,
-      timeInvested: "40-50 hours",
-      challenges: ["Complex algorithms", "Code organization", "Performance optimization"],
-      progress: 70
+      bgColor: "course-challenge",
+      description: "30 დღიან ჩელენჯში უკვე გამომუშავებული ჩვევის გამყარება ხდება ისე რომ კოდის წერა ბუნებრივი პროცესი ხდება",
+      habits: [
+        "რთული პრობლემების დაძლევა",
+        "AI ხელსაწყოების ეფექტური გამოყენება", 
+        "კონსისტენტური შრომისმოყვარეობა"
+      ],
+      outcome: "კოდირება ისეთივე ბუნებრივი ხდება როგორც სუნთქვა"
     },
     {
-      day: "Day 31-100",
-      phase: "Mastery & Identity",
-      icon: Mountain,
-      color: "text-accent",
-      bgColor: "from-accent/20 to-accent/10",
-      borderColor: "border-accent/30",
-      description: "Building projects and developing programmer identity",
-      skills: ["Full-stack applications", "Version control", "Testing and deployment"],
-      mindset: "I am a programmer",
-      confidence: 90,
-      timeInvested: "120+ hours",
-      challenges: ["Architecture decisions", "Code quality", "Continuous learning"],
-      progress: 90
+      days: 100,
+      title: "ჩააჭირე",
+      subtitle: "ჩვევის ინტეგრაცია",
+      icon: Trophy,
+      color: "text-accent", 
+      bgColor: "course-premium",
+      description: "100 დღიან ჩელენჯში შენი სამყარო იცვლება და ახალი უნარები შენი ყოველდღიურობის განუყოფელი ნაწილი ხდება",
+      habits: [
+        "მუდმივი განვითარება და ახალი ტექნოლოგიების სწავლა",
+        "რეალური პროექტების შექმნა",
+        "სხვების დახმარება და ცოდნის გაზიარება"
+      ],
+      outcome: "ხდები დამოუკიდებელი დეველოპერი სიცოცხლის ბოლომდე"
     }
   ];
 
   return (
     <section className="relative py-20 bg-background pixel-bg">
       <PixelBackground />
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-text-primary mb-6">
-            Your Transformation Journey
+            ჩელენჯების პროგრამა
           </h2>
           <p className="text-xl text-text-secondary max-w-4xl mx-auto leading-relaxed">
-            Watch yourself evolve from complete beginner to confident programmer through our structured challenges. 
-            Each stage builds upon the previous, creating lasting habits and real skills.
+            სამი ეტაპი რომელიც შეგძლებს გახდე შეუჩერებელი დეველოპერი. 
+            ყოველი ჩელენჯი ამყარებს ჩვევებს და ცვლის შენს იდენტობას.
           </p>
         </div>
 
-        <div className="relative">
-          {/* Timeline line */}
-          <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-secondary via-primary to-accent rounded-full opacity-30"></div>
-          
-          <div className="space-y-16">
-            {transformationStages.map((stage, index) => {
-              const Icon = stage.icon;
-              const isEven = index % 2 === 0;
-              
-              return (
-                <div key={stage.day} className={`flex items-center ${isEven ? 'flex-row' : 'flex-row-reverse'}`}>
-                  {/* Content Card */}
-                  <div className={`w-5/12 ${isEven ? 'pr-8' : 'pl-8'}`}>
-                    <Card className={`p-6 bg-gradient-to-br ${stage.bgColor} border ${stage.borderColor} shadow-soft card-hover`}>
-                      <div className={`flex items-start gap-4 ${isEven ? '' : 'flex-row-reverse text-right'}`}>
-                        <div className={`w-12 h-12 bg-gradient-to-br ${stage.bgColor} rounded-xl flex items-center justify-center flex-shrink-0`}>
-                          <Icon className={`w-6 h-6 ${stage.color}`} />
-                        </div>
-                        <div className="flex-1">
-                          <div className="flex items-center gap-2 mb-2">
-                            <span className="text-sm font-semibold text-text-secondary">{stage.day}</span>
-                            <div className="flex-1 h-px bg-border"></div>
-                          </div>
-                          <h3 className="text-xl font-bold text-text-primary mb-2">{stage.phase}</h3>
-                          <p className="text-text-secondary mb-4">{stage.description}</p>
-                          
-                          {/* Progress Bar */}
-                          <div className="mb-4">
-                            <div className="flex justify-between text-sm mb-1">
-                              <span className="text-text-secondary">Confidence Level</span>
-                              <span className={`font-semibold ${stage.color}`}>{stage.confidence}%</span>
-                            </div>
-                            <Progress value={stage.confidence} className="h-2" />
-                          </div>
-                          
-                          {/* Key Metrics */}
-                          <div className="grid grid-cols-2 gap-4 text-sm">
-                            <div>
-                              <span className="text-text-muted">Time Invested:</span>
-                              <p className="font-semibold text-text-primary">{stage.timeInvested}</p>
-                            </div>
-                            <div>
-                              <span className="text-text-muted">Mindset:</span>
-                              <p className="font-semibold text-text-primary">{stage.mindset}</p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </Card>
+        {/* Challenge Cards Grid */}
+        <div className="grid md:grid-cols-3 gap-8 lg:gap-12 mb-16">
+          {challengeStages.map((stage, index) => {
+            const Icon = stage.icon;
+            
+            return (
+              <Card key={stage.days} className={`relative p-8 md:p-10 card-hover pixel-border ${stage.bgColor} text-center overflow-hidden`}>
+                {/* Challenge Number - Big and Bold */}
+                <div className="mb-8">
+                  <div className={`w-20 h-20 mx-auto pixel-border flex items-center justify-center mb-4 ${
+                    stage.days === 21 ? "bg-secondary" :
+                    stage.days === 30 ? "bg-primary" :
+                    "bg-accent"
+                  }`}>
+                    <span className="text-3xl font-black text-white">{stage.days}</span>
                   </div>
-                  
-                  {/* Center Timeline Node */}
-                  <div className="w-2/12 flex justify-center">
-                    <div className={`w-6 h-6 rounded-full bg-gradient-to-r ${stage.bgColor} border-2 ${stage.borderColor} shadow-medium z-10`}>
-                      <div className={`w-full h-full rounded-full bg-gradient-to-r ${stage.bgColor}`}></div>
-                    </div>
+                  <div className="text-sm font-semibold text-text-muted uppercase tracking-wider mb-2">
+                    {stage.subtitle}
                   </div>
-                  
-                  {/* Skills & Challenges */}
-                  <div className={`w-5/12 ${isEven ? 'pl-8' : 'pr-8'}`}>
-                    <div className="space-y-4">
-                      <div className={`${isEven ? 'text-left' : 'text-right'}`}>
-                        <h4 className="font-semibold text-text-primary mb-2">Key Skills Developed</h4>
-                        <ul className="space-y-1">
-                          {stage.skills.map((skill, skillIndex) => (
-                            <li key={skillIndex} className="text-sm text-text-secondary flex items-center gap-2">
-                              {isEven ? (
-                                <>
-                                  <div className={`w-1.5 h-1.5 rounded-full ${stage.color.replace('text-', 'bg-')}`}></div>
-                                  {skill}
-                                </>
-                              ) : (
-                                <>
-                                  {skill}
-                                  <div className={`w-1.5 h-1.5 rounded-full ${stage.color.replace('text-', 'bg-')}`}></div>
-                                </>
-                              )}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                      
-                      <div className={`${isEven ? 'text-left' : 'text-right'}`}>
-                        <h4 className="font-semibold text-text-primary mb-2">Common Challenges</h4>
-                        <ul className="space-y-1">
-                          {stage.challenges.map((challenge, challengeIndex) => (
-                            <li key={challengeIndex} className="text-sm text-text-muted flex items-center gap-2">
-                              {isEven ? (
-                                <>
-                                  <div className="w-1.5 h-1.5 rounded-full bg-text-muted"></div>
-                                  {challenge}
-                                </>
-                              ) : (
-                                <>
-                                  {challenge}
-                                  <div className="w-1.5 h-1.5 rounded-full bg-text-muted"></div>
-                                </>
-                              )}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
+                  <h3 className="text-2xl font-bold text-text-primary mb-4">
+                    {stage.title}
+                  </h3>
                 </div>
-              );
-            })}
-          </div>
+
+                {/* Description */}
+                <p className="text-text-secondary leading-relaxed mb-8 text-base">
+                  {stage.description}
+                </p>
+
+                {/* Habits List */}
+                <div className="mb-8">
+                  <h4 className="font-bold text-text-primary mb-4 text-left">
+                    რას ისწავლი:
+                  </h4>
+                  <ul className="space-y-3 text-left">
+                    {stage.habits.map((habit, habitIndex) => (
+                      <li key={habitIndex} className="text-sm text-text-secondary flex items-start gap-3">
+                        <div className={`w-2 h-2 rounded-none mt-2 flex-shrink-0 ${stage.color.replace('text-', 'bg-')}`}></div>
+                        {habit}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* Outcome Badge */}
+                <div className={`pixel-border p-4 ${
+                  stage.days === 21 ? "bg-secondary/10" :
+                  stage.days === 30 ? "bg-primary/10" :
+                  "bg-accent/10"
+                }`}>
+                  <Icon className={`w-6 h-6 ${stage.color} mx-auto mb-2`} />
+                  <p className="font-bold text-text-primary text-sm leading-tight">
+                    {stage.outcome}
+                  </p>
+                </div>
+              </Card>
+            );
+          })}
+        </div>
+
+        {/* Progression Flow */}
+        <div className="flex items-center justify-center space-x-4 mb-16">
+          <div className="text-4xl font-black text-secondary">21</div>
+          <ArrowRight className="w-8 h-8 text-text-muted" />
+          <div className="text-4xl font-black text-primary">30</div>
+          <ArrowRight className="w-8 h-8 text-text-muted" />
+          <div className="text-4xl font-black text-accent">100</div>
         </div>
 
         {/* Final Call to Action */}
-        <div className="text-center mt-16">
-          <Card className="p-8 bg-gradient-to-br from-primary/10 to-primary/5 border-primary/30 max-w-2xl mx-auto">
-            <div className="flex items-center justify-center w-16 h-16 bg-gradient-to-br from-accent/20 to-accent/10 rounded-2xl mx-auto mb-6">
-              <Award className="w-8 h-8 text-accent" />
+        <div className="text-center">
+          <Card className="p-8 md:p-12 pixel-border course-challenge max-w-3xl mx-auto card-hover">
+            <div className="w-20 h-20 bg-primary pixel-border flex items-center justify-center mx-auto mb-8">
+              <Trophy className="w-10 h-10 text-primary-foreground" />
             </div>
-            <h3 className="text-2xl font-bold text-text-primary mb-4">Ready to Start Your Transformation?</h3>
-            <p className="text-text-secondary mb-6">
-              Join hundreds of students who have successfully built sustainable programming habits and launched their tech careers.
+            <h3 className="text-3xl font-bold text-text-primary mb-6">მზად ხარ დაიწყო შენი ტრანსფორმაცია?</h3>
+            <p className="text-xl text-text-secondary mb-8 leading-relaxed">
+              შეუერთდი ათასობით სტუდენტს ვინც წარმატებით ამოიღო ჩვევები და გახდა დეველოპერი.
             </p>
-            <div className="flex items-center justify-center gap-6">
-              <div className="flex items-center gap-2">
-                <TrendingUp className="w-5 h-5 text-secondary" />
-                <span className="text-sm text-text-secondary">94% completion rate</span>
+            <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-12">
+              <div className="flex items-center gap-3">
+                <div className="w-4 h-4 bg-secondary pixel-border"></div>
+                <span className="font-bold text-text-secondary">95% წარმატების ალბათობა</span>
               </div>
-              <div className="flex items-center gap-2">
-                <Award className="w-5 h-5 text-accent" />
-                <span className="text-sm text-text-secondary">500+ graduates</span>
+              <div className="flex items-center gap-3">
+                <div className="w-4 h-4 bg-accent pixel-border"></div>
+                <span className="font-bold text-text-secondary">5000+ კურსდამთავრებული</span>
               </div>
             </div>
           </Card>
