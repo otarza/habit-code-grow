@@ -120,7 +120,7 @@ export function HowItWorks() {
               <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
                 <span className="text-2xl font-bold text-primary">5+</span>
               </div>
-              <h4 className="font-semibold text-text-primary mb-2">დავხარჯეთ მის შექმნასა და დახვეწაში</h4>
+              <h4 className="font-semibold text-text-primary mb-2">წლები დავხარჯეთ მის შექმნასა და დახვეწაში</h4>
               <p className="text-text-secondary text-sm">მუდმივად ვავითარებთ სტუდენტებისგან მიღებული გამოცდილებების კვალდაკვალ</p>
             </div>
             

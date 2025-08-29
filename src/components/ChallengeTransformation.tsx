@@ -52,7 +52,7 @@ export function ChallengeTransformation() {
   ];
 
   return (
-    <section className="relative py-20 bg-background pixel-bg">
+    <section id="21-day" className="relative py-20 bg-background pixel-bg">
       <PixelBackground />
       <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
         <div className="text-center mb-16">
@@ -60,8 +60,8 @@ export function ChallengeTransformation() {
             ჩელენჯების პროგრამა
           </h2>
           <p className="text-xl text-text-secondary max-w-4xl mx-auto leading-relaxed">
-            სამი ეტაპი რომელიც შეგძლებს გახდე შეუჩერებელი დეველოპერი. 
-            ყოველი ჩელენჯი ამყარებს ჩვევებს და ცვლის შენს იდენტობას.
+            ჩელენჯების სისტემა ჩამოგიყალიბებს ჩვევებს რათა გახდე შეუჩერებელი დეველოპერი.
+            ყოველი მომდევნო ჩელენჯი ამყარებს ჩვევებს და გაქცევს საკუთარი თავის უკეთეს ვერსიად.
           </p>
         </div>
 
@@ -97,7 +97,7 @@ export function ChallengeTransformation() {
                 {/* Habits List */}
                 <div className="mb-8">
                   <h4 className="font-bold text-text-primary mb-4 text-left">
-                    რას ისწავლი:
+                    რას მიიღებ:
                   </h4>
                   <ul className="space-y-3 text-left">
                     {stage.habits.map((habit, habitIndex) => (
@@ -141,17 +141,22 @@ export function ChallengeTransformation() {
               <Trophy className="w-10 h-10 text-primary-foreground" />
             </div>
             <h3 className="text-3xl font-bold text-text-primary mb-6">მზად ხარ დაიწყო შენი ტრანსფორმაცია?</h3>
-            <p className="text-xl text-text-secondary mb-8 leading-relaxed">
-              შეუერთდი ათასობით სტუდენტს ვინც წარმატებით ამოიღო ჩვევები და გახდა დეველოპერი.
+            <p className="text-xl text-text-secondary mb-4 leading-relaxed">
+              გახდი BitCamp - ის შეუპოვარი მებრძოლების საზოგადოების წევრი.
             </p>
+            <div className="mb-8 p-4 bg-gradient-to-r from-primary/20 to-secondary/20 pixel-border">
+              <p className="text-2xl font-black text-text-primary tracking-wide">
+                სწავლა და ბრძოლა 🔥✊
+              </p>
+            </div>
             <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-12">
               <div className="flex items-center gap-3">
-                <div className="w-4 h-4 bg-secondary pixel-border"></div>
+                <div className="w-4 h-4 bg-green-500 pixel-border"></div>
                 <span className="font-bold text-text-secondary">95% წარმატების ალბათობა</span>
               </div>
               <div className="flex items-center gap-3">
                 <div className="w-4 h-4 bg-accent pixel-border"></div>
-                <span className="font-bold text-text-secondary">5000+ კურსდამთავრებული</span>
+                <span className="font-bold text-text-secondary">5000+ სტუდენტი 5 წლის განმავლობაში</span>
               </div>
             </div>
           </Card>

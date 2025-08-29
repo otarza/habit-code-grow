@@ -11,7 +11,7 @@ export function Navbar() {
     { name: "ჩელენჯების პროგრამა", href: "#21-day" },
     { name: "ფასები", href: "#pricing" },
     { name: "წარმატება", href: "#success" },
-    { name: "ინფორმაცია", href: "#about" },
+    { name: "კითხვები", href: "#faq" },
   ];
 
   return (
@@ -43,10 +43,21 @@ export function Navbar() {
           </div>
 
           {/* Desktop CTA */}
-          <div className="hidden md:block">
-            <Button variant="hero" size="sm">
-              დაიწყე 21 დღიანი ჩელენჯით
-            </Button>
+          <div className="hidden md:flex items-center gap-3">
+            <a 
+              href="https://www.bitcamp.ge/dashboard/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Button variant="outline" size="sm" className="border-primary text-primary hover:bg-primary hover:text-primary-foreground">
+                შესვლა
+              </Button>
+            </a>
+            <a href="#pricing">
+              <Button variant="hero" size="sm">
+                დაიწყე 21 დღიანი ჩელენჯით
+              </Button>
+            </a>
           </div>
 
           {/* Mobile menu button */}
@@ -74,10 +85,22 @@ export function Navbar() {
                   {item.name}
                 </a>
               ))}
-              <div className="pt-4">
-                <Button variant="hero" size="sm" className="w-full">
-                  Start Your 21-Day Streak
-                </Button>
+              <div className="pt-4 space-y-3">
+                <a 
+                  href="https://www.bitcamp.ge/dashboard/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => setIsOpen(false)}
+                >
+                  <Button variant="outline" size="sm" className="w-full border-primary text-primary hover:bg-primary hover:text-primary-foreground">
+                    შესვლა
+                  </Button>
+                </a>
+                <a href="#pricing" onClick={() => setIsOpen(false)}>
+                  <Button variant="hero" size="sm" className="w-full">
+                    დაიწყე 21 დღიანი ჩელენჯით
+                  </Button>
+                </a>
               </div>
             </div>
           </div>

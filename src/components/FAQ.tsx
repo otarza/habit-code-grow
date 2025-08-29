@@ -29,9 +29,15 @@ export function FAQ() {
   ];
 
   return (
-    <section className="py-20 bg-surface">
+    <section id="faq" className="py-20 bg-surface">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
+          {/* Final Decision Urgency */}
+          <div className="inline-flex items-center gap-2 bg-blue-100 text-blue-700 px-4 py-2 rounded-full text-sm font-semibold mb-6">
+            <div className="w-2 h-2 bg-blue-500 rounded-full animate-ping"></div>
+            <span>ყოველ 7 წუთში 1 ადამიანი იღებს გადაწყვეტილებას</span>
+          </div>
+          
           <h2 className="text-4xl md:text-5xl font-bold text-text-primary mb-6">
             ხშირად დასმული კითხვები
           </h2>
@@ -85,7 +91,9 @@ export function FAQ() {
               მოგვწერე
             </a>
             <a 
-              href="#"
+              href="https://www.facebook.com/bitcamp.ge"
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center justify-center px-6 py-3 bg-secondary text-secondary-foreground hover:bg-secondary-hover rounded-lg transition-colors"
             >
               ეწვიე ჩვენს Facebook გვერდს

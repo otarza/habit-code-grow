@@ -17,10 +17,12 @@ export function Footer() {
             <p className="text-xl text-primary-foreground/90 mb-8 max-w-2xl mx-auto">
               დააღწიე თავი მუდმივად გადადებული საქმისა და განუხორციელებელი გეგმების ციკლს. დაიწყე ნამდვილი ჩვევებისა და უნარების ათვისება - ისინი ხომ მთელი ცხოვრება გაგყვება.
             </p>
-            <Button variant="hero" size="xl" className="group">
-              დაიწყე 21 დღიანი ჩელენჯი
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </Button>
+            <a href="#pricing">
+              <Button variant="hero" size="xl" className="group">
+                დაიწყე 21 დღიანი ჩელენჯი
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </Button>
+            </a>
           </div>
         </div>
       </div>
@@ -43,7 +45,7 @@ export function Footer() {
             <p className="text-primary-foreground/80 mb-6 max-w-md">
               ვქმინთ უალტერნატივო ჩვევებს ტექნოლოგიების სამყაროში გზის გასაკვალად. ვქმნით დამოუკიდებელ და შეუპოვარ პროფესიონალებს.2018 წლიდან ვმუშაობთ ათასობით სტუდენტთან და საფუძველი ჩავუყარეთ თითოეული მათგანის ცხოვრებისა და კარიერის შეუჩერებელ ტრანსფორმაციას. 
             </p>
-            <div className="flex gap-4">
+            {/* <div className="flex gap-4">
               <Button variant="outline" size="sm" className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground hover:text-primary">
                 <MessageSquare className="w-4 h-4" />
                 Discord სერვერი
@@ -52,7 +54,7 @@ export function Footer() {
                 <Calendar className="w-4 h-4" />
                 ლაივ სესიები
               </Button>
-            </div>
+            </div> */}
           </div>
 
           {/* Quick Links */}
@@ -60,8 +62,8 @@ export function Footer() {
             <h3 className="font-semibold mb-4">ჩელენჯები</h3>
             <ul className="space-y-3 text-primary-foreground/80">
               <li><a href="#21-day" className="hover:text-primary-foreground transition-colors">21 დღიანი ჩელენჯი</a></li>
-              <li><a href="#pricing" className="hover:text-primary-foreground transition-colors">30 დღიანი ჩელენჯი</a></li>
-              <li><a href="#pricing" className="hover:text-primary-foreground transition-colors">100 დღიანი ჩელენჯი</a></li>
+              <li><a href="#21-day" className="hover:text-primary-foreground transition-colors">30 დღიანი ჩელენჯი</a></li>
+              <li><a href="#21-day" className="hover:text-primary-foreground transition-colors">100 დღიანი ჩელენჯი</a></li>
               <li><a href="#how-it-works" className="hover:text-primary-foreground transition-colors">როგორ მუშაობს?</a></li>
             </ul>
           </div>
@@ -70,10 +72,9 @@ export function Footer() {
           <div>
             <h3 className="font-semibold mb-4">ბმულები</h3>
             <ul className="space-y-3 text-primary-foreground/80">
-              <li><a href="#success" className="hover:text-primary-foreground transition-colors"></a></li>
-              <li><a href="#about" className="hover:text-primary-foreground transition-colors">Linkedin</a></li>
-              <li><a href="/terms" className="hover:text-primary-foreground transition-colors">Facebook</a></li>
-              <li><a href="/privacy" className="hover:text-primary-foreground transition-colors">YouTube</a></li>
+              <li><a href="https://www.youtube.com/@bitcampge" target="_blank" rel="noopener noreferrer" className="hover:text-primary-foreground transition-colors">YouTube</a></li>
+              <li><a href="https://www.facebook.com/bitcamp.ge" target="_blank" rel="noopener noreferrer" className="hover:text-primary-foreground transition-colors">Facebook</a></li>
+              <li><a href="https://www.linkedin.com/in/otarza/" target="_blank" rel="noopener noreferrer" className="hover:text-primary-foreground transition-colors">LinkedIn</a></li>
             </ul>
           </div>
         </div>

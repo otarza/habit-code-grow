@@ -59,7 +59,7 @@ export function ProblemSolution() {
             
             <div className="space-y-6">
               <p className="text-lg text-text-secondary leading-relaxed">
-                3 ეტაპიანი სამენტორო სისტემა რომელიც შეგძენს საჭირო ჩვევებს, გაგიმყარებს მიღებულ ცოდნას და განვითარება გახდება შენი ყოველდღიურობის განუყოფელი ნაწილი. სიცოცხლის ბოლომდე!
+                სამი ჩელენჯი შენი ტრანსფორმაციისთვის რათა გახდე შეუჩერებელი დეველოპერი. ყოველი ჩელენჯი ამყარებს ჩვევებს და ფუნდამენტურად გცვლის შენ.
               </p>
               
               <div className="space-y-4">
@@ -103,7 +103,7 @@ export function ProblemSolution() {
               <div className="flex items-center gap-3 p-4 bg-secondary/10 rounded-lg">
                 <TrendingUp className="w-6 h-6 text-secondary" />
                 <p className="font-semibold text-text-primary">
-                  მიზანი: გახდი დამოუკიდებელი ტექნოლოგიების ათვისებაში
+                  მიზანი: გახდე დამოუკიდებელი ტექნოლოგიების ათვისებაში
                 </p>
               </div>
             </div>
