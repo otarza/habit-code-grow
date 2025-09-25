@@ -17,12 +17,14 @@ export function Footer() {
             <p className="text-xl text-primary-foreground/90 mb-8 max-w-2xl mx-auto">
               დააღწიე თავი მუდმივად გადადებული საქმისა და განუხორციელებელი გეგმების ციკლს. დაიწყე ნამდვილი ჩვევებისა და უნარების ათვისება - ისინი ხომ მთელი ცხოვრება გაგყვება.
             </p>
-            <a href="#pricing">
-              <Button variant="hero" size="xl" className="group">
-                დაიწყე 21 დღიანი ჩელენჯი
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </Button>
-            </a>
+            <div className="flex justify-center w-full px-4">
+              <a href="#pricing" className="w-full max-w-lg">
+                <Button variant="hero" className="group w-full text-center px-3 sm:px-10 h-12 sm:h-16 text-sm sm:text-xl font-bold whitespace-nowrap">
+                  დაიწყე 21 დღიანი ჩელენჯი
+                  <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform flex-shrink-0" />
+                </Button>
+              </a>
+            </div>
           </div>
         </div>
       </div>

@@ -30,11 +30,35 @@ export function ProgressiveForm({ onComplete }: ProgressiveFormProps) {
   const handleSubmit = async () => {
     setIsSubmitting(true);
     
-    // Simulate API call
-    setTimeout(() => {
-      onComplete(formData as FormData);
-      setIsSubmitting(false);
-    }, 1500);
+    try {
+      // Option 1: Simple redirect with pre-filled data (Most reliable)
+      const tallyUrl = new URL('https://tally.so/r/woq4ZN');
+      
+      // Add form data as URL parameters to pre-fill Tally form
+      if (formData.email) tallyUrl.searchParams.set('email', formData.email);
+      if (formData.name) tallyUrl.searchParams.set('name', formData.name);
+      if (formData.experience) tallyUrl.searchParams.set('experience', formData.experience);
+      if (formData.goal) tallyUrl.searchParams.set('goal', formData.goal);
+
+      // Show success message first, then redirect
+      setTimeout(() => {
+        onComplete(formData as FormData);
+        setIsSubmitting(false);
+        
+        // Open Tally form in new tab after success
+        setTimeout(() => {
+          window.open(tallyUrl.toString(), '_blank');
+        }, 2000);
+      }, 1000);
+
+    } catch (error) {
+      console.error('Failed to process form:', error);
+      // Still show success for UX
+      setTimeout(() => {
+        onComplete(formData as FormData);
+        setIsSubmitting(false);
+      }, 1500);
+    }
   };
 
   const getStepTitle = () => {

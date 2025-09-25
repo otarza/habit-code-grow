@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Sparkles } from "lucide-react";
 import bitcampLogo from "@/assets/bitcamp-logo.png";
 
 export function Navbar() {
@@ -8,7 +8,6 @@ export function Navbar() {
 
   const navigationItems = [
     { name: "როგორ მუშაობს", href: "#how-it-works" },
-    { name: "ჩელენჯების პროგრამა", href: "#21-day" },
     { name: "ფასები", href: "#pricing" },
     { name: "წარმატება", href: "#success" },
     { name: "კითხვები", href: "#faq" },
@@ -31,19 +30,34 @@ export function Navbar() {
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-8">
               {navigationItems.map((item) => (
-                <a
+                <button
                   key={item.name}
-                  href={item.href}
+                  onClick={() => {
+                    const targetId = item.href.replace('#', '');
+                    document.getElementById(targetId)?.scrollIntoView({ behavior: 'smooth' });
+                  }}
                   className="text-text-secondary hover:text-text-primary px-3 py-2 text-sm font-medium transition-colors"
                 >
                   {item.name}
-                </a>
+                </button>
               ))}
             </div>
           </div>
 
           {/* Desktop CTA */}
           <div className="hidden md:flex items-center gap-3">
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              className="text-text-secondary hover:text-primary flex items-center gap-1"
+              onClick={() => {
+                document.getElementById('free-courses')?.scrollIntoView({ behavior: 'smooth' });
+              }}
+            >
+              <Sparkles className="w-4 h-4" />
+              უფასო კურსები
+            </Button>
+            <div className="w-px h-6 bg-border"></div>
             <a 
               href="https://www.bitcamp.ge/dashboard/"
               target="_blank"
@@ -53,15 +67,30 @@ export function Navbar() {
                 შესვლა
               </Button>
             </a>
-            <a href="#pricing">
-              <Button variant="hero" size="sm">
-                დაიწყე 21 დღიანი ჩელენჯით
-              </Button>
-            </a>
+            <Button 
+              variant="hero" 
+              size="sm"
+              onClick={() => {
+                document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' });
+              }}
+            >
+              დაიწყე 21 დღიანი ჩელენჯით
+            </Button>
           </div>
 
-          {/* Mobile menu button */}
-          <div className="md:hidden">
+          {/* Mobile Free Courses Link and Menu Button */}
+          <div className="md:hidden flex items-center gap-2">
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              className="text-text-secondary hover:text-primary flex items-center gap-1 text-xs px-2 py-1"
+              onClick={() => {
+                document.getElementById('free-courses')?.scrollIntoView({ behavior: 'smooth' });
+              }}
+            >
+              <Sparkles className="w-3 h-3" />
+              უფასო კურსები
+            </Button>
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="text-text-secondary hover:text-text-primary p-2"
@@ -76,31 +105,54 @@ export function Navbar() {
           <div className="md:hidden border-t border-border">
             <div className="px-2 pt-2 pb-3 space-y-1">
               {navigationItems.map((item) => (
-                <a
+                <button
                   key={item.name}
-                  href={item.href}
-                  className="text-text-secondary hover:text-text-primary block px-3 py-2 text-base font-medium"
-                  onClick={() => setIsOpen(false)}
+                  onClick={() => {
+                    setIsOpen(false);
+                    const targetId = item.href.replace('#', '');
+                    document.getElementById(targetId)?.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                  className="text-text-secondary hover:text-text-primary block px-3 py-2 text-base font-medium w-full text-left"
                 >
                   {item.name}
-                </a>
+                </button>
               ))}
-              <div className="pt-4 space-y-3">
+              <div className="pt-4 space-y-4">
+                <Button 
+                  variant="ghost" 
+                  size="sm" 
+                  className="w-full text-text-secondary hover:text-primary flex items-center justify-center gap-1"
+                  onClick={() => {
+                    setIsOpen(false);
+                    document.getElementById('free-courses')?.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                >
+                  <Sparkles className="w-4 h-4" />
+                  უფასო კურსები
+                </Button>
+                <div className="h-px bg-border"></div>
                 <a 
                   href="https://www.bitcamp.ge/dashboard/"
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => setIsOpen(false)}
+                  className="block"
                 >
                   <Button variant="outline" size="sm" className="w-full border-primary text-primary hover:bg-primary hover:text-primary-foreground">
                     შესვლა
                   </Button>
                 </a>
-                <a href="#pricing" onClick={() => setIsOpen(false)}>
-                  <Button variant="hero" size="sm" className="w-full">
-                    დაიწყე 21 დღიანი ჩელენჯით
-                  </Button>
-                </a>
+                <Button 
+                  variant="hero" 
+                  size="sm" 
+                  className="w-full"
+                  onClick={() => {
+                    setIsOpen(false);
+                    document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                >
+                  დაიწყე 21 დღიანი ჩელენჯით
+                </Button>
               </div>
             </div>
           </div>

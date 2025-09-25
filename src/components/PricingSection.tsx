@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Check, BookOpen, Users, Star } from "lucide-react";
+import { Check, Users, Star, Globe } from "lucide-react";
 import { PixelGrid } from "@/components/PixelBackground";
 import { TallyModal, useTallyModal } from "@/components/TallyModal";
 import { tracking } from "@/utils/tracking";
@@ -10,61 +10,41 @@ export function PricingSection() {
   const { isOpen: isMentorshipModalOpen, openModal: openMentorshipModal, closeModal: closeMentorshipModal } = useTallyModal();
   const services = [
     {
-      id: "free-courses",
-      icon: BookOpen,
-      title: "უფასო კურსები",
-      description: "კარგად ორგანიზებული ვიდეო კურსები თუ გინდა რომ შენით ისწავლო, მენტორის და მხარდაჭერის გარეშე",
-      features: [
-        "დამწყებებზე მორგებული კურსები",
-        "ვიდეო გაკვეთილები", 
-        "სავარჯიშოები და პროექტები",
-        "მოხვდი BitCamp - ის მრავალათასიან ჯგუფში",
-        "საკუთარი თავის იმედად"
-      ],
-      price: "0₾",
-      originalPrice: null,
-      priceLabel: "სრულიად უფასო",
-      ctaText: "დაიწყე სწავლა ახლავე",
-      ctaAction: "start-free",
-      popular: false,
-      cardClass: "course-free"
-    },
-    {
-      id: "challenge-21-30",
+      id: "group-mentorship",
       icon: Users,
-      title: "21 და 30 დღიანი ჩელენჯები",
-      description: "21 და 30 დღიანი სტრუქტურირებული ჩელენჯების პროგრამა, მენტორის დახმარებითა და ჩვევის ჩამოყალიბებით",
+      title: "ჯგუფური სამენტორო",
+      description: "21 დღიანი ინტენსიური ჩელენჯი ჯგუფურ გარემოში, სადაც გადადგამ აუცილებელ პირველ ნაბიჯებს",
       features: [
-        "21 ან 30 დღიანი ინტენსიური ჩელენჯი",
-        "ყოველდღიური მუშაობა საკუთარ თავზე",
-        "მენტორი გეხმიანება ყოველდღიურად",
+        "21 დღიანი ინტენსიური ჩელენჯი",
+        "ყოველკვირეული ჯგუფური სამეცადინო სესიები",
+        "10-15 კაციანი ჯგუფები მაქსიმალური ეფექტისთვის",
         "Discord - ის დახურული საზოგადოება",
-        "ყოველკვირეული სამეცადინო სესიები",
+        "მხარდაჭერა და მოტივაცია",
         "სერტიფიკატი დასრულებისას"
       ],
-      price: "250₾",
-      originalPrice: "333₾",
+      price: "350₾",
+      originalPrice: "433₾",
       priceLabel: "ერთჯერადი",
-      duration: "21 ან 30 დღე",
-      ctaText: "დაჯავშნე შენი ადგილი",
+      duration: "21 დღე ჯგუფურ გარემოში",
+      ctaText: "დაიწყე ტრანსფორმაცია",
       ctaAction: "book-consultation",
       popular: true,
       cardClass: "course-challenge"
     },
     {
-      id: "mentorship",
+      id: "personal-mentorship",
       icon: Star,
-      title: "ინდივიდუალური მენტორი",
-      description: "პრემიუმ მომსახურება მათთვის ვისაც სურს მიიღოს მაქსიმალური ეფექტი, უმოკლეს დროში. პირადი სესიები, 1-1 - ზე. მენტორი მხოლოდ შენზე ზრუნავს",
+      title: "პირადი მენტორი",
+      description: "პრემიუმ მომსახურება. აიყვანე პირადი მენტორი თუ გსურს მაქსიმალური შედეგი უმოკლეს დროში. პირადად შენთვის შექმნილ სამეცადინო სესიებზე მენტორი მთლიანად შენზეა ფოკუსირებული",
       features: [
-        "ყოველდღიური სამეცადინო სესიები მენტორთან ერთად",
-        "პირადად შენთვის შედგენილი სასწავლო პროგრამა",
-        "დავალებების დეტალური შემოწმება და მენტორთან ერთად მუშაობა",
-        "ემოციური და ფსიქოლოგიური მხარდაჭერა",
-        "წვდომა მენტორის პირად ტელეფონის ნომერზე",
-        "კომპლექსურ პროექტებზე კოლაბორაცია"
+        "1-1 - ზე ყოველდღიური სესიები მხოლოდ შენთვის",
+        "100% - ით შენთვის შექმნილი სასწავლო პროგრამა",
+        "დავალებების დეტალური განხილვა და კოდის რევიუ",
+        "მენტორის სრული ყურადღება და ფოკუსი შენზე",
+        "პირდაპირი კომუნიკაცია მენტორთან ნებისმიერ დროს",
+        "სწრაფი პროგრესი და ინდივიდუალური მიდგომა"
       ],
-      price: "450₾",
+      price: "550₾",
       originalPrice: null,
       priceLabel: "დან თვეში*",
       duration: "*საბოლოო ფასი შეთანხმებადია კონსულტაციისას",
@@ -72,6 +52,28 @@ export function PricingSection() {
       ctaAction: "apply-mentorship",
       popular: false,
       cardClass: "course-premium premium-chrome"
+    },
+    {
+      id: "emigrant-mentorship",
+      icon: Globe,
+      title: "ემიგრანტებისთვის",
+      description: "ემიგრანტი ხარ? მიიღე განსაკუთრებული პრიობები და ისწავლე პირად მენტორთან 1-1 - ზე შენთვის მოსახერხებელ დროებში",
+      features: [
+        "მოქნილი გრაფიკი ნებისმიერი სასაათო სარტყელისთვის",
+        "პირადი მენტორი გამეცადინებს 1-1 - ზე",
+        "სასწავლო პროგრამას მოვარგებთ შენს მიზნებს",
+        "სურვილის შემთხვევაში ჩაგრთავთ ჯგუფურ პროექტებში",
+        "კვირაში 3-4 სესია შენთვის მოსახერხებელ დროს",
+        "კარიერული მხარდაჭერა საზღვარგარეთ"
+      ],
+      price: "ფასი შეთანხმებადია",
+      originalPrice: null,
+      priceLabel: "",
+      duration: "განსაკუთრებული პირობები ემიგრანტებისთვის",
+      ctaText: "ჩაეწერე კონსულტაციაზე",
+      ctaAction: "emigrant-consultation",
+      popular: false,
+      cardClass: "course-emigrant emigrant-special"
     }
   ];
 
@@ -85,26 +87,26 @@ export function PricingSection() {
             {/* მხოლოდ 12 ადგილი დარჩა იანვრის ჯგუფში */}
           </div>
           <h2 className="text-4xl md:text-5xl font-bold text-text-primary mb-6">
-            აირჩიე შენთვის სასურველი გეგმა
+            აირჩიე სასურველი სამენტორო მომსახურება
           </h2>
           <p className="text-xl text-text-secondary max-w-3xl mx-auto leading-relaxed">
-            გამჭვირვალე ფასები, ღია პირობები. დაიწყე უფასოდ ან აირჩიე პროფესიონალური გზა.
+            ჩვენი სამენტორო ერთადერთი ფორმატია საქართველოში სადაც შენ ხარ მთავარი და არა ლექტორი
           </p>
-          <div className="flex items-center justify-center gap-6 mt-6 text-sm text-text-muted">
-            <div className="flex items-center gap-2">
-              <div className="w-4 h-4 bg-green-500 rounded-full flex items-center justify-center">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 mt-6 text-sm text-text-muted px-4">
+            <div className="flex items-center gap-2 whitespace-nowrap">
+              <div className="w-4 h-4 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
                 <Check className="w-2 h-2 text-white" />
               </div>
               <span>პერსონალური მხარდაჭერა</span>
             </div>
-            <div className="flex items-center gap-2">
-              <div className="w-4 h-4 bg-green-500 rounded-full flex items-center justify-center">
+            <div className="flex items-center gap-2 whitespace-nowrap">
+              <div className="w-4 h-4 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
                 <Check className="w-2 h-2 text-white" />
               </div>
               <span>Discord საზოგადოება</span>
             </div>
-            <div className="flex items-center gap-2">
-              <div className="w-4 h-4 bg-green-500 rounded-full flex items-center justify-center">
+            <div className="flex items-center gap-2 whitespace-nowrap">
+              <div className="w-4 h-4 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
                 <Check className="w-2 h-2 text-white" />
               </div>
               <span>ღია კომუნიკაცია მენტორთან</span>
@@ -112,13 +114,14 @@ export function PricingSection() {
           </div>
         </div>
         
-        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {services.map((service) => {
             const Icon = service.icon;
             return (
               <Card 
                 key={service.id} 
-                className={`relative p-8 card-hover ${service.popular ? 'ring-2 ring-primary shadow-glow' : 'shadow-soft'} ${service.cardClass}`}
+                id={service.id}
+                className={`relative p-8 card-hover ${service.popular ? 'ring-2 ring-primary shadow-glow' : 'shadow-soft'} ${service.cardClass} h-full flex flex-col`}
               >
                 {service.popular && (
                   <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
@@ -128,7 +131,7 @@ export function PricingSection() {
                   </div>
                 )}
                 
-                <div className="text-center">
+                <div className="text-center flex-1 flex flex-col">
                   <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/20 to-primary/10 mb-6">
                     <Icon className="w-8 h-8 text-primary" />
                   </div>
@@ -156,7 +159,7 @@ export function PricingSection() {
                     )}
                   </div>
                   
-                  <ul className="space-y-3 mb-8 text-left">
+                  <ul className="space-y-3 mb-8 text-left flex-1">
                     {service.features.map((feature, index) => (
                       <li key={index} className="flex items-start gap-3">
                         <Check className="w-5 h-5 text-secondary mt-0.5 flex-shrink-0" />
@@ -165,52 +168,7 @@ export function PricingSection() {
                     ))}
                   </ul>
                   
-                  {service.id === "free-courses" ? (
-                    <div className="space-y-3">
-                      <a 
-                        href="https://forms.gle/2e5mE5b3xaGb8g1U8"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="block"
-                      >
-                        <Button
-                          variant="default"
-                          size="lg"
-                          className="w-full bg-secondary hover:bg-secondary/90 text-white"
-                        >
-                          🐍 Python პროგრამირება
-                        </Button>
-                      </a>
-                      <a 
-                        href="https://forms.gle/iand6o4N2aRRBxoC6"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="block"
-                      >
-                        <Button
-                          variant="default"
-                          size="lg"
-                          className="w-full bg-accent hover:bg-accent/90 text-white"
-                        >
-                          🗄️ SQL მონაცემთა ბაზები
-                        </Button>
-                      </a>
-                      <a 
-                        href="https://www.bitcamp.ge/courses/java/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="block"
-                      >
-                        <Button
-                          variant="default"
-                          size="lg"
-                          className="w-full bg-orange-500 hover:bg-orange-600 text-white"
-                        >
-                          ♨️ Java პროგრამირება
-                        </Button>
-                      </a>
-                    </div>
-                  ) : (
+                  <div className="mt-auto">
                     <Button
                       variant={
                         service.id === "mentorship" ? "premium" : 
@@ -220,12 +178,14 @@ export function PricingSection() {
                       size="lg"
                       className="w-full"
                       onClick={() => {
-                        if (service.ctaAction === "book-consultation" || service.ctaAction === "apply-mentorship") {
+                        if (service.ctaAction === "book-consultation" || service.ctaAction === "apply-mentorship" || service.ctaAction === "emigrant-consultation") {
                           // Track the interaction
                           tracking.courseInterest(service.id);
                           tracking.formStart(service.ctaText);
                           
-                          if (service.id === "mentorship") {
+                          if (service.id === "personal-mentorship") {
+                            openMentorshipModal();
+                          } else if (service.id === "emigrant-mentorship") {
                             openMentorshipModal();
                           } else {
                             openChallengeModal();
@@ -235,7 +195,7 @@ export function PricingSection() {
                     >
                       {service.ctaText}
                     </Button>
-                  )}
+                  </div>
                 </div>
               </Card>
             );

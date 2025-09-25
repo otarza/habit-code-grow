@@ -10,6 +10,21 @@ Red pyramid, dark navy, with vibrant pixel art accents and animations
 */
 
 @layer base {
+  /* Prevent horizontal overflow and ensure mobile stability */
+  html {
+    overflow-x: hidden;
+  }
+  
+  body {
+    overflow-x: hidden;
+    width: 100%;
+    position: relative;
+  }
+  
+  * {
+    box-sizing: border-box;
+  }
+
   :root {
     /* Pixel Art Theme - Inspired by BITCAMP Logo */
     --background: 210 15% 96%;
@@ -335,6 +350,29 @@ Red pyramid, dark navy, with vibrant pixel art accents and animations
   .course-premium {
     @apply bg-gradient-to-br from-premium/5 to-premium/10 pixel-border;
     border-color: hsl(var(--premium) / 0.3);
+  }
+  
+  .emigrant-special {
+    @apply bg-gradient-to-br from-accent/5 to-accent/10 pixel-border;
+    border-color: hsl(var(--accent) / 0.3);
+    position: relative;
+  }
+  
+  .emigrant-special::before {
+    content: '🌍';
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    font-size: 1.5rem;
+    background: hsl(var(--accent));
+    border-radius: 50%;
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-medium);
+    z-index: 2;
   }
   
   /* Pixel Art Background Animations */

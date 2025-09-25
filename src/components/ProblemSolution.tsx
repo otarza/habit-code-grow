@@ -12,20 +12,20 @@ export function ProblemSolution() {
               <div className="w-12 h-12 bg-destructive/10 rounded-xl flex items-center justify-center">
                 <AlertTriangle className="w-6 h-6 text-destructive" />
               </div>
-              <h2 className="text-3xl font-bold text-text-primary">შენი პრობლემა</h2>
+              <h2 className="text-3xl font-bold text-text-primary">რა გაფერხებს?</h2>
             </div>
             
             <div className="space-y-6">
               <p className="text-lg text-text-secondary leading-relaxed">
-                სწავლის დაწყებიდან მალევე ნებდები. შენ არც ზარმაცი ხარ და არც ინტელექტი გაკლია. აი რა გაფერხებს:
+                ყოველდღიურად მუშაობა გიჭირს და მარტო ხარ სწავლაში. შენ არც ზარმაცი ხარ და არც ინტელექტი გაკლია:
               </p>
               
               <div className="space-y-4">
                 <div className="flex items-start gap-4 p-4 bg-destructive/5 rounded-lg border border-destructive/20">
                   <div className="w-2 h-2 bg-destructive rounded-full mt-2 flex-shrink-0"></div>
                   <div>
-                    <h4 className="font-semibold text-text-primary mb-1">ყოველდღიურად მუშაობა გიჭირს</h4>
-                    <p className="text-text-secondary">არ გაქვს შემუშავებული სისტემა მუდმივი განვითარებისა და ზრდისთვის</p>
+                    <h4 className="font-semibold text-text-primary mb-1">არ გაქვს დისციპლინა</h4>
+                    <p className="text-text-secondary">კარგავ მოტივაციას პირველივე სირთულესთან შეჯახებისას</p>
                   </div>
                 </div>
                 
@@ -33,7 +33,7 @@ export function ProblemSolution() {
                   <div className="w-2 h-2 bg-destructive rounded-full mt-2 flex-shrink-0"></div>
                   <div>
                     <h4 className="font-semibold text-text-primary mb-1">მარტო ხარ</h4>
-                    <p className="text-text-secondary">არავისთან ხარ პასუხიმგებელი. სხვა კურსებზე კი ლექტორს სულ არ აინტერესებს ისწავლი თუ არა. </p>
+                    <p className="text-text-secondary">არავისთან ხარ პასუხიმგებელი და არავინ გაძალიერებს ყოველდღე</p>
                   </div>
                 </div>
                 
@@ -41,7 +41,7 @@ export function ProblemSolution() {
                   <div className="w-2 h-2 bg-destructive rounded-full mt-2 flex-shrink-0"></div>
                   <div>
                     <h4 className="font-semibold text-text-primary mb-1">არავინ გეხმარება ჩვევების ჩამოყალიბებაში</h4>
-                    <p className="text-text-secondary">მოტივაცია ქრება თუ ყოველდღიურად არ მუშაობ საკუთარ თავზე</p>
+                    <p className="text-text-secondary">არ გყავს ადამიანი ვინც გვერდში დაგიდება რთული მომენტების გადალახვისას</p>
                   </div>
                 </div>
               </div>
@@ -54,12 +54,12 @@ export function ProblemSolution() {
               <div className="w-12 h-12 bg-secondary/10 rounded-xl flex items-center justify-center">
                 <Target className="w-6 h-6 text-secondary" />
               </div>
-              <h2 className="text-3xl font-bold text-text-primary">ჩვენ გეხმარებით</h2>
+              <h2 className="text-3xl font-bold text-text-primary">ჩვენ ვიქნებით შენი მეგზური</h2>
             </div>
             
             <div className="space-y-6">
               <p className="text-lg text-text-secondary leading-relaxed">
-                სამი ჩელენჯი შენი ტრანსფორმაციისთვის რათა გახდე შეუჩერებელი დეველოპერი. ყოველი ჩელენჯი ამყარებს ჩვევებს და ფუნდამენტურად გცვლის შენ.
+                <strong>5 წელია ვეხმარებით ადამიანებს ამ პრობლემის გადაჭრაში.</strong> 5000+ ქართველს დავეხმარეთ დეველოპერად ქცევაში, კარიერის ცვლილებასა თუ პიროვნულ ტრანსფორმაციაში.
               </p>
               
               <div className="space-y-4">
@@ -103,7 +103,7 @@ export function ProblemSolution() {
               <div className="flex items-center gap-3 p-4 bg-secondary/10 rounded-lg">
                 <TrendingUp className="w-6 h-6 text-secondary" />
                 <p className="font-semibold text-text-primary">
-                  მიზანი: გახდე დამოუკიდებელი ტექნოლოგიების ათვისებაში
+                  მიზანი: გახდე დამოუკიდებელი თანამედროვე ტექნოლოგიების ათვისებაში
                 </p>
               </div>
             </div>

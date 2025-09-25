@@ -8,7 +8,30 @@ import heroCoding from "@/assets/hero-coding.jpg";
 
 export function Hero() {
   const [liveViewers, setLiveViewers] = useState(0);
+  const [currentMonth, setCurrentMonth] = useState('სექტემბრის');
   const { scarcityData } = useScarcity();
+
+  // Georgian month names in genitive case (ending with -ის for "month's stream")
+  const georgianMonthsGenitive = {
+    0: 'იანვრის',
+    1: 'თებერვლის', 
+    2: 'მარტის',
+    3: 'აპრილის',
+    4: 'მაისის',
+    5: 'ივნისის',
+    6: 'ივლისის',
+    7: 'აგვისტოს',
+    8: 'სექტემბრის',
+    9: 'ოქტომბრის',
+    10: 'ნოემბრის',
+    11: 'დეკემბრის'
+  };
+
+  // Set current month on component mount
+  useEffect(() => {
+    const currentMonthIndex = new Date().getMonth();
+    setCurrentMonth(georgianMonthsGenitive[currentMonthIndex]);
+  }, []);
 
   useEffect(() => {
     // Generate realistic viewer count based on time of day
@@ -65,56 +88,53 @@ export function Hero() {
           {/* Dynamic Scarcity Alert */}
           <div className="inline-flex items-center gap-2 bg-red-500 text-white px-6 py-3 rounded-full text-sm font-bold mb-6 mt-8 sm:mt-6 animate-pulse">
             <div className="w-3 h-3 bg-white rounded-full animate-ping"></div>
-            <span>მიმდინარეობს სექტემბრის ნაკადის შევსება</span>
+            <span>{currentMonth} ნაკადი ივსება</span>
           </div>
           
-          {/* Main Headline */}
-          <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold text-text-inverse mb-6 leading-tight px-2">
-            მზად ხარ ტრანსფორმაციისთვის?{" "}
+          {/* Main Headline - StoryBrand Character */}
+          <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold text-text-inverse mb-6 leading-tight px-4 max-w-4xl mx-auto break-words">
+            თუ გინდა დაიწყო ტექნოლოგიური კარიერა ნულიდან,{" "}
+            <span className="text-secondary">სწორ ადგილას მოხვდი</span>
           </h1>
           
-          {/* Subheadline */}
-          <p className="text-lg sm:text-xl md:text-2xl text-text-inverse/90 mb-8 leading-relaxed max-w-3xl mx-auto px-4">
-            ეს არ არის უბრალოდ კურსი. ეს არის პიროვნული ტრანსფორმაციის უალტერნატივო პროცესი. 
-            შეიძინე დისციპლინა და გახდი დამოუკიდებელი ნებისმიერი ტექნოლოგიური საკითხის შესწავლაში!
+          {/* Subheadline - Problem & Solution */}
+          <p className="text-base sm:text-lg md:text-xl text-text-inverse/90 mb-8 leading-relaxed max-w-3xl mx-auto px-6 break-words">
+            21 დღეში ჩამოგიყალიბდება დისციპლინა და მყარად დაადგები ტექნოლოგიების ათვისების გზას.
+            ყოველდღიური ჩართულობით დაძლევ მოტივაციის ნაკლებობის პრობლემას.
           </p>
           
           {/* Trust Indicator */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-12 px-4">
-            <div className="flex items-center gap-2 bg-surface/10 backdrop-blur-sm rounded-full px-4 py-2">
-              <div className="w-2 h-2 bg-secondary rounded-full animate-pulse"></div>
-              <span className="text-text-inverse/80 text-xs sm:text-sm">5+ წელი ვქმნიდით სრულყოფილ სისტემას</span>
+          <div className="flex flex-col items-center justify-center gap-3 mb-12 px-6 max-w-4xl mx-auto">
+            <div className="flex items-center gap-2 bg-surface/10 backdrop-blur-sm rounded-full px-4 py-2 w-full max-w-sm justify-center">
+              <div className="w-2 h-2 bg-secondary rounded-full animate-pulse flex-shrink-0"></div>
+              <span className="text-text-inverse/80 text-xs sm:text-sm text-center break-words">ჩვენ ვიცით რა სირთულეებს აწყდები</span>
             </div>
-            <div className="flex items-center gap-2 bg-surface/10 backdrop-blur-sm rounded-full px-4 py-2">
-              <div className="w-2 h-2 bg-accent rounded-full animate-pulse"></div>
-              <span className="text-text-inverse/80 text-xs sm:text-sm">პრაქტიკაზე დაფუძნებული სწავლება</span>
+            <div className="flex items-center gap-2 bg-surface/10 backdrop-blur-sm rounded-full px-4 py-2 w-full max-w-sm justify-center">
+              <div className="w-2 h-2 bg-accent rounded-full animate-pulse flex-shrink-0"></div>
+              <span className="text-text-inverse/80 text-xs sm:text-sm text-center break-words">გაგიძღვებით იმ მომავლისკენ სადაც ყველა მათგანს გადალახავ</span>
             </div>
           </div>
           
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16 px-4">
-            <a href="#pricing" className="w-full sm:w-auto">
-              <Button 
-                variant="hero" 
-                size="xl" 
-                className="group pixel-btn w-full sm:w-auto"
-                onClick={() => tracking.buttonClick('დაიწყე 21 დღიანი ჩელენჯი', 'hero')}
-              >
-                <span className="text-sm sm:text-base">დაიწყე 21 დღიანი ჩელენჯი</span>
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </Button>
-            </a>
-            <a href="#pricing" className="w-full sm:w-auto">
-              <Button 
-                variant="outline" 
-                size="xl" 
-                className="group border-2 border-text-inverse/30 text-text-inverse hover:bg-text-inverse hover:text-primary w-full sm:w-auto"
-                onClick={() => tracking.courseInterest('free-courses')}
-              >
-                <span className="text-sm sm:text-base">უფასო კურსები</span>
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </Button>
-            </a>
+          {/* CTA Button - Single Focus */}
+          <div className="flex justify-center items-center mb-16 px-6">
+            <Button 
+              variant="hero" 
+              size="lg" 
+              className="group pixel-btn w-full sm:w-auto max-w-md relative z-50 cursor-pointer"
+              onClick={() => {
+                console.log('Button clicked!'); // Debug log
+                tracking.buttonClick('დაიწყე ტრანსფორმაცია ახლავე', 'hero');
+                const pricingElement = document.getElementById('pricing');
+                if (pricingElement) {
+                  pricingElement.scrollIntoView({ behavior: 'smooth' });
+                } else {
+                  console.log('Pricing element not found');
+                }
+              }}
+            >
+              <span className="text-xs sm:text-sm md:text-base break-words">დაიწყე ტრანსფორმაცია ახლავე</span>
+              <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform flex-shrink-0" />
+            </Button>
           </div>
           
           {/* Social Proof with Live Activity */}

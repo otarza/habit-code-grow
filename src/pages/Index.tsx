@@ -6,6 +6,9 @@ import { LeadMagnet } from "@/components/LeadMagnet";
 import { PricingSection } from "@/components/PricingSection";
 import { ChallengeTransformation } from "@/components/ChallengeTransformation";
 import { HowItWorks } from "@/components/HowItWorks";
+import { ThreeStepPlan } from "@/components/ThreeStepPlan";
+import { SuccessFailureContrast } from "@/components/SuccessFailureContrast";
+import { FreeCoursesSection } from "@/components/FreeCoursesSection";
 import { Testimonials } from "@/components/Testimonials";
 import { FAQ } from "@/components/FAQ";
 import { Footer } from "@/components/Footer";
@@ -14,6 +17,7 @@ import { FloatingSocialProof } from "@/components/FloatingSocialProof";
 import { ABTestProvider } from "@/components/ABTestTracker";
 import { RetargetingProvider } from "@/components/RetargetingPixels";
 import { ScarcityProvider } from "@/components/ScarcityManager";
+import { VideoExplainer } from "@/components/VideoExplainer";
 
 const Index = () => {
   // Simplified retargeting config to avoid env variable issues
@@ -33,11 +37,15 @@ const Index = () => {
             <Hero />
             {/* <TrustIndicators /> */}
             <ProblemSolution />
+            <ThreeStepPlan />
+            <VideoExplainer />
             <HowItWorks />
             {/* <LeadMagnet /> */}
             <PricingSection />
+            <SuccessFailureContrast />
             <ChallengeTransformation />
             <Testimonials />
+            <FreeCoursesSection />
             <FAQ />
             <Footer />
             <StickyCtaBar />
