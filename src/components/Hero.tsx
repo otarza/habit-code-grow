@@ -115,26 +115,59 @@ export function Hero() {
             </div>
           </div>
           
-          {/* CTA Button - Single Focus */}
-          <div className="flex justify-center items-center mb-16 px-6">
-            <Button 
-              variant="hero" 
-              size="lg" 
+          {/* Dual CTA Buttons - Free First Approach */}
+          <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mb-16 px-6">
+            {/* Primary CTA - Free Course */}
+            <Button
+              variant="hero"
+              size="lg"
               className="group pixel-btn w-full sm:w-auto max-w-md relative z-50 cursor-pointer"
               onClick={() => {
-                console.log('Button clicked!'); // Debug log
-                tracking.buttonClick('დაიწყე ტრანსფორმაცია ახლავე', 'hero');
-                const pricingElement = document.getElementById('pricing');
-                if (pricingElement) {
-                  pricingElement.scrollIntoView({ behavior: 'smooth' });
-                } else {
-                  console.log('Pricing element not found');
+                tracking.buttonClick('დაიწყე უფასო კურსით', 'hero-primary');
+                const freeCoursesElement = document.getElementById('free-courses');
+                if (freeCoursesElement) {
+                  freeCoursesElement.scrollIntoView({ behavior: 'smooth' });
                 }
               }}
             >
-              <span className="text-xs sm:text-sm md:text-base break-words">დაიწყე ტრანსფორმაცია ახლავე</span>
+              <Download className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
+              <span className="text-xs sm:text-sm md:text-base break-words">დაიწყე უფასო კურსით</span>
               <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform flex-shrink-0" />
             </Button>
+
+            {/* Secondary CTA - Paid Mentorship */}
+            <Button
+              variant="outline"
+              size="lg"
+              className="group w-full sm:w-auto max-w-md relative z-50 cursor-pointer bg-surface/10 backdrop-blur-sm border-2 border-text-inverse/30 text-text-inverse hover:bg-text-inverse hover:text-primary transition-all"
+              onClick={() => {
+                tracking.buttonClick('იხილე სამენტორო პროგრამა', 'hero-secondary');
+                const pricingElement = document.getElementById('pricing');
+                if (pricingElement) {
+                  pricingElement.scrollIntoView({ behavior: 'smooth' });
+                }
+              }}
+            >
+              <span className="text-xs sm:text-sm md:text-base break-words">იხილე სამენტორო პროგრამა</span>
+              <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform flex-shrink-0" />
+            </Button>
+          </div>
+
+          {/* Trust Badge & Discord Link */}
+          <div className="flex flex-col items-center gap-3 mb-8">
+            <div className="inline-flex items-center gap-2 bg-green-100/10 backdrop-blur-sm text-green-300 px-4 py-2 rounded-full text-sm font-semibold">
+              <Download className="w-4 h-4" />
+              <span>5000+ სტუდენტმა დაიწყო უფასო კურსებით</span>
+            </div>
+            <a
+              href="https://discord.gg/AGAW3xmGPr"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => tracking.buttonClick('შემოუერთდი Discord საზოგადოებას', 'hero-discord')}
+              className="text-text-inverse/80 hover:text-text-inverse text-sm underline underline-offset-4 transition-colors"
+            >
+              ან შემოუერთდი Discord საზოგადოებას უფასოდ
+            </a>
           </div>
           
           {/* Social Proof with Live Activity */}

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { X, AlertCircle, TrendingUp } from "lucide-react";
+import { X, AlertCircle, TrendingUp, Download } from "lucide-react";
 
 export function StickyCtaBar() {
   const [isVisible, setIsVisible] = useState(false);
@@ -97,7 +97,19 @@ export function StickyCtaBar() {
 
           {/* Right: CTA Buttons */}
           <div className="flex items-center gap-2 flex-shrink-0">
-            <Button 
+            <Button
+              variant="outline"
+              size="sm"
+              className="bg-white/10 border-white/30 text-white hover:bg-white hover:text-red-700 font-bold whitespace-nowrap hidden sm:flex"
+              onClick={() => {
+                document.getElementById('free-courses')?.scrollIntoView({ behavior: 'smooth' });
+              }}
+            >
+              <Download className="w-4 h-4 mr-1" />
+              უფასო კურსი
+            </Button>
+
+            <Button
               variant="secondary"
               size="sm"
               className="bg-white text-red-700 hover:bg-gray-100 font-bold whitespace-nowrap"
@@ -107,7 +119,7 @@ export function StickyCtaBar() {
             >
               📚 დაჯავშნე ადგილი
             </Button>
-            
+
             <button
               onClick={() => setIsDismissed(true)}
               className="w-6 h-6 flex items-center justify-center hover:bg-white/10 rounded-full transition-colors"

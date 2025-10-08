@@ -35,6 +35,9 @@ const Index = () => {
           <ScarcityProvider>
             <Navbar />
             <Hero />
+            {/* Value Ladder: Start with FREE to build trust */}
+            <FreeCoursesSection />
+            <Testimonials />
             {/* <TrustIndicators /> */}
             <ProblemSolution />
             <ThreeStepPlan />
@@ -44,8 +47,6 @@ const Index = () => {
             <PricingSection />
             <SuccessFailureContrast />
             <ChallengeTransformation />
-            <Testimonials />
-            <FreeCoursesSection />
             <FAQ />
             <Footer />
             <StickyCtaBar />

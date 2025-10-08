@@ -1,6 +1,6 @@
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { BookOpen, Sparkles, Users, Code, Database } from "lucide-react";
+import { BookOpen, Sparkles, Users, Code, Database, Facebook } from "lucide-react";
 import { tracking } from "@/utils/tracking";
 
 export function FreeCoursesSection() {
@@ -41,14 +41,14 @@ export function FreeCoursesSection() {
         <div className="text-center mb-12">
           <div className="inline-flex items-center gap-2 bg-green-100 text-green-700 px-4 py-2 rounded-full text-sm font-semibold mb-6">
             <Sparkles className="w-4 h-4" />
-            <span>ჯერ არ ხარ მზად BitCamp - ის სამენტოროსთვის?</span>
+            <span>დაიწყე რისკის გარეშე - 100% უფასოდ</span>
           </div>
           <h2 className="text-3xl md:text-4xl font-bold text-text-primary mb-4">
-            დაიწყე უფასო კურსებით
+            აირჩიე შენი პირველი უფასო კურსი
           </h2>
           <p className="text-lg text-text-secondary max-w-2xl mx-auto">
-            თუ გინდა ჯერ დამოუკიდებლად სცადო, შეგიძლია დაიწყო ჩვენი უფასო ვიდეო კურსებით. 
-            როცა მზად იქნები სერიოზული ტრანსფორმაციისთვის, შემოგვიერთდი სამენტოროში სადაც 0 - დან ვიწყებთ სწავლას.
+            გაეცანი ჩვენს სასწავლო მეთოდს და მიიღე ღირებული ცოდნა სრულიად უფასოდ.
+            ამ კურსებით 5000+ ადამიანმა დაიწყო გზა ტექნოლოგიურ კარიერაში.
           </p>
         </div>
 
@@ -81,39 +81,71 @@ export function FreeCoursesSection() {
         </div>
 
         <Card className="p-8 bg-gradient-to-r from-primary/5 to-secondary/5 border-2 border-primary/20 max-w-3xl mx-auto">
-          <div className="flex items-start gap-4">
+          <div className="flex flex-col sm:flex-row items-start gap-4">
             <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
               <Users className="w-6 h-6 text-primary" />
             </div>
-            <div>
+            <div className="flex-1">
               <h3 className="text-xl font-bold text-text-primary mb-2">
                 შემოუერთდი BitCamp საზოგადოებას
               </h3>
               <p className="text-text-secondary mb-4">
-                უფასო კურსების დაწყებით ავტომატურად ხდები ჩვენი მრავალათასიანი საზოგადოების წევრი. 
-                მიიღე წვდომა Discord სერვერზე, სადაც შეგიძლია დახმარება სთხოვო სხვა სტუდენტებს.
+                უფასო კურსების დაწყებით ავტომატურად ხდები BitCamp - ის საზოგადოების წევრი.
+                მიიღე წვდომა Discord სერვერზე, სადაც შეგიძლია დახმარება სთხოვო საზოგადოების სხვა წევრებს.
               </p>
-              <div className="flex items-center gap-2 text-sm text-text-muted">
-                <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                <span>5000+ აქტიური წევრი</span>
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-4">
+                <div className="flex items-center gap-2 text-sm text-text-muted">
+                  <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                  <span>55k აქტიური წევრი Facebook ჯგუფში</span>
+                </div>
+              </div>
+              <div className="flex flex-col sm:flex-row gap-3">
+                <a
+                  href="https://www.facebook.com/groups/bitcamp.ge"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => tracking.courseInterest('facebook-group')}
+                  className="flex-1"
+                >
+                  <Button variant="default" className="w-full bg-[#1877F2] hover:bg-[#166FE5] text-white">
+                    <Facebook className="w-4 h-4 mr-2" />
+                    Facebook ჯგუფი
+                  </Button>
+                </a>
+                <a
+                  href="https://discord.gg/AGAW3xmGPr"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => tracking.courseInterest('discord-community')}
+                  className="flex-1"
+                >
+                  <Button variant="default" className="w-full bg-[#5865F2] hover:bg-[#4752C4] text-white">
+                    <Users className="w-4 h-4 mr-2" />
+                    Discord სერვერი
+                  </Button>
+                </a>
               </div>
             </div>
           </div>
         </Card>
 
-        <div className="text-center mt-12">
-          <p className="text-text-secondary mb-4">
-            მზად ხარ სერიოზული შედეგებისთვის?
+        <div className="text-center mt-12 bg-gradient-to-r from-primary/5 to-secondary/5 border-2 border-primary/20 rounded-2xl p-8 max-w-3xl mx-auto">
+          <h3 className="text-xl md:text-2xl font-bold text-text-primary mb-3">
+            მოგეწონა რასაც ნახე?
+          </h3>
+          <p className="text-text-secondary mb-6">
+            როცა მზად იქნები სერიოზული ტრანსფორმაციისთვის და გინდა პირადი მენტორის მხარდაჭერა,
+            გაეცანი ჩვენს სამენტორო პროგრამებს სადაც 0-დან ვიწყებთ და გიწევთ მხარს ყოველ ნაბიჯზე.
           </p>
-          <Button 
-            variant="hero" 
-            size="lg" 
+          <Button
+            variant="hero"
+            size="lg"
             className="group"
             onClick={() => {
               document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' });
             }}
           >
-            შემოგვიერთდ სამენტოროში
+            იხილე სამენტორო პროგრამები
             <Code className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
           </Button>
         </div>
