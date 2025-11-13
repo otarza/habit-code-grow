@@ -156,7 +156,7 @@ export function ChallengeTransformation() {
               </div>
               <div className="flex items-center gap-3">
                 <div className="w-4 h-4 bg-accent pixel-border"></div>
-                <span className="font-bold text-text-secondary">5000+ სტუდენტი 5 წლის განმავლობაში</span>
+                <span className="font-bold text-text-secondary">50K+ სტუდენტი 5 წლის განმავლობაში</span>
               </div>
             </div>
           </Card>

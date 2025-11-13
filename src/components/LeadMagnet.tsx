@@ -31,7 +31,7 @@ export function LeadMagnet() {
     {
       icon: Users,
       title: "Discord კომუნიტი",
-      description: "დაუყოვნებლივი წვდომა 5000+ დეველოპერის ჯგუფში",
+      description: "დაუყოვნებლივი წვდომა 50K+ დეველოპერის ჯგუფში",
       value: "უფასო"
     }
   ];

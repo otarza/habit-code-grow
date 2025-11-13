@@ -34,20 +34,20 @@ const Index = () => {
         <ABTestProvider>
           <ScarcityProvider>
             <Navbar />
-            <Hero />
             {/* Value Ladder: Start with FREE to build trust */}
             <FreeCoursesSection />
+            <VideoExplainer />
+            <FAQ />
+            <Hero />
             <Testimonials />
             {/* <TrustIndicators /> */}
             <ProblemSolution />
             <ThreeStepPlan />
-            <VideoExplainer />
             <HowItWorks />
             {/* <LeadMagnet /> */}
             <PricingSection />
             <SuccessFailureContrast />
             <ChallengeTransformation />
-            <FAQ />
             <Footer />
             <StickyCtaBar />
             {/* <FloatingSocialProof /> */}
