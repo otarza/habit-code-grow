@@ -141,16 +141,17 @@ class ABTestTracker {
       fbq('trackCustom', 'AB_Test_Event', data);
     }
 
-    // Custom API endpoint
-    if (process.env.NODE_ENV === 'production') {
-      fetch('/api/analytics', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data)
-      }).catch(err => console.error('Analytics tracking failed:', err));
-    }
+    // Custom API endpoint - disabled for static site deployment
+    // If you add a backend in the future, uncomment this:
+    // if (process.env.NODE_ENV === 'production') {
+    //   fetch('/api/analytics', {
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify(data)
+    //   }).catch(err => console.error('Analytics tracking failed:', err));
+    // }
 
     // Store locally for batch sending
     const storedEvents = JSON.parse(localStorage.getItem('ab_events') || '[]');
