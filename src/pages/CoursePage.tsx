@@ -75,9 +75,9 @@ export default function CoursePage() {
 
       {/* Main content */}
       <main className="flex-1 min-w-0">
-        <div className="p-6 lg:p-12">
-          {/* Back to home link */}
-          <div className="mb-6 lg:hidden">
+        <div className="p-6 pt-20 lg:p-12">
+          {/* Back to home link - hidden on mobile to avoid conflict with menu button */}
+          <div className="mb-6 hidden lg:block">
             <Link
               to="/"
               className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground transition-colors"

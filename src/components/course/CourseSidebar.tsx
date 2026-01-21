@@ -12,11 +12,12 @@ interface CourseSidebarProps {
   className?: string;
 }
 
-function TopicSection({ topic, courseSlug, currentTopicSlug, currentLessonSlug }: {
+function TopicSection({ topic, courseSlug, currentTopicSlug, currentLessonSlug, onLessonClick }: {
   topic: TopicInfo;
   courseSlug: string;
   currentTopicSlug?: string;
   currentLessonSlug?: string;
+  onLessonClick?: () => void;
 }) {
   const isCurrentTopic = topic.slug === currentTopicSlug;
   const [isExpanded, setIsExpanded] = useState(isCurrentTopic);
@@ -48,6 +49,7 @@ function TopicSection({ topic, courseSlug, currentTopicSlug, currentLessonSlug }
               <li key={lesson.slug}>
                 <Link
                   to={`/courses/${courseSlug}/${topic.slug}/${lesson.slug}`}
+                  onClick={onLessonClick}
                   className={cn(
                     "flex items-center px-3 py-1.5 text-sm rounded-md transition-colors",
                     "hover:bg-accent hover:text-accent-foreground",
@@ -80,14 +82,14 @@ export function CourseSidebar({ manifest, className }: CourseSidebarProps) {
     <>
       {/* Logo */}
       <div className="p-5 border-b flex justify-center">
-        <Link to="/">
+        <Link to="/" onClick={() => setIsMobileOpen(false)}>
           <img src={bitcampLogo} alt="BitCamp" className="h-10" />
         </Link>
       </div>
 
       {/* Course title */}
       <div className="p-4 border-b">
-        <Link to={`/courses/${manifest.slug}`} className="block">
+        <Link to={`/courses/${manifest.slug}`} onClick={() => setIsMobileOpen(false)} className="block">
           <h2 className="font-semibold text-lg leading-tight hover:text-primary transition-colors">
             {manifest.title}
           </h2>
@@ -106,6 +108,7 @@ export function CourseSidebar({ manifest, className }: CourseSidebarProps) {
               courseSlug={manifest.slug}
               currentTopicSlug={topicSlug}
               currentLessonSlug={lessonSlug}
+              onLessonClick={() => setIsMobileOpen(false)}
             />
           ))}
         </nav>
