@@ -23,3 +23,13 @@ dist-ssr
 *.sln
 *.sw?
 tutor-lms-data-*.json
+
+# Environment variables (never commit!)
+.env
+.env.local
+.env.*.local
+
+# Scripts with credentials (never commit!)
+scripts/check-wp-api.js
+scripts/export-tutor-lms.js
+scripts/test-tutor-api.js
