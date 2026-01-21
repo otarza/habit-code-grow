@@ -1,0 +1,449 @@
+{
+  "id": 14807,
+  "title": "HTML და CSS - ვებ დიზაინი და დეველოპმენტი",
+  "slug": "html-css",
+  "description": "",
+  "thumbnail": "https://www.bitcamp.ge/wp-content/uploads/2025/01/Web-oto-1.png",
+  "exportedAt": "2026-01-21T09:02:07.201Z",
+  "topics": [
+    {
+      "id": 15848,
+      "slug": "01-",
+      "title": "გაცნობა და შესავალი",
+      "order": 1,
+      "lessons": [
+        {
+          "id": 15861,
+          "slug": "01-",
+          "title": "შესავალი",
+          "order": 101,
+          "videoUrl": "https://www.youtube.com/watch?v=PQ30ZtODsKQ",
+          "videoDuration": "11:06",
+          "isPreview": true
+        },
+        {
+          "id": 15849,
+          "slug": "02-",
+          "title": "დასაწყისი - კურსის შესახებ",
+          "order": 102,
+          "videoUrl": "https://www.youtube.com/watch?v=MqPGW99dlPw",
+          "videoDuration": "21:56",
+          "isPreview": true
+        }
+      ]
+    },
+    {
+      "id": 15862,
+      "slug": "02-",
+      "title": "კოდის ედიტორი",
+      "order": 2,
+      "lessons": [
+        {
+          "id": 15863,
+          "slug": "01-vs-code",
+          "title": "VS Code",
+          "order": 201,
+          "videoUrl": "https://www.youtube.com/watch?v=Ax16E4WYdx4",
+          "videoDuration": "12:04",
+          "isPreview": true
+        }
+      ]
+    },
+    {
+      "id": 15881,
+      "slug": "03-html",
+      "title": "HTML დოკუმენტი",
+      "order": 3,
+      "lessons": [
+        {
+          "id": 15882,
+          "slug": "01-html",
+          "title": "HTML დოკუმენტი",
+          "order": 301,
+          "videoUrl": "https://youtu.be/-_Lh-6Xijj8",
+          "videoDuration": "9:05",
+          "isPreview": true
+        },
+        {
+          "id": 15883,
+          "slug": "02-head",
+          "title": "head ელემენტი",
+          "order": 302,
+          "videoUrl": "https://youtu.be/ESn-a_1lUl4",
+          "videoDuration": "3:50",
+          "isPreview": true
+        },
+        {
+          "id": 15884,
+          "slug": "03-body",
+          "title": "body ელემენტი",
+          "order": 303,
+          "videoUrl": "https://www.youtube.com/watch?v=vZP9fTxfXek",
+          "videoDuration": "4:36",
+          "isPreview": true
+        }
+      ]
+    },
+    {
+      "id": 15885,
+      "slug": "04-",
+      "title": "კონსპექტები",
+      "order": 4,
+      "lessons": [
+        {
+          "id": 15886,
+          "slug": "01-html",
+          "title": "HTML - ის სახელმძღვანელო",
+          "order": 401,
+          "videoUrl": "https://youtu.be/k7NvlHraG0E",
+          "videoDuration": "4:17",
+          "isPreview": true
+        }
+      ]
+    },
+    {
+      "id": 15887,
+      "slug": "05-",
+      "title": "ტექსტური ელემენტები",
+      "order": 5,
+      "lessons": [
+        {
+          "id": 15888,
+          "slug": "01-h1-h6",
+          "title": "h1-h6 სათაურის ელემენტები",
+          "order": 501,
+          "videoUrl": "https://youtu.be/VnzV6tgwblM",
+          "videoDuration": "10:22",
+          "isPreview": true
+        },
+        {
+          "id": 15889,
+          "slug": "02-p-paragraph",
+          "title": "p - ელემენტი - აბზაცი - Paragraph",
+          "order": 502,
+          "videoUrl": "https://youtu.be/ZJYHJOt2Z_A",
+          "videoDuration": "5:21",
+          "isPreview": true
+        },
+        {
+          "id": 15890,
+          "slug": "03-bold-strong",
+          "title": "Bold & Strong ელემენტები",
+          "order": 503,
+          "videoUrl": "https://youtu.be/xtoVhKqLnOQ",
+          "videoDuration": "5:22",
+          "isPreview": true
+        },
+        {
+          "id": 15891,
+          "slug": "04-i-em",
+          "title": "i & em ელემენტები",
+          "order": 504,
+          "videoUrl": "https://youtu.be/zVA8NGSuAyQ",
+          "videoDuration": "5:56",
+          "isPreview": true
+        },
+        {
+          "id": 15892,
+          "slug": "05-",
+          "title": "დალაგებული და დაულაგებელი სიები",
+          "order": 505,
+          "videoUrl": "https://youtu.be/imIjj2emplw",
+          "videoDuration": "8:57",
+          "isPreview": true
+        }
+      ]
+    },
+    {
+      "id": 15853,
+      "slug": "06-",
+      "title": "ბმულები",
+      "order": 6,
+      "lessons": [
+        {
+          "id": 15854,
+          "slug": "01-hyperlinks",
+          "title": "ბმულები | HyperLinks",
+          "order": 601,
+          "videoUrl": "https://youtu.be/14s_24lsKT8",
+          "videoDuration": "26:45",
+          "isPreview": true
+        }
+      ]
+    },
+    {
+      "id": 15870,
+      "slug": "07-",
+      "title": "სურათები და ატრიბუტები",
+      "order": 7,
+      "lessons": [
+        {
+          "id": 15871,
+          "slug": "01-img",
+          "title": "სურათები | img ელემენტი",
+          "order": 701,
+          "videoUrl": "https://youtu.be/WN3mDQuPn6E",
+          "videoDuration": "8:02",
+          "isPreview": true
+        },
+        {
+          "id": 16217,
+          "slug": "02-",
+          "title": "ლოკალური სურათები",
+          "order": 702,
+          "videoUrl": "https://youtu.be/ECn7QwFmLhA",
+          "videoDuration": "5:04",
+          "isPreview": true
+        },
+        {
+          "id": 15872,
+          "slug": "03-width-height",
+          "title": "width და height ატრიბუტები",
+          "order": 703,
+          "videoUrl": "https://youtu.be/bbKCrVQsXEo",
+          "videoDuration": "3:59",
+          "isPreview": true
+        },
+        {
+          "id": 15873,
+          "slug": "04-alt",
+          "title": "alt ატრიბუტი",
+          "order": 704,
+          "videoUrl": "https://youtu.be/xwaK4w35T_s",
+          "videoDuration": "4:35",
+          "isPreview": true
+        }
+      ]
+    },
+    {
+      "id": 15874,
+      "slug": "08-",
+      "title": "გვერდის სტრუქტურის განვითარება",
+      "order": 8,
+      "lessons": [
+        {
+          "id": 16218,
+          "slug": "01-html",
+          "title": "სემანტიკური HTML ელემენტები",
+          "order": 801,
+          "videoUrl": "https://youtu.be/heFURSBeY08",
+          "videoDuration": "5:26",
+          "isPreview": true
+        },
+        {
+          "id": 16219,
+          "slug": "02-nav",
+          "title": "nav ელემენტი",
+          "order": 802,
+          "videoUrl": "https://youtu.be/nzt7PvxY7t0",
+          "videoDuration": "3:03",
+          "isPreview": true
+        },
+        {
+          "id": 16220,
+          "slug": "03-article",
+          "title": "article ელემენტი",
+          "order": 803,
+          "videoUrl": "https://youtu.be/NEMSQza6vfg",
+          "videoDuration": "4:24",
+          "isPreview": true
+        },
+        {
+          "id": 16221,
+          "slug": "04-header",
+          "title": "header ელემენტი",
+          "order": 804,
+          "videoUrl": "https://youtu.be/LssGIRxxvCY",
+          "videoDuration": "6:23",
+          "isPreview": false
+        },
+        {
+          "id": 16222,
+          "slug": "05-main",
+          "title": "main ელემენტი",
+          "order": 805,
+          "videoUrl": "https://youtu.be/dnzeX6CvqDU",
+          "videoDuration": "2:11",
+          "isPreview": false
+        },
+        {
+          "id": 16223,
+          "slug": "06-footer",
+          "title": "footer ელემენტი",
+          "order": 806,
+          "videoUrl": "https://youtu.be/_RUApNbN_5Q",
+          "videoDuration": "3:29",
+          "isPreview": false
+        },
+        {
+          "id": 16224,
+          "slug": "07-aside",
+          "title": "aside ელემენტი",
+          "order": 807,
+          "videoUrl": "https://youtu.be/-PhaKP-XJvA",
+          "videoDuration": "9:30",
+          "isPreview": false
+        }
+      ]
+    },
+    {
+      "id": 16440,
+      "slug": "09-vs-code-extensions",
+      "title": "VS Code - ის დამატებები | Extensions",
+      "order": 9,
+      "lessons": [
+        {
+          "id": 16441,
+          "slug": "01-vs-code-live-server",
+          "title": "VS Code: Live Server დამატება",
+          "order": 901,
+          "videoUrl": "https://youtu.be/OgeOSCv3F4k",
+          "videoDuration": "8:53",
+          "isPreview": false
+        },
+        {
+          "id": 16446,
+          "slug": "02-vs-code-auto-rename-tag",
+          "title": "VS Code: Auto Rename Tag დამატება",
+          "order": 902,
+          "videoUrl": "https://youtu.be/81p46ni-IwY",
+          "videoDuration": "2:10",
+          "isPreview": false
+        },
+        {
+          "id": 16447,
+          "slug": "03-vs-code-image-preview",
+          "title": "VS Code: Image Preview დამატება",
+          "order": 903,
+          "videoUrl": "https://youtu.be/cFOtnAUw3mY",
+          "videoDuration": "1:54",
+          "isPreview": false
+        }
+      ]
+    },
+    {
+      "id": 15876,
+      "slug": "10-",
+      "title": "ცხრილები",
+      "order": 10,
+      "lessons": [
+        {
+          "id": 16448,
+          "slug": "01-tableshtml",
+          "title": "ახალი გვერდის შექმნა tables.html",
+          "order": 1001,
+          "videoUrl": "https://youtu.be/UBmc_bn81t8",
+          "videoDuration": "12:03",
+          "isPreview": false
+        },
+        {
+          "id": 16449,
+          "slug": "02-table-caption",
+          "title": "table და caption ელემენტები",
+          "order": 1002,
+          "videoUrl": "https://youtu.be/oIjEHZaoOGg",
+          "videoDuration": "5:45",
+          "isPreview": false
+        },
+        {
+          "id": 16450,
+          "slug": "03-tr-td",
+          "title": "tr, td სტრიქონები და სვეტები",
+          "order": 1003,
+          "videoUrl": "https://youtu.be/f3Xh-vDfH5o",
+          "videoDuration": "5:27",
+          "isPreview": false
+        },
+        {
+          "id": 16451,
+          "slug": "04-th",
+          "title": "th სვეტების სათაურები",
+          "order": 1004,
+          "videoUrl": "https://youtu.be/CAoP7ENZchk",
+          "videoDuration": "6:27",
+          "isPreview": false
+        },
+        {
+          "id": 16452,
+          "slug": "05-colspan",
+          "title": "colspan სვეტების გაერთიანება",
+          "order": 1005,
+          "videoUrl": "https://youtu.be/kNjVh8UrFi4",
+          "videoDuration": "5:15",
+          "isPreview": false
+        },
+        {
+          "id": 16453,
+          "slug": "06-thead-tbody-tfoo",
+          "title": "thead, tbody, tfoo ცხრილის სემანტიკური სტრუქტურა",
+          "order": 1006,
+          "videoUrl": "https://www.youtube.com/watch?v=P8IdNR-GtVc",
+          "videoDuration": "8:22",
+          "isPreview": false
+        }
+      ]
+    },
+    {
+      "id": 15877,
+      "slug": "11-",
+      "title": "მედია ელემენტები",
+      "order": 11,
+      "lessons": [
+        {
+          "id": 17954,
+          "slug": "01-media",
+          "title": "Media ელემენტები",
+          "order": 1101,
+          "videoUrl": "https://youtu.be/Rota-HHD3hU",
+          "videoDuration": "2:16",
+          "isPreview": false
+        },
+        {
+          "id": 17955,
+          "slug": "02-audio",
+          "title": "Audio ელემენტი",
+          "order": 1102,
+          "videoUrl": "https://youtu.be/OMeRg8De9as",
+          "videoDuration": "5:21",
+          "isPreview": false
+        },
+        {
+          "id": 17956,
+          "slug": "03-audio",
+          "title": "Audio - ს მრავალი წყარო",
+          "order": 1103,
+          "videoUrl": "https://youtu.be/x4O656hBzH4",
+          "videoDuration": "18:56",
+          "isPreview": false
+        },
+        {
+          "id": 17957,
+          "slug": "04-video",
+          "title": "Video ელემენტი",
+          "order": 1104,
+          "videoUrl": "https://youtu.be/O4irtgAhNhM",
+          "videoDuration": "4:00",
+          "isPreview": false
+        },
+        {
+          "id": 17958,
+          "slug": "05-picture",
+          "title": "Picture ელემენტი",
+          "order": 1105,
+          "videoUrl": "https://youtu.be/e7vHTGmEK44",
+          "videoDuration": "12:16",
+          "isPreview": false
+        },
+        {
+          "id": 17959,
+          "slug": "06-iframe",
+          "title": "Iframe ელემენტი",
+          "order": 1106,
+          "videoUrl": "https://youtu.be/fryK2GfHNQE",
+          "videoDuration": "3:58",
+          "isPreview": false
+        }
+      ]
+    }
+  ]
+}

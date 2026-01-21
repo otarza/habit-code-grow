@@ -1,0 +1,253 @@
+{
+  "id": 22846,
+  "title": "SQL მონაცემთა ბაზები - უფასო ტრენინგი",
+  "slug": "sql-training",
+  "description": "",
+  "thumbnail": "https://www.bitcamp.ge/wp-content/uploads/2025/01/SQL-oto.png",
+  "exportedAt": "2026-01-21T09:02:07.140Z",
+  "topics": [
+    {
+      "id": 22851,
+      "slug": "01-1",
+      "title": "დღე 1 - შესავალი",
+      "order": 1,
+      "lessons": [
+        {
+          "id": 23182,
+          "slug": "01-",
+          "title": "მისალმება",
+          "order": 101,
+          "videoUrl": "https://youtu.be/LthxPyGtQuc",
+          "videoDuration": "7:35",
+          "isPreview": false
+        },
+        {
+          "id": 22853,
+          "slug": "02-",
+          "title": "მონაცემთა ბაზები - უძველესი იდეა",
+          "order": 102,
+          "videoUrl": "https://youtu.be/UD5ca-a5oac",
+          "videoDuration": "2:16",
+          "isPreview": false
+        },
+        {
+          "id": 22854,
+          "slug": "03-",
+          "title": "თანამედროვე კონტექსტი",
+          "order": 103,
+          "videoUrl": "https://youtu.be/Hz_s70jD5pc",
+          "videoDuration": "2:56",
+          "isPreview": false
+        },
+        {
+          "id": 22855,
+          "slug": "04-",
+          "title": "რატომ ვიყენებთ მონაცემთა ბაზებს?",
+          "order": 104,
+          "videoUrl": "https://youtu.be/ChRtTVeIicg",
+          "videoDuration": "5:24",
+          "isPreview": false
+        },
+        {
+          "id": 22856,
+          "slug": "05-crud",
+          "title": "CRUD - რა არის მონაცემთა ბაზა?",
+          "order": 105,
+          "videoUrl": "https://youtu.be/rsR6p46uyc4",
+          "videoDuration": "1:22",
+          "isPreview": false
+        },
+        {
+          "id": 22857,
+          "slug": "06-dbms",
+          "title": "DBMS - მონაცემთა ბაზის მენეჯმენტ სისტემა",
+          "order": 106,
+          "videoUrl": "https://youtu.be/q2xY4f4af_E",
+          "videoDuration": "6:48",
+          "isPreview": false
+        },
+        {
+          "id": 22858,
+          "slug": "07-sql",
+          "title": "რა არის SQL?",
+          "order": 107,
+          "videoUrl": "https://youtu.be/C0wNhupz7Fo",
+          "videoDuration": "4:07",
+          "isPreview": false
+        }
+      ]
+    },
+    {
+      "id": 22881,
+      "slug": "02-2",
+      "title": "დღე 2 - პირველი შეხება ბაზასთან",
+      "order": 2,
+      "lessons": [
+        {
+          "id": 23174,
+          "slug": "01-the-booker-prizes",
+          "title": "The Booker Prizes ბაზა",
+          "order": 201,
+          "videoUrl": "https://youtu.be/BKJrcnIX_zM",
+          "videoDuration": "3:32",
+          "isPreview": false
+        },
+        {
+          "id": 23175,
+          "slug": "02-vs-code-github",
+          "title": "VS Code და Github",
+          "order": 202,
+          "videoUrl": "https://youtu.be/bG2SegjQgp8",
+          "videoDuration": "8:39",
+          "isPreview": false
+        },
+        {
+          "id": 23176,
+          "slug": "03-vs-code-terminal",
+          "title": "VS Code - ის და Terminal - ის გამოყენება",
+          "order": 203,
+          "videoUrl": "https://youtu.be/esI11bMqsJE",
+          "videoDuration": "10:38",
+          "isPreview": false
+        },
+        {
+          "id": 23177,
+          "slug": "04-longlistdb",
+          "title": "longlist.db ფაილის გადმოწერა",
+          "order": 204,
+          "videoUrl": "https://youtu.be/axFGZPm3WmU",
+          "videoDuration": "8:43",
+          "isPreview": false
+        },
+        {
+          "id": 23178,
+          "slug": "05-select",
+          "title": "SELECT - ის პირველი გამოყენება",
+          "order": 205,
+          "videoUrl": "https://youtu.be/6Ayw7eX-3MA",
+          "videoDuration": "9:20",
+          "isPreview": false
+        },
+        {
+          "id": 23179,
+          "slug": "06-select-title-1",
+          "title": "SELECT title - 1 სვეტის ამოღება",
+          "order": 206,
+          "videoUrl": "https://youtu.be/RILKo1wSxn0",
+          "videoDuration": "4:17",
+          "isPreview": false
+        },
+        {
+          "id": 23180,
+          "slug": "07-select-title-author-2",
+          "title": "SELECT title, author - 2 ან მეტი სვეტის ამოღება",
+          "order": 207,
+          "videoUrl": "https://youtu.be/-RvPW0Q1sMQ",
+          "videoDuration": "2:51",
+          "isPreview": false
+        },
+        {
+          "id": 23181,
+          "slug": "08-limit",
+          "title": "LIMIT - სტქირონების რაოდენობის შეზღუდვა",
+          "order": 208,
+          "videoUrl": "https://youtu.be/w_KRC6G3cvk",
+          "videoDuration": "7:39",
+          "isPreview": false
+        }
+      ]
+    },
+    {
+      "id": 22884,
+      "slug": "03-3",
+      "title": "დღე 3 - \"სადაც\"",
+      "order": 3,
+      "lessons": [
+        {
+          "id": 22885,
+          "slug": "01-where",
+          "title": "WHERE სადაც",
+          "order": 301,
+          "videoUrl": "https://youtu.be/4kRFyBmNXcs",
+          "videoDuration": "6:43",
+          "isPreview": false
+        },
+        {
+          "id": 23284,
+          "slug": "02-where",
+          "title": "WHERE | სადაც \"არ უდრის\" - ძახილის ნიშნით",
+          "order": 302,
+          "videoUrl": "https://youtu.be/Pv-apJKqjew",
+          "videoDuration": "5:11",
+          "isPreview": false
+        },
+        {
+          "id": 23285,
+          "slug": "03-where",
+          "title": "WHERE | სადაც \"არ უდრის\" - მეტობა-ნაკლებობის ნიშნებით",
+          "order": 303,
+          "videoUrl": "https://youtu.be/BVxYqPrLr78",
+          "videoDuration": "1:17",
+          "isPreview": false
+        },
+        {
+          "id": 23287,
+          "slug": "04-where-not",
+          "title": "WHERE | სადაც \"არ უდრის\" - NOT - ით",
+          "order": 304,
+          "videoUrl": "https://youtu.be/Wa2d9Kp2Axc",
+          "videoDuration": "2:34",
+          "isPreview": false
+        },
+        {
+          "id": 23288,
+          "slug": "05-where-or",
+          "title": "WHERE | სადაც \"ან ის, ან ეს\" - OR ოპერატორი",
+          "order": 305,
+          "videoUrl": "https://youtu.be/TtJ5ZRIqku8",
+          "videoDuration": "4:08",
+          "isPreview": false
+        },
+        {
+          "id": 23290,
+          "slug": "06-where-and",
+          "title": "WHERE | სადაც \"ეს და აუცილებლად ესეც\" - AND ოპერატორი",
+          "order": 306,
+          "videoUrl": "https://youtu.be/YT65ygmVSZs",
+          "videoDuration": "7:43",
+          "isPreview": false
+        }
+      ]
+    },
+    {
+      "id": 22888,
+      "slug": "04-4",
+      "title": "დღე 4",
+      "order": 4,
+      "lessons": [
+        {
+          "id": 22889,
+          "slug": "01-",
+          "title": "დაელოდეთ მასალების გამოქვეყნებას",
+          "order": 401,
+          "isPreview": false
+        }
+      ]
+    },
+    {
+      "id": 22890,
+      "slug": "05-5",
+      "title": "დღე 5",
+      "order": 5,
+      "lessons": [
+        {
+          "id": 22891,
+          "slug": "01-",
+          "title": "დაელოდეთ მასალების გამოქვეყნებას",
+          "order": 501,
+          "isPreview": false
+        }
+      ]
+    }
+  ]
+}

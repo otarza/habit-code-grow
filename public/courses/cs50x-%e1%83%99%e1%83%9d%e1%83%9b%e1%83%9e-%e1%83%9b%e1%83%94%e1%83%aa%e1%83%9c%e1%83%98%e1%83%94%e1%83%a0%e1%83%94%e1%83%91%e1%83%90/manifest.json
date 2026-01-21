@@ -1,0 +1,54 @@
+{
+  "id": 14787,
+  "title": "CS50x - კომპ. მეცნიერება",
+  "slug": "cs50x-%e1%83%99%e1%83%9d%e1%83%9b%e1%83%9e-%e1%83%9b%e1%83%94%e1%83%aa%e1%83%9c%e1%83%98%e1%83%94%e1%83%a0%e1%83%94%e1%83%91%e1%83%90",
+  "description": "",
+  "thumbnail": "https://www.bitcamp.ge/wp-content/uploads/2025/01/cs50x.png",
+  "exportedAt": "2026-01-21T09:02:07.204Z",
+  "topics": [
+    {
+      "id": 14790,
+      "slug": "01-",
+      "title": "კომპიუტერული მეცნიერების საწყისები",
+      "order": 1,
+      "lessons": [
+        {
+          "id": 14791,
+          "slug": "01-0-hello-world-scratch",
+          "title": "ლექცია 0 - Hello World | Scratch",
+          "order": 101,
+          "videoUrl": "https://youtu.be/EYAWEnegsZM",
+          "videoDuration": "2:57:40",
+          "isPreview": false
+        },
+        {
+          "id": 14792,
+          "slug": "02-1-c",
+          "title": "ლექცია 1 - C პროგრამირების ენა",
+          "order": 102,
+          "videoUrl": "https://youtu.be/B2i3K_rwgmM",
+          "videoDuration": "4:16:41",
+          "isPreview": false
+        },
+        {
+          "id": 14793,
+          "slug": "03-2-arrays",
+          "title": "ლექცია 2 - Arrays - მასივები",
+          "order": 103,
+          "videoUrl": "https://youtu.be/ZeNiqT5YOzY",
+          "videoDuration": "3:40:40",
+          "isPreview": false
+        },
+        {
+          "id": 14794,
+          "slug": "04-3",
+          "title": "ლექცია 3 - ალგორითმები",
+          "order": 104,
+          "videoUrl": "https://youtu.be/eHR6MKzCaRM",
+          "videoDuration": "1:49:40",
+          "isPreview": false
+        }
+      ]
+    }
+  ]
+}

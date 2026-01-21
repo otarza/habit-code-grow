@@ -1,0 +1,271 @@
+{
+  "id": 19876,
+  "title": "AI + Python პროგრამირების სასწავლო ჯგუფი",
+  "slug": "python-programireba-samentoro",
+  "description": "",
+  "thumbnail": "https://www.bitcamp.ge/wp-content/uploads/2025/04/Python-oto.jpg",
+  "exportedAt": "2026-01-21T09:02:07.147Z",
+  "topics": [
+    {
+      "id": 20779,
+      "slug": "01-",
+      "title": "მნიშვნელოვანი ინფორმაცია",
+      "order": 1,
+      "lessons": [
+        {
+          "id": 20780,
+          "slug": "01-discord",
+          "title": "შემოგვიერთდი Discord - ის სერვერზე",
+          "order": 101,
+          "isPreview": false
+        }
+      ]
+    },
+    {
+      "id": 20776,
+      "slug": "02-",
+      "title": "შეხვედრები",
+      "order": 2,
+      "lessons": [
+        {
+          "id": 20782,
+          "slug": "01-1",
+          "title": "შეხვედრა #1 - გაცნობა და შესავალი",
+          "order": 201,
+          "videoUrl": "https://youtu.be/fhbxJ-xzNdI",
+          "videoDuration": "3:11:46",
+          "isPreview": false
+        },
+        {
+          "id": 21167,
+          "slug": "02-2",
+          "title": "შეხვედრა #2 - მოთელვა",
+          "order": 202,
+          "isPreview": false
+        },
+        {
+          "id": 21196,
+          "slug": "03-3",
+          "title": "შეხვედრა #3 - ფუნქციები",
+          "order": 203,
+          "isPreview": false
+        }
+      ]
+    },
+    {
+      "id": 20781,
+      "slug": "03-0-problemset-0",
+      "title": "დავალებები 0 - Problemset 0",
+      "order": 3,
+      "lessons": [
+        {
+          "id": 20999,
+          "slug": "01-",
+          "title": "დავალებების შესრულების ინსტრუქცია",
+          "order": 301,
+          "isPreview": false
+        },
+        {
+          "id": 21000,
+          "slug": "02-01-indoor-voice",
+          "title": "დავალება 0.1 - შინაგანი ხმა - Indoor Voice",
+          "order": 302,
+          "isPreview": false
+        },
+        {
+          "id": 21001,
+          "slug": "03-02-playback-speed",
+          "title": "დავალება 0.2 საუბრის სიჩქარე - Playback Speed",
+          "order": 303,
+          "isPreview": false
+        },
+        {
+          "id": 21002,
+          "slug": "04-03-making-faces",
+          "title": "დავალება 0.3 ცვალებადი სახეები - Making Faces",
+          "order": 304,
+          "isPreview": false
+        },
+        {
+          "id": 21003,
+          "slug": "05-04-einstein",
+          "title": "დავალება 0.4 აინშტაინი - Einstein",
+          "order": 305,
+          "isPreview": false
+        },
+        {
+          "id": 21004,
+          "slug": "06-05-tip-calculator",
+          "title": "დავალება 0.5 \"თიფის\" კალკულატორი - Tip Calculator",
+          "order": 306,
+          "isPreview": false
+        }
+      ]
+    },
+    {
+      "id": 21233,
+      "slug": "04-0",
+      "title": "სავარჯიშოები 0",
+      "order": 4,
+      "lessons": [
+        {
+          "id": 21238,
+          "slug": "01-01",
+          "title": "სავარჯიშო 0.1: მიიღე რიცხვები და გაამრავლე",
+          "order": 401,
+          "isPreview": false
+        },
+        {
+          "id": 21239,
+          "slug": "02-02",
+          "title": "სავარჯიშო 0.2: სტრინგის ფორმატირება ფიფქებით",
+          "order": 402,
+          "isPreview": false
+        },
+        {
+          "id": 21241,
+          "slug": "03-03-2",
+          "title": "სავარჯიშო 0.3: წილადი მძიმის შემდეგ 2 ციფრით",
+          "order": 403,
+          "isPreview": false
+        },
+        {
+          "id": 21245,
+          "slug": "04-04-strformat",
+          "title": "სავარჯიშო 0.4: დააფორმატირე ტექსტი str.format() მეთოდით",
+          "order": 404,
+          "isPreview": false
+        },
+        {
+          "id": 21251,
+          "slug": "05-05-padding-with-zeros",
+          "title": "სავარჯიშო 0.5: Padding with Zeros",
+          "order": 405,
+          "isPreview": false
+        }
+      ]
+    },
+    {
+      "id": 21005,
+      "slug": "05-1-problemset-1",
+      "title": "დავალებები 1 - Problemset 1",
+      "order": 5,
+      "lessons": [
+        {
+          "id": 21006,
+          "slug": "01-11-deep-thought",
+          "title": "დავალება 1.1 Deep Thought",
+          "order": 501,
+          "isPreview": false
+        },
+        {
+          "id": 21007,
+          "slug": "02-12-home-federal-savings-bank",
+          "title": "დავალება 1.2 Home Federal Savings Bank",
+          "order": 502,
+          "isPreview": false
+        },
+        {
+          "id": 21008,
+          "slug": "03-13-file-extensions",
+          "title": "დავალება 1.3 File Extensions",
+          "order": 503,
+          "isPreview": false
+        },
+        {
+          "id": 21009,
+          "slug": "04-14-math-interpreter",
+          "title": "დავალება 1.4 Math Interpreter",
+          "order": 504,
+          "isPreview": false
+        },
+        {
+          "id": 21010,
+          "slug": "05-15-meal-time",
+          "title": "დავალება 1.5 Meal Time",
+          "order": 505,
+          "isPreview": false
+        }
+      ]
+    },
+    {
+      "id": 21616,
+      "slug": "06-2-problemset-2",
+      "title": "დავალებები 2 - Problemset 2",
+      "order": 6,
+      "lessons": [
+        {
+          "id": 21618,
+          "slug": "01-21-camelcase",
+          "title": "დავალება 2.1 აქლემის კუზი - camelCase",
+          "order": 601,
+          "isPreview": false
+        },
+        {
+          "id": 21619,
+          "slug": "02-22-coke-machine",
+          "title": "დავალება 2.2 კოკა-კოლას აპარატი - Coke Machine",
+          "order": 602,
+          "isPreview": false
+        },
+        {
+          "id": 21620,
+          "slug": "03-23-twttr",
+          "title": "დავალება 2.3 twttr",
+          "order": 603,
+          "isPreview": false
+        },
+        {
+          "id": 21621,
+          "slug": "04-24-vanity-plates",
+          "title": "დავალება 2.4 Vanity Plates",
+          "order": 604,
+          "isPreview": false
+        },
+        {
+          "id": 21622,
+          "slug": "05-25-nutrition-facts",
+          "title": "დავალება 2.5 Nutrition Facts",
+          "order": 605,
+          "isPreview": false
+        }
+      ]
+    },
+    {
+      "id": 21802,
+      "slug": "07-3-problemset-3",
+      "title": "დავალებები 3 - Problemset 3",
+      "order": 7,
+      "lessons": [
+        {
+          "id": 21803,
+          "slug": "01-31",
+          "title": "დავალება 3.1 საწვავის ოდენობა მანქანის ავზში",
+          "order": 701,
+          "isPreview": false
+        },
+        {
+          "id": 21804,
+          "slug": "02-32-felipes-taqueria",
+          "title": "დავალება 3.2 Felipe’s Taqueria",
+          "order": 702,
+          "isPreview": false
+        },
+        {
+          "id": 21805,
+          "slug": "03-33",
+          "title": "დავალება 3.3 საყიდლების სია",
+          "order": 703,
+          "isPreview": false
+        },
+        {
+          "id": 21806,
+          "slug": "04-34-outdated",
+          "title": "დავალება 3.4 Outdated",
+          "order": 704,
+          "isPreview": false
+        }
+      ]
+    }
+  ]
+}

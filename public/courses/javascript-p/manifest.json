@@ -1,0 +1,25 @@
+{
+  "id": 11032,
+  "title": "JavaScript Foundations",
+  "slug": "javascript-p",
+  "description": "",
+  "thumbnail": null,
+  "exportedAt": "2026-01-21T09:02:07.203Z",
+  "topics": [
+    {
+      "id": 11033,
+      "slug": "01-",
+      "title": "შესავალი",
+      "order": 1,
+      "lessons": [
+        {
+          "id": 11034,
+          "slug": "01-draft-lesson-1",
+          "title": "Draft Lesson 1",
+          "order": 101,
+          "isPreview": false
+        }
+      ]
+    }
+  ]
+}

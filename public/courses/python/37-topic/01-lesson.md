@@ -1,0 +1,9 @@
+---
+title: "ფინალური პროექტი"
+order: 3701
+videoUrl: ""
+videoDuration: ""
+isPreview: false
+---
+
+ფინალური პროექტის აღწერის სანახავად ეწვიეთ ჰარვარდის ოფიციალურ საიტს: [https://cs50.harvard.edu/python/2022/project/](https://cs50.harvard.edu/python/2022/project/)

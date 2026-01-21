@@ -1,0 +1,448 @@
+{
+  "id": 11852,
+  "title": "Python პროგრამირების საფუძვლები [უფასო ვერსია]",
+  "slug": "python-free",
+  "description": "თანამედროვე სამყაროში Python ძალიან მოთხოვნადი და ხშირად გამოყენებადი ენაა. მისი საშუალებით შესაძლებელია ნებისმიერი ტიპისა და სირთულის პრობლემების გადაწყვეტა.\r \r ეს არის შესავალი კურსი პროგრამირებაში Python - ის გამოყენებით.",
+  "thumbnail": "https://www.bitcamp.ge/wp-content/uploads/2024/11/python-cs50p.png",
+  "exportedAt": "2026-01-21T09:02:07.208Z",
+  "topics": [
+    {
+      "id": 11853,
+      "slug": "01-",
+      "title": "შესავალი და კურსის შესახებ",
+      "order": 1,
+      "lessons": [
+        {
+          "id": 11854,
+          "slug": "01-",
+          "title": "მისალმება",
+          "order": 101,
+          "videoUrl": "https://youtu.be/8AdxMhkEjGM",
+          "videoDuration": "0:19",
+          "isPreview": true
+        },
+        {
+          "id": 11855,
+          "slug": "02-",
+          "title": "რას ისწავლი ამ კურსზე?",
+          "order": 102,
+          "videoUrl": "https://youtu.be/KHNW1un769c",
+          "videoDuration": "1:23",
+          "isPreview": true
+        },
+        {
+          "id": 11856,
+          "slug": "03-bitcamp",
+          "title": "BitCamp - ის სერტიფიკატების შესახებ",
+          "order": 103,
+          "videoUrl": "https://youtu.be/jFqv9FLAQiw",
+          "videoDuration": "0:57",
+          "isPreview": true
+        },
+        {
+          "id": 11857,
+          "slug": "04-harvard",
+          "title": "Harvard - ის სერტიფიკატი",
+          "order": 104,
+          "videoUrl": "https://youtu.be/36rvn1g0bFE",
+          "videoDuration": "1:21",
+          "isPreview": true
+        },
+        {
+          "id": 12105,
+          "slug": "05-",
+          "title": "უფასო ვერსია",
+          "order": 105,
+          "isPreview": false
+        }
+      ]
+    },
+    {
+      "id": 11858,
+      "slug": "02-",
+      "title": "აუცილებელი ხელსაწყოები",
+      "order": 2,
+      "lessons": [
+        {
+          "id": 11859,
+          "slug": "01-github",
+          "title": "Github - ის ანგარიშის შექმნა",
+          "order": 201,
+          "videoUrl": "https://youtu.be/4Isnp-omQMA",
+          "videoDuration": "3:13",
+          "isPreview": true
+        },
+        {
+          "id": 11861,
+          "slug": "02-cs50dev",
+          "title": "CS50.DEV ანგარიშის შექმნა",
+          "order": 202,
+          "videoUrl": "https://youtu.be/S_O7rbAN92M",
+          "videoDuration": "1:26",
+          "isPreview": true
+        },
+        {
+          "id": 11862,
+          "slug": "03-",
+          "title": "რა არის კოდის ედიტორი?",
+          "order": 203,
+          "videoUrl": "https://youtu.be/TxhSwWIN4Pg",
+          "videoDuration": "1:48",
+          "isPreview": true
+        },
+        {
+          "id": 11863,
+          "slug": "04-vs-code",
+          "title": "VS Code - სტრუქტურა",
+          "order": 204,
+          "videoUrl": "https://youtu.be/IIGRS26iCzw",
+          "videoDuration": "3:55",
+          "isPreview": true
+        },
+        {
+          "id": 12106,
+          "slug": "05-",
+          "title": "უფასო ვერსია",
+          "order": 205,
+          "isPreview": false
+        }
+      ]
+    },
+    {
+      "id": 11864,
+      "slug": "03-",
+      "title": "დაწერე შენი პირველი პროგრამა",
+      "order": 3,
+      "lessons": [
+        {
+          "id": 11865,
+          "slug": "01-hello-world",
+          "title": "ჩემი პირველი პროგრამა | Hello World!",
+          "order": 301,
+          "videoUrl": "https://youtu.be/sszcwgmQeyU",
+          "videoDuration": "3:44",
+          "isPreview": true
+        },
+        {
+          "id": 11866,
+          "slug": "02-",
+          "title": "ფუნქცია და არგუმენტი",
+          "order": 302,
+          "videoUrl": "https://youtu.be/Xl17qkp7aZM",
+          "videoDuration": "5:07",
+          "isPreview": true
+        },
+        {
+          "id": 11867,
+          "slug": "03-bugs",
+          "title": "შეცდომები - BUGS",
+          "order": 303,
+          "videoUrl": "https://youtu.be/L8HlANPmzbw",
+          "videoDuration": "4:33",
+          "isPreview": true
+        },
+        {
+          "id": 12107,
+          "slug": "04-",
+          "title": "უფასო ვერსია",
+          "order": 304,
+          "isPreview": false
+        }
+      ]
+    },
+    {
+      "id": 11868,
+      "slug": "04-variables",
+      "title": "ცვლადები | Variables",
+      "order": 4,
+      "lessons": [
+        {
+          "id": 11869,
+          "slug": "01-",
+          "title": "დაბრუნებული მნიშვნელობა და ცვლადი",
+          "order": 401,
+          "videoUrl": "https://youtu.be/yM9VAG1BZ0I",
+          "videoDuration": "8:47",
+          "isPreview": true
+        },
+        {
+          "id": 11870,
+          "slug": "02-",
+          "title": "კონკატენაცია",
+          "order": 402,
+          "videoUrl": "https://youtu.be/w1aZYQX2DHk",
+          "videoDuration": "3:18",
+          "isPreview": true
+        },
+        {
+          "id": 12108,
+          "slug": "03-",
+          "title": "უფასო ვერსია",
+          "order": 403,
+          "isPreview": false
+        }
+      ]
+    },
+    {
+      "id": 11871,
+      "slug": "05-",
+      "title": "კომენტარები და ფსევდო კოდი",
+      "order": 5,
+      "lessons": [
+        {
+          "id": 11872,
+          "slug": "01-",
+          "title": "კომენტარები",
+          "order": 501,
+          "videoUrl": "https://youtu.be/VxOstdDCJh8",
+          "videoDuration": "4:06",
+          "isPreview": false
+        },
+        {
+          "id": 11873,
+          "slug": "02-",
+          "title": "ფსევდოკოდი",
+          "order": 502,
+          "videoUrl": "https://youtu.be/DjdBvNGKlTI",
+          "videoDuration": "4:04",
+          "isPreview": false
+        },
+        {
+          "id": 12109,
+          "slug": "03-",
+          "title": "უფასო ვერსია",
+          "order": 503,
+          "isPreview": false
+        }
+      ]
+    },
+    {
+      "id": 11874,
+      "slug": "06-",
+      "title": "ფუნქციის არგუმენტები",
+      "order": 6,
+      "lessons": [
+        {
+          "id": 11875,
+          "slug": "01-",
+          "title": "ფუნცქია მრავალი არგუმენტით",
+          "order": 601,
+          "videoUrl": "https://youtu.be/pGZtNQ_WYoM",
+          "videoDuration": "6:47",
+          "isPreview": false
+        },
+        {
+          "id": 11876,
+          "slug": "02-",
+          "title": "დასახელებული არგუმენტები",
+          "order": 602,
+          "videoUrl": "https://youtu.be/y6ThrMO_uIQ",
+          "videoDuration": "11:58",
+          "isPreview": false
+        },
+        {
+          "id": 12110,
+          "slug": "03-",
+          "title": "უფასო ვერსია",
+          "order": 603,
+          "isPreview": false
+        }
+      ]
+    },
+    {
+      "id": 11877,
+      "slug": "07-string",
+      "title": "String | ტექსტი",
+      "order": 7,
+      "lessons": [
+        {
+          "id": 11878,
+          "slug": "01-string",
+          "title": "ფორმატირებული String",
+          "order": 701,
+          "videoUrl": "https://youtu.be/9naF5KxxDjU",
+          "videoDuration": "5:59",
+          "isPreview": false
+        },
+        {
+          "id": 11879,
+          "slug": "02-striing",
+          "title": "Striing - ის მეთოდები",
+          "order": 702,
+          "videoUrl": "https://youtu.be/ajSwc7dw7J4",
+          "videoDuration": "8:42",
+          "isPreview": false
+        },
+        {
+          "id": 11880,
+          "slug": "03-",
+          "title": "მეთოდების გამოყენების სტილი",
+          "order": 703,
+          "videoUrl": "https://youtu.be/xkRaOkWacBg",
+          "videoDuration": "2:51",
+          "isPreview": false
+        },
+        {
+          "id": 11881,
+          "slug": "04-",
+          "title": "ტექსტის გახლეჩვა",
+          "order": 704,
+          "videoUrl": "https://youtu.be/fnaFbHhtK3w",
+          "videoDuration": "4:27",
+          "isPreview": false
+        },
+        {
+          "id": 12111,
+          "slug": "05-",
+          "title": "უფასო ვერსია",
+          "order": 705,
+          "isPreview": false
+        }
+      ]
+    },
+    {
+      "id": 11882,
+      "slug": "08-",
+      "title": "რიცხვები და ოპერატორები",
+      "order": 8,
+      "lessons": [
+        {
+          "id": 11883,
+          "slug": "01-",
+          "title": "მათემატიკური ოპერატორები",
+          "order": 801,
+          "videoUrl": "https://youtu.be/y-Jw1SdESBY",
+          "videoDuration": "1:14",
+          "isPreview": false
+        },
+        {
+          "id": 11884,
+          "slug": "02-",
+          "title": "ინტერაქტიული რეჟიმი",
+          "order": 802,
+          "videoUrl": "https://youtu.be/uVQ-aIoCHeQ",
+          "videoDuration": "2:29",
+          "isPreview": false
+        },
+        {
+          "id": 11885,
+          "slug": "03-",
+          "title": "შეკრება",
+          "order": 803,
+          "videoUrl": "https://youtu.be/iqXZdTsnGyw",
+          "videoDuration": "1:45",
+          "isPreview": false
+        },
+        {
+          "id": 11886,
+          "slug": "04-",
+          "title": "ტიპის კონვერტაცია",
+          "order": 804,
+          "videoUrl": "https://youtu.be/SE4SdK6RQA4",
+          "videoDuration": "5:15",
+          "isPreview": false
+        },
+        {
+          "id": 11887,
+          "slug": "05-",
+          "title": "წილადები",
+          "order": 805,
+          "videoUrl": "https://youtu.be/A-R6sHyesy4",
+          "videoDuration": "2:20",
+          "isPreview": false
+        },
+        {
+          "id": 11888,
+          "slug": "06-",
+          "title": "დამრგვალება",
+          "order": 806,
+          "videoUrl": "https://youtu.be/LaYXJXE-Tj4",
+          "videoDuration": "2:49",
+          "isPreview": false
+        },
+        {
+          "id": 11889,
+          "slug": "07-",
+          "title": "რიცხვების ფორმატირება",
+          "order": 807,
+          "videoUrl": "https://youtu.be/PMDhN9f2xYU",
+          "videoDuration": "4:17",
+          "isPreview": false
+        },
+        {
+          "id": 11890,
+          "slug": "08-",
+          "title": "გაყოფა, ფორმატირებული სტრინგი და დამრგვალება",
+          "order": 808,
+          "videoUrl": "https://youtu.be/JWU_wANmTnI",
+          "videoDuration": "4:33",
+          "isPreview": false
+        },
+        {
+          "id": 12112,
+          "slug": "09-",
+          "title": "უფასო ვერსია",
+          "order": 809,
+          "isPreview": false
+        }
+      ]
+    },
+    {
+      "id": 11891,
+      "slug": "09-advanced",
+      "title": "ფინქციები (advanced)",
+      "order": 9,
+      "lessons": [
+        {
+          "id": 11892,
+          "slug": "01-",
+          "title": "საკუთარი ფუნქციების შექმნა",
+          "order": 901,
+          "videoUrl": "https://youtu.be/zyiWswjTBcs",
+          "videoDuration": "8:46",
+          "isPreview": false
+        },
+        {
+          "id": 11893,
+          "slug": "02-",
+          "title": "ფუნქციის ნაგულისხმევი პარამეტრები",
+          "order": 902,
+          "videoUrl": "https://youtu.be/3jtG5yj9Zl8",
+          "videoDuration": "2:51",
+          "isPreview": false
+        },
+        {
+          "id": 11894,
+          "slug": "03-",
+          "title": "ფუნქციების რეორგანიზება",
+          "order": 903,
+          "videoUrl": "https://youtu.be/l54KKqXjNqg",
+          "videoDuration": "5:49",
+          "isPreview": false
+        },
+        {
+          "id": 12113,
+          "slug": "04-",
+          "title": "უფასო ვერსია",
+          "order": 904,
+          "isPreview": false
+        }
+      ]
+    },
+    {
+      "id": 11895,
+      "slug": "10-0",
+      "title": "დავალებები 0",
+      "order": 10,
+      "lessons": [
+        {
+          "id": 11896,
+          "slug": "01-",
+          "title": "დავალებების შესრულების ინსტრუქცია",
+          "order": 1001,
+          "isPreview": false
+        }
+      ]
+    }
+  ]
+}

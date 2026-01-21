@@ -1,0 +1,8 @@
+---
+title: "ვალიდაციის კოდის გაუმჯობესება"
+order: 1903
+videoUrl: "https://youtu.be/g-LzI68l6pg"
+videoDuration: "4:03"
+isPreview: false
+---
+

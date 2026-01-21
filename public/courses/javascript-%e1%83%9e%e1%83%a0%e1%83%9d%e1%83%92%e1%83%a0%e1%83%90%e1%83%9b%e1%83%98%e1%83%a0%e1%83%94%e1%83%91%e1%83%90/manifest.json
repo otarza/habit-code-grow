@@ -1,0 +1,223 @@
+{
+  "id": 16242,
+  "title": "JavaScript პროგრამირება",
+  "slug": "javascript-%e1%83%9e%e1%83%a0%e1%83%9d%e1%83%92%e1%83%a0%e1%83%90%e1%83%9b%e1%83%98%e1%83%a0%e1%83%94%e1%83%91%e1%83%90",
+  "description": "",
+  "thumbnail": "https://www.bitcamp.ge/wp-content/uploads/2025/03/javascript-programireba.png",
+  "exportedAt": "2026-01-21T09:02:07.198Z",
+  "topics": [
+    {
+      "id": 17171,
+      "slug": "01-1",
+      "title": "სექცია 1 - საწყისები",
+      "order": 1,
+      "lessons": [
+        {
+          "id": 17172,
+          "slug": "01-",
+          "title": "გაცნობა და შესავალი",
+          "order": 101,
+          "videoUrl": "https://youtu.be/hi4amySnooU",
+          "videoDuration": "21:08",
+          "isPreview": false
+        },
+        {
+          "id": 17173,
+          "slug": "02-",
+          "title": "ბროუზერის და ედიტორის გამოყენება",
+          "order": 102,
+          "videoUrl": "https://youtu.be/OPZzLQad8vY",
+          "videoDuration": "10:20",
+          "isPreview": false
+        },
+        {
+          "id": 17174,
+          "slug": "03-hello-world",
+          "title": "Hello World",
+          "order": 103,
+          "videoUrl": "https://youtu.be/E5CUL9exGBQ?si=HHT8mIRCJVDmv5sh",
+          "videoDuration": "9:59",
+          "isPreview": false
+        },
+        {
+          "id": 17175,
+          "slug": "04-javascript",
+          "title": "JavaScript ფაილის მიბმა",
+          "order": 104,
+          "videoUrl": "https://youtu.be/f39deKpCy3w",
+          "videoDuration": "4:18",
+          "isPreview": false
+        },
+        {
+          "id": 17176,
+          "slug": "05-",
+          "title": "რა არის პროგრამა",
+          "order": 105,
+          "videoUrl": "https://youtu.be/KY3MnKnhryQ",
+          "videoDuration": "7:04",
+          "isPreview": false
+        },
+        {
+          "id": 17177,
+          "slug": "06-javascript",
+          "title": "JavaScript როგორც მაღალი დონის პროგრამირების ენა",
+          "order": 106,
+          "videoUrl": "https://youtu.be/pYeZZpbnOjs",
+          "videoDuration": "6:17",
+          "isPreview": false
+        },
+        {
+          "id": 17178,
+          "slug": "07-",
+          "title": "მნიშვნელობები",
+          "order": 107,
+          "videoUrl": "https://youtu.be/9FoYXpiBrA8",
+          "videoDuration": "9:02",
+          "isPreview": false
+        },
+        {
+          "id": 17179,
+          "slug": "08-",
+          "title": "მნიშვნელობების გამოყენების თეორიული ასპექტები",
+          "order": 108,
+          "videoUrl": "https://youtu.be/nfr5mFOLeko",
+          "videoDuration": "15:56",
+          "isPreview": false
+        },
+        {
+          "id": 17180,
+          "slug": "09-",
+          "title": "ცვლადები და მინიჭების ოპერაცია",
+          "order": 109,
+          "videoUrl": "https://youtu.be/zQFgHg9JQkQ",
+          "videoDuration": "16:02",
+          "isPreview": false
+        },
+        {
+          "id": 17181,
+          "slug": "10-console",
+          "title": "console და მასალის შეჯამება",
+          "order": 110,
+          "videoUrl": "https://youtu.be/DQF-oZf_lro",
+          "videoDuration": "6:48",
+          "isPreview": false
+        },
+        {
+          "id": 17939,
+          "slug": "11-",
+          "title": "მონაცემთა ტიპები და კომენტარები",
+          "order": 111,
+          "videoUrl": "https://youtu.be/MqQEQWwhD5w",
+          "videoDuration": "24:27",
+          "isPreview": false
+        },
+        {
+          "id": 17940,
+          "slug": "12-",
+          "title": "მონაცემთა ტიპები პრაქტიკულად",
+          "order": 112,
+          "videoUrl": "https://youtu.be/MKbBDfzWyRM",
+          "videoDuration": "19:02",
+          "isPreview": false
+        },
+        {
+          "id": 17941,
+          "slug": "13-const",
+          "title": "const - მუდმივი ცვლადის აღწერა",
+          "order": 113,
+          "videoUrl": "https://youtu.be/wZSkwcEqBTY",
+          "videoDuration": "4:19",
+          "isPreview": false
+        },
+        {
+          "id": 17942,
+          "slug": "14-const-undefined",
+          "title": "const და undefined",
+          "order": 114,
+          "videoUrl": "https://youtu.be/K1I-ah1somM",
+          "videoDuration": "4:23",
+          "isPreview": false
+        },
+        {
+          "id": 17943,
+          "slug": "15-const-let",
+          "title": "const თუ let? რომელი, როდის გამოვიყენოთ?",
+          "order": 115,
+          "videoUrl": "https://youtu.be/ADtAGi7YpiA",
+          "videoDuration": "6:00",
+          "isPreview": false
+        },
+        {
+          "id": 17944,
+          "slug": "16-var",
+          "title": "var უნდა გამოვიყენოთ?",
+          "order": 116,
+          "videoUrl": "https://youtu.be/7cIQT9e8tGs",
+          "videoDuration": "6:02",
+          "isPreview": false
+        },
+        {
+          "id": 17945,
+          "slug": "17-",
+          "title": "მათემატიკური ოპერატორები",
+          "order": 117,
+          "videoUrl": "https://youtu.be/UEXHZDLPUkY",
+          "videoDuration": "15:39",
+          "isPreview": false
+        },
+        {
+          "id": 17946,
+          "slug": "18-",
+          "title": "მინიჭების ოპერატორები",
+          "order": 118,
+          "videoUrl": "https://youtu.be/IjEoiJtCej4",
+          "videoDuration": "8:17",
+          "isPreview": false
+        },
+        {
+          "id": 17947,
+          "slug": "19-",
+          "title": "შედარების ოპერატორები",
+          "order": 119,
+          "videoUrl": "https://youtu.be/c55Sg2NZOmg",
+          "videoDuration": "7:11",
+          "isPreview": false
+        },
+        {
+          "id": 17948,
+          "slug": "20-",
+          "title": "ოპერატორების პრიორიტეტები",
+          "order": 120,
+          "videoUrl": "https://youtu.be/EE6G0rBqLbg",
+          "videoDuration": "4:28",
+          "isPreview": false
+        },
+        {
+          "id": 17949,
+          "slug": "21-11-bmi",
+          "title": "დავალება 1.1 - ის აღწერა - სხეულის მასის ინდექსი (BMI)",
+          "order": 121,
+          "videoUrl": "https://youtu.be/fysgqn_ixEo",
+          "videoDuration": "11:42",
+          "isPreview": false
+        },
+        {
+          "id": 17953,
+          "slug": "22-11-bmi",
+          "title": "დავალება 1.1 - სხეულის მასის ინდექსი (BMI)",
+          "order": 122,
+          "isPreview": false
+        },
+        {
+          "id": 17951,
+          "slug": "23-11-bmi",
+          "title": "დავალება 1.1 - ის ამოხსნა (BMI)",
+          "order": 123,
+          "videoUrl": "https://youtu.be/4-UNKonCYgE",
+          "videoDuration": "11:59",
+          "isPreview": false
+        }
+      ]
+    }
+  ]
+}

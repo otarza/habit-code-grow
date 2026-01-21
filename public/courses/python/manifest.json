@@ -1,0 +1,2173 @@
+{
+  "id": 10592,
+  "title": "Python პროგრამირების საფუძვლები",
+  "slug": "python",
+  "description": "თანამედროვე სამყაროში Python ძალიან მოთხოვნადი და ხშირად გამოყენებადი ენაა. მისი საშუალებით შესაძლებელია ნებისმიერი ტიპისა და სირთულის პრობლემების გადაწყვეტა.\r \r ეს არის შესავალი კურსი პროგრამირებაში Python - ის გამოყენებით.",
+  "thumbnail": "https://www.bitcamp.ge/wp-content/uploads/2025/01/Python-oto-1.png",
+  "exportedAt": "2026-01-21T12:07:53.222Z",
+  "topics": [
+    {
+      "id": 10982,
+      "slug": "01-topic",
+      "title": "შესავალი და კურსის შესახებ",
+      "order": 1,
+      "lessons": [
+        {
+          "id": 24591,
+          "slug": "01-lesson",
+          "title": "სანამ დაიწყებ",
+          "order": 101,
+          "videoUrl": "https://www.youtube.com/watch?v=6Wbcy0WUwSo",
+          "videoDuration": "15:40",
+          "isPreview": false
+        },
+        {
+          "id": 10983,
+          "slug": "02-lesson",
+          "title": "მისალმება",
+          "order": 102,
+          "videoUrl": "https://youtu.be/8AdxMhkEjGM",
+          "videoDuration": "0:19",
+          "isPreview": true
+        },
+        {
+          "id": 11360,
+          "slug": "03-lesson",
+          "title": "რას ისწავლი ამ კურსზე?",
+          "order": 103,
+          "videoUrl": "https://youtu.be/KHNW1un769c",
+          "videoDuration": "1:23",
+          "isPreview": true
+        },
+        {
+          "id": 11376,
+          "slug": "04-bitcamp",
+          "title": "BitCamp - ის სერტიფიკატების შესახებ",
+          "order": 104,
+          "videoUrl": "https://youtu.be/jFqv9FLAQiw",
+          "videoDuration": "0:56",
+          "isPreview": true
+        },
+        {
+          "id": 11378,
+          "slug": "05-harvard",
+          "title": "Harvard - ის სერტიფიკატი",
+          "order": 105,
+          "videoUrl": "https://youtu.be/36rvn1g0bFE",
+          "videoDuration": "1:20",
+          "isPreview": true
+        }
+      ]
+    },
+    {
+      "id": 11361,
+      "slug": "02-topic",
+      "title": "აუცილებელი ხელსაწყოები",
+      "order": 2,
+      "lessons": [
+        {
+          "id": 11362,
+          "slug": "01-github",
+          "title": "Github - ის ანგარიშის შექმნა",
+          "order": 201,
+          "videoUrl": "https://youtu.be/4Isnp-omQMA",
+          "videoDuration": "3:13",
+          "isPreview": true
+        },
+        {
+          "id": 11380,
+          "slug": "02-cs50dev",
+          "title": "CS50.DEV ანგარიშის შექმნა",
+          "order": 202,
+          "videoUrl": "https://youtu.be/S_O7rbAN92M",
+          "videoDuration": "1:26",
+          "isPreview": true
+        },
+        {
+          "id": 11381,
+          "slug": "03-lesson",
+          "title": "რა არის კოდის ედიტორი?",
+          "order": 203,
+          "videoUrl": "https://youtu.be/TxhSwWIN4Pg",
+          "videoDuration": "1:48",
+          "isPreview": true
+        },
+        {
+          "id": 11382,
+          "slug": "04-vs-code",
+          "title": "VS Code - სტრუქტურა",
+          "order": 204,
+          "videoUrl": "https://youtu.be/IIGRS26iCzw",
+          "videoDuration": "3:55",
+          "isPreview": true
+        }
+      ]
+    },
+    {
+      "id": 11383,
+      "slug": "03-topic",
+      "title": "დაწერე შენი პირველი პროგრამა",
+      "order": 3,
+      "lessons": [
+        {
+          "id": 11384,
+          "slug": "01-hello-world",
+          "title": "ჩემი პირველი პროგრამა | Hello World!",
+          "order": 301,
+          "videoUrl": "https://youtu.be/sszcwgmQeyU",
+          "videoDuration": "3:44",
+          "isPreview": true
+        },
+        {
+          "id": 11385,
+          "slug": "02-lesson",
+          "title": "ფუნქცია და არგუმენტი",
+          "order": 302,
+          "videoUrl": "https://youtu.be/Xl17qkp7aZM",
+          "videoDuration": "5:07",
+          "isPreview": true
+        },
+        {
+          "id": 11386,
+          "slug": "03-bugs",
+          "title": "შეცდომები - BUGS",
+          "order": 303,
+          "videoUrl": "https://youtu.be/L8HlANPmzbw",
+          "videoDuration": "4:33",
+          "isPreview": true
+        }
+      ]
+    },
+    {
+      "id": 11387,
+      "slug": "04-variables",
+      "title": "ცვლადები | Variables",
+      "order": 4,
+      "lessons": [
+        {
+          "id": 11388,
+          "slug": "01-lesson",
+          "title": "დაბრუნებული მნიშვნელობა და ცვლადი",
+          "order": 401,
+          "videoUrl": "https://youtu.be/yM9VAG1BZ0I",
+          "videoDuration": "8:47",
+          "isPreview": true
+        },
+        {
+          "id": 11389,
+          "slug": "02-lesson",
+          "title": "კონკატენაცია",
+          "order": 402,
+          "videoUrl": "https://youtu.be/w1aZYQX2DHk",
+          "videoDuration": "3:18",
+          "isPreview": true
+        }
+      ]
+    },
+    {
+      "id": 11390,
+      "slug": "05-topic",
+      "title": "კომენტარები და ფსევდო კოდი",
+      "order": 5,
+      "lessons": [
+        {
+          "id": 11391,
+          "slug": "01-lesson",
+          "title": "კომენტარები",
+          "order": 501,
+          "videoUrl": "https://youtu.be/VxOstdDCJh8",
+          "videoDuration": "4:05",
+          "isPreview": false
+        },
+        {
+          "id": 11392,
+          "slug": "02-lesson",
+          "title": "ფსევდოკოდი",
+          "order": 502,
+          "videoUrl": "https://youtu.be/DjdBvNGKlTI",
+          "videoDuration": "4:04",
+          "isPreview": false
+        }
+      ]
+    },
+    {
+      "id": 11393,
+      "slug": "06-topic",
+      "title": "ფუნქციის არგუმენტები",
+      "order": 6,
+      "lessons": [
+        {
+          "id": 11394,
+          "slug": "01-lesson",
+          "title": "ფუნცქია მრავალი არგუმენტით",
+          "order": 601,
+          "videoUrl": "https://youtu.be/pGZtNQ_WYoM",
+          "videoDuration": "6:47",
+          "isPreview": false
+        },
+        {
+          "id": 11395,
+          "slug": "02-lesson",
+          "title": "დასახელებული არგუმენტები",
+          "order": 602,
+          "videoUrl": "https://youtu.be/y6ThrMO_uIQ",
+          "videoDuration": "11:58",
+          "isPreview": false
+        }
+      ]
+    },
+    {
+      "id": 11396,
+      "slug": "07-string",
+      "title": "String | ტექსტი",
+      "order": 7,
+      "lessons": [
+        {
+          "id": 11397,
+          "slug": "01-string",
+          "title": "ფორმატირებული String",
+          "order": 701,
+          "videoUrl": "https://youtu.be/9naF5KxxDjU",
+          "videoDuration": "5:59",
+          "isPreview": false
+        },
+        {
+          "id": 11398,
+          "slug": "02-striing",
+          "title": "Striing - ის მეთოდები",
+          "order": 702,
+          "videoUrl": "https://youtu.be/ajSwc7dw7J4",
+          "videoDuration": "8:42",
+          "isPreview": false
+        },
+        {
+          "id": 11399,
+          "slug": "03-lesson",
+          "title": "მეთოდების გამოყენების სტილი",
+          "order": 703,
+          "videoUrl": "https://youtu.be/xkRaOkWacBg",
+          "videoDuration": "2:51",
+          "isPreview": false
+        },
+        {
+          "id": 11400,
+          "slug": "04-lesson",
+          "title": "ტექსტის გახლეჩვა",
+          "order": 704,
+          "videoUrl": "https://youtu.be/fnaFbHhtK3w",
+          "videoDuration": "4:26",
+          "isPreview": false
+        }
+      ]
+    },
+    {
+      "id": 11401,
+      "slug": "08-topic",
+      "title": "რიცხვები და ოპერატორები",
+      "order": 8,
+      "lessons": [
+        {
+          "id": 11402,
+          "slug": "01-lesson",
+          "title": "მათემატიკური ოპერატორები",
+          "order": 801,
+          "videoUrl": "https://youtu.be/y-Jw1SdESBY",
+          "videoDuration": "1:14",
+          "isPreview": false
+        },
+        {
+          "id": 11403,
+          "slug": "02-lesson",
+          "title": "ინტერაქტიული რეჟიმი",
+          "order": 802,
+          "videoUrl": "https://youtu.be/uVQ-aIoCHeQ",
+          "videoDuration": "2:30",
+          "isPreview": false
+        },
+        {
+          "id": 11404,
+          "slug": "03-lesson",
+          "title": "შეკრება",
+          "order": 803,
+          "videoUrl": "https://youtu.be/iqXZdTsnGyw",
+          "videoDuration": "1:45",
+          "isPreview": false
+        },
+        {
+          "id": 11405,
+          "slug": "04-lesson",
+          "title": "ტიპის კონვერტაცია",
+          "order": 804,
+          "videoUrl": "https://youtu.be/SE4SdK6RQA4",
+          "videoDuration": "5:15",
+          "isPreview": false
+        },
+        {
+          "id": 11406,
+          "slug": "05-lesson",
+          "title": "წილადები",
+          "order": 805,
+          "videoUrl": "https://youtu.be/A-R6sHyesy4",
+          "videoDuration": "2:20",
+          "isPreview": false
+        },
+        {
+          "id": 11407,
+          "slug": "06-lesson",
+          "title": "დამრგვალება",
+          "order": 806,
+          "videoUrl": "https://youtu.be/LaYXJXE-Tj4",
+          "videoDuration": "2:49",
+          "isPreview": false
+        },
+        {
+          "id": 11408,
+          "slug": "07-lesson",
+          "title": "რიცხვების ფორმატირება",
+          "order": 807,
+          "videoUrl": "https://youtu.be/PMDhN9f2xYU",
+          "videoDuration": "4:17",
+          "isPreview": false
+        },
+        {
+          "id": 11409,
+          "slug": "08-lesson",
+          "title": "გაყოფა, ფორმატირებული სტრინგი და დამრგვალება",
+          "order": 808,
+          "videoUrl": "https://youtu.be/JWU_wANmTnI",
+          "videoDuration": "4:34",
+          "isPreview": false
+        }
+      ]
+    },
+    {
+      "id": 11410,
+      "slug": "09-advanced",
+      "title": "ფინქციები (advanced)",
+      "order": 9,
+      "lessons": [
+        {
+          "id": 11411,
+          "slug": "01-lesson",
+          "title": "საკუთარი ფუნქციების შექმნა",
+          "order": 901,
+          "videoUrl": "https://youtu.be/zyiWswjTBcs",
+          "videoDuration": "8:47",
+          "isPreview": false
+        },
+        {
+          "id": 11412,
+          "slug": "02-lesson",
+          "title": "ფუნქციის ნაგულისხმევი პარამეტრები",
+          "order": 902,
+          "videoUrl": "https://youtu.be/3jtG5yj9Zl8",
+          "videoDuration": "2:51",
+          "isPreview": false
+        },
+        {
+          "id": 11413,
+          "slug": "03-lesson",
+          "title": "ფუნქციების რეორგანიზება",
+          "order": 903,
+          "videoUrl": "https://youtu.be/l54KKqXjNqg",
+          "videoDuration": "5:50",
+          "isPreview": false
+        }
+      ]
+    },
+    {
+      "id": 24596,
+      "slug": "10-topic",
+      "title": "თუ დავალებების გაკეთება გაგიჭირდა",
+      "order": 10,
+      "lessons": [
+        {
+          "id": 24598,
+          "slug": "01-lesson",
+          "title": "\"ისწავლე როგორ ისწავლო\" - გაიარე ტრენინგი",
+          "order": 1001,
+          "isPreview": false
+        },
+        {
+          "id": 24597,
+          "slug": "02-lesson",
+          "title": "აიყვანე პირადი მენტორი",
+          "order": 1002,
+          "isPreview": false
+        }
+      ]
+    },
+    {
+      "id": 11414,
+      "slug": "11-0",
+      "title": "დავალებები 0",
+      "order": 11,
+      "lessons": [
+        {
+          "id": 11416,
+          "slug": "01-lesson",
+          "title": "დავალებების შესრულების ინსტრუქცია",
+          "order": 1101,
+          "isPreview": false
+        },
+        {
+          "id": 11418,
+          "slug": "02-01-indoor-voice",
+          "title": "დავალება 0.1 - შინაგანი ხმა - Indoor Voice",
+          "order": 1102,
+          "isPreview": false
+        },
+        {
+          "id": 11509,
+          "slug": "03-02-playback-speed",
+          "title": "დავალება 0.2 საუბრის სიჩქარე - Playback Speed",
+          "order": 1103,
+          "isPreview": false
+        },
+        {
+          "id": 11510,
+          "slug": "04-03-making-faces",
+          "title": "დავალება 0.3 ცვალებადი სახეები - Making Faces",
+          "order": 1104,
+          "isPreview": false
+        },
+        {
+          "id": 11511,
+          "slug": "05-04-einstein",
+          "title": "დავალება 0.4 აინშტაინი - Einstein",
+          "order": 1105,
+          "isPreview": false
+        },
+        {
+          "id": 11512,
+          "slug": "06-05-tip-calculator",
+          "title": "დავალება 0.5 \"თიფის\" კალკულატორი - Tip Calculator",
+          "order": 1106,
+          "isPreview": false
+        }
+      ]
+    },
+    {
+      "id": 11513,
+      "slug": "12-conditionals",
+      "title": "პირობითი კონსტრუქციები | Conditionals",
+      "order": 12,
+      "lessons": [
+        {
+          "id": 11514,
+          "slug": "01-lesson",
+          "title": "შედარების ოპერატორები",
+          "order": 1201,
+          "videoUrl": "https://youtu.be/EiIhC4qS17g",
+          "videoDuration": "2:51",
+          "isPreview": false
+        },
+        {
+          "id": 11515,
+          "slug": "02-if",
+          "title": "IF ბლოკი",
+          "order": 1202,
+          "videoUrl": "https://youtu.be/0MZUft8AbIA",
+          "videoDuration": "6:31",
+          "isPreview": false
+        },
+        {
+          "id": 11516,
+          "slug": "03-lesson",
+          "title": "მრავალი პირობის დაკმაყოფილება",
+          "order": 1203,
+          "videoUrl": "https://youtu.be/aqgY8oFgLYY",
+          "videoDuration": "2:29",
+          "isPreview": false
+        },
+        {
+          "id": 11517,
+          "slug": "04-lesson",
+          "title": "მრავალი პირობის გრაფიკული რეპრეზენტაცია",
+          "order": 1204,
+          "videoUrl": "https://youtu.be/7bJZlw4wQOk",
+          "videoDuration": "1:40",
+          "isPreview": false
+        },
+        {
+          "id": 11518,
+          "slug": "05-elif",
+          "title": "elif",
+          "order": 1205,
+          "videoUrl": "https://youtu.be/Rj2XIWVS9BA",
+          "videoDuration": "6:48",
+          "isPreview": false
+        },
+        {
+          "id": 11519,
+          "slug": "06-elif",
+          "title": "elif - ის გრაფიკული რეპრეზენტაცია",
+          "order": 1206,
+          "videoUrl": "https://youtu.be/OeQzipDBgtU",
+          "videoDuration": "2:01",
+          "isPreview": false
+        },
+        {
+          "id": 11520,
+          "slug": "07-else",
+          "title": "else",
+          "order": 1207,
+          "videoUrl": "https://youtu.be/aTbeTLmxX8k",
+          "videoDuration": "2:56",
+          "isPreview": false
+        },
+        {
+          "id": 11521,
+          "slug": "08-or",
+          "title": "or - ლოგიკური \"ან\" ოპერატორი",
+          "order": 1208,
+          "videoUrl": "https://youtu.be/d91xiNeemQ0",
+          "videoDuration": "3:58",
+          "isPreview": false
+        },
+        {
+          "id": 11522,
+          "slug": "09-lesson",
+          "title": "მარტივი ტოლობა",
+          "order": 1209,
+          "videoUrl": "https://youtu.be/pvfDaMY6RqI",
+          "videoDuration": "1:21",
+          "isPreview": false
+        },
+        {
+          "id": 11523,
+          "slug": "10-lesson",
+          "title": "მარტივი უტოლობა",
+          "order": 1210,
+          "videoUrl": "https://youtu.be/USWR34mY8Yg",
+          "videoDuration": "2:12",
+          "isPreview": false
+        }
+      ]
+    },
+    {
+      "id": 11524,
+      "slug": "13-topic",
+      "title": "მინი პროექტი",
+      "order": 13,
+      "lessons": [
+        {
+          "id": 11525,
+          "slug": "01-grade",
+          "title": "შაფასების სისტემა | Grade",
+          "order": 1301,
+          "videoUrl": "https://youtu.be/TNJrVGse3KU",
+          "videoDuration": "9:12",
+          "isPreview": false
+        },
+        {
+          "id": 11526,
+          "slug": "02-lesson",
+          "title": "შეფასების სისტემის გამარტივება",
+          "order": 1302,
+          "videoUrl": "https://youtu.be/8WtRAjf8Xas",
+          "videoDuration": "4:12",
+          "isPreview": false
+        }
+      ]
+    },
+    {
+      "id": 11527,
+      "slug": "14-topic",
+      "title": "ლუწ-კენტობა",
+      "order": 14,
+      "lessons": [
+        {
+          "id": 11528,
+          "slug": "01-lesson",
+          "title": "ლუწ-კენტობის დადგენა",
+          "order": 1401,
+          "videoUrl": "https://youtu.be/L3phstN9uV8",
+          "videoDuration": "5:15",
+          "isPreview": false
+        },
+        {
+          "id": 11529,
+          "slug": "02-is_even",
+          "title": "is_even ფუნქციის შექმნა",
+          "order": 1402,
+          "videoUrl": "https://youtu.be/WItAYW3M4XQ",
+          "videoDuration": "8:45",
+          "isPreview": false
+        },
+        {
+          "id": 11530,
+          "slug": "03-is_even",
+          "title": "is_even ფუნქციის გაუმჯობესება",
+          "order": 1403,
+          "videoUrl": "https://youtu.be/umucFbwu7O8",
+          "videoDuration": "2:30",
+          "isPreview": false
+        }
+      ]
+    },
+    {
+      "id": 11531,
+      "slug": "15-match",
+      "title": "და თუ დაემთხვევა? | Match",
+      "order": 15,
+      "lessons": [
+        {
+          "id": 11532,
+          "slug": "01-match-case",
+          "title": "Match / Case",
+          "order": 1501,
+          "videoUrl": "https://youtu.be/nQODJzaNOnc",
+          "videoDuration": "11:46",
+          "isPreview": false
+        }
+      ]
+    },
+    {
+      "id": 11533,
+      "slug": "16-1",
+      "title": "დავალებები 1",
+      "order": 16,
+      "lessons": [
+        {
+          "id": 11534,
+          "slug": "01-11-deep-thought",
+          "title": "დავალება 1.1 Deep Thought",
+          "order": 1601,
+          "isPreview": false
+        },
+        {
+          "id": 11535,
+          "slug": "02-12-home-federal-savings-bank",
+          "title": "დავალება 1.2 Home Federal Savings Bank",
+          "order": 1602,
+          "isPreview": false
+        },
+        {
+          "id": 11536,
+          "slug": "03-13-file-extensions",
+          "title": "დავალება 1.3 File Extensions",
+          "order": 1603,
+          "isPreview": false
+        },
+        {
+          "id": 11537,
+          "slug": "04-14-math-interpreter",
+          "title": "დავალება 1.4 Math Interpreter",
+          "order": 1604,
+          "isPreview": false
+        },
+        {
+          "id": 11538,
+          "slug": "05-15-meal-time",
+          "title": "დავალება 1.5 Meal Time",
+          "order": 1605,
+          "isPreview": false
+        }
+      ]
+    },
+    {
+      "id": 11539,
+      "slug": "17-while",
+      "title": "While ციკლი",
+      "order": 17,
+      "lessons": [
+        {
+          "id": 11540,
+          "slug": "01-roar",
+          "title": "Roar - ღრიალი",
+          "order": 1701,
+          "videoUrl": "https://youtu.be/HO8ugC95MgE",
+          "videoDuration": "2:46",
+          "isPreview": false
+        },
+        {
+          "id": 11541,
+          "slug": "02-lesson",
+          "title": "გამეორება / ციკლი",
+          "order": 1702,
+          "videoUrl": "https://youtu.be/53f1j8xJzk0",
+          "videoDuration": "1:49",
+          "isPreview": false
+        },
+        {
+          "id": 11542,
+          "slug": "03-while",
+          "title": "While ციკლის იმპლემენტაცია",
+          "order": 1703,
+          "videoUrl": "https://youtu.be/q_4aX73RydE",
+          "videoDuration": "8:28",
+          "isPreview": false
+        },
+        {
+          "id": 11543,
+          "slug": "04-while",
+          "title": "While ციკლი - გაუმჯობესება",
+          "order": 1704,
+          "videoUrl": "https://youtu.be/Ook3BIRfEVI",
+          "videoDuration": "5:35",
+          "isPreview": false
+        },
+        {
+          "id": 11544,
+          "slug": "05-lesson",
+          "title": "ინკრემენტაციის მოკლე ჩანაწერი",
+          "order": 1705,
+          "videoUrl": "https://youtu.be/usuhhfEnHv4",
+          "videoDuration": "2:46",
+          "isPreview": false
+        }
+      ]
+    },
+    {
+      "id": 11545,
+      "slug": "18-for",
+      "title": "For ციკლი",
+      "order": 18,
+      "lessons": [
+        {
+          "id": 11546,
+          "slug": "01-for",
+          "title": "For ციკლი",
+          "order": 1801,
+          "videoUrl": "https://youtu.be/1cc074UXx0E",
+          "videoDuration": "9:55",
+          "isPreview": false
+        },
+        {
+          "id": 11547,
+          "slug": "02-range",
+          "title": "დიაპაზონი - range()",
+          "order": 1802,
+          "videoUrl": "https://youtu.be/pK0Wo54sScE",
+          "videoDuration": "2:00",
+          "isPreview": false
+        },
+        {
+          "id": 11548,
+          "slug": "03-for",
+          "title": "for ციკლის გამოუყენებელი ცვლადი",
+          "order": 1803,
+          "videoUrl": "https://youtu.be/CeSneseU69s",
+          "videoDuration": "2:44",
+          "isPreview": false
+        },
+        {
+          "id": 11549,
+          "slug": "04-lesson",
+          "title": "სტრიქონის გამრავლება",
+          "order": 1804,
+          "videoUrl": "https://youtu.be/0BKLuip3LTU",
+          "videoDuration": "4:56",
+          "isPreview": false
+        }
+      ]
+    },
+    {
+      "id": 11550,
+      "slug": "19-topic",
+      "title": "ვალიდაცია",
+      "order": 19,
+      "lessons": [
+        {
+          "id": 11551,
+          "slug": "01-if",
+          "title": "უსასრულოდ ჩალაგებული if ბლოკები",
+          "order": 1901,
+          "videoUrl": "https://youtu.be/uxTLjcLYY2E",
+          "videoDuration": "3:58",
+          "isPreview": false
+        },
+        {
+          "id": 11552,
+          "slug": "02-break-continue",
+          "title": "წყვეტა და გაგრძელება / break & continue",
+          "order": 1902,
+          "videoUrl": "https://youtu.be/TaTnUopFUA4",
+          "videoDuration": "9:13",
+          "isPreview": false
+        },
+        {
+          "id": 11553,
+          "slug": "03-lesson",
+          "title": "ვალიდაციის კოდის გაუმჯობესება",
+          "order": 1903,
+          "videoUrl": "https://youtu.be/g-LzI68l6pg",
+          "videoDuration": "4:03",
+          "isPreview": false
+        },
+        {
+          "id": 11554,
+          "slug": "04-lesson",
+          "title": "პასუხისმგებლობების განაწილება",
+          "order": 1904,
+          "videoUrl": "https://youtu.be/a6_48pWidFE",
+          "videoDuration": "12:15",
+          "isPreview": false
+        }
+      ]
+    },
+    {
+      "id": 11555,
+      "slug": "20-list",
+      "title": "სია / list",
+      "order": 20,
+      "lessons": [
+        {
+          "id": 11556,
+          "slug": "01-list",
+          "title": "სია / list და მისი ელემენტების გამობეჭდვა",
+          "order": 2001,
+          "videoUrl": "https://youtu.be/SIe72l33oSk",
+          "videoDuration": "4:18",
+          "isPreview": false
+        },
+        {
+          "id": 11557,
+          "slug": "02-list",
+          "title": "სიის / list ელემენტები და ინდექსაცია",
+          "order": 2002,
+          "videoUrl": "https://youtu.be/E6YElBnRnfk",
+          "videoDuration": "5:07",
+          "isPreview": false
+        },
+        {
+          "id": 11558,
+          "slug": "03-lesson",
+          "title": "ინდექსებისა და მნიშნველობების ერთდროული გამოყენება",
+          "order": 2003,
+          "videoUrl": "https://youtu.be/kxZJfHiUYiM",
+          "videoDuration": "10:27",
+          "isPreview": false
+        }
+      ]
+    },
+    {
+      "id": 11559,
+      "slug": "21-dict",
+      "title": "ლექსიკონი / dict",
+      "order": 21,
+      "lessons": [
+        {
+          "id": 11560,
+          "slug": "01-dict",
+          "title": "\"ლექსიკონი\" / dict ზოგადი განმარტება",
+          "order": 2101,
+          "videoUrl": "https://youtu.be/73toX1Fze4I",
+          "videoDuration": "2:32",
+          "isPreview": false
+        },
+        {
+          "id": 11561,
+          "slug": "02-dict",
+          "title": "dict - ის იმპლემენტაცია",
+          "order": 2102,
+          "videoUrl": "https://youtu.be/_6THcdhnNgo",
+          "videoDuration": "11:58",
+          "isPreview": false
+        },
+        {
+          "id": 11562,
+          "slug": "03-dict-list",
+          "title": "dict და list კომბინაციაში",
+          "order": 2103,
+          "videoUrl": "https://youtu.be/CRWrP8Q18dY",
+          "videoDuration": "8:17",
+          "isPreview": false
+        }
+      ]
+    },
+    {
+      "id": 11563,
+      "slug": "22-topic",
+      "title": "ჩალაგებული ციკლები",
+      "order": 22,
+      "lessons": [
+        {
+          "id": 11564,
+          "slug": "01-lesson",
+          "title": "ჩალაგებული ციკლები, აბსტრაქცია და მოტივაცია",
+          "order": 2201,
+          "videoUrl": "https://youtu.be/aCdIIRn6HYQ",
+          "videoDuration": "32:41",
+          "isPreview": false
+        }
+      ]
+    },
+    {
+      "id": 11565,
+      "slug": "23-2",
+      "title": "დავალებები 2",
+      "order": 23,
+      "lessons": [
+        {
+          "id": 11567,
+          "slug": "01-21-camelcase",
+          "title": "დავალება 2.1 აქლემის კუზი - camelCase",
+          "order": 2301,
+          "isPreview": false
+        },
+        {
+          "id": 11569,
+          "slug": "02-22-coke-machine",
+          "title": "დავალება 2.2 კოკა-კოლას აპარატი - Coke Machine",
+          "order": 2302,
+          "isPreview": false
+        },
+        {
+          "id": 11570,
+          "slug": "03-23-twttr",
+          "title": "დავალება 2.3 twttr",
+          "order": 2303,
+          "isPreview": false
+        },
+        {
+          "id": 11571,
+          "slug": "04-24-vanity-plates",
+          "title": "დავალება 2.4 Vanity Plates",
+          "order": 2304,
+          "isPreview": false
+        },
+        {
+          "id": 11572,
+          "slug": "05-25-nutrition-facts",
+          "title": "დავალება 2.5 Nutrition Facts",
+          "order": 2305,
+          "isPreview": false
+        }
+      ]
+    },
+    {
+      "id": 11573,
+      "slug": "24-topic",
+      "title": "შეცდომები",
+      "order": 24,
+      "lessons": [
+        {
+          "id": 11574,
+          "slug": "01-o-exceptions",
+          "title": "შეცდომებo / Exceptions",
+          "order": 2401,
+          "videoUrl": "https://youtu.be/7kpcsUCsPns",
+          "videoDuration": "0:33",
+          "isPreview": false
+        },
+        {
+          "id": 11575,
+          "slug": "02-syntaxerror",
+          "title": "SyntaxError",
+          "order": 2402,
+          "videoUrl": "https://youtu.be/tff3UwMaA28",
+          "videoDuration": "3:42",
+          "isPreview": false
+        },
+        {
+          "id": 11576,
+          "slug": "03-valueerror",
+          "title": "ValueError",
+          "order": 2403,
+          "videoUrl": "https://youtu.be/g_8DjXBz4w4",
+          "videoDuration": "4:29",
+          "isPreview": false
+        },
+        {
+          "id": 11577,
+          "slug": "04-error-handling-try-except",
+          "title": "Error Handling | Try : Except",
+          "order": 2404,
+          "videoUrl": "https://youtu.be/a9rD2Xo-saE",
+          "videoDuration": "7:28",
+          "isPreview": false
+        },
+        {
+          "id": 11578,
+          "slug": "05-nameerror",
+          "title": "NameError",
+          "order": 2405,
+          "videoUrl": "https://youtu.be/ceeHv6LXb7k",
+          "videoDuration": "4:12",
+          "isPreview": false
+        },
+        {
+          "id": 11579,
+          "slug": "06-try-except-else",
+          "title": "Try : Except : Else",
+          "order": 2406,
+          "videoUrl": "https://youtu.be/nOsfm_GBEr0",
+          "videoDuration": "2:22",
+          "isPreview": false
+        },
+        {
+          "id": 11580,
+          "slug": "07-lesson",
+          "title": "უსასრულო ციკლით",
+          "order": 2407,
+          "videoUrl": "https://youtu.be/XIN0c_7wsgQ",
+          "videoDuration": "4:49",
+          "isPreview": false
+        },
+        {
+          "id": 11581,
+          "slug": "08-get_int",
+          "title": "შექმენი get_int ფუნცქია",
+          "order": 2408,
+          "videoUrl": "https://youtu.be/BShlCpDzcG0",
+          "videoDuration": "7:49",
+          "isPreview": false
+        },
+        {
+          "id": 11582,
+          "slug": "09-pass",
+          "title": "გაატარე | pass",
+          "order": 2409,
+          "videoUrl": "https://youtu.be/HD5skfLaVIc",
+          "videoDuration": "3:16",
+          "isPreview": false
+        }
+      ]
+    },
+    {
+      "id": 11583,
+      "slug": "25-3",
+      "title": "დავალებები 3",
+      "order": 25,
+      "lessons": [
+        {
+          "id": 11587,
+          "slug": "01-31",
+          "title": "დავალება 3.1 საწვავის ოდენობა მანქანის ავზში",
+          "order": 2501,
+          "isPreview": false
+        },
+        {
+          "id": 11589,
+          "slug": "02-32-felipes-taqueria",
+          "title": "დავალება 3.2 Felipe’s Taqueria",
+          "order": 2502,
+          "isPreview": false
+        },
+        {
+          "id": 11590,
+          "slug": "03-33",
+          "title": "დავალება 3.3 საყიდლების სია",
+          "order": 2503,
+          "isPreview": false
+        },
+        {
+          "id": 11591,
+          "slug": "04-34-outdated",
+          "title": "დავალება 3.4 Outdated",
+          "order": 2504,
+          "isPreview": false
+        }
+      ]
+    },
+    {
+      "id": 11592,
+      "slug": "26-topic",
+      "title": "ბიბლიოთეკები, მოდულები, პაკეტები",
+      "order": 26,
+      "lessons": [
+        {
+          "id": 11593,
+          "slug": "01-lesson",
+          "title": "შესავალი",
+          "order": 2601,
+          "videoUrl": "https://youtu.be/d9yk_6KJWeE",
+          "videoDuration": "2:37",
+          "isPreview": false
+        },
+        {
+          "id": 11594,
+          "slug": "02-lesson",
+          "title": "მოდულები",
+          "order": 2602,
+          "videoUrl": "https://youtu.be/aPOIzXUWRtg",
+          "videoDuration": "2:19",
+          "isPreview": false
+        },
+        {
+          "id": 11595,
+          "slug": "03-import-randomchoice",
+          "title": "ჩატვირთვა და შემთხვევითი ამორჩევა | import random.choice",
+          "order": 2603,
+          "videoUrl": "https://youtu.be/zeK-k-DoO_A",
+          "videoDuration": "7:40",
+          "isPreview": false
+        },
+        {
+          "id": 11596,
+          "slug": "04-from",
+          "title": "დააიმპორტე მხოლოდ ის რაც გჭირდება | from",
+          "order": 2604,
+          "videoUrl": "https://youtu.be/AnFUa72Q_3U",
+          "videoDuration": "4:21",
+          "isPreview": false
+        },
+        {
+          "id": 11597,
+          "slug": "05-randint",
+          "title": "randint",
+          "order": 2605,
+          "videoUrl": "https://youtu.be/Q4jELsU5Yys",
+          "videoDuration": "2:28",
+          "isPreview": false
+        },
+        {
+          "id": 11598,
+          "slug": "06-shuffle",
+          "title": "აჩეხე | Shuffle",
+          "order": 2606,
+          "videoUrl": "https://youtu.be/Hpv8hnq9TaQ",
+          "videoDuration": "7:16",
+          "isPreview": false
+        },
+        {
+          "id": 11599,
+          "slug": "07-mean",
+          "title": "საშუალო არითმეტიკულის გამოთვლა | mean",
+          "order": 2607,
+          "videoUrl": "https://youtu.be/L5aVN9XQS94",
+          "videoDuration": "3:29",
+          "isPreview": false
+        },
+        {
+          "id": 11600,
+          "slug": "08-sys-argv",
+          "title": "sys მოდული და argv სია",
+          "order": 2608,
+          "videoUrl": "https://youtu.be/fWHKtBtVnbA",
+          "videoDuration": "8:10",
+          "isPreview": false
+        },
+        {
+          "id": 11601,
+          "slug": "09-indexerror",
+          "title": "IndexError ის მართვა",
+          "order": 2609,
+          "videoUrl": "https://youtu.be/MHwvZZGWoNc",
+          "videoDuration": "2:49",
+          "isPreview": false
+        },
+        {
+          "id": 11602,
+          "slug": "10-len",
+          "title": "len და მკაცრი საზღვრები",
+          "order": 2610,
+          "videoUrl": "https://youtu.be/XuYaPBLubC4",
+          "videoDuration": "5:01",
+          "isPreview": false
+        },
+        {
+          "id": 11603,
+          "slug": "11-sysexit",
+          "title": "sys.exit",
+          "order": 2611,
+          "videoUrl": "https://youtu.be/swtvwvETspA",
+          "videoDuration": "5:59",
+          "isPreview": false
+        },
+        {
+          "id": 11604,
+          "slug": "12-lesson",
+          "title": "მრავალი არგუმენტი",
+          "order": 2612,
+          "videoUrl": "https://youtu.be/PJaN3xxpyy8",
+          "videoDuration": "3:03",
+          "isPreview": false
+        },
+        {
+          "id": 11605,
+          "slug": "13-slice",
+          "title": "ლისტის ნაჭრის სინტაქსი | slice",
+          "order": 2613,
+          "videoUrl": "https://youtu.be/CcUT9umYPkY",
+          "videoDuration": "2:45",
+          "isPreview": false
+        },
+        {
+          "id": 11606,
+          "slug": "14-cowsay",
+          "title": "ძროხა თქვი | cowsay",
+          "order": 2614,
+          "videoUrl": "https://youtu.be/lsbQn7WjLiQ",
+          "videoDuration": "9:18",
+          "isPreview": false
+        },
+        {
+          "id": 11607,
+          "slug": "15-api-requests-json",
+          "title": "API, requests, json",
+          "order": 2615,
+          "isPreview": false
+        },
+        {
+          "id": 11608,
+          "slug": "16-lesson",
+          "title": "შექმენი ბიბლიოთეკები / მოდულები",
+          "order": 2616,
+          "videoUrl": "https://youtu.be/2jUx8XkTKK4",
+          "videoDuration": "11:51",
+          "isPreview": false
+        }
+      ]
+    },
+    {
+      "id": 11609,
+      "slug": "27-4",
+      "title": "დავალებები 4",
+      "order": 27,
+      "lessons": [
+        {
+          "id": 11610,
+          "slug": "01-41-emojize",
+          "title": "დავალება 4.1 ემოჯირება | Emojize",
+          "order": 2701,
+          "isPreview": false
+        },
+        {
+          "id": 11615,
+          "slug": "02-42-frank-ian-and-glens-letters",
+          "title": "დავალება 4.2 Frank, Ian and Glen’s Letters",
+          "order": 2702,
+          "isPreview": false
+        },
+        {
+          "id": 11616,
+          "slug": "03-43-adieu-adieu",
+          "title": "დავალება 4.3 Adieu, Adieu",
+          "order": 2703,
+          "isPreview": false
+        },
+        {
+          "id": 11617,
+          "slug": "04-44-guessing-game",
+          "title": "დავალება 4.4 გამოცნობანა | Guessing Game",
+          "order": 2704,
+          "isPreview": false
+        },
+        {
+          "id": 11618,
+          "slug": "05-45-little-professor",
+          "title": "დავალება 4.5 პატარა პროფესორი | Little Professor",
+          "order": 2705,
+          "isPreview": false
+        },
+        {
+          "id": 11620,
+          "slug": "06-46-bitcoin-bitcoin-price-index",
+          "title": "დავალება 4.6 Bitcoin - ის ფასის ინდექსი | Bitcoin Price Index",
+          "order": 2706,
+          "isPreview": false
+        }
+      ]
+    },
+    {
+      "id": 11621,
+      "slug": "28-unit",
+      "title": "შესავალი unit ტესტებში",
+      "order": 28,
+      "lessons": [
+        {
+          "id": 11622,
+          "slug": "01-unit-tests",
+          "title": "Unit Tests",
+          "order": 2801,
+          "videoUrl": "https://youtu.be/cF8UmpN7bVU",
+          "videoDuration": "0:57",
+          "isPreview": false
+        },
+        {
+          "id": 11623,
+          "slug": "02-calculatorpy",
+          "title": "calculator.py",
+          "order": 2802,
+          "videoUrl": "https://youtu.be/5Bxr3BSo_1w",
+          "videoDuration": "2:37",
+          "isPreview": false
+        },
+        {
+          "id": 11624,
+          "slug": "03-test_calculatorpy",
+          "title": "test_calculator.py",
+          "order": 2803,
+          "videoUrl": "https://youtu.be/wp5lCZSd0Ts",
+          "videoDuration": "9:36",
+          "isPreview": false
+        },
+        {
+          "id": 11625,
+          "slug": "04-assert",
+          "title": "assert",
+          "order": 2804,
+          "isPreview": false
+        },
+        {
+          "id": 11626,
+          "slug": "05-assertionerror",
+          "title": "AssertionError - ის მართვა",
+          "order": 2805,
+          "videoUrl": "https://youtu.be/VlPJ5mf_ITc",
+          "videoDuration": "6:19",
+          "isPreview": false
+        },
+        {
+          "id": 11627,
+          "slug": "06-pytest",
+          "title": "pytest",
+          "order": 2806,
+          "videoUrl": "https://youtu.be/OxtvH6nAhKE",
+          "videoDuration": "6:54",
+          "isPreview": false
+        },
+        {
+          "id": 11628,
+          "slug": "07-lesson",
+          "title": "ტესტების კატეგორიზება",
+          "order": 2807,
+          "videoUrl": "https://youtu.be/49ACe3bpl7M",
+          "videoDuration": "5:50",
+          "isPreview": false
+        },
+        {
+          "id": 11629,
+          "slug": "08-typeerror",
+          "title": "TypeError",
+          "order": 2808,
+          "videoUrl": "https://youtu.be/n8Ccyz1zHLw",
+          "videoDuration": "3:56",
+          "isPreview": false
+        },
+        {
+          "id": 11630,
+          "slug": "09-side-effects",
+          "title": "გვერდითი ეფექტები | Side Effects",
+          "order": 2809,
+          "videoUrl": "https://youtu.be/cayE0T8t6Hc",
+          "videoDuration": "11:48",
+          "isPreview": false
+        },
+        {
+          "id": 11631,
+          "slug": "10-lesson",
+          "title": "კოლექციები / პაკეტები",
+          "order": 2810,
+          "videoUrl": "https://youtu.be/Za_KMqaB0lQ",
+          "videoDuration": "5:10",
+          "isPreview": false
+        }
+      ]
+    },
+    {
+      "id": 11632,
+      "slug": "29-5",
+      "title": "დავალებები 5",
+      "order": 29,
+      "lessons": [
+        {
+          "id": 11633,
+          "slug": "01-51-testing-my-twttr",
+          "title": "დავალება 5.1 Testing my twttr",
+          "order": 2901,
+          "isPreview": false
+        },
+        {
+          "id": 11634,
+          "slug": "02-52",
+          "title": "დავალება 5.2 უკან ბანკში",
+          "order": 2902,
+          "isPreview": false
+        },
+        {
+          "id": 11635,
+          "slug": "03-53-re-requesting-a-vanity-plate",
+          "title": "დავალება 5.3 Re-requesting a Vanity Plate",
+          "order": 2903,
+          "isPreview": false
+        },
+        {
+          "id": 11636,
+          "slug": "04-54-re-requesting-a-vanity-plate",
+          "title": "დავალება 5.4 Re-requesting a Vanity Plate",
+          "order": 2904,
+          "isPreview": false
+        }
+      ]
+    },
+    {
+      "id": 11637,
+      "slug": "30-io",
+      "title": "ფაილები და I/O",
+      "order": 30,
+      "lessons": [
+        {
+          "id": 11638,
+          "slug": "01-lesson",
+          "title": "შესავალი",
+          "order": 3001,
+          "videoUrl": "https://youtu.be/-KGGwcqfNkU",
+          "videoDuration": "1:54",
+          "isPreview": false
+        },
+        {
+          "id": 11639,
+          "slug": "02-lesson",
+          "title": "რაში გვჭირდება ფაილებთან მუშაობა",
+          "order": 3002,
+          "videoUrl": "https://youtu.be/r4nmUQmlKHM",
+          "videoDuration": "3:51",
+          "isPreview": false
+        },
+        {
+          "id": 11640,
+          "slug": "03-lesson",
+          "title": "ჩაამატე ელემენტები სიაში",
+          "order": 3003,
+          "videoUrl": "https://youtu.be/bfAbGgW8WHI",
+          "videoDuration": "9:02",
+          "isPreview": false
+        },
+        {
+          "id": 11641,
+          "slug": "04-open-w-mode",
+          "title": "open | ჩაწერის რეჟიმი - w mode",
+          "order": 3004,
+          "videoUrl": "https://youtu.be/rXJygzMaBJ4",
+          "videoDuration": "7:22",
+          "isPreview": false
+        },
+        {
+          "id": 11642,
+          "slug": "05-a-append-mode",
+          "title": "ჩამატების რეჟიმი - a (append) mode",
+          "order": 3005,
+          "videoUrl": "https://youtu.be/xpPGkq2e0QE",
+          "videoDuration": "4:45",
+          "isPreview": false
+        },
+        {
+          "id": 11643,
+          "slug": "06-with",
+          "title": "with ბლოკი",
+          "order": 3006,
+          "videoUrl": "https://youtu.be/Gglo7ZZd4E0",
+          "videoDuration": "2:53",
+          "isPreview": false
+        },
+        {
+          "id": 11644,
+          "slug": "07-r-read-mode",
+          "title": "წაკითხვის რეჟიმი - r (read) mode",
+          "order": 3007,
+          "videoUrl": "https://youtu.be/gm7Nk7m5VYQ",
+          "videoDuration": "4:35",
+          "isPreview": false
+        },
+        {
+          "id": 11645,
+          "slug": "08-lesson",
+          "title": "ფაილის წაკითხვის ელეგანტური გზა",
+          "order": 3008,
+          "videoUrl": "https://youtu.be/XCFTiXH4Ock",
+          "videoDuration": "2:59",
+          "isPreview": false
+        },
+        {
+          "id": 11646,
+          "slug": "09-lesson",
+          "title": "დაასორტირე ფაილიდან ამოღებული მნიშვნელობები",
+          "order": 3009,
+          "videoUrl": "https://youtu.be/DXP6COke144",
+          "videoDuration": "4:51",
+          "isPreview": false
+        },
+        {
+          "id": 11647,
+          "slug": "10-with",
+          "title": "სორტირება with ბლოკში",
+          "order": 3010,
+          "isPreview": false
+        },
+        {
+          "id": 11648,
+          "slug": "11-csv",
+          "title": "რა არის CSV?",
+          "order": 3011,
+          "videoUrl": "https://youtu.be/NztANRImv9Y",
+          "videoDuration": "9:16",
+          "isPreview": false
+        },
+        {
+          "id": 11649,
+          "slug": "12-unpack",
+          "title": "unpack - ინფორმაციის ამოღება ცვლადებში",
+          "order": 3012,
+          "videoUrl": "https://youtu.be/8FplaLoGE68",
+          "videoDuration": "1:31",
+          "isPreview": false
+        },
+        {
+          "id": 11650,
+          "slug": "13-lesson",
+          "title": "ისევ სორტირება",
+          "order": 3013,
+          "videoUrl": "https://youtu.be/-qgooVsbFqc",
+          "videoDuration": "4:11",
+          "isPreview": false
+        },
+        {
+          "id": 11651,
+          "slug": "14-dict",
+          "title": "dict - ების გამოყენება მეტად კომპლექსური სტრუქტურებისთვის",
+          "order": 3014,
+          "videoUrl": "https://youtu.be/gE-6Q_AHKqs",
+          "videoDuration": "6:15",
+          "isPreview": false
+        },
+        {
+          "id": 11652,
+          "slug": "15-lesson",
+          "title": "ფუნქცია როგორც არგუმენტი",
+          "order": 3015,
+          "videoUrl": "https://youtu.be/6W454bxa5qM",
+          "videoDuration": "11:24",
+          "isPreview": false
+        },
+        {
+          "id": 11653,
+          "slug": "16-lambda",
+          "title": "lambda | ანონიმური ფუნქცია",
+          "order": 3016,
+          "videoUrl": "https://youtu.be/FqaF1GFfUwQ",
+          "videoDuration": "5:26",
+          "isPreview": false
+        },
+        {
+          "id": 11654,
+          "slug": "17-csv",
+          "title": "CSV მოდულის გამოყენება",
+          "order": 3017,
+          "videoUrl": "https://youtu.be/7U9Xfs14Z18",
+          "videoDuration": "4:25",
+          "isPreview": false
+        },
+        {
+          "id": 11655,
+          "slug": "18-dictreader",
+          "title": "DictReader - წამკითხველი",
+          "order": 3018,
+          "videoUrl": "https://youtu.be/qOfje0B82ig",
+          "videoDuration": "6:04",
+          "isPreview": false
+        },
+        {
+          "id": 11656,
+          "slug": "19-writer",
+          "title": "writer | ჩამწერი",
+          "order": 3019,
+          "videoUrl": "https://youtu.be/Uh_vndD72VY",
+          "videoDuration": "3:24",
+          "isPreview": false
+        },
+        {
+          "id": 11657,
+          "slug": "20-dictwriter",
+          "title": "DictWriter | ჩამწერი",
+          "order": 3020,
+          "videoUrl": "https://youtu.be/Xc_dBdy5j0Q",
+          "videoDuration": "2:34",
+          "isPreview": false
+        },
+        {
+          "id": 11658,
+          "slug": "21-lesson",
+          "title": "ასწავლე კატას სირბილი",
+          "order": 3021,
+          "videoUrl": "https://youtu.be/6UXYr5eBvjY",
+          "videoDuration": "10:36",
+          "isPreview": false
+        }
+      ]
+    },
+    {
+      "id": 11659,
+      "slug": "31-6",
+      "title": "დავალებები 6",
+      "order": 31,
+      "lessons": [
+        {
+          "id": 11660,
+          "slug": "01-61-lines-of-code",
+          "title": "დავალება 6.1 Lines of Code",
+          "order": 3101,
+          "isPreview": false
+        },
+        {
+          "id": 11661,
+          "slug": "02-62-pizza-py",
+          "title": "დავალება 6.2 Pizza Py",
+          "order": 3102,
+          "isPreview": false
+        },
+        {
+          "id": 11662,
+          "slug": "03-63-scourgify",
+          "title": "დავალება 6.3 Scourgify",
+          "order": 3103,
+          "isPreview": false
+        },
+        {
+          "id": 11664,
+          "slug": "04-64-cs50-p-shirt",
+          "title": "დავალება 6.4 CS50 P-Shirt",
+          "order": 3104,
+          "isPreview": false
+        }
+      ]
+    },
+    {
+      "id": 11665,
+      "slug": "32-topic",
+      "title": "რეგულარული გამოსახულებები",
+      "order": 32,
+      "lessons": [
+        {
+          "id": 11666,
+          "slug": "01-lesson",
+          "title": "შესავალი",
+          "order": 3201,
+          "videoUrl": "https://youtu.be/kf4plxQ4WwY",
+          "videoDuration": "3:58",
+          "isPreview": false
+        },
+        {
+          "id": 11667,
+          "slug": "02-validatepy",
+          "title": "validate.py",
+          "order": 3202,
+          "videoUrl": "https://youtu.be/2FQL-4ZMPDk",
+          "videoDuration": "5:05",
+          "isPreview": false
+        },
+        {
+          "id": 11668,
+          "slug": "03-research",
+          "title": "re.search",
+          "order": 3203,
+          "videoUrl": "https://youtu.be/8E3mY5BNgK0",
+          "videoDuration": "23:11",
+          "isPreview": false
+        },
+        {
+          "id": 11669,
+          "slug": "04-lesson",
+          "title": "დასაწყისის და დასასრულის დაფიქსირება",
+          "order": 3204,
+          "videoUrl": "https://youtu.be/iTkQxiO3mNc",
+          "videoDuration": "8:14",
+          "isPreview": false
+        },
+        {
+          "id": 11670,
+          "slug": "05-lesson",
+          "title": "სიმბოლოების სეტი და აკრძალვა",
+          "order": 3205,
+          "videoUrl": "https://youtu.be/z28GdaKCvcI",
+          "videoDuration": "6:23",
+          "isPreview": false
+        },
+        {
+          "id": 11671,
+          "slug": "06-lesson",
+          "title": "დასაშვებ სიმბოლოთა დიაპაზონები",
+          "order": 3206,
+          "videoUrl": "https://youtu.be/y2xGebBjyM8",
+          "videoDuration": "3:54",
+          "isPreview": false
+        },
+        {
+          "id": 11672,
+          "slug": "07-lesson",
+          "title": "სიმბოლოთა კლასები",
+          "order": 3207,
+          "videoUrl": "https://youtu.be/fp9hHdx6ALw",
+          "videoDuration": "4:31",
+          "isPreview": false
+        },
+        {
+          "id": 11673,
+          "slug": "08-research-flags",
+          "title": "re.search - flags",
+          "order": 3208,
+          "videoUrl": "https://youtu.be/C8WW474kz-M",
+          "videoDuration": "4:26",
+          "isPreview": false
+        },
+        {
+          "id": 11674,
+          "slug": "09-lesson",
+          "title": "წესების ჯგუფები",
+          "order": 3209,
+          "videoUrl": "https://youtu.be/2ejnOWel8sI",
+          "videoDuration": "7:42",
+          "isPreview": false
+        },
+        {
+          "id": 11675,
+          "slug": "10-lesson",
+          "title": "\"ან\" კომბინაცია",
+          "order": 3210,
+          "videoUrl": "https://youtu.be/rUGbopSjrOg",
+          "videoDuration": "2:34",
+          "isPreview": false
+        },
+        {
+          "id": 11676,
+          "slug": "11-regex",
+          "title": "როგორია ელ.ფოსტის ვალიდაციის ნამდვილი regex?",
+          "order": 3211,
+          "videoUrl": "https://youtu.be/WXvCVA8ev1Y",
+          "videoDuration": "4:18",
+          "isPreview": false
+        },
+        {
+          "id": 11677,
+          "slug": "12-lesson",
+          "title": "მონაცემთა გაწმენდა",
+          "order": 3212,
+          "videoUrl": "https://youtu.be/A5N7ZYt8WPQ",
+          "videoDuration": "8:25",
+          "isPreview": false
+        },
+        {
+          "id": 11678,
+          "slug": "13-lesson",
+          "title": "ჯგუფების გამოჭერა",
+          "order": 3213,
+          "videoUrl": "https://youtu.be/4zjwY9rxsVY",
+          "videoDuration": "11:30",
+          "isPreview": false
+        },
+        {
+          "id": 11679,
+          "slug": "14-lesson",
+          "title": "არააუცილებელი სფეისების პრობლემის გადაჭრა",
+          "order": 3214,
+          "videoUrl": "https://youtu.be/hDCSXO87ZWc",
+          "videoDuration": "3:11",
+          "isPreview": false
+        },
+        {
+          "id": 11680,
+          "slug": "15-walrus",
+          "title": "Walrus - ოპერატორი",
+          "order": 3215,
+          "videoUrl": "https://youtu.be/Y_WcHZtDKaA",
+          "videoDuration": "2:58",
+          "isPreview": false
+        },
+        {
+          "id": 11682,
+          "slug": "16-url-username",
+          "title": "URL - იდან username - ის ამოღება",
+          "order": 3216,
+          "videoUrl": "https://youtu.be/LAwa2DxOf_I",
+          "videoDuration": "4:41",
+          "isPreview": false
+        },
+        {
+          "id": 11683,
+          "slug": "17-resub-regex",
+          "title": "re.sub() და regex",
+          "order": 3217,
+          "videoUrl": "https://youtu.be/NewhrKb03UQ",
+          "videoDuration": "12:28",
+          "isPreview": false
+        },
+        {
+          "id": 11684,
+          "slug": "18-lesson",
+          "title": "შეჯამება",
+          "order": 3218,
+          "videoUrl": "https://youtu.be/HjgFicvWnSk",
+          "videoDuration": "6:44",
+          "isPreview": false
+        }
+      ]
+    },
+    {
+      "id": 11685,
+      "slug": "33-7",
+      "title": "დავალებები 7",
+      "order": 33,
+      "lessons": [
+        {
+          "id": 11686,
+          "slug": "01-lesson",
+          "title": "დავალებები",
+          "order": 3301,
+          "isPreview": false
+        }
+      ]
+    },
+    {
+      "id": 11687,
+      "slug": "34-oop",
+      "title": "OOP",
+      "order": 34,
+      "lessons": [
+        {
+          "id": 11688,
+          "slug": "01-lesson",
+          "title": "შესავალი",
+          "order": 3401,
+          "videoUrl": "https://youtu.be/09-z_r8liSw",
+          "videoDuration": "7:32",
+          "isPreview": false
+        },
+        {
+          "id": 11689,
+          "slug": "02-lesson",
+          "title": "პროცედურულად",
+          "order": 3402,
+          "videoUrl": "https://youtu.be/N-apIvCeuhs",
+          "videoDuration": "7:25",
+          "isPreview": false
+        },
+        {
+          "id": 11690,
+          "slug": "03-tuples",
+          "title": "Tuples",
+          "order": 3403,
+          "videoUrl": "https://youtu.be/tyT3hk16nCU",
+          "videoDuration": "12:33",
+          "isPreview": false
+        },
+        {
+          "id": 11691,
+          "slug": "04-tuple",
+          "title": "არამუტირებადი tuple",
+          "order": 3404,
+          "videoUrl": "https://youtu.be/p3JUMqCHkUA",
+          "videoDuration": "5:19",
+          "isPreview": false
+        },
+        {
+          "id": 11692,
+          "slug": "05-tuples-vs-lists",
+          "title": "Tuples VS Lists",
+          "order": 3405,
+          "videoUrl": "https://youtu.be/HOa7CSio1Y8",
+          "videoDuration": "2:59",
+          "isPreview": false
+        },
+        {
+          "id": 11693,
+          "slug": "06-dictionaries",
+          "title": "Dictionaries",
+          "order": 3406,
+          "videoUrl": "https://youtu.be/qVfB8_79riI",
+          "videoDuration": "5:03",
+          "isPreview": false
+        },
+        {
+          "id": 11694,
+          "slug": "07-class",
+          "title": "class სინტაქსი",
+          "order": 3407,
+          "videoUrl": "https://youtu.be/j7XBYm9lJiA",
+          "videoDuration": "17:52",
+          "isPreview": false
+        },
+        {
+          "id": 11695,
+          "slug": "08-__init__",
+          "title": "__init__ მეთოდი",
+          "order": 3408,
+          "videoUrl": "https://youtu.be/IHeRAohSaQ8",
+          "videoDuration": "22:19",
+          "isPreview": false
+        },
+        {
+          "id": 11696,
+          "slug": "09-lesson",
+          "title": "კლასში ჩაშენებული ვალიდაცია",
+          "order": 3409,
+          "videoUrl": "https://youtu.be/ZV2CObHZt9E",
+          "videoDuration": "14:54",
+          "isPreview": false
+        },
+        {
+          "id": 11697,
+          "slug": "10-__str__",
+          "title": "__str__ სპეციალური მეთოდი",
+          "order": 3410,
+          "videoUrl": "https://youtu.be/DtDcH0hmdXM",
+          "videoDuration": "5:06",
+          "isPreview": false
+        },
+        {
+          "id": 11698,
+          "slug": "11-lesson",
+          "title": "ვალიდაციის საზღვრების გარღვევა",
+          "order": 3411,
+          "videoUrl": "https://youtu.be/7EBkQO-oo68",
+          "videoDuration": "4:23",
+          "isPreview": false
+        },
+        {
+          "id": 11699,
+          "slug": "12-setters-getters",
+          "title": "Setters & Getters",
+          "order": 3412,
+          "videoUrl": "https://youtu.be/UR8HekRbTOw",
+          "videoDuration": "32:53",
+          "isPreview": false
+        },
+        {
+          "id": 11700,
+          "slug": "13-lesson",
+          "title": "ტიპები და კლასები",
+          "order": 3413,
+          "videoUrl": "https://youtu.be/OIwEyt_cKvc",
+          "videoDuration": "8:25",
+          "isPreview": false
+        },
+        {
+          "id": 11701,
+          "slug": "14-lesson",
+          "title": "კლასის მეთოდი",
+          "order": 3414,
+          "videoUrl": "https://youtu.be/lh9w7TGCHpI",
+          "videoDuration": "24:56",
+          "isPreview": false
+        },
+        {
+          "id": 11702,
+          "slug": "15-lesson",
+          "title": "მემკვიდრეობითობა",
+          "order": 3415,
+          "videoUrl": "https://youtu.be/evWY5K-MKWA",
+          "videoDuration": "14:11",
+          "isPreview": false
+        },
+        {
+          "id": 11703,
+          "slug": "16-operator-overloading",
+          "title": "Operator Overloading",
+          "order": 3416,
+          "videoUrl": "https://youtu.be/iVa8ZNUGtk8",
+          "videoDuration": "13:19",
+          "isPreview": false
+        }
+      ]
+    },
+    {
+      "id": 11704,
+      "slug": "35-8",
+      "title": "დავალებები 8",
+      "order": 35,
+      "lessons": [
+        {
+          "id": 11705,
+          "slug": "01-lesson",
+          "title": "დავალებები",
+          "order": 3501,
+          "isPreview": false
+        }
+      ]
+    },
+    {
+      "id": 11706,
+      "slug": "36-etc-python",
+      "title": "Etc. მნიშვნელოვანი იარაღები Python - ში",
+      "order": 36,
+      "lessons": [
+        {
+          "id": 11707,
+          "slug": "01-lesson",
+          "title": "შესავალი",
+          "order": 3601,
+          "videoUrl": "https://youtu.be/2OBcunpsBr8",
+          "videoDuration": "4:45",
+          "isPreview": false
+        },
+        {
+          "id": 11708,
+          "slug": "02-set",
+          "title": "წყება / set",
+          "order": 3602,
+          "videoUrl": "https://youtu.be/Buxozu6cIqw",
+          "videoDuration": "12:07",
+          "isPreview": false
+        },
+        {
+          "id": 11710,
+          "slug": "03-globals",
+          "title": "გლობალური ცვლადები | globals",
+          "order": 3603,
+          "videoUrl": "https://youtu.be/tH7laMtfZ4Y",
+          "videoDuration": "14:39",
+          "isPreview": false
+        },
+        {
+          "id": 11711,
+          "slug": "04-constants",
+          "title": "მუდმივები | constants",
+          "order": 3604,
+          "videoUrl": "https://youtu.be/DcRHFtmnass",
+          "videoDuration": "7:38",
+          "isPreview": false
+        },
+        {
+          "id": 11712,
+          "slug": "05-type-hints-mypy",
+          "title": "Type hints & mypy",
+          "order": 3605,
+          "videoUrl": "https://youtu.be/AVUzaHC8iHA",
+          "videoDuration": "16:01",
+          "isPreview": false
+        },
+        {
+          "id": 11713,
+          "slug": "06-return-types",
+          "title": "return types",
+          "order": 3606,
+          "videoUrl": "https://youtu.be/xkVPVlCq3Is",
+          "videoDuration": "6:01",
+          "isPreview": false
+        },
+        {
+          "id": 11714,
+          "slug": "07-docstrings",
+          "title": "დოკუმენტაციის სტრიქონი | docstrings",
+          "order": 3607,
+          "videoUrl": "https://youtu.be/m8t4-w3Yw98",
+          "videoDuration": "19:53",
+          "isPreview": false
+        },
+        {
+          "id": 11715,
+          "slug": "08-sysargv",
+          "title": "sys.argv",
+          "order": 3608,
+          "videoUrl": "https://youtu.be/nPNombnMWog",
+          "videoDuration": "18:55",
+          "isPreview": false
+        },
+        {
+          "id": 11716,
+          "slug": "09-argparse",
+          "title": "argparse",
+          "order": 3609,
+          "videoUrl": "https://youtu.be/pkQjiuZpAn8",
+          "videoDuration": "22:09",
+          "isPreview": false
+        },
+        {
+          "id": 11717,
+          "slug": "10-unpacking",
+          "title": "unpacking",
+          "order": 3610,
+          "videoUrl": "https://youtu.be/117udVp3iGY",
+          "videoDuration": "15:53",
+          "isPreview": false
+        },
+        {
+          "id": 11718,
+          "slug": "11-args-kwargs",
+          "title": "args & kwargs",
+          "order": 3611,
+          "videoUrl": "https://youtu.be/c6WdaNY7MgY",
+          "videoDuration": "9:46",
+          "isPreview": false
+        },
+        {
+          "id": 11719,
+          "slug": "12-map",
+          "title": "map | ტრანსფორმაცია",
+          "order": 3612,
+          "videoUrl": "https://youtu.be/w2E4ZHIdMAw",
+          "videoDuration": "19:35",
+          "isPreview": false
+        },
+        {
+          "id": 11720,
+          "slug": "13-list-comprehensions",
+          "title": "list comprehensions",
+          "order": 3613,
+          "videoUrl": "https://youtu.be/wdbIzvDNShU",
+          "videoDuration": "4:35",
+          "isPreview": false
+        },
+        {
+          "id": 11721,
+          "slug": "14-filter-in-list-comprehensions",
+          "title": "filter in list comprehensions",
+          "order": 3614,
+          "videoUrl": "https://youtu.be/oGhVzLcDFfw",
+          "videoDuration": "6:32",
+          "isPreview": false
+        },
+        {
+          "id": 11722,
+          "slug": "15-filter-lambda",
+          "title": "filter & lambda",
+          "order": 3615,
+          "videoUrl": "https://youtu.be/NFjhuGCP83c",
+          "videoDuration": "16:52",
+          "isPreview": false
+        },
+        {
+          "id": 11723,
+          "slug": "16-dict-comprehensions",
+          "title": "dict comprehensions",
+          "order": 3616,
+          "videoUrl": "https://youtu.be/e9BZIhwwRQM",
+          "videoDuration": "5:30",
+          "isPreview": false
+        },
+        {
+          "id": 11724,
+          "slug": "17-enumerate",
+          "title": "enumerate",
+          "order": 3617,
+          "isPreview": false
+        },
+        {
+          "id": 11725,
+          "slug": "18-yield",
+          "title": "გენერატორები | yield",
+          "order": 3618,
+          "videoUrl": "https://youtu.be/6gm52_TE74A",
+          "videoDuration": "21:02",
+          "isPreview": false
+        },
+        {
+          "id": 11726,
+          "slug": "19-lesson",
+          "title": "შეჯამება",
+          "order": 3619,
+          "videoUrl": "https://youtu.be/jz3jmW4JKqU",
+          "videoDuration": "14:35",
+          "isPreview": false
+        }
+      ]
+    },
+    {
+      "id": 11727,
+      "slug": "37-topic",
+      "title": "ფინალური პროექტი",
+      "order": 37,
+      "lessons": [
+        {
+          "id": 11728,
+          "slug": "01-lesson",
+          "title": "ფინალური პროექტი",
+          "order": 3701,
+          "isPreview": false
+        }
+      ]
+    }
+  ]
+}

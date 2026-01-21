@@ -1,0 +1,1584 @@
+{
+  "id": 14541,
+  "title": "Angular - Front-End დეველოპმენტი",
+  "slug": "angular",
+  "description": "",
+  "thumbnail": "https://www.bitcamp.ge/wp-content/uploads/2025/01/Angular-oto.png",
+  "exportedAt": "2026-01-21T09:02:07.090Z",
+  "topics": [
+    {
+      "id": 14543,
+      "slug": "01-1",
+      "title": "1. შესავალი",
+      "order": 1,
+      "lessons": [
+        {
+          "id": 14544,
+          "slug": "01-1a",
+          "title": "1a. ვინ ვარ მე",
+          "order": 101,
+          "videoUrl": "https://www.youtube.com/watch?v=BVVAMSVWDKk",
+          "videoDuration": "1:05",
+          "isPreview": true
+        },
+        {
+          "id": 14545,
+          "slug": "02-1b",
+          "title": "1b. რა არის ანგულარი?",
+          "order": 102,
+          "videoUrl": "https://youtu.be/UI5Yhw3YBQg",
+          "videoDuration": "3:28",
+          "isPreview": true
+        },
+        {
+          "id": 14604,
+          "slug": "03-1c-angular",
+          "title": "1c. Angular-ის პროექტის შექმნა",
+          "order": 103,
+          "videoUrl": "https://youtu.be/-vEf4fCGWt8",
+          "videoDuration": "10:21",
+          "isPreview": true
+        },
+        {
+          "id": 14605,
+          "slug": "04-1d-angular",
+          "title": "1d. Angular-ის პროექტის გარემო",
+          "order": 104,
+          "videoUrl": "https://youtu.be/2BTD-PTLcC0",
+          "videoDuration": "7:51",
+          "isPreview": true
+        },
+        {
+          "id": 14606,
+          "slug": "05-1e",
+          "title": "1e. პროექტის სტრუქტურის განხილვა",
+          "order": 105,
+          "videoUrl": "https://youtu.be/bfqxyugLkiQ",
+          "videoDuration": "5:01",
+          "isPreview": true
+        }
+      ]
+    },
+    {
+      "id": 14607,
+      "slug": "02-2-typescript",
+      "title": "2. Typescript",
+      "order": 2,
+      "lessons": [
+        {
+          "id": 14608,
+          "slug": "01-2a-typescript",
+          "title": "2a. რა არის Typescript და რატომ უნდა გამოვიყენოთ?",
+          "order": 201,
+          "videoUrl": "https://youtu.be/E2a4gPAdAJ4",
+          "videoDuration": "6:51",
+          "isPreview": false
+        },
+        {
+          "id": 14609,
+          "slug": "02-2b-typescript",
+          "title": "2b. Typescript-ის დაყენება და გამოყენება",
+          "order": 202,
+          "videoUrl": "https://youtu.be/_DyKFFX6m9o",
+          "videoDuration": "7:33",
+          "isPreview": false
+        },
+        {
+          "id": 14610,
+          "slug": "03-2c-typescript",
+          "title": "2c. Typescript-ის საბაზისო ტიპები და პრიმიტივები",
+          "order": 203,
+          "videoUrl": "https://youtu.be/aKFkaEDPPpI",
+          "videoDuration": "2:24",
+          "isPreview": false
+        },
+        {
+          "id": 14611,
+          "slug": "04-2d-typescript-type-inference",
+          "title": "2d. Typescript-ის მასივისა და ობიექტის ტიპები. Type inference",
+          "order": 204,
+          "videoUrl": "https://youtu.be/ujJZN2z3tNY",
+          "videoDuration": "9:29",
+          "isPreview": false
+        },
+        {
+          "id": 14612,
+          "slug": "05-2e-typescript-union-types-type-alias",
+          "title": "2e. Typescript-ის Union Types და Type Alias",
+          "order": 205,
+          "videoUrl": "https://youtu.be/7Cuj5iiVk-s",
+          "videoDuration": "5:13",
+          "isPreview": false
+        },
+        {
+          "id": 14613,
+          "slug": "06-2f-typescript",
+          "title": "2f. Typescript-ის ფუნქციები და ფუნქციის ტიპები",
+          "order": 206,
+          "videoUrl": "https://youtu.be/KEN1_AUh7GA",
+          "videoDuration": "3:26",
+          "isPreview": false
+        },
+        {
+          "id": 14614,
+          "slug": "07-2g-typescript-generics",
+          "title": "2g. Typescript-ის ჯენერიკები(Generics)",
+          "order": 207,
+          "videoUrl": "https://youtu.be/d9DLGXK4jCk",
+          "videoDuration": "6:47",
+          "isPreview": false
+        },
+        {
+          "id": 14615,
+          "slug": "08-2h-typescript",
+          "title": "2h. Typescript-ის კლასები",
+          "order": 208,
+          "videoUrl": "https://youtu.be/kRD5nrvzPXU",
+          "videoDuration": "3:45",
+          "isPreview": false
+        },
+        {
+          "id": 14616,
+          "slug": "09-2i-typescript",
+          "title": "2i. Typescript-ის ინტერფეისები",
+          "order": 209,
+          "videoUrl": "https://youtu.be/GOBeUS34Vyc",
+          "videoDuration": "6:29",
+          "isPreview": false
+        }
+      ]
+    },
+    {
+      "id": 14617,
+      "slug": "03-3-angular",
+      "title": "3. Angular კომპონენტის შესავალი",
+      "order": 3,
+      "lessons": [
+        {
+          "id": 14618,
+          "slug": "01-3a-angular",
+          "title": "3a. Angular-ის კომპონენტის განხილვა",
+          "order": 301,
+          "videoUrl": "https://youtu.be/k157apczCG4",
+          "videoDuration": "9:06",
+          "isPreview": false
+        },
+        {
+          "id": 14619,
+          "slug": "02-3b",
+          "title": "3b. პირველი კომპონენტის შექმნა",
+          "order": 302,
+          "videoUrl": "https://youtu.be/YAllC7tT_Es",
+          "videoDuration": "18:19",
+          "isPreview": false
+        },
+        {
+          "id": 14620,
+          "slug": "03-3c-header-component",
+          "title": "3c. Header Component-ის გასტილვა",
+          "order": 303,
+          "videoUrl": "https://youtu.be/g2px9SQ5qLU",
+          "videoDuration": "6:12",
+          "isPreview": false
+        },
+        {
+          "id": 14621,
+          "slug": "04-3d-angular-cli",
+          "title": "3d. არსებული კომპონენტების მართვა და ახალი კომპონენტის შექმნა Angular CLI-ით",
+          "order": 304,
+          "videoUrl": "https://youtu.be/bqWY3ROgYwQ",
+          "videoDuration": "4:26",
+          "isPreview": false
+        },
+        {
+          "id": 14622,
+          "slug": "05-3e-task-component",
+          "title": "3e. Task component-ის გამოყენება",
+          "order": 305,
+          "videoUrl": "https://youtu.be/PsFHK0yOOOk",
+          "videoDuration": "5:27",
+          "isPreview": false
+        },
+        {
+          "id": 14623,
+          "slug": "06-3f-string-interpolation",
+          "title": "3f. ინფორმაციის გამოტანა String Interpolation-ის საშუალებით",
+          "order": 306,
+          "videoUrl": "https://youtu.be/kvCNn1K53aY",
+          "videoDuration": "9:19",
+          "isPreview": false
+        },
+        {
+          "id": 14624,
+          "slug": "07-3g-property-binding",
+          "title": "3g. Property binding",
+          "order": 307,
+          "videoUrl": "https://youtu.be/6neCYfqFXPc",
+          "videoDuration": "5:02",
+          "isPreview": false
+        },
+        {
+          "id": 14625,
+          "slug": "08-3h-user-event",
+          "title": "3h. User Event-ების მოსმენა",
+          "order": 308,
+          "videoUrl": "https://youtu.be/NFgVkx8XKyE",
+          "videoDuration": "7:13",
+          "isPreview": false
+        }
+      ]
+    },
+    {
+      "id": 14626,
+      "slug": "04-4-angular-inputs-outputs",
+      "title": "4. Angular კომპონენტის Inputs და Outputs",
+      "order": 4,
+      "lessons": [
+        {
+          "id": 14627,
+          "slug": "01-4a-component-inputs",
+          "title": "4a. Component Inputs",
+          "order": 401,
+          "videoUrl": "https://youtu.be/5ET7AiLKAHE",
+          "videoDuration": "12:12",
+          "isPreview": false
+        },
+        {
+          "id": 14628,
+          "slug": "02-4b-required-optional-inputs",
+          "title": "4b. Required და Optional Inputs",
+          "order": 402,
+          "videoUrl": "https://youtu.be/eqkCpSBpo0k",
+          "videoDuration": "2:46",
+          "isPreview": false
+        },
+        {
+          "id": 14629,
+          "slug": "03-4c-component-outputs",
+          "title": "4c. Component Outputs",
+          "order": 403,
+          "videoUrl": "https://youtu.be/8WOdZzWCNmU",
+          "videoDuration": "12:13",
+          "isPreview": false
+        },
+        {
+          "id": 14630,
+          "slug": "04-4d-type-output",
+          "title": "4d. Type ინფორმაციის დამატება Output ზე",
+          "order": 404,
+          "videoUrl": "https://youtu.be/IKyZoaSNvoc",
+          "videoDuration": "2:56",
+          "isPreview": false
+        }
+      ]
+    },
+    {
+      "id": 14631,
+      "slug": "05-5",
+      "title": "5. ჩაშენებული სტრუქტურული დირექტივები",
+      "order": 5,
+      "lessons": [
+        {
+          "id": 14632,
+          "slug": "01-5a-for",
+          "title": "5a. @for",
+          "order": 501,
+          "videoUrl": "https://youtu.be/3l0TJyh31bs",
+          "videoDuration": "7:27",
+          "isPreview": false
+        },
+        {
+          "id": 14633,
+          "slug": "02-5b-if",
+          "title": "5b. @if",
+          "order": 502,
+          "videoUrl": "https://youtu.be/9ciEcE5fH9g",
+          "videoDuration": "5:09",
+          "isPreview": false
+        },
+        {
+          "id": 14634,
+          "slug": "03-5c-ngif-ngfor",
+          "title": "5c. *ngIf და *ngFor",
+          "order": 503,
+          "videoUrl": "https://youtu.be/EMHFU2ktsZA",
+          "videoDuration": "7:00",
+          "isPreview": false
+        },
+        {
+          "id": 14635,
+          "slug": "04-5d-css-binding",
+          "title": "5d. ჩვეულენივი და დინამიკური CSS Binding",
+          "order": 504,
+          "videoUrl": "https://youtu.be/S6j-TcJE8Ps",
+          "videoDuration": "4:55",
+          "isPreview": false
+        }
+      ]
+    },
+    {
+      "id": 14654,
+      "slug": "06-6",
+      "title": "6. პრაქტიკა: ახალი კომპონენტების შექმნა და კოდის რეფაქტორება",
+      "order": 6,
+      "lessons": [
+        {
+          "id": 14655,
+          "slug": "01-6a-task-interface",
+          "title": "6a. Task-ის Interface-ზე რეფაქტორება",
+          "order": 601,
+          "videoUrl": "https://youtu.be/iIYH0NnQ_VI",
+          "videoDuration": "4:55",
+          "isPreview": false
+        },
+        {
+          "id": 14656,
+          "slug": "02-6b-task-detail",
+          "title": "6b. Task Detail კომპონენტის შექმნა",
+          "order": 602,
+          "videoUrl": "https://youtu.be/GlRwvxyuqHk",
+          "videoDuration": "10:15",
+          "isPreview": false
+        }
+      ]
+    },
+    {
+      "id": 14657,
+      "slug": "07-7-angular",
+      "title": "7. Angular მოდულები",
+      "order": 7,
+      "lessons": [
+        {
+          "id": 14658,
+          "slug": "01-7a-angular-angular",
+          "title": "7a. Angular მოდულის მიმოხილვა და პირველი Angular მოდულის შექმნა",
+          "order": 701,
+          "videoUrl": "https://youtu.be/b7Vg7S_08Ro",
+          "videoDuration": "15:33",
+          "isPreview": false
+        },
+        {
+          "id": 14659,
+          "slug": "02-7b-standalone-angular-module",
+          "title": "7b. Standalone კომპონენტებიდან Angular Module-ზე მიგრაცია",
+          "order": 702,
+          "videoUrl": "https://youtu.be/6YuFKO1db3k",
+          "videoDuration": "1:24",
+          "isPreview": false
+        },
+        {
+          "id": 14660,
+          "slug": "03-7c",
+          "title": "7c. კომპონენტ-მოდულის შექმნა",
+          "order": 703,
+          "videoUrl": "https://youtu.be/x530RCOg3_Y",
+          "videoDuration": "6:38",
+          "isPreview": false
+        }
+      ]
+    },
+    {
+      "id": 14661,
+      "slug": "08-8",
+      "title": "8. კომპონენტის სიღრმისეული განხილვა",
+      "order": 8,
+      "lessons": [
+        {
+          "id": 14663,
+          "slug": "01-8a-content-projection-ngcontent",
+          "title": "8a. Content Projection NgContent-ის გამოყენებით",
+          "order": 801,
+          "videoUrl": "https://youtu.be/Xh8ThmKAJa4",
+          "videoDuration": "7:49",
+          "isPreview": false
+        },
+        {
+          "id": 14664,
+          "slug": "02-8b-content-projection",
+          "title": "8b. მრავალსლოტიანი Content Projection",
+          "order": 802,
+          "videoUrl": "https://youtu.be/rfMQ7FCDvbs",
+          "videoDuration": "8:29",
+          "isPreview": false
+        },
+        {
+          "id": 14665,
+          "slug": "03-8c-css",
+          "title": "8c. CSS სტილების გავრცელების არეალი",
+          "order": 803,
+          "videoUrl": "https://youtu.be/Z_3mn1QCKiQ",
+          "videoDuration": "8:34",
+          "isPreview": false
+        },
+        {
+          "id": 14666,
+          "slug": "04-8d-lifecycle",
+          "title": "8d. Lifecycle-ის მიმოხილვა",
+          "order": 804,
+          "videoUrl": "https://youtu.be/Nv_l2Sjm-EQ",
+          "videoDuration": "7:02",
+          "isPreview": false
+        },
+        {
+          "id": 14667,
+          "slug": "05-8e-lifecycle",
+          "title": "8e. Lifecycle კომპონენტის შექმნა",
+          "order": 805,
+          "videoUrl": "https://youtu.be/B7NSpKV0LeA",
+          "videoDuration": "9:50",
+          "isPreview": false
+        },
+        {
+          "id": 14668,
+          "slug": "06-8f-lifecycle-hook",
+          "title": "8f. Lifecycle Hook-ების პრაქტიკული განხილვა",
+          "order": 806,
+          "videoUrl": "https://youtu.be/1LdLvqe5xlg",
+          "videoDuration": "12:40",
+          "isPreview": false
+        },
+        {
+          "id": 14669,
+          "slug": "07-8g-host",
+          "title": "8g. Host ელემენტები",
+          "order": 807,
+          "videoUrl": "https://youtu.be/9O9ujRuHtSU",
+          "videoDuration": "3:24",
+          "isPreview": false
+        },
+        {
+          "id": 14670,
+          "slug": "08-8h-hostlistener-hostbinding",
+          "title": "8h. @HostListener და @HostBinding-ის გამოყენება",
+          "order": 808,
+          "videoUrl": "https://youtu.be/8wZdB74-KQc",
+          "videoDuration": "10:56",
+          "isPreview": false
+        },
+        {
+          "id": 14671,
+          "slug": "09-8i-css",
+          "title": "8i. CSS კლასის დინამიურად მინიჭების ვარიანტები",
+          "order": 809,
+          "videoUrl": "https://youtu.be/cz5voBcQ96A",
+          "videoDuration": "8:20",
+          "isPreview": false
+        },
+        {
+          "id": 14672,
+          "slug": "10-8j-two-way",
+          "title": "8j. ორმხრივი (Two-Way) მონაცემთა ბაინდინგი",
+          "order": 810,
+          "videoUrl": "https://youtu.be/T_tHIA7vLq0",
+          "videoDuration": "15:06",
+          "isPreview": false
+        },
+        {
+          "id": 14673,
+          "slug": "11-8k-template-template-variables",
+          "title": "8k. Template-ის ცვლადები (Template Variables)",
+          "order": 811,
+          "videoUrl": "https://youtu.be/hvrq25itcUc",
+          "videoDuration": "9:36",
+          "isPreview": false
+        },
+        {
+          "id": 14674,
+          "slug": "12-8l-viewchild-vs-contentchild",
+          "title": "8l. ViewChild Vs ContentChild",
+          "order": 812,
+          "videoUrl": "https://youtu.be/9ZTGbJDDeUg",
+          "videoDuration": "7:32",
+          "isPreview": false
+        },
+        {
+          "id": 14675,
+          "slug": "13-8m-lifecycle-hooks",
+          "title": "8m. Lifecycle Hooks-ის განმეორებითი განხილვა",
+          "order": 813,
+          "videoUrl": "https://youtu.be/HXF-ESLNgdk",
+          "videoDuration": "10:16",
+          "isPreview": false
+        },
+        {
+          "id": 14676,
+          "slug": "14-8n-input-output",
+          "title": "8n. მეტი Input-სა და Output-ზე",
+          "order": 814,
+          "videoUrl": "https://youtu.be/XFeQ_dcPSPQ",
+          "videoDuration": "6:31",
+          "isPreview": false
+        },
+        {
+          "id": 14677,
+          "slug": "15-8o-custom-two-way",
+          "title": "8o. მომხმარებლის მიერ განსაზღვრული (Custom) ორმხრივი (Two-Way) მონაცემთა ბაინდინგი",
+          "order": 815,
+          "videoUrl": "https://youtu.be/AZaMNGoWhvQ",
+          "videoDuration": "18:34",
+          "isPreview": false
+        }
+      ]
+    },
+    {
+      "id": 14678,
+      "slug": "09-9-pipes",
+      "title": "9. Pipes",
+      "order": 9,
+      "lessons": [
+        {
+          "id": 14679,
+          "slug": "01-9a-pipes-date-pipe",
+          "title": "9a. რა არის Pipes და Date Pipe-ის გამოყენება",
+          "order": 901,
+          "videoUrl": "https://youtu.be/-vrXusqycmM",
+          "videoDuration": "13:05",
+          "isPreview": false
+        },
+        {
+          "id": 14680,
+          "slug": "02-9b-built-in-pipes",
+          "title": "9b. სხვა ჩაშენებული (Built-in) Pipes",
+          "order": 902,
+          "videoUrl": "https://youtu.be/hDj5eljWnZ4",
+          "videoDuration": "16:49",
+          "isPreview": false
+        },
+        {
+          "id": 14681,
+          "slug": "03-9c-custom-pipe",
+          "title": "9c. პირველი მომხმარებლის მიერ განსაზღვრული (Custom) Pipe-ის შექმნა",
+          "order": 903,
+          "videoUrl": "https://youtu.be/Es8FzEpog74",
+          "videoDuration": "9:49",
+          "isPreview": false
+        },
+        {
+          "id": 14682,
+          "slug": "04-9d-pipes-pipes-combine",
+          "title": "9d. Pipes-ში პარამეტრების მიღება და Pipes-ის გაერთიანება (Combine)",
+          "order": 904,
+          "videoUrl": "https://youtu.be/g_ocH4ofkvs",
+          "videoDuration": "6:22",
+          "isPreview": false
+        },
+        {
+          "id": 14683,
+          "slug": "05-9e-pipe-impure-vs-pure-pipes",
+          "title": "9e. Pipe-ის სორტირებისთვის გამოყენება და Impure vs Pure Pipes",
+          "order": 905,
+          "videoUrl": "https://youtu.be/CTj5zUQnzkw",
+          "videoDuration": "12:06",
+          "isPreview": false
+        }
+      ]
+    },
+    {
+      "id": 14684,
+      "slug": "10-10-dependencies-injection",
+      "title": "10. სერვისები და Dependencies Injection შესავალი",
+      "order": 10,
+      "lessons": [
+        {
+          "id": 14685,
+          "slug": "01-10a",
+          "title": "10a. რა არის სერვისი?",
+          "order": 1001,
+          "videoUrl": "https://youtu.be/93J59ZbhUig",
+          "videoDuration": "2:16",
+          "isPreview": false
+        },
+        {
+          "id": 14686,
+          "slug": "02-10b-task-list",
+          "title": "10b. Task List კომპონენტის დამატება",
+          "order": 1002,
+          "videoUrl": "https://youtu.be/6j3Z-lvi3io",
+          "videoDuration": "5:05",
+          "isPreview": false
+        },
+        {
+          "id": 14687,
+          "slug": "03-10c",
+          "title": "10c. პირველი სერვისის შექმნა",
+          "order": 1003,
+          "videoUrl": "https://youtu.be/iBohT9uz2GM",
+          "videoDuration": "11:22",
+          "isPreview": false
+        },
+        {
+          "id": 14688,
+          "slug": "04-10d-dependency-injection",
+          "title": "10d. Dependency Injection-ის გამოყენება",
+          "order": 1004,
+          "videoUrl": "https://youtu.be/MOZ2EVJeS84",
+          "videoDuration": "4:13",
+          "isPreview": false
+        },
+        {
+          "id": 14689,
+          "slug": "05-10e-dependency-injection",
+          "title": "10e. Dependency Injection-ის ალტერნატიული სინტაქსი",
+          "order": 1005,
+          "videoUrl": "https://youtu.be/IqHdMov81VU",
+          "videoDuration": "3:38",
+          "isPreview": false
+        }
+      ]
+    },
+    {
+      "id": 14690,
+      "slug": "11-11-signals",
+      "title": "11. Signals",
+      "order": 11,
+      "lessons": [
+        {
+          "id": 14691,
+          "slug": "01-11a-data",
+          "title": "11a. მონაცემთა (Data) განახლება კომპონენტში და სერვისში",
+          "order": 1101,
+          "videoUrl": "https://youtu.be/2MeUX_MFNis",
+          "videoDuration": "10:36",
+          "isPreview": false
+        },
+        {
+          "id": 14692,
+          "slug": "02-11b-signals",
+          "title": "11b. Signals-ის შესავალი",
+          "order": 1102,
+          "videoUrl": "https://youtu.be/h7UJCG2Phm8",
+          "videoDuration": "10:34",
+          "isPreview": false
+        },
+        {
+          "id": 14693,
+          "slug": "03-11c-signal",
+          "title": "11c. Signal-ის შექმნა და განახლება",
+          "order": 1103,
+          "videoUrl": "https://youtu.be/Qrp781nEECk",
+          "videoDuration": "6:12",
+          "isPreview": false
+        },
+        {
+          "id": 14694,
+          "slug": "04-11d-set-update-signals",
+          "title": "11d. Set და Update მეთოდები Signals-ში",
+          "order": 1104,
+          "videoUrl": "https://youtu.be/3cR2phs859E",
+          "videoDuration": "4:09",
+          "isPreview": false
+        },
+        {
+          "id": 14695,
+          "slug": "05-11e-signal",
+          "title": "11e. Signal-ის დამატებითი ფუნქციონალი",
+          "order": 1105,
+          "videoUrl": "https://youtu.be/1OzdVYofh5A",
+          "videoDuration": "3:50",
+          "isPreview": false
+        }
+      ]
+    },
+    {
+      "id": 14696,
+      "slug": "12-12-change-detection",
+      "title": "12. Change Detection-ის სიღრმისეული განხილვა",
+      "order": 12,
+      "lessons": [
+        {
+          "id": 14697,
+          "slug": "01-12a-change-detection",
+          "title": "12a. Change Detection-ის შესავალი",
+          "order": 1201,
+          "videoUrl": "https://youtu.be/BsxhDFkVQYI",
+          "videoDuration": "1:22",
+          "isPreview": false
+        },
+        {
+          "id": 14698,
+          "slug": "02-12b",
+          "title": "12b. სატესტო პროექტის მომზადება",
+          "order": 1202,
+          "videoUrl": "https://youtu.be/yGCoIYakfQs",
+          "videoDuration": "17:14",
+          "isPreview": false
+        },
+        {
+          "id": 14699,
+          "slug": "03-12ba",
+          "title": "12ba. სატესტო პროექტის შექმნა გაგრძელება",
+          "order": 1203,
+          "videoUrl": "https://youtu.be/BgZHGuvsMB8",
+          "videoDuration": "1:52",
+          "isPreview": false
+        },
+        {
+          "id": 14700,
+          "slug": "04-12c-angular-change-detection",
+          "title": "12c. როგორ აღძრავს Angular Change Detection-ს?",
+          "order": 1204,
+          "videoUrl": "https://youtu.be/lqF0EiDd-J0",
+          "videoDuration": "6:04",
+          "isPreview": false
+        },
+        {
+          "id": 14701,
+          "slug": "05-12d-expressionchangedafterchecked-error",
+          "title": "12d. ExpressionChangedAfterChecked შეცდომა (Error)",
+          "order": 1205,
+          "videoUrl": "https://youtu.be/2E8WTNDeRvk",
+          "videoDuration": "4:10",
+          "isPreview": false
+        },
+        {
+          "id": 14702,
+          "slug": "06-12e-get",
+          "title": "12e. არ გამოვიყენოთ get მეთოდი კომპონენტში",
+          "order": 1206,
+          "videoUrl": "https://youtu.be/CIWhcJ8q3TI",
+          "videoDuration": "1:50",
+          "isPreview": false
+        },
+        {
+          "id": 14703,
+          "slug": "07-12f-change-detection",
+          "title": "12f. Change Detection-ის თავიდან აცილება არასაჭირო შემთხვევაში",
+          "order": 1207,
+          "videoUrl": "https://youtu.be/rvMJybOcBdc",
+          "videoDuration": "6:31",
+          "isPreview": false
+        },
+        {
+          "id": 14704,
+          "slug": "08-12g-onpush",
+          "title": "12g. OnPush-ის გამოყენება",
+          "order": 1208,
+          "videoUrl": "https://youtu.be/__fMnPePGWY",
+          "videoDuration": "3:18",
+          "isPreview": false
+        },
+        {
+          "id": 14705,
+          "slug": "09-12h-onpush",
+          "title": "12h. როგორ მუშაობს OnPush",
+          "order": 1209,
+          "videoUrl": "https://youtu.be/QDSVNufP2MA",
+          "videoDuration": "14:29",
+          "isPreview": false
+        },
+        {
+          "id": 14706,
+          "slug": "10-12i-onpush-signals",
+          "title": "12i. OnPush და Signals",
+          "order": 1210,
+          "videoUrl": "https://youtu.be/2zVotP5e0Pk",
+          "videoDuration": "1:57",
+          "isPreview": false
+        },
+        {
+          "id": 14707,
+          "slug": "11-12j-signal",
+          "title": "12j. ინფორმაციის გაზიარება სერვისში Signal-ის დამატებით",
+          "order": 1211,
+          "videoUrl": "https://youtu.be/_fwx-kUutxk",
+          "videoDuration": "4:20",
+          "isPreview": false
+        },
+        {
+          "id": 14708,
+          "slug": "12-12k-signal",
+          "title": "12k. ინფორმაციის გაზიარება სერვისში Signal-ის გარეშე",
+          "order": 1212,
+          "videoUrl": "https://youtu.be/0Em_e66kVpE",
+          "videoDuration": "2:30",
+          "isPreview": false
+        },
+        {
+          "id": 14709,
+          "slug": "13-12l-change-detection-rxjs",
+          "title": "12l. Change Detection-ის ხელით აღძვრა და RxJS-ის გამოყენება",
+          "order": 1213,
+          "videoUrl": "https://youtu.be/ZI_uVEeBVck",
+          "videoDuration": "12:19",
+          "isPreview": false
+        },
+        {
+          "id": 14710,
+          "slug": "14-12m-async-pipe",
+          "title": "12m. Async Pipe",
+          "order": 1214,
+          "videoUrl": "https://youtu.be/oL8jSMFXlZ8",
+          "videoDuration": "4:49",
+          "isPreview": false
+        },
+        {
+          "id": 14711,
+          "slug": "15-12n-zonejs",
+          "title": "12n. Zone.js-ის ამოღება",
+          "order": 1215,
+          "videoUrl": "https://youtu.be/tcd8l9zcxGA",
+          "videoDuration": "10:14",
+          "isPreview": false
+        }
+      ]
+    },
+    {
+      "id": 14712,
+      "slug": "13-13-rxjs",
+      "title": "13. RxJS",
+      "order": 13,
+      "lessons": [
+        {
+          "id": 14713,
+          "slug": "01-13a-rxjs",
+          "title": "13a. RxJS-ის შესავალი",
+          "order": 1301,
+          "videoUrl": "https://youtu.be/F-1rtZtbdXs",
+          "videoDuration": "1:32",
+          "isPreview": false
+        },
+        {
+          "id": 14714,
+          "slug": "02-13b-observable",
+          "title": "13b. Observable-ების შექმნა და გამოყენება",
+          "order": 1302,
+          "videoUrl": "https://youtu.be/6eZ0VEQZPq8",
+          "videoDuration": "11:44",
+          "isPreview": false
+        },
+        {
+          "id": 14715,
+          "slug": "03-13c-rxjs",
+          "title": "13c. RxJS ოპერატორები",
+          "order": 1303,
+          "videoUrl": "https://youtu.be/RZF5zQrn9Bs",
+          "videoDuration": "5:23",
+          "isPreview": false
+        },
+        {
+          "id": 14716,
+          "slug": "04-13d-observable-signals",
+          "title": "13d. Observable და Signals",
+          "order": 1304,
+          "videoUrl": "https://youtu.be/Aek79bnHqGI",
+          "videoDuration": "3:52",
+          "isPreview": false
+        },
+        {
+          "id": 14717,
+          "slug": "05-13e-signals-vs-observables",
+          "title": "13e. Signals vs Observables",
+          "order": 1305,
+          "videoUrl": "https://youtu.be/CaMmji3LlmQ",
+          "videoDuration": "7:35",
+          "isPreview": false
+        },
+        {
+          "id": 14718,
+          "slug": "06-13f-signal-observable",
+          "title": "13f. Signal-დან Observable-ში კონვერტაცია",
+          "order": 1306,
+          "videoUrl": "https://youtu.be/GG6I44vlDcA",
+          "videoDuration": "3:59",
+          "isPreview": false
+        },
+        {
+          "id": 14719,
+          "slug": "07-13g-observable-signal",
+          "title": "13g. Observable-დან Signal-ში კონვერტაცია",
+          "order": 1307,
+          "videoUrl": "https://youtu.be/4qrZ3t7ZV9s",
+          "videoDuration": "4:25",
+          "isPreview": false
+        },
+        {
+          "id": 14720,
+          "slug": "08-13h-custom-observable",
+          "title": "13h. Custom Observable-ის შექმნა",
+          "order": 1308,
+          "videoUrl": "https://youtu.be/gV4dsUSvZDs",
+          "videoDuration": "10:44",
+          "isPreview": false
+        }
+      ]
+    },
+    {
+      "id": 14721,
+      "slug": "14-14-angular-http",
+      "title": "14. Angular HTTP",
+      "order": 14,
+      "lessons": [
+        {
+          "id": 14722,
+          "slug": "01-14a-http",
+          "title": "14a. HTTP-ის შესავალი",
+          "order": 1401,
+          "videoUrl": "https://youtu.be/LBvA5WxEBRk",
+          "videoDuration": "1:00",
+          "isPreview": false
+        },
+        {
+          "id": 14723,
+          "slug": "02-14b-backend",
+          "title": "14b. პროექტის დაწყება და Backend-ის მომზადება",
+          "order": 1402,
+          "videoUrl": "https://youtu.be/PofbE5aG5mw",
+          "videoDuration": "8:10",
+          "isPreview": false
+        },
+        {
+          "id": 14724,
+          "slug": "03-14c-angular-httpclient-inject",
+          "title": "14c. Angular HttpClient-ის ჩასმა (Inject)",
+          "order": 1403,
+          "videoUrl": "https://youtu.be/gpmxsTxk6cU",
+          "videoDuration": "9:37",
+          "isPreview": false
+        },
+        {
+          "id": 14725,
+          "slug": "04-14d-get",
+          "title": "14d. GET-ის გაგზავნა მონაცემთა მისაღებად",
+          "order": 1404,
+          "videoUrl": "https://youtu.be/qwqIdmFECgE",
+          "videoDuration": "7:40",
+          "isPreview": false
+        },
+        {
+          "id": 14726,
+          "slug": "05-14e-request",
+          "title": "14e. Request-ების დაკონფიგურირება",
+          "order": 1405,
+          "videoUrl": "https://www.youtube.com/watch?v=vM3HNhhX17w",
+          "videoDuration": "3:37",
+          "isPreview": false
+        },
+        {
+          "id": 14727,
+          "slug": "06-14f-template",
+          "title": "14f. Template-ში მონაცემების გამოტანა",
+          "order": 1406,
+          "videoUrl": "https://youtu.be/nmSMIzCLyWA",
+          "videoDuration": "4:55",
+          "isPreview": false
+        },
+        {
+          "id": 14728,
+          "slug": "07-14g-loading",
+          "title": "14g. Loading-ის ჩვენება",
+          "order": 1407,
+          "videoUrl": "https://youtu.be/n1BRU-2nSKA",
+          "videoDuration": "5:17",
+          "isPreview": false
+        },
+        {
+          "id": 14729,
+          "slug": "08-14h-error-handling",
+          "title": "14h. შეცდომების დამუშავება (Error Handling)",
+          "order": 1408,
+          "videoUrl": "https://youtu.be/_CpP4LjShyU",
+          "videoDuration": "10:11",
+          "isPreview": false
+        },
+        {
+          "id": 14730,
+          "slug": "09-14i-put",
+          "title": "14i. მონაცემების გაგზავნა ბექენდთან PUT მეთოდით",
+          "order": 1409,
+          "videoUrl": "https://youtu.be/OVSnt3bIhzU",
+          "videoDuration": "9:51",
+          "isPreview": false
+        },
+        {
+          "id": 14731,
+          "slug": "10-14j-post",
+          "title": "14j. მონაცემების გაგზავნა ბექენდთან POST მეთოდით",
+          "order": 1410,
+          "videoUrl": "https://youtu.be/yl_fQmzvP6A",
+          "videoDuration": "4:41",
+          "isPreview": false
+        },
+        {
+          "id": 14732,
+          "slug": "11-14k",
+          "title": "14k. სერვისის გამოყენება",
+          "order": 1411,
+          "videoUrl": "https://youtu.be/qBzyxVa3hYM",
+          "videoDuration": "7:56",
+          "isPreview": false
+        },
+        {
+          "id": 14733,
+          "slug": "12-14l-task-list",
+          "title": "14l. Task List-ის განახლება",
+          "order": 1412,
+          "videoUrl": "https://youtu.be/cTZTsdN7MsY",
+          "videoDuration": "4:52",
+          "isPreview": false
+        },
+        {
+          "id": 14734,
+          "slug": "13-14m-delete-request",
+          "title": "14m. Delete Request",
+          "order": 1413,
+          "videoUrl": "https://youtu.be/QQEvX76GryQ",
+          "videoDuration": "4:27",
+          "isPreview": false
+        },
+        {
+          "id": 14735,
+          "slug": "14-14n-interceptors",
+          "title": "14n. Interceptors",
+          "order": 1414,
+          "videoUrl": "https://youtu.be/13a7gUgZxN0",
+          "videoDuration": "11:05",
+          "isPreview": false
+        },
+        {
+          "id": 14736,
+          "slug": "15-14o-class-interceptor",
+          "title": "14o. Class Interceptor",
+          "order": 1415,
+          "videoUrl": "https://youtu.be/nMpc75awGUE",
+          "videoDuration": "4:45",
+          "isPreview": false
+        }
+      ]
+    },
+    {
+      "id": 14737,
+      "slug": "15-15-dependency-injection",
+      "title": "15. Dependency Injection-ის სიღრმისეული განხილვა",
+      "order": 15,
+      "lessons": [
+        {
+          "id": 14738,
+          "slug": "01-15a",
+          "title": "15a. სერვისის შექმნის სხვადასხვა გზები",
+          "order": 1501,
+          "videoUrl": "https://youtu.be/f3v_hsjLXkI",
+          "videoDuration": "11:13",
+          "isPreview": false
+        },
+        {
+          "id": 14739,
+          "slug": "02-15b-element-injectors",
+          "title": "15b. Element Injectors",
+          "order": 1502,
+          "videoUrl": "https://youtu.be/GdaTpOZalzA",
+          "videoDuration": "5:37",
+          "isPreview": false
+        },
+        {
+          "id": 14740,
+          "slug": "03-15c-injection-angular-devtools",
+          "title": "15c. სერვისის სერვისში Injection და Angular DevTools",
+          "order": 1503,
+          "videoUrl": "https://youtu.be/uQxGpOHzkyA",
+          "videoDuration": "7:42",
+          "isPreview": false
+        },
+        {
+          "id": 14741,
+          "slug": "04-15d-custom-di-tokens",
+          "title": "15d. მომხმარებლის მიერ განსაზღვრული (Custom) DI Tokens",
+          "order": 1504,
+          "videoUrl": "https://youtu.be/_J7uQkdLVgU",
+          "videoDuration": "9:18",
+          "isPreview": false
+        },
+        {
+          "id": 14742,
+          "slug": "05-15e-non-class-injections",
+          "title": "15e. Non Class Injections",
+          "order": 1505,
+          "videoUrl": "https://youtu.be/h0wXopPlyO4",
+          "videoDuration": "10:45",
+          "isPreview": false
+        },
+        {
+          "id": 14743,
+          "slug": "06-15f-ngmodule-dependency-injection-di",
+          "title": "15f. NgModule და Dependency Injection (DI)",
+          "order": 1506,
+          "videoUrl": "https://youtu.be/00nwmMfdqG8",
+          "videoDuration": "4:18",
+          "isPreview": false
+        }
+      ]
+    },
+    {
+      "id": 14744,
+      "slug": "16-16-directives",
+      "title": "16. Directives",
+      "order": 16,
+      "lessons": [
+        {
+          "id": 14745,
+          "slug": "01-16a-directive",
+          "title": "16a. Directive-ის შესავალი",
+          "order": 1601,
+          "videoUrl": "https://youtu.be/ChmWqMXviUY",
+          "videoDuration": "2:46",
+          "isPreview": false
+        },
+        {
+          "id": 14746,
+          "slug": "02-16b",
+          "title": "16b. ჩაშენებული დირექტივების მიმოხილვა",
+          "order": 1602,
+          "videoUrl": "https://youtu.be/-VO81l9XL4I",
+          "videoDuration": "8:31",
+          "isPreview": false
+        },
+        {
+          "id": 14747,
+          "slug": "03-16c-custom",
+          "title": "16c. პირველი მომხმარებლის მიერ განსაზღვრული (Custom) დირექტივის შექმნა",
+          "order": 1603,
+          "videoUrl": "https://youtu.be/J7ddwpD-MhU",
+          "videoDuration": "8:28",
+          "isPreview": false
+        },
+        {
+          "id": 14748,
+          "slug": "04-16d-directive-inputs-outputs",
+          "title": "16d. Directive-ის Inputs და Outputs",
+          "order": 1604,
+          "videoUrl": "https://youtu.be/Q7sdj0IbdGc",
+          "videoDuration": "8:02",
+          "isPreview": false
+        },
+        {
+          "id": 14749,
+          "slug": "05-16e-directives-dependency-injection-di",
+          "title": "16e. Directives და Dependency Injection (DI)",
+          "order": 1605,
+          "videoUrl": "https://youtu.be/O5hcmGkdlwY",
+          "videoDuration": "2:07",
+          "isPreview": false
+        }
+      ]
+    },
+    {
+      "id": 18164,
+      "slug": "17-17-template-driven-forms",
+      "title": "17. Template Driven Forms",
+      "order": 17,
+      "lessons": [
+        {
+          "id": 18165,
+          "slug": "01-17a-forms",
+          "title": "17a. Forms შესავალი",
+          "order": 1701,
+          "videoUrl": "https://youtu.be/ROtLsj2hU9Q",
+          "videoDuration": "3:33",
+          "isPreview": false
+        },
+        {
+          "id": 18166,
+          "slug": "02-17b-template-driven-forms",
+          "title": "17b, Template Driven Forms შესავალი",
+          "order": 1702,
+          "videoUrl": "https://youtu.be/CZ23M8zzFww",
+          "videoDuration": "10:55",
+          "isPreview": false
+        },
+        {
+          "id": 18167,
+          "slug": "03-17c-template-drive-form",
+          "title": "17c. Template Drive Form დან მნიშვნელობების ამოღება",
+          "order": 1703,
+          "videoUrl": "https://youtu.be/E2U1S01N-wY",
+          "videoDuration": "12:08",
+          "isPreview": false
+        },
+        {
+          "id": 18168,
+          "slug": "04-17d-template-driven-forms",
+          "title": "17d. Template Driven Forms ვალიდაციის შესავალი",
+          "order": 1704,
+          "videoUrl": "https://youtu.be/69LMZ1rJitw",
+          "videoDuration": "8:44",
+          "isPreview": false
+        },
+        {
+          "id": 18169,
+          "slug": "05-17e-template-driven-forms",
+          "title": "17e. Template Driven Forms ვალიდაცია — დეტალური განხილვა",
+          "order": 1705,
+          "videoUrl": "https://youtu.be/Qu_CopaHWb8",
+          "videoDuration": "8:19",
+          "isPreview": false
+        }
+      ]
+    },
+    {
+      "id": 19881,
+      "slug": "18-18-reactive-forms",
+      "title": "18. Reactive Forms",
+      "order": 18,
+      "lessons": [
+        {
+          "id": 19882,
+          "slug": "01-18a-reactive-forms",
+          "title": "18a. Reactive Forms შესავალი",
+          "order": 1801,
+          "videoUrl": "https://youtu.be/ToK2cGuH5Ss",
+          "videoDuration": "6:07",
+          "isPreview": false
+        },
+        {
+          "id": 19883,
+          "slug": "02-18b-reactive-form-html",
+          "title": "18b. Reactive Form-ის HTML თან დაკავშირება",
+          "order": 1802,
+          "videoUrl": "https://youtu.be/WEeSJ6zPhDE",
+          "videoDuration": "5:14",
+          "isPreview": false
+        },
+        {
+          "id": 19884,
+          "slug": "03-18c-reactive-form",
+          "title": "18c. Reactive Form-ის ვალიდაციები",
+          "order": 1803,
+          "videoUrl": "https://youtu.be/53WFTZeycc4",
+          "videoDuration": "6:54",
+          "isPreview": false
+        },
+        {
+          "id": 19885,
+          "slug": "04-18d-custom",
+          "title": "18d. Custom ვალიდატორები",
+          "order": 1804,
+          "videoUrl": "https://youtu.be/_tcr3Lc0KMY",
+          "videoDuration": "6:35",
+          "isPreview": false
+        },
+        {
+          "id": 19886,
+          "slug": "05-18e-async",
+          "title": "18e. ასინქრონული (Async) ვალიდატორი",
+          "order": 1805,
+          "videoUrl": "https://youtu.be/46h_TtqyJEY",
+          "videoDuration": "4:00",
+          "isPreview": false
+        },
+        {
+          "id": 19887,
+          "slug": "06-18f-signup",
+          "title": "18f. SignUp ფორმის შექმნა",
+          "order": 1806,
+          "videoUrl": "https://youtu.be/wiMlplAwf8s",
+          "videoDuration": "7:48",
+          "isPreview": false
+        },
+        {
+          "id": 19889,
+          "slug": "07-18g-formgroup",
+          "title": "18g. ჩადგმული FormGroup-ები",
+          "order": 1807,
+          "videoUrl": "https://youtu.be/_5khjvYSK3c",
+          "videoDuration": "7:09",
+          "isPreview": false
+        },
+        {
+          "id": 19890,
+          "slug": "08-18h-formcontrol-select-option",
+          "title": "18h. FormControl Select Option-ისთვის",
+          "order": 1808,
+          "videoUrl": "https://youtu.be/nCBYfy9ZZkU",
+          "videoDuration": "2:40",
+          "isPreview": false
+        },
+        {
+          "id": 19891,
+          "slug": "09-18i-formarray",
+          "title": "18i. FormArray",
+          "order": 1809,
+          "videoUrl": "https://youtu.be/NpENEbgdlgs",
+          "videoDuration": "4:13",
+          "isPreview": false
+        },
+        {
+          "id": 19892,
+          "slug": "10-18j-formgroup",
+          "title": "18j. FormGroup-ის ვალიდაციები",
+          "order": 1810,
+          "videoUrl": "https://youtu.be/x7SopNf-z9g",
+          "videoDuration": "8:03",
+          "isPreview": false
+        }
+      ]
+    },
+    {
+      "id": 21867,
+      "slug": "19-19-routing",
+      "title": "19. Routing",
+      "order": 19,
+      "lessons": [
+        {
+          "id": 21868,
+          "slug": "01-19a-routing",
+          "title": "19a. Routing შესავალი",
+          "order": 1901,
+          "videoUrl": "https://youtu.be/yctXoqHUbl0",
+          "videoDuration": "1:49",
+          "isPreview": false
+        },
+        {
+          "id": 21869,
+          "slug": "02-19b-routing",
+          "title": "19b. რა არის Routing?",
+          "order": 1902,
+          "videoUrl": "https://youtu.be/CMdlsHgUhpk",
+          "videoDuration": "2:45",
+          "isPreview": false
+        },
+        {
+          "id": 21870,
+          "slug": "03-19c-route",
+          "title": "19c. პირველი Route - ის დამატება",
+          "order": 1903,
+          "videoUrl": "https://youtu.be/wR-s3HNN19o",
+          "videoDuration": "6:51",
+          "isPreview": false
+        },
+        {
+          "id": 21871,
+          "slug": "04-19d-route",
+          "title": "19d. Route-ის დარენდერება",
+          "order": 1904,
+          "videoUrl": "https://youtu.be/cJpoU3U9xps",
+          "videoDuration": "3:43",
+          "isPreview": false
+        },
+        {
+          "id": 21872,
+          "slug": "05-19e-route",
+          "title": "19e. რამდენიმე route-ის დარენდერება",
+          "order": 1905,
+          "videoUrl": "https://youtu.be/gEjmI-VQ6P0",
+          "videoDuration": "4:14",
+          "isPreview": false
+        },
+        {
+          "id": 21873,
+          "slug": "06-19f",
+          "title": "19f. ლინკების დამატება",
+          "order": 1906,
+          "videoUrl": "https://youtu.be/JCnMYhr64f4",
+          "videoDuration": "5:01",
+          "isPreview": false
+        },
+        {
+          "id": 21874,
+          "slug": "07-19g-route",
+          "title": "19g. აქტიური route ის გასტილვა",
+          "order": 1907,
+          "videoUrl": "https://youtu.be/mB26nvZhfzk",
+          "videoDuration": "2:59",
+          "isPreview": false
+        },
+        {
+          "id": 21875,
+          "slug": "08-19h-route",
+          "title": "19h. დინამიური route -ის დამატება",
+          "order": 1908,
+          "videoUrl": "https://youtu.be/kIW-96MKVW8",
+          "videoDuration": "6:05",
+          "isPreview": false
+        },
+        {
+          "id": 21876,
+          "slug": "09-19i-route-input",
+          "title": "19i. დინამიური route პარამეტრის ამოღება input-ით",
+          "order": 1909,
+          "videoUrl": "https://youtu.be/Ho3cSPsP4Ac",
+          "videoDuration": "4:57",
+          "isPreview": false
+        },
+        {
+          "id": 21877,
+          "slug": "10-19j-route-observable",
+          "title": "19j. დინამიური route პარამეტრის ამოღება observable-თ",
+          "order": 1910,
+          "videoUrl": "https://youtu.be/VeVZdT8f_XE",
+          "videoDuration": "7:31",
+          "isPreview": false
+        },
+        {
+          "id": 21878,
+          "slug": "11-19k-nested-routes",
+          "title": "19k. Nested Routes-ის სატესტო გარემო",
+          "order": 1911,
+          "videoUrl": "https://www.youtube.com/watch?v=v8E5QGb7a40",
+          "videoDuration": "3:23",
+          "isPreview": false
+        },
+        {
+          "id": 21879,
+          "slug": "12-19l-nested-route",
+          "title": "19l. Nested Route დარეგისტრირება",
+          "order": 1912,
+          "videoUrl": "https://youtu.be/XXzYiRFfw_Q",
+          "videoDuration": "9:40",
+          "isPreview": false
+        },
+        {
+          "id": 21880,
+          "slug": "13-19m-route-routelink",
+          "title": "19m. სხვა ჩადგმული route-ების და routeLink-ების რეგისტრაცია",
+          "order": 1913,
+          "videoUrl": "https://youtu.be/gPy1lmyewBA",
+          "videoDuration": "3:49",
+          "isPreview": false
+        },
+        {
+          "id": 21881,
+          "slug": "14-19n-router-navigate",
+          "title": "19n. Router navigate",
+          "order": 1914,
+          "videoUrl": "https://youtu.be/hiAIe3Cn3yw",
+          "videoDuration": "2:49",
+          "isPreview": false
+        },
+        {
+          "id": 21882,
+          "slug": "15-19o-not-found-route",
+          "title": "19o. არასწორი (Not Found) route-ების დამუშავება",
+          "order": 1915,
+          "videoUrl": "https://youtu.be/J33olngtMxw",
+          "videoDuration": "5:48",
+          "isPreview": false
+        },
+        {
+          "id": 21883,
+          "slug": "16-19p-default-redirect",
+          "title": "19p. Default Redirect – ნაგულისხმევი გადამისამართება",
+          "order": 1916,
+          "videoUrl": "https://youtu.be/8rC1hNA83UQ",
+          "videoDuration": "6:43",
+          "isPreview": false
+        },
+        {
+          "id": 21884,
+          "slug": "17-19q-route",
+          "title": "19q. Route-ების დაყოფა",
+          "order": 1917,
+          "videoUrl": "https://youtu.be/xV_RxG8bHZk",
+          "videoDuration": "2:47",
+          "isPreview": false
+        },
+        {
+          "id": 21885,
+          "slug": "18-19r-query",
+          "title": "19r. Query პარამეტრები",
+          "order": 1918,
+          "videoUrl": "https://youtu.be/DNYoBCusCzE",
+          "videoDuration": "3:30",
+          "isPreview": false
+        },
+        {
+          "id": 21886,
+          "slug": "19-19s-query-input",
+          "title": "19s. Query პარამეტრების ამოღება input -ით",
+          "order": 1919,
+          "videoUrl": "https://youtu.be/i5Tp51-KY4k",
+          "videoDuration": "3:05",
+          "isPreview": false
+        },
+        {
+          "id": 21887,
+          "slug": "20-19t-query-observable",
+          "title": "19t. Query პარამეტრების ამოღება observable-თ",
+          "order": 1920,
+          "videoUrl": "https://youtu.be/F_js9BOZUHM",
+          "videoDuration": "4:07",
+          "isPreview": false
+        },
+        {
+          "id": 21888,
+          "slug": "21-19u-route",
+          "title": "19u. სტატიკური მონაცემის დამატება route-ში",
+          "order": 1921,
+          "videoUrl": "https://youtu.be/ORG84bCw02Y",
+          "videoDuration": "5:00",
+          "isPreview": false
+        },
+        {
+          "id": 21889,
+          "slug": "22-19v-route",
+          "title": "19v. დინამიკური მონაცემის დამატება route-ში",
+          "order": 1922,
+          "videoUrl": "https://youtu.be/UbgxbRikKGE",
+          "videoDuration": "11:43",
+          "isPreview": false
+        },
+        {
+          "id": 21890,
+          "slug": "23-19w-route-class",
+          "title": "19w. დინამიკური მონაცემის დამატება route-ში Class-ის გამოყენებით",
+          "order": 1923,
+          "videoUrl": "https://youtu.be/AzTIpeVEin4",
+          "videoDuration": "2:59",
+          "isPreview": false
+        },
+        {
+          "id": 21891,
+          "slug": "24-19x-router-resolver",
+          "title": "19x. Router Resolver",
+          "order": 1924,
+          "videoUrl": "https://youtu.be/GkbHSQ3TZPQ",
+          "videoDuration": "3:10",
+          "isPreview": false
+        },
+        {
+          "id": 21892,
+          "slug": "25-19y-title-routing",
+          "title": "19y. Title-ის გაწერა routing-ით",
+          "order": 1925,
+          "videoUrl": "https://youtu.be/48aHMoVjJkw",
+          "videoDuration": "5:42",
+          "isPreview": false
+        },
+        {
+          "id": 21893,
+          "slug": "26-19z-lazy-loading-route",
+          "title": "19z. Lazy loading route-ები",
+          "order": 1926,
+          "videoUrl": "https://youtu.be/9SQYjKiOwTA",
+          "videoDuration": "5:58",
+          "isPreview": false
+        },
+        {
+          "id": 21894,
+          "slug": "27-19za-guard",
+          "title": "19za. Guard-ები",
+          "order": 1927,
+          "videoUrl": "https://youtu.be/u5G2HC9JwOU",
+          "videoDuration": "8:58",
+          "isPreview": false
+        },
+        {
+          "id": 21895,
+          "slug": "28-19zb-guard-class",
+          "title": "19zb. Guard Class-ის გამოყენებით",
+          "order": 1928,
+          "videoUrl": "https://youtu.be/44mRV8UKFiI",
+          "videoDuration": "2:35",
+          "isPreview": false
+        },
+        {
+          "id": 21896,
+          "slug": "29-19zc-candeactivate",
+          "title": "19zc. CanDeactivate",
+          "order": 1929,
+          "videoUrl": "https://youtu.be/sHPmuGdRX5Y",
+          "videoDuration": "4:10",
+          "isPreview": false
+        }
+      ]
+    }
+  ]
+}
