@@ -33,3 +33,6 @@ tutor-lms-data-*.json
 scripts/check-wp-api.js
 scripts/export-tutor-lms.js
 scripts/test-tutor-api.js
+
+# Large media files (use optimized versions instead)
+public/challenges-bitcamp.mp4
