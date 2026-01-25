@@ -14,6 +14,8 @@ import { AIPricing } from "@/components/ai-course/AIPricing";
 import { AIRegistrationForm } from "@/components/ai-course/AIRegistrationForm";
 import { AIFAQ } from "@/components/ai-course/AIFAQ";
 
+import { SEO } from "@/components/SEO";
+
 const AIPromptEngineering = () => {
   const retargetingConfig = {
     facebookPixelId: undefined,
@@ -24,6 +26,10 @@ const AIPromptEngineering = () => {
 
   return (
     <div className="min-h-screen">
+      <SEO
+        title="AI აგენტები, პრომპტ-ინჟინერია & ავტომატიზაცია | BitCamp"
+        description="ისწავლე როგორ შექმნა ჭკვიანი AI აგენტები, დაეუფლე ChatGPT-ს და n8n ავტომატიზაციას. 0-დან AI არქიტექტორამდე - დაიწყე დღესვე!"
+      />
       <RetargetingProvider config={retargetingConfig}>
         <ABTestProvider>
           <ScarcityProvider>
