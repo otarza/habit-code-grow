@@ -29,6 +29,7 @@ const AIPromptEngineering = () => {
       <SEO
         title="AI აგენტები, პრომპტ-ინჟინერია & ავტომატიზაცია | BitCamp"
         description="ისწავლე როგორ შექმნა ჭკვიანი AI აგენტები, დაეუფლე ChatGPT-ს და n8n ავტომატიზაციას. 0-დან AI არქიტექტორამდე - დაიწყე დღესვე!"
+        image="https://www.bitcamp.ge/ai-meta.png"
       />
       <RetargetingProvider config={retargetingConfig}>
         <ABTestProvider>
