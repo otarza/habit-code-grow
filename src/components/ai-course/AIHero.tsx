@@ -115,7 +115,7 @@ export function AIHero() {
                 }
               }}
             >
-              <span>ადგილის დაჯავშნა</span>
+              <span>რეგისტრაცია</span>
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </Button>
           </div>

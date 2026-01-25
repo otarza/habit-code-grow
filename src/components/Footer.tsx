@@ -1,9 +1,12 @@
 import { Button } from "@/components/ui/button";
+import { useLocation } from "react-router-dom";
 import { ArrowRight, Mail, MessageSquare, Calendar } from "lucide-react";
 import bitcampLogo from "@/assets/bitcamp-logo.png";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
+  const location = useLocation();
+  const isAIPage = location.pathname === '/ai';
 
   return (
     <footer className="bg-primary text-primary-foreground">
@@ -12,7 +15,7 @@ export function Footer() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="text-center">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              დღეს იწყება შენი თავგადასავალი ტექნოლოგიების სამყაროში 
+              დღეს იწყება შენი თავგადასავალი ტექნოლოგიების სამყაროში
             </h2>
             <p className="text-xl text-primary-foreground/90 mb-8 max-w-2xl mx-auto">
               დააღწიე თავი მუდმივად გადადებული საქმისა და განუხორციელებელი გეგმების ციკლს. დაიწყე ნამდვილი ჩვევებისა და უნარების ათვისება - ისინი ხომ მთელი ცხოვრება გაგყვება.
@@ -20,7 +23,7 @@ export function Footer() {
             <div className="flex justify-center w-full px-4">
               <a href="#pricing" className="w-full max-w-lg">
                 <Button variant="hero" className="group w-full text-center px-3 sm:px-10 h-12 sm:h-16 text-sm sm:text-xl font-bold whitespace-nowrap">
-                  დაიწყე 21 დღიანი ჩელენჯი
+                  {isAIPage ? "გახდი AI არქიტექტორი" : "დაიწყე 21 დღიანი ჩელენჯი"}
                   <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform flex-shrink-0" />
                 </Button>
               </a>
@@ -35,17 +38,17 @@ export function Footer() {
           {/* Brand */}
           <div className="lg:col-span-2">
             <div className="flex items-center mb-4">
-              <img 
-                className="h-8 w-auto invert" 
-                src={bitcampLogo} 
-                alt="Bitcamp" 
+              <img
+                className="h-8 w-auto invert"
+                src={bitcampLogo}
+                alt="Bitcamp"
               />
               <span className="ml-3 text-xl font-bold">
                 სწავლა და ბრძოლა
               </span>
             </div>
             <p className="text-primary-foreground/80 mb-6 max-w-md">
-              ვქმინთ უალტერნატივო ჩვევებს ტექნოლოგიების სამყაროში გზის გასაკვალად. ვქმნით დამოუკიდებელ და შეუპოვარ პროფესიონალებს.2018 წლიდან ვმუშაობთ ათასობით სტუდენტთან და საფუძველი ჩავუყარეთ თითოეული მათგანის ცხოვრებისა და კარიერის შეუჩერებელ ტრანსფორმაციას. 
+              ვქმინთ უალტერნატივო ჩვევებს ტექნოლოგიების სამყაროში გზის გასაკვალად. ვქმნით დამოუკიდებელ და შეუპოვარ პროფესიონალებს.2018 წლიდან ვმუშაობთ ათასობით სტუდენტთან და საფუძველი ჩავუყარეთ თითოეული მათგანის ცხოვრებისა და კარიერის შეუჩერებელ ტრანსფორმაციას.
             </p>
             {/* <div className="flex gap-4">
               <Button variant="outline" size="sm" className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground hover:text-primary">

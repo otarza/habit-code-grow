@@ -144,8 +144,10 @@ export function AIPricing() {
                 className="w-full pixel-btn text-lg py-6"
                 onClick={() => {
                   tracking.buttonClick('ჩაეწერე ახლავე - Pricing', 'ai-pricing-cta');
-                  // TODO: Replace with actual Tally form or payment link
-                  window.open('https://tally.so/r/YOUR_FORM_ID', '_blank');
+                  const registerElement = document.getElementById('register');
+                  if (registerElement) {
+                    registerElement.scrollIntoView({ behavior: 'smooth' });
+                  }
                 }}
               >
                 <Sparkles className="w-5 h-5" />

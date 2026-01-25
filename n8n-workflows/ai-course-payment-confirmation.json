@@ -1,0 +1,144 @@
+{
+  "name": "AI Course Payment Confirmation",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "ai-course-payment",
+        "options": {}
+      },
+      "id": "webhook-payment",
+      "name": "Payment Confirmation Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [250, 300],
+      "webhookId": "ai-course-payment"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "YOUR_GOOGLE_SHEET_ID",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Registrations",
+          "mode": "list"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Email",
+              "lookupValue": "={{ $json.data.email }}"
+            }
+          ]
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Status": "paid",
+            "Payment_Date": "={{ $now.toISO() }}",
+            "Payment_Proof": "={{ $json.data.screenshot_url || 'submitted' }}"
+          }
+        },
+        "options": {}
+      },
+      "id": "update-status",
+      "name": "Update Payment Status",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.4,
+      "position": [470, 300],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "YOUR_GOOGLE_CREDENTIALS_ID",
+          "name": "Google Sheets"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fromEmail": "otar@bitcamp.ge",
+        "toEmail": "={{ $json.data.email }}",
+        "subject": "🎉 მოგესალმებით AI კურსზე! | BitCamp",
+        "htmlBody": "<!DOCTYPE html>\n<html>\n<head>\n  <meta charset=\"utf-8\">\n  <style>\n    body { font-family: 'BPG Glaho', Georgia, serif; line-height: 1.6; color: #333; }\n    .container { max-width: 600px; margin: 0 auto; padding: 20px; }\n    .header { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0; }\n    .content { background: #f9f9f9; padding: 30px; border-radius: 0 0 10px 10px; }\n    .success-box { background: #d4edda; border: 2px solid #28a745; border-radius: 10px; padding: 20px; margin: 20px 0; text-align: center; }\n    .module-list { background: white; padding: 20px; border-radius: 10px; margin: 20px 0; }\n    .module-item { display: flex; align-items: center; padding: 10px 0; border-bottom: 1px solid #eee; }\n    .module-item:last-child { border-bottom: none; }\n    .module-emoji { font-size: 24px; margin-right: 15px; }\n    .cta-button { display: inline-block; background: #28a745; color: white; padding: 15px 30px; text-decoration: none; border-radius: 5px; margin-top: 20px; font-weight: bold; }\n    .footer { text-align: center; margin-top: 30px; color: #666; font-size: 14px; }\n  </style>\n</head>\n<body>\n  <div class=\"container\">\n    <div class=\"header\">\n      <h1>🎉 გილოცავ!</h1>\n      <p>შენ ახლა AI კურსის სტუდენტი ხარ!</p>\n    </div>\n    <div class=\"content\">\n      <div class=\"success-box\">\n        <h2 style=\"color: #28a745; margin: 0;\">✅ გადახდა დადასტურებულია!</h2>\n      </div>\n      \n      <p>გამარჯობა, <strong>{{ $json.data.name || 'სტუდენტო' }}</strong>! 👋</p>\n      \n      <p>მადლობა, რომ შეუერთდი <strong>AI პრომპტ-ინჟინერიის Mega პროგრამას</strong>!</p>\n      \n      <h3>📚 რას მიიღებ:</h3>\n      \n      <div class=\"module-list\">\n        <div class=\"module-item\">\n          <span class=\"module-emoji\">🟢</span>\n          <span><strong>მოდული 1:</strong> ფუნდამენტური პრომპტინგი (T.C.R.E.I.)</span>\n        </div>\n        <div class=\"module-item\">\n          <span class=\"module-emoji\">🔵</span>\n          <span><strong>მოდული 2:</strong> გაფართოებული ტექნიკები</span>\n        </div>\n        <div class=\"module-item\">\n          <span class=\"module-emoji\">🟠</span>\n          <span><strong>მოდული 3:</strong> AI პროდუქტიულობაში</span>\n        </div>\n        <div class=\"module-item\">\n          <span class=\"module-emoji\">🟣</span>\n          <span><strong>მოდული 4:</strong> მულტიმოდალური AI</span>\n        </div>\n        <div class=\"module-item\">\n          <span class=\"module-emoji\">🔴</span>\n          <span><strong>მოდული 5:</strong> Custom GPTs & Gems</span>\n        </div>\n        <div class=\"module-item\">\n          <span class=\"module-emoji\">🔥</span>\n          <span><strong>მოდული 6:</strong> n8n ავტომატიზაცია</span>\n        </div>\n      </div>\n      \n      <h3>🚀 შემდეგი ნაბიჯები:</h3>\n      \n      <p>1. შემოგვიერთდი Discord საზოგადოებაში კურსის მასალებზე წვდომისთვის:</p>\n      \n      <p style=\"text-align: center;\">\n        <a href=\"https://discord.gg/AGAW3xmGPr\" class=\"cta-button\">🎮 Discord-ზე შესვლა</a>\n      </p>\n      \n      <p>2. Discord-ში მოძებნე <strong>#ai-course</strong> არხი</p>\n      <p>3. დაიწყე პირველი მოდულით!</p>\n      \n      <div class=\"footer\">\n        <p>კითხვები? მოგვწერე: <a href=\"mailto:hello@bitcamp.ge\">hello@bitcamp.ge</a></p>\n        <p>წარმატებებს გისურვებ! 🚀</p>\n        <p><strong>— ოთარ, BitCamp</strong></p>\n      </div>\n    </div>\n  </div>\n</body>\n</html>",
+        "options": {
+          "replyTo": "hello@bitcamp.ge"
+        }
+      },
+      "id": "postmark-access",
+      "name": "Send Course Access Email",
+      "type": "n8n-nodes-base.postmark",
+      "typeVersion": 1,
+      "position": [690, 300],
+      "credentials": {
+        "postmarkApi": {
+          "id": "YOUR_POSTMARK_CREDENTIALS_ID",
+          "name": "Postmark"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "channel": "#ai-course-sales",
+        "text": "🎉 *ახალი გაყიდვა!*\n\n👤 სახელი: {{ $json.data.name }}\n📧 Email: {{ $json.data.email }}\n💰 თანხა: ₾99\n📅 თარიღი: {{ $now.format('yyyy-MM-dd HH:mm') }}",
+        "otherOptions": {}
+      },
+      "id": "slack-notification",
+      "name": "Notify on Slack (Optional)",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.1,
+      "position": [910, 300],
+      "credentials": {
+        "slackApi": {
+          "id": "YOUR_SLACK_CREDENTIALS_ID",
+          "name": "Slack"
+        }
+      },
+      "disabled": true
+    }
+  ],
+  "connections": {
+    "Payment Confirmation Webhook": {
+      "main": [
+        [
+          {
+            "node": "Update Payment Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Payment Status": {
+      "main": [
+        [
+          {
+            "node": "Send Course Access Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Course Access Email": {
+      "main": [
+        [
+          {
+            "node": "Notify on Slack (Optional)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "pinData": {}
+}

@@ -1,0 +1,265 @@
+{
+  "name": "AI Course Registration Flow",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "ai-course-register",
+        "options": {}
+      },
+      "id": "webhook-tally",
+      "name": "Tally Registration Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [250, 300],
+      "webhookId": "ai-course-register"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "YOUR_GOOGLE_SHEET_ID",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Registrations",
+          "mode": "list"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Timestamp": "={{ $now.toISO() }}",
+            "Name": "={{ $json.data.name }}",
+            "Email": "={{ $json.data.email }}",
+            "Phone": "={{ $json.data.phone }}",
+            "Status": "pending",
+            "Source": "landing-page"
+          }
+        },
+        "options": {}
+      },
+      "id": "google-sheets-log",
+      "name": "Log to Google Sheets",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.4,
+      "position": [470, 300],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "YOUR_GOOGLE_CREDENTIALS_ID",
+          "name": "Google Sheets"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fromEmail": "otar@bitcamp.ge",
+        "toEmail": "={{ $json.data.email }}",
+        "subject": "🎓 AI კურსი - გადახდის ინსტრუქცია | BitCamp",
+        "htmlBody": "<!DOCTYPE html>\n<html>\n<head>\n  <meta charset=\"utf-8\">\n  <style>\n    body { font-family: 'BPG Glaho', Georgia, serif; line-height: 1.6; color: #333; }\n    .container { max-width: 600px; margin: 0 auto; padding: 20px; }\n    .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0; }\n    .content { background: #f9f9f9; padding: 30px; border-radius: 0 0 10px 10px; }\n    .price-box { background: white; border: 2px solid #667eea; border-radius: 10px; padding: 20px; margin: 20px 0; text-align: center; }\n    .price { font-size: 48px; font-weight: bold; color: #667eea; }\n    .original-price { text-decoration: line-through; color: #999; font-size: 24px; }\n    .bank-details { background: white; border-left: 4px solid #667eea; padding: 15px; margin: 20px 0; }\n    .bank-details p { margin: 5px 0; }\n    .cta-button { display: inline-block; background: #667eea; color: white; padding: 15px 30px; text-decoration: none; border-radius: 5px; margin-top: 20px; }\n    .footer { text-align: center; margin-top: 30px; color: #666; font-size: 14px; }\n  </style>\n</head>\n<body>\n  <div class=\"container\">\n    <div class=\"header\">\n      <h1>🎓 AI პრომპტ-ინჟინერიის Mega პროგრამა</h1>\n    </div>\n    <div class=\"content\">\n      <p>გამარჯობა, <strong>{{ $json.data.name }}</strong>! 👋</p>\n      \n      <p>მადლობა რომ დაინტერესდი AI პრომპტ-ინჟინერიის კურსით!</p>\n      \n      <div class=\"price-box\">\n        <div class=\"original-price\">₾790</div>\n        <div class=\"price\">₾99</div>\n        <p style=\"color: #e53e3e; font-weight: bold;\">🔥 87% ფასდაკლება</p>\n      </div>\n      \n      <h3>💳 გადახდის ინსტრუქცია:</h3>\n      \n      <div class=\"bank-details\">\n        <p><strong>თანხა:</strong> 99 ლარი</p>\n        <p><strong>საქართველოს ბანკი:</strong></p>\n        <p>GE75TB7003815365100012</p>\n        <p><strong>საქართველოს ბანკი (სახელმწიფო):</strong></p>\n        <p>GE58BG0000000610012590</p>\n        <p><strong>მიმღები:</strong> ოთარ ზაქალაშვილი</p>\n        <p><strong>დანიშნულება:</strong> AI კურსი - {{ $json.data.name }}</p>\n      </div>\n      \n      <p>გადახდის შემდეგ, გთხოვთ გამოგვიგზავნოთ ჩარიცხვის სქრინშოტი ამ ბმულზე:</p>\n      \n      <p style=\"text-align: center;\">\n        <a href=\"https://tally.so/r/PAYMENT_CONFIRMATION_FORM_ID\" class=\"cta-button\">📤 ჩარიცხვის დადასტურება</a>\n      </p>\n      \n      <p>კურსზე წვდომას მიიღებ დადასტურებიდან რამდენიმე საათში!</p>\n      \n      <div class=\"footer\">\n        <p>კითხვები? მოგვწერე: <a href=\"mailto:hello@bitcamp.ge\">hello@bitcamp.ge</a></p>\n        <p>ან Discord-ზე: <a href=\"https://discord.gg/AGAW3xmGPr\">discord.gg/AGAW3xmGPr</a></p>\n      </div>\n    </div>\n  </div>\n</body>\n</html>",
+        "options": {
+          "replyTo": "hello@bitcamp.ge"
+        }
+      },
+      "id": "postmark-welcome",
+      "name": "Send Welcome Email",
+      "type": "n8n-nodes-base.postmark",
+      "typeVersion": 1,
+      "position": [690, 300],
+      "credentials": {
+        "postmarkApi": {
+          "id": "YOUR_POSTMARK_CREDENTIALS_ID",
+          "name": "Postmark"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 31,
+        "unit": "minutes"
+      },
+      "id": "wait-31min",
+      "name": "Wait 31 Minutes",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [910, 300]
+    },
+    {
+      "parameters": {
+        "operation": "read",
+        "documentId": {
+          "__rl": true,
+          "value": "YOUR_GOOGLE_SHEET_ID",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Registrations",
+          "mode": "list"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Email",
+              "lookupValue": "={{ $('Tally Registration Webhook').item.json.data.email }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "check-payment-status",
+      "name": "Check Payment Status",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.4,
+      "position": [1130, 300],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "YOUR_GOOGLE_CREDENTIALS_ID",
+          "name": "Google Sheets"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "condition-paid",
+              "leftValue": "={{ $json.Status }}",
+              "rightValue": "paid",
+              "operator": {
+                "type": "string",
+                "operation": "notEquals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "if-not-paid",
+      "name": "If Not Paid",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [1350, 300]
+    },
+    {
+      "parameters": {
+        "fromEmail": "otar@bitcamp.ge",
+        "toEmail": "={{ $('Tally Registration Webhook').item.json.data.email }}",
+        "subject": "⏰ შეგახსენებთ - AI კურსი ₾99-ად | BitCamp",
+        "htmlBody": "<!DOCTYPE html>\n<html>\n<head>\n  <meta charset=\"utf-8\">\n  <style>\n    body { font-family: 'BPG Glaho', Georgia, serif; line-height: 1.6; color: #333; }\n    .container { max-width: 600px; margin: 0 auto; padding: 20px; }\n    .header { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0; }\n    .content { background: #f9f9f9; padding: 30px; border-radius: 0 0 10px 10px; }\n    .highlight { background: #fff3cd; border: 1px solid #ffc107; padding: 15px; border-radius: 5px; margin: 20px 0; }\n    .cta-button { display: inline-block; background: #f5576c; color: white; padding: 15px 30px; text-decoration: none; border-radius: 5px; margin-top: 20px; }\n  </style>\n</head>\n<body>\n  <div class=\"container\">\n    <div class=\"header\">\n      <h1>⏰ შეგახსენებთ!</h1>\n    </div>\n    <div class=\"content\">\n      <p>გამარჯობა, <strong>{{ $('Tally Registration Webhook').item.json.data.name }}</strong>!</p>\n      \n      <p>შენ დარეგისტრირდი AI პრომპტ-ინჟინერიის კურსზე, მაგრამ ჯერ არ მიგვიღია გადახდის დადასტურება.</p>\n      \n      <div class=\"highlight\">\n        <p>🔥 <strong>შეგახსენებთ:</strong> კურსის ფასი მხოლოდ <strong>₾99</strong>-ია (ნაცვლად ₾790-ის)!</p>\n        <p>ეს 87%-იანი ფასდაკლება შეზღუდული დროით მოქმედებს.</p>\n      </div>\n      \n      <p>გადახდის შემდეგ, გამოგვიგზავნე ჩარიცხვის სქრინშოტი:</p>\n      \n      <p style=\"text-align: center;\">\n        <a href=\"https://tally.so/r/PAYMENT_CONFIRMATION_FORM_ID\" class=\"cta-button\">📤 ჩარიცხვის დადასტურება</a>\n      </p>\n      \n      <p>კითხვები გაქვს? მოგვწერე hello@bitcamp.ge</p>\n    </div>\n  </div>\n</body>\n</html>",
+        "options": {
+          "replyTo": "hello@bitcamp.ge"
+        }
+      },
+      "id": "postmark-reminder-1",
+      "name": "Send Reminder Email",
+      "type": "n8n-nodes-base.postmark",
+      "typeVersion": 1,
+      "position": [1570, 200],
+      "credentials": {
+        "postmarkApi": {
+          "id": "YOUR_POSTMARK_CREDENTIALS_ID",
+          "name": "Postmark"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "id": "noop-paid",
+      "name": "Already Paid - Stop",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [1570, 400]
+    }
+  ],
+  "connections": {
+    "Tally Registration Webhook": {
+      "main": [
+        [
+          {
+            "node": "Log to Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Log to Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "Send Welcome Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Welcome Email": {
+      "main": [
+        [
+          {
+            "node": "Wait 31 Minutes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait 31 Minutes": {
+      "main": [
+        [
+          {
+            "node": "Check Payment Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Payment Status": {
+      "main": [
+        [
+          {
+            "node": "If Not Paid",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If Not Paid": {
+      "main": [
+        [
+          {
+            "node": "Send Reminder Email",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Already Paid - Stop",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "pinData": {}
+}

@@ -1,10 +1,13 @@
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X, Sparkles } from "lucide-react";
 import bitcampLogo from "@/assets/bitcamp-logo.png";
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const location = useLocation();
+  const isAIPage = location.pathname === '/ai';
 
   const navigationItems = [
     { name: "როგორ მუშაობს", href: "#how-it-works" },
@@ -19,10 +22,10 @@ export function Navbar() {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex-shrink-0 flex items-center">
-            <img 
-              className="h-8 w-auto" 
-              src={bitcampLogo} 
-              alt="Bitcamp" 
+            <img
+              className="h-8 w-auto"
+              src={bitcampLogo}
+              alt="Bitcamp"
             />
           </div>
 
@@ -46,9 +49,9 @@ export function Navbar() {
 
           {/* Desktop CTA */}
           <div className="hidden md:flex items-center gap-3">
-            <Button 
-              variant="ghost" 
-              size="sm" 
+            <Button
+              variant="ghost"
+              size="sm"
               className="text-text-secondary hover:text-primary flex items-center gap-1"
               onClick={() => {
                 document.getElementById('free-courses')?.scrollIntoView({ behavior: 'smooth' });
@@ -58,7 +61,7 @@ export function Navbar() {
               უფასო კურსები
             </Button>
             <div className="w-px h-6 bg-border"></div>
-            <a 
+            <a
               href="https://www.bitcamp.ge/dashboard/"
               target="_blank"
               rel="noopener noreferrer"
@@ -67,22 +70,22 @@ export function Navbar() {
                 შესვლა
               </Button>
             </a>
-            <Button 
-              variant="hero" 
+            <Button
+              variant="hero"
               size="sm"
               onClick={() => {
                 document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' });
               }}
             >
-              დაიწყე 21 დღიანი ჩელენჯით
+              {isAIPage ? "გახდი AI არქიტექტორი" : "დაიწყე 21 დღიანი ჩელენჯით"}
             </Button>
           </div>
 
           {/* Mobile Free Courses Link and Menu Button */}
           <div className="md:hidden flex items-center gap-2">
-            <Button 
-              variant="ghost" 
-              size="sm" 
+            <Button
+              variant="ghost"
+              size="sm"
               className="text-text-secondary hover:text-primary flex items-center gap-1 text-xs px-2 py-1"
               onClick={() => {
                 document.getElementById('free-courses')?.scrollIntoView({ behavior: 'smooth' });
@@ -118,9 +121,9 @@ export function Navbar() {
                 </button>
               ))}
               <div className="pt-4 space-y-4">
-                <Button 
-                  variant="ghost" 
-                  size="sm" 
+                <Button
+                  variant="ghost"
+                  size="sm"
                   className="w-full text-text-secondary hover:text-primary flex items-center justify-center gap-1"
                   onClick={() => {
                     setIsOpen(false);
@@ -131,7 +134,7 @@ export function Navbar() {
                   უფასო კურსები
                 </Button>
                 <div className="h-px bg-border"></div>
-                <a 
+                <a
                   href="https://www.bitcamp.ge/dashboard/"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -142,16 +145,16 @@ export function Navbar() {
                     შესვლა
                   </Button>
                 </a>
-                <Button 
-                  variant="hero" 
-                  size="sm" 
+                <Button
+                  variant="hero"
+                  size="sm"
                   className="w-full"
                   onClick={() => {
                     setIsOpen(false);
                     document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' });
                   }}
                 >
-                  დაიწყე 21 დღიანი ჩელენჯით
+                  {isAIPage ? "გახდი AI არქიტექტორი" : "დაიწყე 21 დღიანი ჩელენჯით"}
                 </Button>
               </div>
             </div>

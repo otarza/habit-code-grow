@@ -12,6 +12,7 @@ import { AITestimonials } from "@/components/ai-course/AITestimonials";
 import { AIFinalProject } from "@/components/ai-course/AIFinalProject";
 import { AITransformationPath } from "@/components/ai-course/AITransformationPath";
 import { AIPricing } from "@/components/ai-course/AIPricing";
+import { AIRegistrationForm } from "@/components/ai-course/AIRegistrationForm";
 import { AIFAQ } from "@/components/ai-course/AIFAQ";
 
 const AIPromptEngineering = () => {
@@ -49,6 +50,9 @@ const AIPromptEngineering = () => {
 
             {/* Pricing: Call to action */}
             <AIPricing />
+
+            {/* Registration Form: Inline Tally embed */}
+            <AIRegistrationForm tallyFormId="YOUR_TALLY_FORM_ID" />
 
             {/* FAQ: Address objections */}
             <AIFAQ />
