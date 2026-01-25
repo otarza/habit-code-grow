@@ -86,7 +86,7 @@ export function AIWhoIsThisFor() {
               <Lightbulb className="w-7 h-7 text-white" />
             </div>
             <h3 className="text-xl sm:text-2xl font-bold text-text-primary mb-3">
-              დამწყები და ინტერესის მქონე
+              0 - დან დამწყები
             </h3>
             <p className="text-text-secondary mb-6 leading-relaxed">
               გინდა გაერკვიე AI სამყაროში, შეიძინო მომავლის პროფესია ან უბრალოდ გაიმარტივო ყოველდღიურობა ტექნოლოგიებით.

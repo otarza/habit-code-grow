@@ -9,6 +9,10 @@ import {
 export function AIFAQ() {
   const faqs = [
     {
+      question: "კურსი დასრულებულია თუ ახლა იწერება?",
+      answer: "კურსი არის 'Living Course' რეჟიმში. ეს ნიშნავს, რომ ძირითად მასალას ყოველკვირეულად ემატება ახალი თემები და პრაქტიკული მაგალითები. სულ იგეგმება 200+ ვიდეოს ჩაწერა. ვინც ახლა ყიდულობს, იხდის ნაკლებს და ყველა მომავალ განახლებას იღებს უფასოდ."
+    },
+    {
       question: "ტექნიკური ცოდნა ან გამოცდილება მჭირდება?",
       answer: "არა. ეს არის ზუსტად ამ კურსის მთავარი ღირებულება. ჩვენ არ ვასწავლით პითონს ან ჯავასკრიპტს. ჩვენ ვასწავლით, როგორ გამოიყენო უკვე არსებული, მძლავრი ინსტრუმენტები (ChatGPT, n8n) ვიზუალურად, ყოველგვარი კოდის წერის გარეშე. თუ კომპიუტერის ჩართვა იცი, ეს კურსი შენთვისაა."
     },
@@ -75,12 +79,12 @@ export function AIFAQ() {
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
-              href="https://discord.gg/AGAW3xmGPr"
+              href="https://m.me/bitcamp.ge?ref=w49324136"
               target="_blank"
               rel="noopener noreferrer"
               className="text-secondary hover:underline font-medium"
             >
-              შემოგვიერთდი Discord-ზე
+              მოგვწერე Facebook-ზე
             </a>
             <span className="text-text-secondary hidden sm:inline">ან</span>
             <a

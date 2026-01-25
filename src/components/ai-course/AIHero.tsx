@@ -48,7 +48,7 @@ export function AIHero() {
           {/* Social Proof Badge */}
           <div className="inline-flex items-center gap-2 bg-accent/20 text-accent px-4 sm:px-6 py-2 sm:py-3 rounded-full text-xs sm:text-sm font-bold mb-6 mt-8 sm:mt-6 border border-accent/30">
             <Sparkles className="w-4 h-4" />
-            <span>400+ სტუდენტმა უკვე დაიწყო სწავლა</span>
+            <span>🚀 Early Access: ახალი მასალა ემატება ყოველკვირეულად</span>
           </div>
 
           {/* Main Headline */}
@@ -127,8 +127,8 @@ export function AIHero() {
               <div className="text-text-inverse/70 text-xs sm:text-sm">მოდული</div>
             </div>
             <div className="text-center p-4 bg-surface/5 backdrop-blur-sm rounded-lg border border-white/10">
-              <div className="text-2xl sm:text-3xl font-bold text-purple-400 mb-1">30+</div>
-              <div className="text-text-inverse/70 text-xs sm:text-sm">ვიდეო გაკვეთილი</div>
+              <div className="text-2xl sm:text-3xl font-bold text-purple-400 mb-1">200+</div>
+              <div className="text-text-inverse/70 text-xs sm:text-sm">Living Course</div>
             </div>
             <div className="text-center p-4 bg-surface/5 backdrop-blur-sm rounded-lg border border-white/10">
               <div className="text-2xl sm:text-3xl font-bold text-secondary mb-1">400+</div>

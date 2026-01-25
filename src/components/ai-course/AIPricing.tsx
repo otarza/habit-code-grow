@@ -80,7 +80,7 @@ export function AIPricing() {
                   <span className="text-text-secondary text-lg">სულ</span>
                 </div>
                 <p className="text-accent font-medium mt-2">
-                  ფასი მალე გაიზრდება
+                  ფასი იზრდება კურსის შევსებასთან ერთად
                 </p>
               </div>
 
@@ -90,7 +90,7 @@ export function AIPricing() {
                 <ul className="space-y-3">
                   <li className="flex items-center gap-3">
                     <BookOpen className="w-5 h-5 text-accent flex-shrink-0" />
-                    <span className="text-text-secondary">6 სრული მოდული (30+ პრაქტიკული გაკვეთილი)</span>
+                    <span className="text-text-secondary">6 მოდული (Living Course - ახალი მასალა კვირაში)</span>
                   </li>
                   <li className="flex items-center gap-3">
                     <MessageSquare className="w-5 h-5 text-accent flex-shrink-0" />
@@ -175,12 +175,12 @@ export function AIPricing() {
           <p className="text-text-secondary max-w-2xl mx-auto">
             კითხვები გაქვს? დაგვიკავშირდი{" "}
             <a
-              href="https://discord.gg/AGAW3xmGPr"
+              href="https://m.me/bitcamp.ge?ref=w49324136"
               target="_blank"
               rel="noopener noreferrer"
               className="text-secondary hover:underline font-medium"
             >
-              Discord-ზე
+              Facebook-ზე
             </a>
             {" "}ან მოგვწერე{" "}
             <a
