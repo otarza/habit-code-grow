@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import FullStackAI from "./pages/FullStackAI";
+import AIPromptEngineering from "./pages/AIPromptEngineering";
 import CoursePage from "./pages/CoursePage";
 import NotFound from "./pages/NotFound";
 
@@ -19,6 +20,7 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/fullstack-ai" element={<FullStackAI />} />
+          <Route path="/ai" element={<AIPromptEngineering />} />
           {/* Course routes */}
           <Route path="/courses/:courseSlug" element={<CoursePage />} />
           <Route path="/courses/:courseSlug/:topicSlug/:lessonSlug" element={<CoursePage />} />
