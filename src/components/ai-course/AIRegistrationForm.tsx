@@ -1,6 +1,16 @@
 import { useEffect } from "react";
 import { Badge } from "@/components/ui/badge";
-import { CheckCircle2, Shield, Zap } from "lucide-react";
+import {
+  CheckCircle2,
+  Shield,
+  Zap,
+  MessageSquare,
+  Brain,
+  Briefcase,
+  Image,
+  Bot,
+  Workflow
+} from "lucide-react";
 
 interface AIRegistrationFormProps {
   tallyFormId?: string;
@@ -48,8 +58,8 @@ export function AIRegistrationForm({ tallyFormId = "YOUR_TALLY_FORM_ID" }: AIReg
 
         {/* Main Content Grid */}
         <div className="grid lg:grid-cols-2 gap-12 items-start max-w-6xl mx-auto">
-          {/* Left: What You Get */}
-          <div className="order-2 lg:order-1">
+          {/* Left: What You Get - Shows first on mobile */}
+          <div className="order-1 lg:order-1">
             <div className="bg-card border-2 border-primary/10 rounded-2xl p-6 sm:p-8">
               <h3 className="text-2xl font-bold text-text-primary mb-6">
                 რას მიიღებ:
@@ -57,42 +67,54 @@ export function AIRegistrationForm({ tallyFormId = "YOUR_TALLY_FORM_ID" }: AIReg
 
               <ul className="space-y-4 mb-8">
                 <li className="flex items-start gap-3">
-                  <span className="text-2xl">🟢</span>
+                  <div className="w-8 h-8 rounded-lg bg-green-500 flex items-center justify-center flex-shrink-0">
+                    <MessageSquare className="w-4 h-4 text-white" />
+                  </div>
                   <div>
                     <strong className="text-text-primary">მოდული 1:</strong>
                     <span className="text-text-secondary"> T.C.R.E.I. პრომპტინგის ჩარჩო</span>
                   </div>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="text-2xl">🔵</span>
+                  <div className="w-8 h-8 rounded-lg bg-blue-500 flex items-center justify-center flex-shrink-0">
+                    <Brain className="w-4 h-4 text-white" />
+                  </div>
                   <div>
                     <strong className="text-text-primary">მოდული 2:</strong>
                     <span className="text-text-secondary"> Chain of Thought & Advanced Prompting</span>
                   </div>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="text-2xl">🟠</span>
+                  <div className="w-8 h-8 rounded-lg bg-orange-500 flex items-center justify-center flex-shrink-0">
+                    <Briefcase className="w-4 h-4 text-white" />
+                  </div>
                   <div>
                     <strong className="text-text-primary">მოდული 3:</strong>
                     <span className="text-text-secondary"> ბიზნეს Use Cases</span>
                   </div>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="text-2xl">🟣</span>
+                  <div className="w-8 h-8 rounded-lg bg-purple-500 flex items-center justify-center flex-shrink-0">
+                    <Image className="w-4 h-4 text-white" />
+                  </div>
                   <div>
                     <strong className="text-text-primary">მოდული 4:</strong>
                     <span className="text-text-secondary"> DALL-E, Vision, მონაცემთა ანალიზი</span>
                   </div>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="text-2xl">🔴</span>
+                  <div className="w-8 h-8 rounded-lg bg-red-500 flex items-center justify-center flex-shrink-0">
+                    <Bot className="w-4 h-4 text-white" />
+                  </div>
                   <div>
                     <strong className="text-text-primary">მოდული 5:</strong>
                     <span className="text-text-secondary"> Custom GPTs & Gems</span>
                   </div>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="text-2xl">🔥</span>
+                  <div className="w-8 h-8 rounded-lg bg-gradient-to-r from-orange-500 to-red-600 flex items-center justify-center flex-shrink-0">
+                    <Workflow className="w-4 h-4 text-white" />
+                  </div>
                   <div>
                     <strong className="text-text-primary">მოდული 6:</strong>
                     <span className="text-text-secondary"> n8n ავტომატიზაცია & AI აგენტები</span>
@@ -131,8 +153,8 @@ export function AIRegistrationForm({ tallyFormId = "YOUR_TALLY_FORM_ID" }: AIReg
             </div>
           </div>
 
-          {/* Right: Tally Form */}
-          <div className="order-1 lg:order-2">
+          {/* Right: Tally Form - Shows second on mobile */}
+          <div className="order-2 lg:order-2">
             <div className="bg-card border-2 border-primary/20 rounded-2xl p-6 sm:p-8 shadow-xl">
               <h3 className="text-xl font-bold text-text-primary mb-6 text-center">
                 შეავსე რეგისტრაციის ფორმა

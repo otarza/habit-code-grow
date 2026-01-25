@@ -1,6 +1,5 @@
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
-import { StickyCtaBar } from "@/components/StickyCtaBar";
 import { ABTestProvider } from "@/components/ABTestTracker";
 import { RetargetingProvider } from "@/components/RetargetingPixels";
 import { ScarcityProvider } from "@/components/ScarcityManager";
@@ -58,7 +57,6 @@ const AIPromptEngineering = () => {
             <AIFAQ />
 
             <Footer />
-            <StickyCtaBar />
           </ScarcityProvider>
         </ABTestProvider>
       </RetargetingProvider>

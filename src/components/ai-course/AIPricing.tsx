@@ -58,7 +58,7 @@ export function AIPricing() {
               </div>
             </div>
 
-            <div className="p-8 sm:p-10">
+            <div className="p-8 pt-12 sm:p-10">
               {/* Title */}
               <div className="text-center mb-8">
                 <h3 className="text-2xl sm:text-3xl font-bold text-text-primary mb-2">
@@ -73,7 +73,7 @@ export function AIPricing() {
               <div className="text-center mb-8">
                 <div className="flex items-center justify-center gap-3 mb-2">
                   <span className="text-2xl text-text-secondary line-through">₾790</span>
-                  <Badge className="bg-red-100 text-red-700 border-red-200">დაზოგე 87%</Badge>
+                  <Badge className="bg-red-100 text-red-700 border-red-200 hover:bg-red-100 hover:text-red-700">დაზოგე 87%</Badge>
                 </div>
                 <div className="flex items-baseline justify-center gap-1">
                   <span className="text-5xl sm:text-6xl font-bold text-text-primary">₾99</span>

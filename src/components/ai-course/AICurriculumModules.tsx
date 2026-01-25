@@ -18,7 +18,6 @@ import { PixelGrid } from "@/components/PixelBackground";
 
 interface ModuleData {
   id: number;
-  emoji: string;
   title: string;
   subtitle: string;
   icon: any;
@@ -38,7 +37,6 @@ export function AICurriculumModules() {
   const modules: ModuleData[] = [
     {
       id: 1,
-      emoji: "🟢",
       title: "ფუნდამენტური პრომპტინგი",
       subtitle: "AI-სთან საუბრის ხელოვნება",
       icon: MessageSquare,
@@ -56,7 +54,6 @@ export function AICurriculumModules() {
     },
     {
       id: 2,
-      emoji: "🔵",
       title: "Advanced Prompting",
       subtitle: "აზროვნების მოდელები & ლოგიკა",
       icon: Brain,
@@ -73,7 +70,6 @@ export function AICurriculumModules() {
     },
     {
       id: 3,
-      emoji: "🟠",
       title: "პროდუქტიულობა & ბიზნესი",
       subtitle: "10x შედეგი ნაკლებ დროში",
       icon: Briefcase,
@@ -89,7 +85,6 @@ export function AICurriculumModules() {
     },
     {
       id: 4,
-      emoji: "🟣",
       title: "ვიზუალური AI (Multimodal)",
       subtitle: "DALL-E, Midjourney & Vision",
       icon: Image,
@@ -105,7 +100,6 @@ export function AICurriculumModules() {
     },
     {
       id: 5,
-      emoji: "🔴",
       title: "პერსონალური აგენტები",
       subtitle: "Custom GPTs",
       icon: Bot,
@@ -121,7 +115,6 @@ export function AICurriculumModules() {
     },
     {
       id: 6,
-      emoji: "🔥",
       title: "ავტომატიზაცია (n8n)",
       subtitle: "რეალური ავტონომია",
       icon: Workflow,
@@ -189,7 +182,6 @@ export function AICurriculumModules() {
                       <Badge className={`${module.badgeColor} text-xs font-bold`}>
                         მოდული {module.id}
                       </Badge>
-                      <span className="text-lg">{module.emoji}</span>
                     </div>
                     <h3 className="text-xl sm:text-2xl font-bold text-text-primary mb-1">
                       {module.title}
