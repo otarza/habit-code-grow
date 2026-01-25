@@ -48,40 +48,39 @@ export function AIHero() {
           {/* Social Proof Badge */}
           <div className="inline-flex items-center gap-2 bg-accent/20 text-accent px-4 sm:px-6 py-2 sm:py-3 rounded-full text-xs sm:text-sm font-bold mb-6 mt-8 sm:mt-6 border border-accent/30">
             <Sparkles className="w-4 h-4" />
-            <span>400+ სტუდენტმა უკვე შეიძინა</span>
+            <span>400+ სტუდენტმა უკვე დაიწყო სწავლა</span>
           </div>
 
           {/* Main Headline */}
           <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold text-text-inverse mb-6 leading-tight px-2 sm:px-4 max-w-4xl mx-auto">
-            AI პრომპტ-ინჟინერიის{" "}
+            დაიმორჩილე ხელოვნური ინტელექტი და{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-secondary">
-              Mega პროგრამა
+              გააორმაგე შენი შედეგები
             </span>
           </h1>
 
           {/* Subheadline */}
           <p className="text-xl sm:text-2xl md:text-3xl font-semibold text-text-inverse/90 mb-4 px-3">
-            ნულიდან AI არქიტექტორამდე
+            პროფესიის მიუხედავად — ტექნიკური ცოდნის გარეშე
           </p>
 
           <p className="text-base sm:text-lg md:text-xl text-text-inverse/80 mb-8 leading-relaxed max-w-3xl mx-auto px-3 sm:px-6">
-            ისწავლე AI-სთან ეფექტური კომუნიკაცია, შექმენი ავტონომიური აგენტები და
-            ააწყვე რეალური ავტომატიზაციები — <span className="text-accent font-semibold">პროგრამირების გარეშე</span>
+            ერთადერთი ქართული კურსი, რომელიც გასწავლის არა მარტო "ჩატს", არამედ რეალურ ავტომატიზაციას, აგენტების შექმნას და საქმის გამარტივებას.
           </p>
 
           {/* Trust Indicators */}
           <div className="flex flex-wrap justify-center gap-3 sm:gap-4 mb-10 px-3">
             <div className="flex items-center gap-2 bg-surface/10 backdrop-blur-sm rounded-full px-4 py-2">
               <Code2 className="w-4 h-4 text-accent" />
-              <span className="text-text-inverse/80 text-sm">პროგრამირების გარეშე</span>
+              <span className="text-text-inverse/80 text-sm">კოდის წერა არ გჭირდება</span>
             </div>
             <div className="flex items-center gap-2 bg-surface/10 backdrop-blur-sm rounded-full px-4 py-2">
               <Bot className="w-4 h-4 text-purple-400" />
-              <span className="text-text-inverse/80 text-sm">6 სრული მოდული</span>
+              <span className="text-text-inverse/80 text-sm">სრული პრაქტიკა</span>
             </div>
             <div className="flex items-center gap-2 bg-surface/10 backdrop-blur-sm rounded-full px-4 py-2">
               <Zap className="w-4 h-4 text-secondary" />
-              <span className="text-text-inverse/80 text-sm">n8n ავტომატიზაცია</span>
+              <span className="text-text-inverse/80 text-sm">სამუდამო წვდომა</span>
             </div>
           </div>
 
@@ -100,7 +99,7 @@ export function AIHero() {
               }}
             >
               <Sparkles className="w-5 h-5" />
-              <span>იხილე პროგრამა</span>
+              <span>რა ვისწავლი?</span>
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </Button>
 
@@ -116,7 +115,7 @@ export function AIHero() {
                 }
               }}
             >
-              <span>ჩაეწერე ახლავე</span>
+              <span>ადგილის დაჯავშნა</span>
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </Button>
           </div>
@@ -129,15 +128,15 @@ export function AIHero() {
             </div>
             <div className="text-center p-4 bg-surface/5 backdrop-blur-sm rounded-lg border border-white/10">
               <div className="text-2xl sm:text-3xl font-bold text-purple-400 mb-1">30+</div>
-              <div className="text-text-inverse/70 text-xs sm:text-sm">თემა</div>
+              <div className="text-text-inverse/70 text-xs sm:text-sm">ვიდეო გაკვეთილი</div>
             </div>
             <div className="text-center p-4 bg-surface/5 backdrop-blur-sm rounded-lg border border-white/10">
               <div className="text-2xl sm:text-3xl font-bold text-secondary mb-1">400+</div>
-              <div className="text-text-inverse/70 text-xs sm:text-sm">სტუდენტი</div>
+              <div className="text-text-inverse/70 text-xs sm:text-sm">მონაწილე</div>
             </div>
             <div className="text-center p-4 bg-surface/5 backdrop-blur-sm rounded-lg border border-white/10">
-              <div className="text-2xl sm:text-3xl font-bold text-pink-400 mb-1">0</div>
-              <div className="text-text-inverse/70 text-xs sm:text-sm">კოდი</div>
+              <div className="text-2xl sm:text-3xl font-bold text-pink-400 mb-1">0%</div>
+              <div className="text-text-inverse/70 text-xs sm:text-sm">თეორია / 100% პრაქტიკა</div>
             </div>
           </div>
 

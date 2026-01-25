@@ -37,14 +37,14 @@ export function AIPricing() {
         {/* Section Header */}
         <div className="text-center mb-16">
           <Badge className="mb-4 bg-premium/20 text-premium border-premium/30 px-4 py-2 text-sm font-semibold">
-            ჩაეწერე ახლავე
+            შეუერთდი პროგრამას
           </Badge>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-text-primary mb-6">
-            ინვესტიცია შენს{" "}
-            <span className="text-secondary">AI მომავალში</span>
+            საუკეთესო ინვესტიცია{" "}
+            <span className="text-secondary">შენს მომავალში</span>
           </h2>
           <p className="text-lg sm:text-xl text-text-secondary max-w-3xl mx-auto">
-            ერთჯერადი გადახდა — სამუდამო წვდომა კურსზე და ყველა მომავალ განახლებაზე.
+            ერთჯერადი გადახდა — სამუდამო წვდომა, განახლებები და მხარდაჭერა.
           </p>
         </div>
 
@@ -54,7 +54,7 @@ export function AIPricing() {
             {/* Popular Badge */}
             <div className="absolute top-0 right-0">
               <div className="bg-premium text-white text-sm font-bold px-4 py-2 rounded-bl-xl">
-                400+ სტუდენტი
+                პოპულარული არჩევანი
               </div>
             </div>
 
@@ -62,10 +62,10 @@ export function AIPricing() {
               {/* Title */}
               <div className="text-center mb-8">
                 <h3 className="text-2xl sm:text-3xl font-bold text-text-primary mb-2">
-                  AI პრომპტ-ინჟინერიის Mega პროგრამა
+                  AI პრომპტ-ინჟინერია & ავტომატიზაცია
                 </h3>
                 <p className="text-text-secondary">
-                  სრული კურსი ნულიდან AI არქიტექტორამდე
+                  სრული გზამკვლევი დამწყებიდან პროფესიონალამდე
                 </p>
               </div>
 
@@ -73,30 +73,45 @@ export function AIPricing() {
               <div className="text-center mb-8">
                 <div className="flex items-center justify-center gap-3 mb-2">
                   <span className="text-2xl text-text-secondary line-through">₾790</span>
-                  <Badge className="bg-red-100 text-red-700 border-red-200">-87%</Badge>
+                  <Badge className="bg-red-100 text-red-700 border-red-200">დაზოგე 87%</Badge>
                 </div>
                 <div className="flex items-baseline justify-center gap-1">
                   <span className="text-5xl sm:text-6xl font-bold text-text-primary">₾99</span>
-                  <span className="text-text-secondary text-lg">ერთჯერადად</span>
+                  <span className="text-text-secondary text-lg">სულ</span>
                 </div>
                 <p className="text-accent font-medium mt-2">
-                  სამუდამო წვდომა + უფასო განახლებები
+                  ფასი მალე გაიზრდება
                 </p>
               </div>
 
               {/* Features */}
               <div className="mb-8">
-                <h4 className="font-semibold text-text-primary mb-4">რას მიიღებ:</h4>
+                <h4 className="font-semibold text-text-primary mb-4">რას მიიღებ კურსში:</h4>
                 <ul className="space-y-3">
-                  {features.map((feature, index) => {
-                    const Icon = feature.icon;
-                    return (
-                      <li key={index} className="flex items-center gap-3">
-                        <Icon className="w-5 h-5 text-accent flex-shrink-0" />
-                        <span className="text-text-secondary">{feature.text}</span>
-                      </li>
-                    );
-                  })}
+                  <li className="flex items-center gap-3">
+                    <BookOpen className="w-5 h-5 text-accent flex-shrink-0" />
+                    <span className="text-text-secondary">6 სრული მოდული (30+ პრაქტიკული გაკვეთილი)</span>
+                  </li>
+                  <li className="flex items-center gap-3">
+                    <MessageSquare className="w-5 h-5 text-accent flex-shrink-0" />
+                    <span className="text-text-secondary">უნიკალური T.C.R.E.I. პრომპტინგის სისტემა</span>
+                  </li>
+                  <li className="flex items-center gap-3">
+                    <Bot className="w-5 h-5 text-accent flex-shrink-0" />
+                    <span className="text-text-secondary">შენი პირადი AI აგენტების (Custom GPTs) შექმნა</span>
+                  </li>
+                  <li className="flex items-center gap-3">
+                    <Workflow className="w-5 h-5 text-accent flex-shrink-0" />
+                    <span className="text-text-secondary">n8n ავტომატიზაციის მასტერკლასი</span>
+                  </li>
+                  <li className="flex items-center gap-3">
+                    <Zap className="w-5 h-5 text-accent flex-shrink-0" />
+                    <span className="text-text-secondary">RAG სისტემების აწყობა (Chat with Data)</span>
+                  </li>
+                  <li className="flex items-center gap-3">
+                    <Users className="w-5 h-5 text-accent flex-shrink-0" />
+                    <span className="text-text-secondary">დახურული Discord ქომიუნითი & მხარდაჭერა</span>
+                  </li>
                 </ul>
               </div>
 
@@ -104,15 +119,21 @@ export function AIPricing() {
               <div className="mb-8 p-4 bg-premium/10 rounded-lg border border-premium/20">
                 <h4 className="font-semibold text-premium mb-3 flex items-center gap-2">
                   <Sparkles className="w-5 h-5" />
-                  ბონუსები:
+                  უფასო ბონუსები:
                 </h4>
                 <ul className="space-y-2">
-                  {bonuses.map((bonus, index) => (
-                    <li key={index} className="flex items-center gap-2 text-text-secondary text-sm">
-                      <CheckCircle2 className="w-4 h-4 text-premium flex-shrink-0" />
-                      <span>{bonus}</span>
-                    </li>
-                  ))}
+                  <li className="flex items-center gap-2 text-text-secondary text-sm">
+                    <CheckCircle2 className="w-4 h-4 text-premium flex-shrink-0" />
+                    <span>50+ მზა პრომპტის ბიბლიოთეკა (Copy-Paste)</span>
+                  </li>
+                  <li className="flex items-center gap-2 text-text-secondary text-sm">
+                    <CheckCircle2 className="w-4 h-4 text-premium flex-shrink-0" />
+                    <span>n8n workflow შაბლონები</span>
+                  </li>
+                  <li className="flex items-center gap-2 text-text-secondary text-sm">
+                    <CheckCircle2 className="w-4 h-4 text-premium flex-shrink-0" />
+                    <span>სერთიფიკატი კურსის დასრულების შემდეგ</span>
+                  </li>
                 </ul>
               </div>
 
@@ -128,7 +149,7 @@ export function AIPricing() {
                 }}
               >
                 <Sparkles className="w-5 h-5" />
-                <span>ჩაეწერე ახლავე</span>
+                <span>დიახ, მინდა კურსზე ჩაწერა</span>
                 <ArrowRight className="w-5 h-5" />
               </Button>
 
@@ -140,7 +161,7 @@ export function AIPricing() {
                 </div>
                 <div className="flex items-center gap-2">
                   <CheckCircle2 className="w-4 h-4 text-accent" />
-                  <span>მყისიერი წვდომა</span>
+                  <span>სამუდამო წვდომა</span>
                 </div>
               </div>
             </div>

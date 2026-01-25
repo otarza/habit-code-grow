@@ -69,52 +69,121 @@ export function AIWhoIsThisFor() {
         {/* Section Header */}
         <div className="text-center mb-16">
           <Badge className="mb-4 bg-purple-100 text-purple-700 border-purple-200 px-4 py-2 text-sm font-semibold">
-            ვისთვის არის ეს კურსი?
+            შენ გეძებთ
           </Badge>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-text-primary mb-6">
             ეს პროგრამა შენთვისაა, თუ...
           </h2>
           <p className="text-lg sm:text-xl text-text-secondary max-w-3xl mx-auto">
-            AI არის ინსტრუმენტი, რომელიც ყველას შეუძლია აითვისოს — პროგრამირების გარეშე.
+            არ აქვს მნიშვნელობა პროფესიას — მთავარია გქონდეს სურვილი, მართო მომავლის ტექნოლოგია.
           </p>
         </div>
 
         {/* Target Audience Grid */}
         <div className="grid md:grid-cols-2 gap-6 lg:gap-8 mb-16">
-          {targetAudience.map((audience, index) => {
-            const Icon = audience.icon;
-            return (
-              <Card
-                key={index}
-                className="group p-6 sm:p-8 border-2 border-primary/10 hover:border-primary/30 transition-all duration-300 hover:shadow-xl card-hover bg-card"
-              >
-                {/* Icon */}
-                <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${audience.color} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform`}>
-                  <Icon className="w-7 h-7 text-white" />
-                </div>
+          <Card className="group p-6 sm:p-8 border-2 border-primary/10 hover:border-primary/30 transition-all duration-300 hover:shadow-xl card-hover bg-card">
+            <div className={`w-14 h-14 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform`}>
+              <Lightbulb className="w-7 h-7 text-white" />
+            </div>
+            <h3 className="text-xl sm:text-2xl font-bold text-text-primary mb-3">
+              დამწყები და ინტერესის მქონე
+            </h3>
+            <p className="text-text-secondary mb-6 leading-relaxed">
+              გინდა გაერკვიე AI სამყაროში, შეიძინო მომავლის პროფესია ან უბრალოდ გაიმარტივო ყოველდღიურობა ტექნოლოგიებით.
+            </p>
+            <ul className="space-y-3">
+              <li className="flex items-center gap-3 text-text-secondary">
+                <CheckCircle2 className="w-5 h-5 text-accent flex-shrink-0" />
+                <span className="text-sm sm:text-base">ახალი უნარების ათვისება</span>
+              </li>
+              <li className="flex items-center gap-3 text-text-secondary">
+                <CheckCircle2 className="w-5 h-5 text-accent flex-shrink-0" />
+                <span className="text-sm sm:text-base">კარიერული ტრანსფორმაცია</span>
+              </li>
+              <li className="flex items-center gap-3 text-text-secondary">
+                <CheckCircle2 className="w-5 h-5 text-accent flex-shrink-0" />
+                <span className="text-sm sm:text-base">პირადი ასისტენტის შექმნა</span>
+              </li>
+            </ul>
+          </Card>
 
-                {/* Title */}
-                <h3 className="text-xl sm:text-2xl font-bold text-text-primary mb-3">
-                  {audience.title}
-                </h3>
+          <Card className="group p-6 sm:p-8 border-2 border-primary/10 hover:border-primary/30 transition-all duration-300 hover:shadow-xl card-hover bg-card">
+            <div className={`w-14 h-14 rounded-xl bg-gradient-to-br from-pink-500 to-rose-600 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform`}>
+              <Megaphone className="w-7 h-7 text-white" />
+            </div>
+            <h3 className="text-xl sm:text-2xl font-bold text-text-primary mb-3">
+              მარკეტერი & კრეატორი
+            </h3>
+            <p className="text-text-secondary mb-6 leading-relaxed">
+              გჭირდება უსასრულო იდეები, კონტენტის სწრაფი შექმნა და სოციალური მედიის ავტომატიზაცია რუტინის გარეშე.
+            </p>
+            <ul className="space-y-3">
+              <li className="flex items-center gap-3 text-text-secondary">
+                <CheckCircle2 className="w-5 h-5 text-accent flex-shrink-0" />
+                <span className="text-sm sm:text-base">კონტენტ-გეგმის ავტომატიზაცია</span>
+              </li>
+              <li className="flex items-center gap-3 text-text-secondary">
+                <CheckCircle2 className="w-5 h-5 text-accent flex-shrink-0" />
+                <span className="text-sm sm:text-base">ვიზუალების გენერაცია</span>
+              </li>
+              <li className="flex items-center gap-3 text-text-secondary">
+                <CheckCircle2 className="w-5 h-5 text-accent flex-shrink-0" />
+                <span className="text-sm sm:text-base">კოპირაიტინგი 10x სისწრაფით</span>
+              </li>
+            </ul>
+          </Card>
 
-                {/* Description */}
-                <p className="text-text-secondary mb-6 leading-relaxed">
-                  {audience.description}
-                </p>
+          <Card className="group p-6 sm:p-8 border-2 border-primary/10 hover:border-primary/30 transition-all duration-300 hover:shadow-xl card-hover bg-card">
+            <div className={`w-14 h-14 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-600 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform`}>
+              <TrendingUp className="w-7 h-7 text-white" />
+            </div>
+            <h3 className="text-xl sm:text-2xl font-bold text-text-primary mb-3">
+              ბიზნესის მფლობელი & მენეჯერი
+            </h3>
+            <p className="text-text-secondary mb-6 leading-relaxed">
+              გსურს ოპერაციული ხარჯების შემცირება, პროცესების აჩქარება და გუნდის ეფექტურობის გაზრდა AI-ს დახმარებით.
+            </p>
+            <ul className="space-y-3">
+              <li className="flex items-center gap-3 text-text-secondary">
+                <CheckCircle2 className="w-5 h-5 text-accent flex-shrink-0" />
+                <span className="text-sm sm:text-base">მონაცემების ანალიზი წამებში</span>
+              </li>
+              <li className="flex items-center gap-3 text-text-secondary">
+                <CheckCircle2 className="w-5 h-5 text-accent flex-shrink-0" />
+                <span className="text-sm sm:text-base">რეპორტინგის ავტომატიზაცია</span>
+              </li>
+              <li className="flex items-center gap-3 text-text-secondary">
+                <CheckCircle2 className="w-5 h-5 text-accent flex-shrink-0" />
+                <span className="text-sm sm:text-base">მომხმარებელთა მხარდაჭერა</span>
+              </li>
+            </ul>
+          </Card>
 
-                {/* Benefits */}
-                <ul className="space-y-3">
-                  {audience.benefits.map((benefit, benefitIndex) => (
-                    <li key={benefitIndex} className="flex items-center gap-3 text-text-secondary">
-                      <CheckCircle2 className="w-5 h-5 text-accent flex-shrink-0" />
-                      <span className="text-sm sm:text-base">{benefit}</span>
-                    </li>
-                  ))}
-                </ul>
-              </Card>
-            );
-          })}
+          <Card className="group p-6 sm:p-8 border-2 border-primary/10 hover:border-primary/30 transition-all duration-300 hover:shadow-xl card-hover bg-card">
+            <div className={`w-14 h-14 rounded-xl bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform`}>
+              <Users className="w-7 h-7 text-white" />
+            </div>
+            <h3 className="text-xl sm:text-2xl font-bold text-text-primary mb-3">
+              ადმინისტრატორი & HR
+            </h3>
+            <p className="text-text-secondary mb-6 leading-relaxed">
+              იძირები საბუთებსა და იმეილებში? ისწავლე როგორ გადააბარო მოსაწყენი საქმეები ხელოვნურ ინტელექტს.
+            </p>
+            <ul className="space-y-3">
+              <li className="flex items-center gap-3 text-text-secondary">
+                <CheckCircle2 className="w-5 h-5 text-accent flex-shrink-0" />
+                <span className="text-sm sm:text-base">დოკუმენტაციის დამუშავება</span>
+              </li>
+              <li className="flex items-center gap-3 text-text-secondary">
+                <CheckCircle2 className="w-5 h-5 text-accent flex-shrink-0" />
+                <span className="text-sm sm:text-base">CV-ების სკრინინგი</span>
+              </li>
+              <li className="flex items-center gap-3 text-text-secondary">
+                <CheckCircle2 className="w-5 h-5 text-accent flex-shrink-0" />
+                <span className="text-sm sm:text-base">შეხვედრების მართვა</span>
+              </li>
+            </ul>
+          </Card>
         </div>
 
         {/* Not For Section */}
@@ -122,15 +191,21 @@ export function AIWhoIsThisFor() {
           <div className="bg-red-50 border-2 border-red-200 rounded-xl p-6 sm:p-8">
             <h3 className="text-xl font-bold text-red-700 mb-4 flex items-center gap-2">
               <XCircle className="w-6 h-6" />
-              ეს კურსი არ არის შენთვის, თუ...
+              ეს კურსი არ გამოგადგება, თუ...
             </h3>
             <ul className="space-y-3">
-              {notFor.map((item, index) => (
-                <li key={index} className="flex items-start gap-3 text-red-600">
-                  <XCircle className="w-5 h-5 flex-shrink-0 mt-0.5" />
-                  <span>{item}</span>
-                </li>
-              ))}
+              <li className="flex items-start gap-3 text-red-600">
+                <XCircle className="w-5 h-5 flex-shrink-0 mt-0.5" />
+                <span>გგონია, რომ "ყურება" საკმარისია — აქ კეთებაა მთავარი.</span>
+              </li>
+              <li className="flex items-start gap-3 text-red-600">
+                <XCircle className="w-5 h-5 flex-shrink-0 mt-0.5" />
+                <span>ეძებ "ჯადოსნურ ღილაკს", რომელიც მუშაობის გარეშე გაგამდიდრებს.</span>
+              </li>
+              <li className="flex items-start gap-3 text-red-600">
+                <XCircle className="w-5 h-5 flex-shrink-0 mt-0.5" />
+                <span>არ გაქვს სურვილი, დაუთმო დღეში 20-30 წუთი განვითარებას.</span>
+              </li>
             </ul>
           </div>
         </div>

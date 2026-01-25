@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800&family=Fira+Code:wght@300;400;500;600;700&family=BPG+Nino+Mtavruli:wght@400;700&family=BPG+Glaho:wght@400;700&display=swap');
+@import url('https://cdn.jsdelivr.net/npm/@fontsource/firago@5.2.5/index.min.css');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800&family=Fira+Code:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -10,17 +11,18 @@ Red pyramid, dark navy, with vibrant pixel art accents and animations
 */
 
 @layer base {
+
   /* Prevent horizontal overflow and ensure mobile stability */
   html {
     overflow-x: hidden;
   }
-  
+
   body {
     overflow-x: hidden;
     width: 100%;
     position: relative;
   }
-  
+
   * {
     box-sizing: border-box;
   }
@@ -31,44 +33,44 @@ Red pyramid, dark navy, with vibrant pixel art accents and animations
     --foreground: 220 50% 15%;
     --surface: 0 0% 100%;
     --surface-muted: 210 15% 92%;
-    
+
     /* Primary (BITCAMP Dark Navy) */
     --primary: 220 50% 15%;
     --primary-foreground: 0 0% 100%;
     --primary-hover: 220 50% 12%;
     --primary-light: 220 50% 95%;
-    
+
     /* Secondary (Logo Red Pyramid) */
     --secondary: 0 75% 55%;
     --secondary-foreground: 0 0% 100%;
     --secondary-hover: 0 75% 50%;
     --secondary-light: 0 75% 95%;
-    
+
     /* Accent (Bright Pixel Green) */
     --accent: 120 75% 45%;
     --accent-foreground: 0 0% 100%;
     --accent-hover: 120 75% 40%;
     --accent-light: 120 75% 95%;
-    
+
     /* Premium (Pixel Gold) */
     --premium: 45 85% 55%;
     --premium-foreground: 220 50% 15%;
     --premium-hover: 45 85% 50%;
     --premium-light: 45 85% 95%;
-    
+
     /* Pixel Art Gradients */
     --gradient-hero: linear-gradient(135deg, hsl(220 50% 20%) 0%, hsl(220 45% 25%) 50%, hsl(0 75% 55%) 100%);
     --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(210 15% 98%));
     --gradient-cta: linear-gradient(135deg, hsl(0 75% 55%), hsl(0 75% 50%));
     --gradient-premium: linear-gradient(135deg, hsl(45 85% 55%), hsl(45 85% 50%));
     --gradient-pixel: linear-gradient(90deg, hsl(0 75% 55%), hsl(45 85% 55%), hsl(120 75% 45%));
-    
+
     /* Text Colors */
     --text-primary: 220 50% 15%;
     --text-secondary: 220 30% 35%;
     --text-muted: 220 15% 55%;
     --text-inverse: 0 0% 100%;
-    
+
     /* Interactive Elements */
     --border: 220 15% 80%;
     --input: 220 15% 90%;
@@ -81,7 +83,7 @@ Red pyramid, dark navy, with vibrant pixel art accents and animations
     --muted-foreground: 220 30% 35%;
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
-    
+
     /* Pixel Art Shadows */
     --shadow-soft: 0 4px 20px -2px hsl(220 50% 15% / 0.08);
     --shadow-medium: 0 8px 32px -4px hsl(220 50% 15% / 0.12);
@@ -133,121 +135,169 @@ Red pyramid, dark navy, with vibrant pixel art accents and animations
   body {
     @apply bg-background text-foreground font-body;
   }
-  
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-heading;
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: "FiraGO", sans-serif;
+    text-transform: uppercase;
+    font-feature-settings: "case" on;
   }
 }
 
 @layer components {
+
   /* Pixel Art Animations */
   @keyframes pixel-float {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-8px); }
+
+    0%,
+    100% {
+      transform: translateY(0px);
+    }
+
+    50% {
+      transform: translateY(-8px);
+    }
   }
-  
+
   @keyframes pixel-glow {
-    0%, 100% { box-shadow: 0 0 5px hsl(0 75% 55% / 0.5); }
-    50% { box-shadow: 0 0 20px hsl(0 75% 55% / 0.8), 0 0 30px hsl(0 75% 55% / 0.4); }
+
+    0%,
+    100% {
+      box-shadow: 0 0 5px hsl(0 75% 55% / 0.5);
+    }
+
+    50% {
+      box-shadow: 0 0 20px hsl(0 75% 55% / 0.8), 0 0 30px hsl(0 75% 55% / 0.4);
+    }
   }
-  
+
   @keyframes pixel-slide {
-    0% { transform: translateX(-100%); }
-    100% { transform: translateX(100vw); }
+    0% {
+      transform: translateX(-100%);
+    }
+
+    100% {
+      transform: translateX(100vw);
+    }
   }
-  
+
   @keyframes chrome-spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+      transform: rotate(0deg);
+    }
+
+    100% {
+      transform: rotate(360deg);
+    }
   }
-  
+
   /* Epic Background Animations */
   @keyframes pixel-pulse {
-    0%, 100% { 
+
+    0%,
+    100% {
       opacity: 0.1;
       background-color: hsl(var(--secondary) / 0.05);
     }
-    50% { 
+
+    50% {
       opacity: 0.3;
       background-color: hsl(var(--secondary) / 0.15);
     }
   }
-  
+
   @keyframes pixel-fall {
     0% {
       transform: translateY(-100vh);
       opacity: 0;
     }
+
     10% {
       opacity: 1;
     }
+
     90% {
       opacity: 1;
     }
+
     100% {
       transform: translateY(100vh);
       opacity: 0;
     }
   }
-  
+
   @keyframes glitch-slide {
-    0%, 100% {
+
+    0%,
+    100% {
       transform: translateX(-100%) scaleX(0);
       opacity: 0;
     }
+
     10% {
       transform: translateX(-50%) scaleX(0.5);
       opacity: 0.5;
     }
+
     50% {
       transform: translateX(0) scaleX(1);
       opacity: 1;
     }
+
     90% {
       transform: translateX(50%) scaleX(0.5);
       opacity: 0.5;
     }
   }
-  
+
   @keyframes scan-vertical {
     0% {
       transform: translateY(-100%);
     }
+
     100% {
       transform: translateY(100vh);
     }
   }
-  
+
   @keyframes scan-horizontal {
     0% {
       transform: translateX(-100%);
     }
+
     100% {
       transform: translateX(100vw);
     }
   }
-  
+
   @keyframes pulse {
-    0%, 100% {
+
+    0%,
+    100% {
       opacity: 1;
       transform: scale(1);
     }
+
     50% {
       opacity: 0.8;
       transform: scale(0.95);
     }
   }
-  
+
   /* Pixel Art Elements */
   .pixel-border {
     border: 3px solid hsl(var(--primary));
     border-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='12' height='12' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h4v4H0zm8 0h4v4H8zm-8 8h4v4H0zm8 0h4v4H8z' fill='%23334155'/%3E%3C/svg%3E") 3;
   }
-  
+
   .pixel-shadow {
     box-shadow: 4px 4px 0px hsl(var(--primary) / 0.3);
   }
-  
+
   .pixel-btn {
     @apply pixel-border pixel-shadow transition-all duration-200;
   }
@@ -262,7 +312,7 @@ Red pyramid, dark navy, with vibrant pixel art accents and animations
       border-width: 2px;
     }
   }
-  
+
   /* Animated Background Elements */
   .floating-pixels {
     position: absolute;
@@ -271,99 +321,99 @@ Red pyramid, dark navy, with vibrant pixel art accents and animations
     background: hsl(var(--secondary));
     animation: pixel-float 3s ease-in-out infinite;
   }
-  
+
   .floating-pixels:nth-child(2) {
     background: hsl(var(--accent));
     animation-delay: -1s;
     animation-duration: 4s;
   }
-  
+
   .floating-pixels:nth-child(3) {
     background: hsl(var(--premium));
     animation-delay: -2s;
     animation-duration: 5s;
   }
-  
+
   /* Premium Chrome Effect with Pixel Art Twist */
   .premium-chrome {
     @apply relative overflow-hidden pixel-border;
     background: linear-gradient(45deg, hsl(var(--premium)), hsl(var(--premium-hover)));
   }
-  
+
   .premium-chrome::before {
     content: '';
     @apply absolute inset-0 opacity-30;
     background: conic-gradient(from 45deg, transparent, hsl(var(--premium)), transparent);
     animation: chrome-spin 3s linear infinite;
   }
-  
-  
+
+
   .premium-chrome::after {
     content: '';
     @apply absolute inset-[2px] bg-card rounded-lg;
     z-index: 1;
   }
-  
-  .premium-chrome > * {
+
+  .premium-chrome>* {
     @apply relative z-10;
   }
-  
+
   /* Challenge Icons - Pixel Style */
   .challenge-21 {
     @apply text-secondary;
     filter: drop-shadow(2px 2px 0px hsl(var(--secondary) / 0.3));
   }
-  
+
   .challenge-30 {
     @apply text-primary;
     filter: drop-shadow(2px 2px 0px hsl(var(--primary) / 0.3));
   }
-  
+
   .challenge-100 {
     @apply text-accent;
     filter: drop-shadow(2px 2px 0px hsl(var(--accent) / 0.3));
   }
-  
+
   /* Pixel Art Cards */
   .card-hover {
     @apply transition-all duration-200 hover:shadow-pixel;
   }
-  
+
   .card-hover:hover {
     transform: translate(-2px, -2px);
   }
-  
+
   .premium-glow {
     @apply shadow-premium pixel-border;
     background: linear-gradient(135deg, hsl(var(--premium)), hsl(var(--premium-hover)));
   }
-  
+
   .premium-glow:hover {
     animation: pixel-glow 2s ease-in-out infinite;
   }
-  
+
   /* Course Card Styling - Pixel Art */
   .course-free {
     @apply bg-gradient-to-br from-secondary/5 to-secondary/10 pixel-border;
     border-color: hsl(var(--secondary) / 0.3);
   }
-  
+
   .course-challenge {
     @apply bg-gradient-to-br from-primary/5 to-primary/10 pixel-border;
     border-color: hsl(var(--primary) / 0.3);
   }
-  
+
   .course-premium {
     @apply bg-gradient-to-br from-premium/5 to-premium/10 pixel-border;
     border-color: hsl(var(--premium) / 0.3);
   }
-  
+
   .emigrant-special {
     @apply bg-gradient-to-br from-accent/5 to-accent/10 pixel-border;
     border-color: hsl(var(--accent) / 0.3);
     position: relative;
   }
-  
+
   .emigrant-special::before {
     content: '🌍';
     position: absolute;
@@ -380,13 +430,13 @@ Red pyramid, dark navy, with vibrant pixel art accents and animations
     box-shadow: var(--shadow-medium);
     z-index: 2;
   }
-  
+
   /* Pixel Art Background Animations */
   .pixel-bg {
     position: relative;
     overflow: hidden;
   }
-  
+
   .pixel-bg::before {
     content: '';
     position: absolute;
@@ -396,7 +446,7 @@ Red pyramid, dark navy, with vibrant pixel art accents and animations
     height: 8px;
     background: hsl(var(--secondary));
     animation: pixel-slide 8s linear infinite;
-    box-shadow: 
+    box-shadow:
       0 50px 0 hsl(var(--accent)),
       0 100px 0 hsl(var(--premium)),
       0 150px 0 hsl(var(--secondary)),
@@ -407,141 +457,151 @@ Red pyramid, dark navy, with vibrant pixel art accents and animations
       100px 50px 0 hsl(var(--secondary)),
       100px 100px 0 hsl(var(--accent));
   }
-  
+
   /* Epic Background Elements */
   .pixel-grid-cell {
     @apply transition-all duration-300;
   }
-  
+
   .pixel-block {
-    box-shadow: 
-      2px 2px 0 rgba(0,0,0,0.1),
-      4px 4px 0 rgba(0,0,0,0.05);
+    box-shadow:
+      2px 2px 0 rgba(0, 0, 0, 0.1),
+      4px 4px 0 rgba(0, 0, 0, 0.05);
   }
-  
+
   .pixel-block-large {
-    box-shadow: 
-      4px 4px 0 rgba(0,0,0,0.1),
-      8px 8px 0 rgba(0,0,0,0.05),
-      12px 12px 0 rgba(0,0,0,0.025);
+    box-shadow:
+      4px 4px 0 rgba(0, 0, 0, 0.1),
+      8px 8px 0 rgba(0, 0, 0, 0.05),
+      12px 12px 0 rgba(0, 0, 0, 0.025);
   }
-  
+
   .pixel-rain {
     text-shadow: 0 0 5px currentColor;
   }
-  
+
   .glitch-line {
     filter: blur(1px);
   }
-  
+
   .pixel-corner {
     clip-path: polygon(0 0, 100% 0, 100% 30%, 30% 100%, 0 100%);
   }
-  
+
   .scan-line {
     mix-blend-mode: screen;
   }
-  
+
   /* CRT Effect */
   .crt-overlay {
-    background: repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 2px,
-      rgba(255,255,255,0.03) 2px,
-      rgba(255,255,255,0.03) 4px
-    );
+    background: repeating-linear-gradient(0deg,
+        transparent,
+        transparent 2px,
+        rgba(255, 255, 255, 0.03) 2px,
+        rgba(255, 255, 255, 0.03) 4px);
     animation: crt-flicker 0.15s infinite;
   }
-  
+
   @keyframes crt-flicker {
-    0%, 100% { opacity: 0.05; }
-    50% { opacity: 0.04; }
+
+    0%,
+    100% {
+      opacity: 0.05;
+    }
+
+    50% {
+      opacity: 0.04;
+    }
   }
-  
+
   .crt-scanlines {
     @apply absolute inset-0;
-    background: linear-gradient(
-      transparent 50%,
-      rgba(0,0,0,0.02) 50%
-    );
+    background: linear-gradient(transparent 50%,
+        rgba(0, 0, 0, 0.02) 50%);
     background-size: 100% 4px;
   }
-  
+
   .animation-delay-200 {
     animation-delay: 200ms;
   }
-  
+
   .animation-delay-400 {
     animation-delay: 400ms;
   }
-  
+
   /* Sticky CTA Bar Animation */
   @keyframes slide-up {
     0% {
       transform: translateY(100%);
       opacity: 0;
     }
+
     100% {
       transform: translateY(0);
       opacity: 1;
     }
   }
-  
+
   .animate-slide-up {
     animation: slide-up 0.4s ease-out;
   }
-  
+
   /* Exit Intent Popup Animations */
   @keyframes fade-in {
     0% {
       opacity: 0;
     }
+
     100% {
       opacity: 1;
     }
   }
-  
+
   @keyframes scale-in {
     0% {
       transform: scale(0.8);
       opacity: 0;
     }
+
     100% {
       transform: scale(1);
       opacity: 1;
     }
   }
-  
+
   .animate-fade-in {
     animation: fade-in 0.3s ease-out;
   }
-  
+
   .animate-scale-in {
     animation: scale-in 0.3s ease-out;
   }
-  
+
   /* Floating Social Proof Animation */
   @keyframes slide-in-left {
     0% {
       transform: translateX(-100%);
       opacity: 0;
     }
+
     100% {
       transform: translateX(0);
       opacity: 1;
     }
   }
-  
+
   .animate-slide-in-left {
     animation: slide-in-left 0.4s ease-out;
   }
 
   /* Animated gradient background */
   @keyframes gradient-xy {
-    0%, 100% {
+
+    0%,
+    100% {
       background-position: 0% 50%;
     }
+
     50% {
       background-position: 100% 50%;
     }

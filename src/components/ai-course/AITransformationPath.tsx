@@ -14,17 +14,17 @@ import {
 
 export function AITransformationPath() {
   const beforeItems = [
-    { icon: Clock, text: "საათობით ხარჯავ დროს რუტინულ დავალებებზე" },
-    { icon: AlertTriangle, text: "AI-ს პასუხები არაპროგნოზირებადი და არაზუსტია" },
-    { icon: Repeat, text: "იგივე სამუშაოს ხელით მეორდები ყოველდღე" },
-    { icon: XCircle, text: "არ იცი როგორ დააკავშირო AI სხვა ინსტრუმენტებთან" }
+    { icon: Clock, text: "დღეში 3-4 საათი იხარჯება რუტინულ, მოსაწყენ საქმეებზე" },
+    { icon: AlertTriangle, text: "AI გაძლევს ზოგად და არასრული პასუხებს, რაც უფრო გაბნევს" },
+    { icon: Repeat, text: "აკეთებ ერთი და იმავეს ყოველდღე, ნაცვლად განვითარუბისა" },
+    { icon: XCircle, text: "გეშინია, რომ ტექნოლოგიური პროგრესი უკან მოგტოვებს" }
   ];
 
   const afterItems = [
-    { icon: Zap, text: "ავტომატიზაციები მუშაობს 24/7 შენს ნაცვლად" },
-    { icon: CheckCircle2, text: "AI-სგან იღებ ზუსტად იმ პასუხს, რაც გინდა" },
-    { icon: Bot, text: "შენი პერსონალური AI აგენტები ასრულებენ დავალებებს" },
-    { icon: TrendingUp, text: "n8n-ით აკავშირებ ნებისმიერ აპლიკაციას" }
+    { icon: Zap, text: "შენი ციფრული სისტემები მუშაობენ 24/7, სანამ შენ ისვენებ" },
+    { icon: CheckCircle2, text: "იღებ ექსპერტულ პასუხებს და შედეგებს პირველივე ცდაზე" },
+    { icon: Bot, text: "გყავს პერსონალური AI გუნდი ნებისმიერი ამოცანისთვის" },
+    { icon: TrendingUp, text: "ფლობ მომავლის უნარს, რომელიც მუდამ მოთხოვნადია" }
   ];
 
   return (
@@ -36,10 +36,10 @@ export function AITransformationPath() {
             ტრანსფორმაცია
           </Badge>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-text-primary mb-6">
-            სანამ vs შემდეგ
+            სად ხარ ახლა vs სად იქნები
           </h2>
           <p className="text-lg sm:text-xl text-text-secondary max-w-3xl mx-auto">
-            ნახე რა იცვლება, როცა AI-ს სწორად იყენებ
+            ეს არ არის უბრალოდ კურსი — ეს არის შენი პროფესიული ნახტომი.
           </p>
         </div>
 
@@ -52,8 +52,8 @@ export function AITransformationPath() {
                 <XCircle className="w-6 h-6 text-white" />
               </div>
               <div>
-                <h3 className="text-2xl font-bold text-red-700">სანამ</h3>
-                <p className="text-red-600 text-sm">კურსის გავლამდე</p>
+                <h3 className="text-2xl font-bold text-red-700">დღეს</h3>
+                <p className="text-red-600 text-sm">ქაოსი და რუტინა</p>
               </div>
             </div>
 
@@ -71,13 +71,10 @@ export function AITransformationPath() {
 
             <div className="mt-6 pt-6 border-t border-red-200">
               <div className="flex items-center justify-between">
-                <span className="text-red-600 font-medium">პროდუქტიულობა</span>
+                <span className="text-red-600 font-medium">სტრესი & დაღლა</span>
                 <div className="flex gap-1">
-                  {[1, 2].map((i) => (
+                  {[1, 2, 3, 4, 5].map((i) => (
                     <div key={i} className="w-4 h-4 bg-red-400 rounded"></div>
-                  ))}
-                  {[3, 4, 5].map((i) => (
-                    <div key={i} className="w-4 h-4 bg-red-200 rounded"></div>
                   ))}
                 </div>
               </div>
@@ -91,8 +88,8 @@ export function AITransformationPath() {
                 <CheckCircle2 className="w-6 h-6 text-white" />
               </div>
               <div>
-                <h3 className="text-2xl font-bold text-green-700">შემდეგ</h3>
-                <p className="text-green-600 text-sm">კურსის გავლის შემდეგ</p>
+                <h3 className="text-2xl font-bold text-green-700">ხვალ</h3>
+                <p className="text-green-600 text-sm">სიმშვიდე და პროგრესი</p>
               </div>
             </div>
 
@@ -110,7 +107,7 @@ export function AITransformationPath() {
 
             <div className="mt-6 pt-6 border-t border-green-200">
               <div className="flex items-center justify-between">
-                <span className="text-green-600 font-medium">პროდუქტიულობა</span>
+                <span className="text-green-600 font-medium">თავისუფალი დრო</span>
                 <div className="flex gap-1">
                   {[1, 2, 3, 4, 5].map((i) => (
                     <div key={i} className="w-4 h-4 bg-green-400 rounded"></div>
@@ -130,19 +127,19 @@ export function AITransformationPath() {
         <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
           <div className="text-center p-6 bg-muted/50 rounded-xl">
             <div className="text-3xl sm:text-4xl font-bold text-accent mb-2">10x</div>
-            <div className="text-text-secondary text-sm">უფრო სწრაფი კონტენტის შექმნა</div>
+            <div className="text-text-secondary text-sm">ზრდა პროდუქტიულობაში</div>
           </div>
           <div className="text-center p-6 bg-muted/50 rounded-xl">
-            <div className="text-3xl sm:text-4xl font-bold text-purple-500 mb-2">90%</div>
-            <div className="text-text-secondary text-sm">რუტინის ავტომატიზაცია</div>
+            <div className="text-3xl sm:text-4xl font-bold text-purple-500 mb-2">30+</div>
+            <div className="text-text-secondary text-sm">საათის დაზოგვა თვეში</div>
           </div>
           <div className="text-center p-6 bg-muted/50 rounded-xl">
-            <div className="text-3xl sm:text-4xl font-bold text-secondary mb-2">24/7</div>
-            <div className="text-text-secondary text-sm">AI აგენტები მუშაობს</div>
+            <div className="text-3xl sm:text-4xl font-bold text-secondary mb-2">∞</div>
+            <div className="text-text-secondary text-sm">პერსონალური აგენტები</div>
           </div>
           <div className="text-center p-6 bg-muted/50 rounded-xl">
-            <div className="text-3xl sm:text-4xl font-bold text-blue-500 mb-2">0</div>
-            <div className="text-text-secondary text-sm">კოდის ხაზი საჭირო</div>
+            <div className="text-3xl sm:text-4xl font-bold text-blue-500 mb-2">Top 1%</div>
+            <div className="text-text-secondary text-sm">მოთხოვნადი უნარი</div>
           </div>
         </div>
       </div>

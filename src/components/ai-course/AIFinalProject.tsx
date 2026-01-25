@@ -13,19 +13,19 @@ import {
 export function AIFinalProject() {
   const projectExamples = [
     {
-      title: "ჭკვიანი კონტენტ-მენეჯერი",
-      description: "სიახლეების ავტომატური სკანირება, AI-ით დამუშავება და სოციალურ ქსელებში პუბლიკაცია.",
-      modules: ["მოდული 2", "მოდული 3", "მოდული 6"]
+      title: "სრული სოციალური მედია მენეჯერი",
+      description: "სისტემა, რომელიც აკვირდება ტრენდებს, წერს პოსტებს, ქმნის ვიზუალებს და აქვეყნებს მათ თქვენს ნაცვლად.",
+      modules: ["Content Automation", "Vision API", "Schedule"]
     },
     {
-      title: "Support აგენტი",
-      description: "იმეილების კატეგორიზაცია, Knowledge Base-ში პასუხის მოძებნა და დრაფტის მომზადება.",
-      modules: ["მოდული 5", "მოდული 6"]
+      title: "მომხმარებელთა მხარდაჭერის AI",
+      description: "ჭკვიანი ბოტი, რომელმაც იცის თქვენი კომპანიის ყველა დეტალი, პასუხობს იმეილებს და აგვარებს პრობლემებს.",
+      modules: ["RAG System", "Gmail Integration", "Auto-Reply"]
     },
     {
-      title: "შეხვედრების ასისტენტი",
-      description: "აუდიო ჩანაწერის ტექსტად ქცევა, შეჯამება და დავალებების Trello-ში გაწერა.",
-      modules: ["მოდული 4", "მოდული 6"]
+      title: "პირადი პროდუქტიულობის ასისტენტი",
+      description: "თქვენი პირადი ჯარვისი — ხმოვანი დავალებების მიღება, კალენდრის მართვა და ინფორმაციის მოძიება.",
+      modules: ["Voice to Text", "Calendar API", "Research Agent"]
     }
   ];
 
@@ -33,7 +33,7 @@ export function AIFinalProject() {
     { icon: MessageSquare, label: "პრომპტინგი", color: "bg-green-500" },
     { icon: Database, label: "Knowledge Base", color: "bg-purple-500" },
     { icon: Workflow, label: "ავტომატიზაცია", color: "bg-orange-500" },
-    { icon: Zap, label: "AI აგენტი", color: "bg-red-500" }
+    { icon: Zap, label: "სრული სისტემა", color: "bg-red-500" }
   ];
 
   return (
@@ -42,14 +42,14 @@ export function AIFinalProject() {
         {/* Section Header */}
         <div className="text-center mb-16">
           <Badge className="mb-4 bg-premium/20 text-premium border-premium/30 px-4 py-2 text-sm font-semibold">
-            ფინალური პროექტი
+            შენი პორტფოლიო
           </Badge>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-text-primary mb-6">
-            შექმენი შენი{" "}
-            <span className="text-secondary">ავტონომიური AI სისტემა</span>
+            შექმენი რეალური{" "}
+            <span className="text-secondary">AI პროდუქტი</span>
           </h2>
           <p className="text-lg sm:text-xl text-text-secondary max-w-3xl mx-auto">
-            პროგრამის ბოლოს გექნება რეალური პროექტი, რომელიც აერთიანებს ყველა მოდულს და აგვარებს შენი ბიზნესის კონკრეტულ პრობლემას.
+            ეს არ არის სათამაშო პროექტი. ეს არის მუშა სისტემა, რომელსაც ან შენ გამოიყენებ, ან გაყიდი.
           </p>
         </div>
 
@@ -79,31 +79,31 @@ export function AIFinalProject() {
         <Card className="max-w-3xl mx-auto p-6 sm:p-8 border-2 border-premium/30 bg-gradient-to-br from-premium/5 to-transparent mb-12">
           <div className="flex items-center gap-3 mb-6">
             <Trophy className="w-8 h-8 text-premium" />
-            <h3 className="text-2xl font-bold text-text-primary">პროექტის მოთხოვნები</h3>
+            <h3 className="text-2xl font-bold text-text-primary">რას ააწყობ კურსის ბოლოს:</h3>
           </div>
           <ul className="space-y-4">
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
               <span className="text-text-secondary">
-                <strong className="text-text-primary">n8n ავტომატიზაცია</strong> — მინიმუმ 5 ნოუდიანი workflow, რომელიც Webhook-ით იწყება
+                <strong className="text-text-primary">სრული ავტონომია (n8n)</strong> — სისტემა, რომელიც მუშაობს ადამიანის ჩარევის გარეშე.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
               <span className="text-text-secondary">
-                <strong className="text-text-primary">AI ინტეგრაცია</strong> — OpenAI ან Claude API-ს გამოყენება დახვეწილი პრომპტით
+                <strong className="text-text-primary">ჭკვიანი ტვინი (LLM)</strong> — OpenAI ან Claude-ის ინტეგრაცია რთული გადაწყვეტილებებისთვის.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
               <span className="text-text-secondary">
-                <strong className="text-text-primary">Knowledge Base</strong> — Custom GPT ან RAG სისტემა შენი დოკუმენტაციით
+                <strong className="text-text-primary">საკუთარი მეხსიერება (RAG)</strong> — სისტემა, რომელმაც იცის შენი დოკუმენტები და ფაილები.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
               <span className="text-text-secondary">
-                <strong className="text-text-primary">ბიზნეს პრობლემის გადაჭრა</strong> — რეალური use case, რომელიც დროს ზოგავს
+                <strong className="text-text-primary">რეალური ღირებულება</strong> — პროექტი, რომელიც ზოგავს დროს ან გენერირებს შემოსავალს.
               </span>
             </li>
           </ul>

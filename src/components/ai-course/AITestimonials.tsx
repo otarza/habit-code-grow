@@ -18,26 +18,26 @@ export function AITestimonials() {
       name: "ნინო მაისურაძე",
       role: "მარკეტინგის მენეჯერი",
       avatar: "ნმ",
-      quote: "ვერც წარმოვიდგენდი, რომ პროგრამირების გარეშე შევძლებდი ავტომატიზაციების აწყობას. ახლა ჩემი კონტენტ-კალენდარი თავისით ივსება და სოციალურ ქსელებში პოსტები ავტომატურად იდება.",
+      quote: "თავიდან მეგონა, რომ ტექნიკური ცოდნის გარეშე გამიჭირდებოდა, მაგრამ კურსი იმდენად მარტივი ენითაა აწყობილი, რომ პირველივე დღეს ავაწყე ჩემი სოშალ მედია ბოტი. საოცარი შეგრძნებაა, როცა საქმე თავისით კეთდება!",
       highlight: "კონტენტ ავტომატიზაცია",
       icon: Megaphone,
       badgeColor: "bg-gradient-to-r from-pink-500 to-rose-600"
     },
     {
       name: "გიორგი ბერიძე",
-      role: "სტარტაპის დამფუძნებელი",
+      role: "მცირე ბიზნესის მფლობელი",
       avatar: "გბ",
-      quote: "n8n-ის მოდულმა სრულიად შემიცვალა ბიზნესის მართვის ხედვა. Support-ის ავტომატიზაცია, იმეილების კატეგორიზაცია — ყველაფერი ავტომატურად ხდება. დროის დანაზოგი უზარმაზარია.",
+      quote: "n8n-ის მოდული არის ამ კურსის არგალიტი. ადრე დღეში 2 საათს ვხარჯავდი ინვოისების დახარისხებაზე, ახლა კი სისტემა თვითონ აგზავნის და აარქივებს ყველაფერს. ეს კურსი საუკეთესო ინვესტიცია იყო წელს.",
       highlight: "ბიზნეს ავტომატიზაცია",
       icon: TrendingUp,
       badgeColor: "bg-gradient-to-r from-blue-500 to-cyan-600"
     },
     {
-      name: "მარიამ კვარაცხელია",
-      role: "HR მენეჯერი",
-      avatar: "მკ",
-      quote: "Custom GPT-ის შექმნა იმდენად მარტივი აღმოჩნდა! ახლა ჩემი პერსონალური ასისტენტი მეხმარება CV-ების გადარჩევაში, შეხვედრების შეჯამებაში და კანდიდატებთან კომუნიკაციაში.",
-      highlight: "Custom GPT",
+      name: "ელენე კაპანაძე",
+      role: "სტუდენტი / დამწყები",
+      avatar: "ეკ",
+      quote: "სულ მაინტერესებდა AI, მაგრამ არ ვიცოდი საიდან დამეწყო. ეს კურსი ნაბიჯ-ნაბიჯ გასწავლის ყველაფერს. ყველაზე ძალიან Custom GPT-ები მომეწონა — შევქმენი ასისტენტი, რომელიც საკურსოების წერაში მეხმარება.",
+      highlight: "ახალი პროფესია",
       icon: Users,
       badgeColor: "bg-gradient-to-r from-green-500 to-emerald-600"
     },
@@ -45,7 +45,7 @@ export function AITestimonials() {
       name: "დავით ჩხეიძე",
       role: "ფინანსური ანალიტიკოსი",
       avatar: "დჩ",
-      quote: "PDF რეპორტების ანალიზი, რომელსაც მთელი დღე მჭირდებოდა, ახლა წუთებში კეთდება. Chain of Thought ტექნიკამ მასწავლა, როგორ მივიღო AI-სგან ნამდვილად გააზრებული პასუხები.",
+      quote: "არ მეგონა, თუ Excel-ის და PDF-ების ანალიზს ასე გავამარტივებდი. Chain of Thought ტექნიკით ისეთ პასუხებს ვიღებ, რომ კოლეგებს უკვირთ, როდის ვასწრებ ამდენს. 10/10!",
       highlight: "მონაცემთა ანალიზი",
       icon: Briefcase,
       badgeColor: "bg-gradient-to-r from-purple-500 to-violet-600"
@@ -54,7 +54,7 @@ export function AITestimonials() {
       name: "ანა გელაშვილი",
       role: "კონტენტ-კრეატორი",
       avatar: "აგ",
-      quote: "DALL-E და Midjourney-ს ვიყენებდი, მაგრამ შედეგები შემთხვევითი იყო. პრომპტინგის სწორი ტექნიკებით ახლა ზუსტად ისეთ ვიზუალებს ვქმნი, როგორიც მინდა.",
+      quote: "Midjourney-ში ასეთი დონის ვიზუალებს თუ შევქმნიდი, ვერ წარმოვიდგენდი. კურსმა მასწავლა სინათლის, კომპოზიციის და სტილის სწორად აღწერა. ჩემი ინსტაგრამი ახალ დონეზე ავიდა.",
       highlight: "ვიზუალური AI",
       icon: Lightbulb,
       badgeColor: "bg-gradient-to-r from-orange-500 to-amber-600"
@@ -63,7 +63,7 @@ export function AITestimonials() {
       name: "ლევან თოფურია",
       role: "ოპერაციების მენეჯერი",
       avatar: "ლთ",
-      quote: "RAG სისტემის აწყობა ჩვენი შიდა დოკუმენტაციისთვის — ეს იყო game-changer. ახლა ახალი თანამშრომლები თავად პოულობენ პასუხებს ჩვენს Knowledge Base-ში.",
+      quote: "ჩვენი კომპანიის შიდა ბაზა ავაწყე RAG სისტემით. ახალი თანამშრომლები კითხვებს ბოტს უსვამენ და მე აღარ მაწუხებენ. მარტო ამისთვის ღირდა კურსის ყიდვა.",
       highlight: "RAG სისტემა",
       icon: Code,
       badgeColor: "bg-gradient-to-r from-red-500 to-rose-600"
@@ -79,7 +79,7 @@ export function AITestimonials() {
             სტუდენტების შეფასებები
           </Badge>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-text-primary mb-6">
-            რას ამბობენ ჩვენი{" "}
+            რას ამბობს ჩვენი{" "}
             <span className="text-secondary">400+ სტუდენტი</span>
           </h2>
           <p className="text-lg sm:text-xl text-text-secondary max-w-3xl mx-auto">
@@ -140,7 +140,7 @@ export function AITestimonials() {
             <div className="text-4xl font-bold text-accent">400+</div>
             <div className="text-left">
               <div className="font-semibold text-text-primary">სტუდენტი უკვე სწავლობს</div>
-              <div className="text-sm text-text-secondary">და რიცხვი იზრდება ყოველდღე</div>
+              <div className="text-sm text-text-secondary">და ეს რიცხვი იზრდება ყოველდღე</div>
             </div>
           </div>
         </div>
