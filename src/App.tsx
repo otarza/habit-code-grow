@@ -7,6 +7,7 @@ import Index from "./pages/Index";
 import FullStackAI from "./pages/FullStackAI";
 import AIPromptEngineering from "./pages/AIPromptEngineering";
 import CoursePage from "./pages/CoursePage";
+import CoursesIndex from "./pages/CoursesIndex";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -21,7 +22,8 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/fullstack-ai" element={<FullStackAI />} />
           <Route path="/ai" element={<AIPromptEngineering />} />
-          {/* Course routes */}
+          {/* Courses routes */}
+          <Route path="/courses" element={<CoursesIndex />} />
           <Route path="/courses/:courseSlug" element={<CoursePage />} />
           <Route path="/courses/:courseSlug/:topicSlug/:lessonSlug" element={<CoursePage />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

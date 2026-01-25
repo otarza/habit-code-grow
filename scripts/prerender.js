@@ -12,7 +12,8 @@ const distDir = path.join(rootDir, 'dist');
 const routes = [
     '/',
     '/ai',
-    '/fullstack-ai'
+    '/fullstack-ai',
+    '/courses'
 ];
 
 const PORT = 4173;

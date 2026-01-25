@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X, Sparkles } from "lucide-react";
 import bitcampLogo from "@/assets/bitcamp-logo.png";
@@ -60,16 +60,11 @@ export function Navbar() {
               <Sparkles className="w-4 h-4" />
               უფასო კურსები
             </Button>
-            <div className="w-px h-6 bg-border"></div>
-            <a
-              href="https://www.bitcamp.ge/dashboard/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <Link to="/courses">
               <Button variant="outline" size="sm" className="border-primary text-primary hover:bg-primary hover:text-primary-foreground">
-                შესვლა
+                კურსები
               </Button>
-            </a>
+            </Link>
             <Button
               variant="hero"
               size="sm"
@@ -133,18 +128,11 @@ export function Navbar() {
                   <Sparkles className="w-4 h-4" />
                   უფასო კურსები
                 </Button>
-                <div className="h-px bg-border"></div>
-                <a
-                  href="https://www.bitcamp.ge/dashboard/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => setIsOpen(false)}
-                  className="block"
-                >
+                <Link to="/courses" onClick={() => setIsOpen(false)}>
                   <Button variant="outline" size="sm" className="w-full border-primary text-primary hover:bg-primary hover:text-primary-foreground">
-                    შესვლა
+                    კურსები
                   </Button>
-                </a>
+                </Link>
                 <Button
                   variant="hero"
                   size="sm"
