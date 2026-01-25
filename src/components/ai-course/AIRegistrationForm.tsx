@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { Badge } from "@/components/ui/badge";
 import {
   CheckCircle2,
@@ -12,26 +11,9 @@ import {
   Workflow
 } from "lucide-react";
 
-interface AIRegistrationFormProps {
-  tallyFormId?: string;
-}
-
-export function AIRegistrationForm({ tallyFormId = "YOUR_TALLY_FORM_ID" }: AIRegistrationFormProps) {
-  useEffect(() => {
-    // Load Tally embed script
-    const script = document.createElement("script");
-    script.src = "https://tally.so/widgets/embed.js";
-    script.async = true;
-    document.body.appendChild(script);
-
-    return () => {
-      // Cleanup script on unmount
-      const existingScript = document.querySelector('script[src="https://tally.so/widgets/embed.js"]');
-      if (existingScript) {
-        existingScript.remove();
-      }
-    };
-  }, []);
+export function AIRegistrationForm() {
+  // ManyChat registration URL - temporary until n8n+Tally is set up
+  const manychatUrl = "https://m.me/bitcamp.ge?ref=w49324136";
 
   const trustIndicators = [
     { icon: CheckCircle2, text: "მყისიერი წვდომა გადახდის შემდეგ" },
@@ -153,39 +135,32 @@ export function AIRegistrationForm({ tallyFormId = "YOUR_TALLY_FORM_ID" }: AIReg
             </div>
           </div>
 
-          {/* Right: Tally Form - Shows second on mobile */}
+          {/* Right: Registration CTA - Shows second on mobile */}
           <div className="order-2 lg:order-2">
             <div className="bg-card border-2 border-primary/20 rounded-2xl p-6 sm:p-8 shadow-xl">
-              <h3 className="text-xl font-bold text-text-primary mb-6 text-center">
-                შეავსე რეგისტრაციის ფორმა
+              <h3 className="text-xl font-bold text-text-primary mb-4 text-center">
+                მზად ხარ დასაწყებად?
               </h3>
 
-              {/* Tally Embed */}
-              <div className="min-h-[400px]">
-                <iframe
-                  data-tally-src={`https://tally.so/embed/${tallyFormId}?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1`}
-                  loading="lazy"
-                  width="100%"
-                  height="400"
-                  frameBorder="0"
-                  marginHeight={0}
-                  marginWidth={0}
-                  title="AI Course Registration"
-                  className="w-full"
-                ></iframe>
-              </div>
+              <p className="text-text-secondary text-center mb-8">
+                დააჭირე ღილაკს და დაიწყე რეგისტრაცია Messenger-ში. მიიღებ დეტალურ ინფორმაციას და გადახდის ინსტრუქციას.
+              </p>
 
-              {/* Fallback Link */}
-              <p className="text-center text-sm text-text-secondary mt-4">
-                ფორმა არ ჩაიტვირთა?{" "}
-                <a
-                  href={`https://tally.so/r/${tallyFormId}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-secondary hover:underline"
-                >
-                  გახსენი ახალ ფანჯარაში
-                </a>
+              {/* ManyChat CTA */}
+              <a
+                href={manychatUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-3 w-full bg-[#0099FF] hover:bg-[#0088ee] text-white font-bold py-4 px-6 rounded-xl transition-colors text-lg shadow-lg"
+              >
+                <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 2C6.477 2 2 6.145 2 11.243c0 2.936 1.444 5.544 3.7 7.254v3.503l3.258-1.822c.898.248 1.85.382 2.842.382h.2c5.523 0 10-4.145 10-9.243S17.523 2 12 2zm1.016 12.441l-2.545-2.718-4.97 2.718 5.467-5.803 2.608 2.718 4.907-2.718-5.467 5.803z"/>
+                </svg>
+                <span>გაგრძელება Messenger-ში</span>
+              </a>
+
+              <p className="text-center text-sm text-text-secondary mt-6">
+                რეგისტრაცია მარტივია და რამდენიმე წუთს საჭიროებს
               </p>
             </div>
           </div>

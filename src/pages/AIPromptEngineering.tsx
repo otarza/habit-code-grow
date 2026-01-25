@@ -50,8 +50,8 @@ const AIPromptEngineering = () => {
             {/* Pricing: Call to action */}
             <AIPricing />
 
-            {/* Registration Form: Inline Tally embed */}
-            <AIRegistrationForm tallyFormId="YOUR_TALLY_FORM_ID" />
+            {/* Registration: ManyChat link (temporary until n8n+Tally is ready) */}
+            <AIRegistrationForm />
 
             {/* FAQ: Address objections */}
             <AIFAQ />
