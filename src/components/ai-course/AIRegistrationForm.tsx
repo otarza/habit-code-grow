@@ -13,7 +13,7 @@ import {
 
 export function AIRegistrationForm() {
   // ManyChat registration URL - temporary until n8n+Tally is set up
-  const manychatUrl = "https://m.me/bitcamp.ge?ref=w49324136";
+  const manychatUrl = "https://m.me/bitcamp.ge?ref=w49691316";
 
   const trustIndicators = [
     { icon: CheckCircle2, text: "მყისიერი წვდომა გადახდის შემდეგ" },
@@ -154,7 +154,7 @@ export function AIRegistrationForm() {
                 className="flex items-center justify-center gap-3 w-full bg-[#0099FF] hover:bg-[#0088ee] text-white font-bold py-4 px-6 rounded-xl transition-colors text-lg shadow-lg"
               >
                 <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M12 2C6.477 2 2 6.145 2 11.243c0 2.936 1.444 5.544 3.7 7.254v3.503l3.258-1.822c.898.248 1.85.382 2.842.382h.2c5.523 0 10-4.145 10-9.243S17.523 2 12 2zm1.016 12.441l-2.545-2.718-4.97 2.718 5.467-5.803 2.608 2.718 4.907-2.718-5.467 5.803z"/>
+                  <path d="M12 2C6.477 2 2 6.145 2 11.243c0 2.936 1.444 5.544 3.7 7.254v3.503l3.258-1.822c.898.248 1.85.382 2.842.382h.2c5.523 0 10-4.145 10-9.243S17.523 2 12 2zm1.016 12.441l-2.545-2.718-4.97 2.718 5.467-5.803 2.608 2.718 4.907-2.718-5.467 5.803z" />
                 </svg>
                 <span>გაგრძელება Messenger-ში</span>
               </a>
