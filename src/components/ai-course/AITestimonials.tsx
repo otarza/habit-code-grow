@@ -1,6 +1,6 @@
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Star, Briefcase, TrendingUp, Megaphone, Users, Lightbulb, Code } from "lucide-react";
+import { Star, Briefcase, TrendingUp, Megaphone, Lightbulb } from "lucide-react";
 
 interface Testimonial {
   name: string;
@@ -15,58 +15,139 @@ interface Testimonial {
 export function AITestimonials() {
   const testimonials: Testimonial[] = [
     {
-      name: "ნინო მაისურაძე",
-      role: "მარკეტინგის მენეჯერი",
-      avatar: "ნმ",
-      quote: "თავიდან მეგონა, რომ ტექნიკური ცოდნის გარეშე გამიჭირდებოდა, მაგრამ კურსი იმდენად მარტივი ენითაა აწყობილი, რომ პირველივე დღეს ავაწყე ჩემი სოშალ მედია ბოტი. საოცარი შეგრძნებაა, როცა საქმე თავისით კეთდება!",
-      highlight: "კონტენტ ავტომატიზაცია",
+      name: "მანანა ჩართოლანი",
+      role: "აქტიური მონაწილე",
+      avatar: "მჩ",
+      quote: "მადლობა თქვენ. მე კი ძალიან მომწონს თქვენი გადმოცემის მეთოდი.",
+      highlight: "გადმოცემის მეთოდი",
       icon: Megaphone,
       badgeColor: "bg-gradient-to-r from-pink-500 to-rose-600"
     },
     {
-      name: "გიორგი ბერიძე",
-      role: "მცირე ბიზნესის მფლობელი",
-      avatar: "გბ",
-      quote: "n8n-ის მოდული არის ამ კურსის არგალიტი. ადრე დღეში 2 საათს ვხარჯავდი ინვოისების დახარისხებაზე, ახლა კი სისტემა თვითონ აგზავნის და აარქივებს ყველაფერს. ეს კურსი საუკეთესო ინვესტიცია იყო წელს.",
-      highlight: "ბიზნეს ავტომატიზაცია",
-      icon: TrendingUp,
-      badgeColor: "bg-gradient-to-r from-blue-500 to-cyan-600"
-    },
-    {
-      name: "ელენე კაპანაძე",
-      role: "სტუდენტი / დამწყები",
-      avatar: "ეკ",
-      quote: "სულ მაინტერესებდა AI, მაგრამ არ ვიცოდი საიდან დამეწყო. ეს კურსი ნაბიჯ-ნაბიჯ გასწავლის ყველაფერს. ყველაზე ძალიან Custom GPT-ები მომეწონა — შევქმენი ასისტენტი, რომელიც საკურსოების წერაში მეხმარება.",
-      highlight: "ახალი პროფესია",
-      icon: Users,
-      badgeColor: "bg-gradient-to-r from-green-500 to-emerald-600"
-    },
-    {
-      name: "დავით ჩხეიძე",
-      role: "ფინანსური ანალიტიკოსი",
-      avatar: "დჩ",
-      quote: "არ მეგონა, თუ Excel-ის და PDF-ების ანალიზს ასე გავამარტივებდი. Chain of Thought ტექნიკით ისეთ პასუხებს ვიღებ, რომ კოლეგებს უკვირთ, როდის ვასწრებ ამდენს. 10/10!",
-      highlight: "მონაცემთა ანალიზი",
-      icon: Briefcase,
-      badgeColor: "bg-gradient-to-r from-purple-500 to-violet-600"
-    },
-    {
-      name: "ანა გელაშვილი",
-      role: "კონტენტ-კრეატორი",
-      avatar: "აგ",
-      quote: "Midjourney-ში ასეთი დონის ვიზუალებს თუ შევქმნიდი, ვერ წარმოვიდგენდი. კურსმა მასწავლა სინათლის, კომპოზიციის და სტილის სწორად აღწერა. ჩემი ინსტაგრამი ახალ დონეზე ავიდა.",
-      highlight: "ვიზუალური AI",
+      name: "ნიკა გოგოლაძე",
+      role: "აქტიური მონაწილე",
+      avatar: "ნგ",
+      quote: "საინტერესო იყო",
+      highlight: "საინტერესო კურსი",
       icon: Lightbulb,
       badgeColor: "bg-gradient-to-r from-orange-500 to-amber-600"
     },
     {
-      name: "ლევან თოფურია",
-      role: "ოპერაციების მენეჯერი",
-      avatar: "ლთ",
-      quote: "ჩვენი კომპანიის შიდა ბაზა ავაწყე RAG სისტემით. ახალი თანამშრომლები კითხვებს ბოტს უსვამენ და მე აღარ მაწუხებენ. მარტო ამისთვის ღირდა კურსის ყიდვა.",
-      highlight: "RAG სისტემა",
-      icon: Code,
-      badgeColor: "bg-gradient-to-r from-red-500 to-rose-600"
+      name: "Jo Rjo",
+      role: "აქტიური მონაწილე",
+      avatar: "JR",
+      quote: "მაგარი კურსია 👍👍👍",
+      highlight: "მაგარი კურსი",
+      icon: TrendingUp,
+      badgeColor: "bg-gradient-to-r from-blue-500 to-cyan-600"
+    },
+    {
+      name: "მიხეილ ჯერიაშვილი",
+      role: "აქტიური მონაწილე",
+      avatar: "მჯ",
+      quote: "დიდი მადლობა, ძალიან სასარგებლო კურსია.. მოვრჩით frameworks და ძალიან საინტერესო დასკვნა გამოვიტანე, ამ ყველაფერს ისედაც ვაკეთებდი (ხუთივე ნაბიჯს), ოღონდ ისე, რომ საერთოდ არც ვიცოდი თუ სახელებიც კი ერქვა და ამხელა თეორიული სწავლება არსებობს ამის შესახებ. ამის მერე სისტემურად და გააზრებულად ბევრად ეფექტურ შედეგს მივიღებ.",
+      highlight: "სისტემური მიდგომა",
+      icon: Briefcase,
+      badgeColor: "bg-gradient-to-r from-purple-500 to-violet-600"
+    },
+    {
+      name: "Lizi",
+      role: "აქტიური მონაწილე",
+      avatar: "L",
+      quote: "მადლობა ძალიან საინტერესოდ და გასაგებად ხსნით.",
+      highlight: "გასაგები ახსნა",
+      icon: Lightbulb,
+      badgeColor: "bg-gradient-to-r from-emerald-500 to-green-600"
+    },
+    {
+      name: "Maia Pavliashvili",
+      role: "აქტიური მონაწილე",
+      avatar: "MP",
+      quote: "დიდი მადლობა, ძალიან მომწონს კურსი, თანმიმდევრული და საინტერესოა და ასევე გადმოცემის ფორმა...",
+      highlight: "თანმიმდევრული კურსი",
+      icon: TrendingUp,
+      badgeColor: "bg-gradient-to-r from-indigo-500 to-blue-600"
+    },
+    {
+      name: "Aleqsandre Nucubidze",
+      role: "აქტიური მონაწილე",
+      avatar: "AN",
+      quote: "დიდი მადლობა ბატონო ოთარ, სასიამოვნო და მეტად საინტერესოა თქვენი ლექციების მოსმენა.",
+      highlight: "საინტერესო ლექციები",
+      icon: Megaphone,
+      badgeColor: "bg-gradient-to-r from-red-500 to-pink-600"
+    },
+    {
+      name: "George Gegelia",
+      role: "აქტიური მონაწილე",
+      avatar: "GG",
+      quote: "ნამდვილად კარგი ფორმატია მოკლე ვიდეოების. მე ოთოს სხვა ლექციებსაც ვუსმენ რომლებიც მინიმუმ საათი გრძელდება. თუ შევადარებთ ვინც ახლა იწყებს ახალი პროფესიის ათვისებას მოკლე ვიდეოებით დაწყება სჯობს. თუ საკითხი საინტერესო იქნება ის ადამიანი ნახავს სხვა გზებსაც რომ უფრო გრძელი ვიდეო გაკვეთილებით გაიღრმავოს ცოდნა. მადლობა ოთო",
+      highlight: "მოკლე ვიდეოები",
+      icon: Briefcase,
+      badgeColor: "bg-gradient-to-r from-cyan-500 to-blue-600"
+    },
+    {
+      name: "David Demetradze",
+      role: "აქტიური მონაწილე",
+      avatar: "DD",
+      quote: "მე ძალიან მომწონს მოკლე ვიდეოების ფორმატი",
+      highlight: "ეფექტური ფორმატი",
+      icon: TrendingUp,
+      badgeColor: "bg-gradient-to-r from-amber-500 to-orange-600"
+    },
+    {
+      name: "Ia Kiknadze",
+      role: "აქტიური მონაწილე",
+      avatar: "IK",
+      quote: "მოგესალმებით 🥰 დიდი მადლობა 🙏 ამ შესაძლებლობისთვის. ვიდეო გაკვეთილები ჩანაწერის სახით ჩემთვის როგორც ემიგრანტისთვის, რომელსაც ძალიან დატვირთული გრაფიკი აქვს, ძალიან მოსახერხებელია. წარმატებები ყველას, მასწავლებელსა და მოსწავლეებსაც🥰",
+      highlight: "მოსახერხებელი გრაფიკი",
+      icon: Briefcase,
+      badgeColor: "bg-gradient-to-r from-teal-500 to-green-600"
+    },
+    {
+      name: "TuKa",
+      role: "აქტიური მონაწილე",
+      avatar: "TK",
+      quote: "დღეს შემოგიერთდით, დილას სქროლვისას გადავაწყდი თქვენს ვიდეოს და არც კი დავფიქრებულვარ ისე სასწრაფოდ დავრეგისტრირდი კურსზე.პირველი გაკვეთილის მოსმენისთანავე დიდი იმედი და სურვილი გაჩნდა და მადლობა თქვენ ამისთვის!",
+      highlight: "დიდი იმედი",
+      icon: Megaphone,
+      badgeColor: "bg-gradient-to-r from-fuchsia-500 to-purple-600"
+    },
+    {
+      name: "Keti Gabunia",
+      role: "აქტიური მონაწილე",
+      avatar: "KG",
+      quote: "როგორც იქნა დავიწყე და თქვენი დამსახურებაა! ჩვენთვის აქ მოსვლა საწინდარი იყოს დიდი და კეთილი საქმეების !",
+      highlight: "ახალი დასაწყისი",
+      icon: Star,
+      badgeColor: "bg-gradient-to-r from-yellow-500 to-orange-600"
+    },
+    {
+      name: "Nana Nadaraia",
+      role: "აქტიური მონაწილე",
+      avatar: "NN",
+      quote: "მადლობა დიდი, საოცრათ თბილი აურა გაქვთ. ძალიან დაინტერესებული ვარ და თანაც მეშინია რომ ვერ დავძლიო.",
+      highlight: "თბილი გარემო",
+      icon: Lightbulb,
+      badgeColor: "bg-gradient-to-r from-pink-500 to-rose-600"
+    },
+    {
+      name: "Lizi",
+      role: "აქტიური მონაწილე",
+      avatar: "L",
+      quote: "მადლობა ამ გამოცდილების გაზიარებისთვის. საოცარი ადამიანი ხართ და პროფესიონალი ძალიან საინტერესოა",
+      highlight: "პროფესიონალიზმი",
+      icon: Star,
+      badgeColor: "bg-gradient-to-r from-violet-500 to-purple-600"
+    },
+    {
+      name: "Giorgi Toidze",
+      role: "აქტიური მონაწილე",
+      avatar: "GT",
+      quote: "დიდი მადლობა ოთარ, რაღაც მინიმალურ დონეზე ვიცნობ მაგ სფეროს და მიუხედავად ჩემი საკმაოდ არასტაბილური გრაფიკისა, დიდი ყურადღებით გამოგყვები კურსის მსვლეობისას, გავხსენი პირველი ვიდეო ყველაფერი მუშაობს",
+      highlight: "მოქნილი გრაფიკი",
+      icon: TrendingUp,
+      badgeColor: "bg-gradient-to-r from-emerald-500 to-teal-600"
     }
   ];
 
