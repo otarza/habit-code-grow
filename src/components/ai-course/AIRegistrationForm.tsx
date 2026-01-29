@@ -160,7 +160,7 @@ export function AIRegistrationForm() {
               </a>
 
               <a
-                href={`https://wa.me/995557151290?text=${encodeURIComponent("მსურს რეგისტრაცია AI კურსზე")}`}
+                href="https://wa.me/995557151290?text=%E1%83%A0%E1%83%94%E1%83%92%E1%83%98%E1%83%A1%E1%83%A2%E1%83%A0%E1%83%90%E1%83%AA%E1%83%98%E1%83%90%20AI%20%E1%83%99%E1%83%A3%E1%83%A0%E1%83%A1%E1%83%96%E1%83%94"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-center gap-3 w-full bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold py-4 px-6 rounded-xl transition-colors text-lg shadow-lg mt-4"
@@ -170,6 +170,20 @@ export function AIRegistrationForm() {
                 </svg>
                 <span>რეგისტრაცია WhatsApp-ით</span>
               </a>
+
+              {/* QR Code */}
+              <div className="mt-8 flex flex-col items-center">
+                <p className="text-sm text-text-secondary mb-3">
+                  ან დაასკანერე QR კოდი:
+                </p>
+                <div className="bg-white p-2 rounded-xl shadow-sm border border-border/50">
+                  <img
+                    src="/whatsapp-qr.svg"
+                    alt="WhatsApp QR Code"
+                    className="w-48 h-48 object-contain"
+                  />
+                </div>
+              </div>
 
               <p className="text-center text-sm text-text-secondary mt-6">
                 რეგისტრაცია მარტივია და ჩვენი ოპერატორები დაგეხმარებიან ყველა ნაბიჯზე ❤️
