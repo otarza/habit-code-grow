@@ -13,7 +13,7 @@ import {
 
 export function AIRegistrationForm() {
   // ManyChat registration URL - temporary until n8n+Tally is set up
-  const manychatUrl = "https://m.me/bitcamp.ge?ref=w49691316";
+  const manychatUrl = "https://m.me/bitcamp.ge?ref=%E1%83%A0%E1%83%94%E1%83%92%E1%83%98%E1%83%A1%E1%83%A2%E1%83%A0%E1%83%90%E1%83%AA%E1%83%98%E1%83%90%20AI%20%E1%83%99%E1%83%A3%E1%83%A0%E1%83%A1%E1%83%96%E1%83%94";
 
   const trustIndicators = [
     { icon: CheckCircle2, text: "მყისიერი წვდომა გადახდის შემდეგ" },
