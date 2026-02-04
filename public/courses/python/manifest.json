@@ -13,19 +13,10 @@
       "order": 1,
       "lessons": [
         {
-          "id": 24591,
-          "slug": "01-lesson",
-          "title": "სანამ დაიწყებ",
-          "order": 101,
-          "videoUrl": "https://www.youtube.com/watch?v=6Wbcy0WUwSo",
-          "videoDuration": "15:40",
-          "isPreview": false
-        },
-        {
           "id": 10983,
           "slug": "02-lesson",
           "title": "მისალმება",
-          "order": 102,
+          "order": 101,
           "videoUrl": "https://youtu.be/8AdxMhkEjGM",
           "videoDuration": "0:19",
           "isPreview": true

@@ -19,5 +19,3 @@ isPreview: false
 **
 
 გაგიძღვები ტექნოლოგიების უსაზღვრო სამყაროში**
-
-#### [მომწერე BitCamp - ის Facebook - გვერდზე.](https://www.facebook.com/bitcamp.ge)
