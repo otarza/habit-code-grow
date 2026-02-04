@@ -3,6 +3,7 @@ import { Footer } from "@/components/Footer";
 import { ABTestProvider } from "@/components/ABTestTracker";
 import { RetargetingProvider } from "@/components/RetargetingPixels";
 import { ScarcityProvider } from "@/components/ScarcityManager";
+import { EvergreenTimer } from "@/components/EvergreenTimer";
 
 import { AIHero } from "@/components/ai-course/AIHero";
 import { AIWhoIsThisFor } from "@/components/ai-course/AIWhoIsThisFor";
@@ -34,6 +35,9 @@ const AIPromptEngineering = () => {
       <RetargetingProvider config={retargetingConfig}>
         <ABTestProvider>
           <ScarcityProvider>
+            {/* Evergreen Timer - Creates urgency with 24-hour countdown */}
+            <EvergreenTimer />
+
             <Navbar />
 
             {/* Hero: Main value proposition */}
