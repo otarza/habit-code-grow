@@ -33,6 +33,7 @@ const PythonSQL = () => {
       <SEO
         title="Python + SQL მასტერკლასი | 4-თვიანი ინტენსიური კურსი | BitCamp"
         description="ნულიდან დაეუფლე Python-ს და SQL მონაცემთა ბაზებს. 2 Harvard CS50 სერტიფიკატი, მენტორის მხარდაჭერა და რეალური პროექტები. მხოლოდ 199₾/თვეში."
+        image="https://www.bitcamp.ge/python-sql-meta.png"
         url="https://www.bitcamp.ge/python-sql"
       />
       <RetargetingProvider config={retargetingConfig}>
