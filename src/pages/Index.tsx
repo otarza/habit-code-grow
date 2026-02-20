@@ -18,6 +18,7 @@ import { ABTestProvider } from "@/components/ABTestTracker";
 import { RetargetingProvider } from "@/components/RetargetingPixels";
 import { ScarcityProvider } from "@/components/ScarcityManager";
 import { VideoExplainer } from "@/components/VideoExplainer";
+import { SEO } from "@/components/SEO";
 
 const Index = () => {
   // Simplified retargeting config to avoid env variable issues
@@ -30,6 +31,12 @@ const Index = () => {
 
   return (
     <div className="min-h-screen">
+      <SEO
+        title="პროგრამირების კურსები BitCamp-ში | AI, Python, SQL და 21 დღიანი ჩელენჯი"
+        description="ისწავლე AI, Python, SQL პროგრამირება BitCamp-ში. უფასო კურსები, 21 დღიანი ჩელენჯები და პირადი მენტორობა. შექმენი ყოველდღიური კოდირების ჩვევები."
+        image="https://www.bitcamp.ge/hero-og-image.png"
+        url="https://www.bitcamp.ge"
+      />
       <RetargetingProvider config={retargetingConfig}>
         <ABTestProvider>
           <ScarcityProvider>
