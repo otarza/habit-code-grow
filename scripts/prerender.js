@@ -13,6 +13,7 @@ const routes = [
     '/',
     '/ai',
     '/fullstack-ai',
+    '/python-sql',
     '/courses'
 ];
 

@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import FullStackAI from "./pages/FullStackAI";
 import AIPromptEngineering from "./pages/AIPromptEngineering";
+import PythonSQL from "./pages/PythonSQL";
 import CoursePage from "./pages/CoursePage";
 import CoursesIndex from "./pages/CoursesIndex";
 import NotFound from "./pages/NotFound";
@@ -22,6 +23,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/fullstack-ai" element={<FullStackAI />} />
           <Route path="/ai" element={<AIPromptEngineering />} />
+          <Route path="/python-sql" element={<PythonSQL />} />
           {/* Courses routes */}
           <Route path="/courses" element={<CoursesIndex />} />
           <Route path="/courses/:courseSlug" element={<CoursePage />} />
