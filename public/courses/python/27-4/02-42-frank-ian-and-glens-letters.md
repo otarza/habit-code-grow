@@ -34,30 +34,25 @@ isPreview: false
 `pip install pyfiglet`
 
 - pyfiglet პაკეტის დოკუმენტაცია არც იმდენად კარგადაა შედგენილი, ამიტომ ამ მოდულის გამოყენებას შეძლებ ასე:
-```
+```python
 from pyfiglet import Figlet
 
 figlet = Figlet()
 ```
 
-`
 შემდეგ შეძლებ მიიღო ფონტების სია ასე:
-````
+```python
 figlet.getFonts()
 ```
 
-`
 შეგიძლია დასეტო ფონტი ასე სადაც f არის ფონტის სახელი:
-````
+```python
 figlet.setFont(font=f)
-
 ```
 
-`
-
 შემდეგ შეგიძლია გამოიტანო ტექსტი ასე სადაც s არის ტექსტი:
-````
-`print(figlet.renderText(s)) `         
+```python
+print(figlet.renderText(s)) 
 ```
 
 - გაიხსენე რომ random მოდულს საინტერესო ფუნქციები აქვს: [https://docs.python.org/3/library/random.html](https://docs.python.org/3/library/random.html)

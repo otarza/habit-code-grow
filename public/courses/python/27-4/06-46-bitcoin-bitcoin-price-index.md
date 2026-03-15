@@ -18,8 +18,10 @@ isPreview: false
 
 - რომელიც მომხმარებელისგან ელოდება command-line არგუმენტს - n - ს, Bitcoin - ის რაოდენობას. თუ შეყვანილი მნიშვნელობის გადაკონვერტირება ვერ მოხდება float - ში, მაშინ პროგრამა უნდა გაჩერდეს sys.exit - ის გამოყენებით.
 - რომელიც მიმართავს CoinCap-ის API-ს ბიტკოინის მიმდინარე ფასის მისაღებად მისამართზე: https://rest.coincap.io/v3/assets/bitcoin?apiKey=YourApiKey. ბოლოში YourApiKey შეიცვალეთ იმ API გასაღებით, რომელიც მიიღეთ თქვენი CoinCap-ის ანგარიშის დეშბორდიდან. ეს API აბრუნებს [JSON](https://en.wikipedia.org/wiki/JSON) ობიექტს რომლის ჩალაგებულ სტრუქტურაში იპოვით Bitcoin - ის ფასს float ფორმატში. 
-requests - მოდულის გამოყენებისას დარწმუნდი რომ [exception](https://requests.readthedocs.io/en/latest/api/#exceptions) - ებსაც მართავ.
-`import requests
+requests - მოდულის გამოყენებისას დარწმუნდი რომ [exception](https://requests.readthedocs.io/en/latest/api/#exceptions) -ებსაც მართავ.
+
+```python
+import requests
 
 try:
     ...
@@ -27,16 +29,14 @@ except requests.RequestException:
     ...`
 - პროგრამამ საბოლოოდ უნდა გამოიტანოს შეყვანილი n Bitcoin - ის ფასი დოლარში. მძიმის შემდეგ 4 ციფრის სიზუსტით. 
 
-**
-
-მინიშნებები:**
+**მინიშნებები:**
 
 - გაიხსენე რომ sys მოდულს აქვს argv - დოკუმენტაცია: [https://docs.python.org/3/library/sys.html#sys.argv](https://docs.python.org/3/library/sys.html#sys.argv)
 - ასევე გაიხსენე რომ requests მოდულს გამოსადეგი მეთოდები აქვს - დოკუმენტაცია: [https://requests.readthedocs.io/en/latest/](https://requests.readthedocs.io/en/latest/). მათ შორისაა get მეთოდიც რომლის გამოყენების მაგალითს აქ ნახავ: [https://requests.readthedocs.io/en/latest/user/quickstart.html#make-a-request](https://requests.readthedocs.io/en/latest/user/quickstart.html#make-a-request) და json მეთოდიც რომლის გამოყენების მაგალითიც აქ არის: [https://requests.readthedocs.io/en/latest/user/quickstart.html#json-response-content](https://requests.readthedocs.io/en/latest/user/quickstart.html#json-response-content)
 რაც მთავარია, ამ მოდულის დაყენებას შეძლებ ასე: 
 `pip install requests`
 - გაითვალისწინე რომ CoinDesk - ის API აბრუნებს ასეთ JSON პასუხს/response:
-```
+```json
 {
    "time":{
       "updated":"May 2, 2022 15:27:00 UTC",
@@ -72,7 +72,7 @@ except requests.RequestException:
 ```
 
 - ასევე გახსოვდეს რომ შეგიძლია დოლარის შესაბამისი რიცხვითი შედეგის ფორმატირება მძიმის შემდეგ 4 რიცხვამდე ასეთი კოდის გამოყენებით:
-```
+```python
 print(f"${amount:,.4f}")
 ```
 

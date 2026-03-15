@@ -14,6 +14,17 @@ export default defineConfig(({ mode }) => ({
     react(),
     mode === 'development' &&
     componentTagger(),
+    {
+      name: 'watch-public',
+      configureServer(server: any) {
+        server.watcher.add(path.resolve(__dirname, 'public'));
+        server.watcher.on('change', (file: string) => {
+          if (file.includes('/public/') || file.includes('\\public\\')) {
+            server.ws.send({ type: 'full-reload' });
+          }
+        });
+      }
+    }
   ].filter(Boolean),
   resolve: {
     alias: {

@@ -37,7 +37,7 @@ isPreview: false
 
 #### Demo - როგორ უნდა მუშაობდეს შენი პროგრამა?
 
-{% embed "https://asciinema.org/a/CDBExQENOwM8xZBpfzwvpkHSv/iframe?autoplay=1&cols=100&loop=1&rows=12" %}
+{% embed "https://asciinema.org/a/Pes7djS4b1GmwpwqNu2vj6LgY/iframe?autoplay=1&cols=80&loop=1&rows=12" %}
 
 #### როგორ უნდა გატესტო შენი პროგრამა?
 

@@ -27,7 +27,8 @@ isPreview: false
 
 შენი პროგრამის სტრუქტურა იყოს ასეთი: 
 
-`import random
+```python
+import random
 
 
 def main():
@@ -43,17 +44,14 @@ def generate_integer(level):
 
 
 if __name__ == "__main__":
-    main()`
+    main()
+```
 
 სადაც get_level ფუნქცია ეკითხება (და საჭიროების შემთხვევაში გაუმეორებს) მომხმარებელს ინფორმაციას სირთულის(level) შესახებ და აბრუნებს 1, 2 ან 3 - ს.
 
 generate_integer  ფუნქცია აბრუნებს შემთხვევთ დაგენერირებული პოზიტიურ, მთელ რიცხვს level - ის მიხედვით (ერთნიშნა, ორნიშნა ან სამნიშნა) ან გაისვრის([raise](https://docs.python.org/3/tutorial/errors.html#raising-exceptions)) ValueError exception - ს თუ level არ არის 1, 2, ან 3. 
 
- 
-
-**
-
-მინიშნებები:**
+**მინიშნებები:**
 
 - გაითვალისწინე რომ შენც შეგიძლია exception - ის გასროლა raise - ის გამოყენებით:
 `raise ValueError`

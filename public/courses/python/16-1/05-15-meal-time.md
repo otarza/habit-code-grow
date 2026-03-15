@@ -60,7 +60,7 @@ hours, minutes = time.split(":")
 
 #### Demo - როგორ უნდა მუშაობდეს შენი პროგრამა?
 
-{% embed "https://asciinema.org/a/udHWr5HxtxP5poDso1aVRB7qC/iframe?autoplay=1&cols=80&loop=1&rows=12" %}
+{% embed "https://asciinema.org/a/r50SdWETBghko6aqkpawWhj1G/iframe?autoplay=1&cols=80&loop=1&rows=12" %}
 
 #### როგორ უნდა გატესტო შენი პროგრამა?
 
