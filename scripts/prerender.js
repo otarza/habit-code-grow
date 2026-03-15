@@ -8,7 +8,9 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const rootDir = path.resolve(__dirname, '..');
 const distDir = path.join(rootDir, 'dist');
+const coursesDir = path.join(rootDir, 'public', 'courses');
 
+// Base routes
 const routes = [
     '/',
     '/ai',
@@ -17,7 +19,34 @@ const routes = [
     '/courses'
 ];
 
+// Dynamically extract all course routes
+if (fs.existsSync(coursesDir)) {
+    const courses = fs.readdirSync(coursesDir).filter(f => fs.statSync(path.join(coursesDir, f)).isDirectory());
+    for (const courseSlug of courses) {
+        routes.push(`/courses/${courseSlug}`); // Course landing
+        
+        const manifestPath = path.join(coursesDir, courseSlug, 'manifest.json');
+        if (fs.existsSync(manifestPath)) {
+            try {
+                const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
+                if (manifest.topics) {
+                    for (const topic of manifest.topics) {
+                        if (topic.lessons) {
+                            for (const lesson of topic.lessons) {
+                                routes.push(`/courses/${courseSlug}/${topic.slug}/${lesson.slug}`);
+                            }
+                        }
+                    }
+                }
+            } catch (err) {
+                console.error(`Error reading manifest for ${courseSlug}:`, err);
+            }
+        }
+    }
+}
+
 const PORT = 4173;
+const CONCURRENCY = 15; // Number of browser tabs to open at once
 
 // Simple static file server
 function createServer() {
@@ -66,7 +95,7 @@ function createServer() {
 }
 
 async function prerender() {
-    console.log('🚀 Starting pre-rendering...');
+    console.log(`🚀 Starting pre-rendering for ${routes.length} total routes...`);
 
     // Start local server
     const server = createServer();
@@ -83,34 +112,58 @@ async function prerender() {
     });
 
     try {
-        for (const route of routes) {
-            console.log(`📸 Prerendering ${route}...`);
-            const page = await browser.newPage();
+        let successCount = 0;
+        let failCount = 0;
 
-            await page.setViewport({ width: 1280, height: 800 });
+        for (let i = 0; i < routes.length; i += CONCURRENCY) {
+            const chunk = routes.slice(i, i + CONCURRENCY);
+            console.log(`📸 Prerendering batch ${Math.floor(i / CONCURRENCY) + 1} of ${Math.ceil(routes.length / CONCURRENCY)}...`);
+            
+            await Promise.all(chunk.map(async (route) => {
+                const page = await browser.newPage();
+                
+                // Disable loading images and unnecessary resources to vastly speed up Puppeteer rendering
+                await page.setRequestInterception(true);
+                page.on('request', (req) => {
+                    if (['image', 'stylesheet', 'font'].includes(req.resourceType())) {
+                        req.abort();
+                    } else {
+                        req.continue();
+                    }
+                });
 
-            const url = `http://localhost:${PORT}${route}`;
-            await page.goto(url, { waitUntil: 'networkidle0', timeout: 30000 });
+                await page.setViewport({ width: 1280, height: 800 });
 
-            // Wait for React Helmet to update the head
-            await new Promise(resolve => setTimeout(resolve, 1500));
+                const url = `http://localhost:${PORT}${route}`;
+                try {
+                    await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 15000 });
 
-            const content = await page.content();
+                    // Wait for React Helmet to update the head
+                    await new Promise(resolve => setTimeout(resolve, 1500));
 
-            const outputPath = path.join(distDir, route === '/' ? 'index.html' : `${route.slice(1)}/index.html`);
-            const outputDir = path.dirname(outputPath);
+                    const content = await page.content();
 
-            if (!fs.existsSync(outputDir)) {
-                fs.mkdirSync(outputDir, { recursive: true });
-            }
+                    const outputPath = path.join(distDir, route === '/' ? 'index.html' : `${route.slice(1)}/index.html`);
+                    const outputDir = path.dirname(outputPath);
 
-            fs.writeFileSync(outputPath, content);
-            console.log(`✅ Saved ${outputPath}`);
+                    if (!fs.existsSync(outputDir)) {
+                        fs.mkdirSync(outputDir, { recursive: true });
+                    }
 
-            await page.close();
+                    fs.writeFileSync(outputPath, content);
+                    successCount++;
+                } catch (error) {
+                    console.error(`❌ Error prerendering ${route}:`, error.message);
+                    failCount++;
+                } finally {
+                    await page.close();
+                }
+            }));
         }
+
+        console.log(`✨ Pre-rendering complete! Generated ${successCount} pages (${failCount} failed).`);
     } catch (error) {
-        console.error('❌ Error during pre-rendering:', error);
+        console.error('❌ Fatal error during pre-rendering:', error);
         await browser.close();
         server.close();
         process.exit(1);
@@ -118,7 +171,6 @@ async function prerender() {
 
     await browser.close();
     server.close();
-    console.log('✨ Pre-rendering complete!');
     process.exit(0);
 }
 

@@ -8,13 +8,13 @@
   "topics": [
     {
       "id": 18104,
-      "slug": "01-1",
+      "slug": "data-retrieval",
       "title": "სექცია 1 - მონაცემთა ამოღება",
       "order": 1,
       "lessons": [
         {
           "id": 18105,
-          "slug": "01-",
+          "slug": "welcome",
           "title": "მისალმება",
           "order": 101,
           "videoUrl": "https://youtu.be/LthxPyGtQuc",
@@ -23,7 +23,7 @@
         },
         {
           "id": 18106,
-          "slug": "02-",
+          "slug": "databases-ancient-idea",
           "title": "მონაცემთა ბაზები - უძველესი იდეა",
           "order": 102,
           "videoUrl": "https://youtu.be/UD5ca-a5oac",
@@ -32,7 +32,7 @@
         },
         {
           "id": 18107,
-          "slug": "03-",
+          "slug": "modern-context",
           "title": "თანამედროვე კონტექსტი",
           "order": 103,
           "videoUrl": "https://youtu.be/Hz_s70jD5pc",
@@ -41,7 +41,7 @@
         },
         {
           "id": 18108,
-          "slug": "04-",
+          "slug": "why-databases",
           "title": "რატომ ვიყენებთ მონაცემთა ბაზებს?",
           "order": 104,
           "videoUrl": "https://youtu.be/ChRtTVeIicg",
@@ -50,7 +50,7 @@
         },
         {
           "id": 18109,
-          "slug": "05-crud",
+          "slug": "crud",
           "title": "CRUD - რა არის მონაცემთა ბაზა?",
           "order": 105,
           "videoUrl": "https://youtu.be/rsR6p46uyc4",
@@ -59,7 +59,7 @@
         },
         {
           "id": 18110,
-          "slug": "06-dbms",
+          "slug": "dbms",
           "title": "DBMS - მონაცემთა ბაზის მენეჯმენტ სისტემა",
           "order": 106,
           "videoUrl": "https://youtu.be/q2xY4f4af_E",
@@ -68,7 +68,7 @@
         },
         {
           "id": 18111,
-          "slug": "07-sql",
+          "slug": "sql",
           "title": "რა არის SQL?",
           "order": 107,
           "videoUrl": "https://youtu.be/C0wNhupz7Fo",
@@ -77,7 +77,7 @@
         },
         {
           "id": 18112,
-          "slug": "08-the-booker-prizes",
+          "slug": "the-booker-prizes",
           "title": "The Booker Prizes ბაზა",
           "order": 108,
           "videoUrl": "https://youtu.be/BKJrcnIX_zM",
@@ -86,7 +86,7 @@
         },
         {
           "id": 18113,
-          "slug": "09-vs-code-github",
+          "slug": "vs-code-github",
           "title": "VS Code და Github",
           "order": 109,
           "videoUrl": "https://youtu.be/bG2SegjQgp8",
@@ -95,7 +95,7 @@
         },
         {
           "id": 18114,
-          "slug": "10-vs-code-terminal",
+          "slug": "vs-code-terminal",
           "title": "VS Code - ის და Terminal - ის გამოყენება",
           "order": 110,
           "videoUrl": "https://youtu.be/esI11bMqsJE",
@@ -104,7 +104,7 @@
         },
         {
           "id": 18115,
-          "slug": "11-longlistdb",
+          "slug": "longlistdb",
           "title": "longlist.db ფაილის გადმოწერა",
           "order": 111,
           "videoUrl": "https://youtu.be/axFGZPm3WmU",
@@ -113,7 +113,7 @@
         },
         {
           "id": 18116,
-          "slug": "12-select",
+          "slug": "select",
           "title": "SELECT - ის პირველი გამოყენება",
           "order": 112,
           "videoUrl": "https://youtu.be/6Ayw7eX-3MA",
@@ -122,7 +122,7 @@
         },
         {
           "id": 18117,
-          "slug": "13-select-title-1",
+          "slug": "select-title-1",
           "title": "SELECT title - 1 სვეტის ამოღება",
           "order": 113,
           "videoUrl": "https://youtu.be/RILKo1wSxn0",
@@ -131,7 +131,7 @@
         },
         {
           "id": 18118,
-          "slug": "14-select-title-author-2",
+          "slug": "select-title-author-2",
           "title": "SELECT title, author - 2 ან მეტი სვეტის ამოღება",
           "order": 114,
           "videoUrl": "https://youtu.be/-RvPW0Q1sMQ",
@@ -140,7 +140,7 @@
         },
         {
           "id": 18119,
-          "slug": "15-limit",
+          "slug": "limit",
           "title": "LIMIT - სტქირონების რაოდენობის შეზღუდვა",
           "order": 115,
           "videoUrl": "https://youtu.be/w_KRC6G3cvk",
@@ -149,7 +149,7 @@
         },
         {
           "id": 18120,
-          "slug": "16-where",
+          "slug": "where",
           "title": "WHERE სადაც",
           "order": 116,
           "videoUrl": "https://youtu.be/4kRFyBmNXcs",
@@ -158,7 +158,7 @@
         },
         {
           "id": 20770,
-          "slug": "17-where",
+          "slug": "where-2",
           "title": "WHERE | უტოლობა ძახილის ნიშნით",
           "order": 117,
           "videoUrl": "https://youtu.be/Pv-apJKqjew",
@@ -167,7 +167,7 @@
         },
         {
           "id": 20771,
-          "slug": "18-where",
+          "slug": "where-3",
           "title": "WHERE | უტოლობა მეტობა-ნაკლებობის ნიშნებით",
           "order": 118,
           "videoUrl": "https://youtu.be/BVxYqPrLr78",
@@ -176,7 +176,7 @@
         },
         {
           "id": 20772,
-          "slug": "19-where-not",
+          "slug": "where-not",
           "title": "WHERE | უტოლობა NOT - ით",
           "order": 119,
           "videoUrl": "https://youtu.be/Wa2d9Kp2Axc",
@@ -185,7 +185,7 @@
         },
         {
           "id": 20773,
-          "slug": "20-where-or",
+          "slug": "where-or",
           "title": "WHERE | OR ოპერატორი",
           "order": 120,
           "videoUrl": "https://youtu.be/TtJ5ZRIqku8",
@@ -194,7 +194,7 @@
         },
         {
           "id": 20774,
-          "slug": "21-where-and",
+          "slug": "where-and",
           "title": "WHERE | AND ოპერატორი",
           "order": 121,
           "videoUrl": "https://youtu.be/YT65ygmVSZs",
@@ -205,34 +205,34 @@
     },
     {
       "id": 18123,
-      "slug": "02-",
+      "slug": "learning-resources",
       "title": "დამატებითი სასწავლო რესურსები",
       "order": 2,
       "lessons": [
         {
           "id": 18124,
-          "slug": "01-",
+          "slug": "about-resources",
           "title": "ამ რესურსების შესახებ",
           "order": 201,
           "isPreview": false
         },
         {
           "id": 18127,
-          "slug": "02-cs50-sql-harvard-sql",
+          "slug": "cs50-sql-harvard-sql",
           "title": "CS50 SQL - Harvard - ის SQL - ის კურსი ინგლისურად",
           "order": 202,
           "isPreview": false
         },
         {
           "id": 18129,
-          "slug": "03-sql-bolt-sql",
+          "slug": "sql-bolt-sql",
           "title": "SQL Bolt - SQL უნარების გასავარჯიშებლად",
           "order": 203,
           "isPreview": false
         },
         {
           "id": 18131,
-          "slug": "04-khan-academy-sql",
+          "slug": "khan-academy-sql",
           "title": "Khan Academy SQL",
           "order": 204,
           "isPreview": false
@@ -241,13 +241,13 @@
     },
     {
       "id": 18103,
-      "slug": "03-",
+      "slug": "legacy-lectures",
       "title": "ძველი ლექციები",
       "order": 3,
       "lessons": [
         {
           "id": 14452,
-          "slug": "01-",
+          "slug": "data-retrieval-processing",
           "title": "მონაცემთა ამოღება და დამუშავება",
           "order": 301,
           "videoUrl": "https://youtu.be/z4jMMcIry4M",
@@ -256,7 +256,7 @@
         },
         {
           "id": 14454,
-          "slug": "02-",
+          "slug": "data-relationships",
           "title": "როგორ დავაკავშიროთ მონაცემები",
           "order": 302,
           "videoUrl": "https://youtu.be/4d5q68Gzv2k",
@@ -265,7 +265,7 @@
         },
         {
           "id": 14456,
-          "slug": "03-",
+          "slug": "database-structure",
           "title": "როგორია მონაცემთა ბაზების სტრუქტურა",
           "order": 303,
           "videoUrl": "https://youtu.be/WZoEug7Sw-4",

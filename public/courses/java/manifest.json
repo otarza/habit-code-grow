@@ -8,13 +8,13 @@
   "topics": [
     {
       "id": 12404,
-      "slug": "01-",
+      "slug": "introduction",
       "title": "დასაწყისი",
       "order": 1,
       "lessons": [
         {
           "id": 12405,
-          "slug": "01-00",
+          "slug": "00",
           "title": "00 მისალმება",
           "order": 101,
           "videoUrl": "https://www.youtube.com/watch?v=J-mT2UXiXmM",
@@ -23,7 +23,7 @@
         },
         {
           "id": 12406,
-          "slug": "02-01",
+          "slug": "01",
           "title": "01 რატომ ჯავა?",
           "order": 102,
           "videoUrl": "https://www.youtube.com/watch?v=0lceO96jk4c",
@@ -32,7 +32,7 @@
         },
         {
           "id": 12408,
-          "slug": "03-02",
+          "slug": "02",
           "title": "02 რა არის შემდეგი?",
           "order": 103,
           "videoUrl": "https://www.youtube.com/watch?v=anFJFoO8D2Q",
@@ -43,13 +43,13 @@
     },
     {
       "id": 12409,
-      "slug": "02-",
+      "slug": "variables-and-types",
       "title": "წინ პრაქტიკისკენ",
       "order": 2,
       "lessons": [
         {
           "id": 12410,
-          "slug": "01-03-jdkide",
+          "slug": "jdkide",
           "title": "03 JDK/IDE-ს გადმოწერა",
           "order": 201,
           "videoUrl": "https://www.youtube.com/watch?v=MTPDuypoXJ8",
@@ -58,7 +58,7 @@
         },
         {
           "id": 12411,
-          "slug": "02-04",
+          "slug": "04",
           "title": "04 პროექტის შექმნა",
           "order": 202,
           "videoUrl": "https://www.youtube.com/watch?v=ubqvQmogga4",
@@ -67,7 +67,7 @@
         },
         {
           "id": 12412,
-          "slug": "03-05-hello-world",
+          "slug": "hello-world",
           "title": "05 Hello World პირველი კოდი",
           "order": 203,
           "videoUrl": "https://www.youtube.com/watch?v=Y_biGT-9kXk",
@@ -76,7 +76,7 @@
         },
         {
           "id": 12413,
-          "slug": "04-06",
+          "slug": "06",
           "title": "06 როგორ დაიწერა ტექსტი ჩვენს კონსოლზე?",
           "order": 204,
           "videoUrl": "https://www.youtube.com/watch?v=qOkfyvMnv28",
@@ -85,7 +85,7 @@
         },
         {
           "id": 12414,
-          "slug": "05-07",
+          "slug": "07",
           "title": "07 რამდენიმე სტრიქონზე სხვადასხვა ტექსტის ბეჭდვა",
           "order": 205,
           "videoUrl": "https://www.youtube.com/watch?v=rqrjKZ1KwY0",
@@ -94,7 +94,7 @@
         },
         {
           "id": 12415,
-          "slug": "06-08",
+          "slug": "08",
           "title": "08 როგორ განვსაზღვროთ ცვლადები?",
           "order": 206,
           "videoUrl": "https://www.youtube.com/watch?v=lApXuim9TKc",
@@ -103,7 +103,7 @@
         },
         {
           "id": 12416,
-          "slug": "07-09",
+          "slug": "09",
           "title": "09 ცვლადების განსაზღვრა და რიგითობა",
           "order": 207,
           "videoUrl": "https://www.youtube.com/watch?v=Wn65uZJxyRA",
@@ -112,7 +112,7 @@
         },
         {
           "id": 12417,
-          "slug": "08-10",
+          "slug": "10",
           "title": "10 რა განსხვავებაა ტექსტურ მონაცემსა და ცვლადს შორის",
           "order": 208,
           "videoUrl": "https://www.youtube.com/watch?v=L2xiU1INbzU",
@@ -121,7 +121,7 @@
         },
         {
           "id": 12418,
-          "slug": "09-11",
+          "slug": "11",
           "title": "11 ცვლადების ტიპები მთელი რიცხვებისთვის",
           "order": 209,
           "videoUrl": "https://www.youtube.com/watch?v=uVAvkflvkM8",
@@ -130,7 +130,7 @@
         },
         {
           "id": 12419,
-          "slug": "10-12",
+          "slug": "12",
           "title": "12 მათემატიკური ოპერაციები რიცხვით ცვლადებზე",
           "order": 210,
           "videoUrl": "https://www.youtube.com/watch?v=g3l7UKe5Iz0",
@@ -139,7 +139,7 @@
         },
         {
           "id": 12420,
-          "slug": "11-13",
+          "slug": "13",
           "title": "13 სხვა მანიპულაციები რიცხვითი ცვლადებით",
           "order": 211,
           "videoUrl": "https://www.youtube.com/watch?v=783wG7fdi2M",
@@ -148,7 +148,7 @@
         },
         {
           "id": 12421,
-          "slug": "12-14",
+          "slug": "14",
           "title": "14 წილადი რიცხვები და ცვლადები",
           "order": 212,
           "videoUrl": "https://www.youtube.com/watch?v=-jm4XPKOIDA",
@@ -157,7 +157,7 @@
         },
         {
           "id": 12422,
-          "slug": "13-15",
+          "slug": "15",
           "title": "15 როგორ მიეკუთვნება მთელი რიცხვების გაყოფა არამთელ ცვლადს",
           "order": 213,
           "videoUrl": "https://www.youtube.com/watch?v=77RtdLp5L1k",
@@ -166,7 +166,7 @@
         },
         {
           "id": 12423,
-          "slug": "14-16",
+          "slug": "16",
           "title": "16 წილადების მთელ რიცხვით ცვლადზე მიკუთვნება",
           "order": 214,
           "videoUrl": "https://www.youtube.com/watch?v=cT12_FDmZAw",
@@ -175,7 +175,7 @@
         },
         {
           "id": 12424,
-          "slug": "15-17-boolean",
+          "slug": "boolean",
           "title": "17 boolean",
           "order": 215,
           "videoUrl": "https://www.youtube.com/watch?v=Xsn_6iXnlNU",
@@ -184,7 +184,7 @@
         },
         {
           "id": 12425,
-          "slug": "16-18",
+          "slug": "18",
           "title": "18 ერთიდაიგივე სახელის მქონე ცვლადები",
           "order": 216,
           "videoUrl": "https://www.youtube.com/watch?v=uy56kH2pt0Q",
@@ -193,7 +193,7 @@
         },
         {
           "id": 12426,
-          "slug": "17-19",
+          "slug": "19",
           "title": "19 ცვლადების სახელების კონვენციები",
           "order": 217,
           "videoUrl": "https://www.youtube.com/watch?v=kG8lmnRirDs",
@@ -202,7 +202,7 @@
         },
         {
           "id": 12427,
-          "slug": "18-20",
+          "slug": "20",
           "title": "20 სხვადასხვა ტიპის ცვლადებისთვის ერთიდაიგივე სახელების დარქმევა",
           "order": 218,
           "videoUrl": "https://www.youtube.com/watch?v=OGyo37vi_4g",
@@ -211,7 +211,7 @@
         },
         {
           "id": 12428,
-          "slug": "19-21",
+          "slug": "number-to-string",
           "title": "21 რიცხვის შენახვა ტექსტურ ცვლადში და პირიქით",
           "order": 219,
           "videoUrl": "https://www.youtube.com/watch?v=rXPp1o0abS8",
@@ -220,7 +220,7 @@
         },
         {
           "id": 12429,
-          "slug": "20-22",
+          "slug": "math-with-variables",
           "title": "22 მათემატიკური მანიპულაციები ცვლადებით",
           "order": 220,
           "videoUrl": "https://www.youtube.com/watch?v=mMnk59f9H7M",
@@ -229,7 +229,7 @@
         },
         {
           "id": 12430,
-          "slug": "21-23-casting",
+          "slug": "casting",
           "title": "23 casting ქასთინგი",
           "order": 221,
           "videoUrl": "https://www.youtube.com/watch?v=Bzph0IwzEoM",
@@ -238,7 +238,7 @@
         },
         {
           "id": 12431,
-          "slug": "22-24-int-casting-string",
+          "slug": "int-to-string-casting",
           "title": "24 int ის casting ი String ად",
           "order": 222,
           "videoUrl": "https://www.youtube.com/watch?v=YcHjf1MbYQw",
@@ -247,7 +247,7 @@
         },
         {
           "id": 12432,
-          "slug": "23-25",
+          "slug": "variable-assignment",
           "title": "25 ცვლადის მიკუთვნება ცვლადზე",
           "order": 223,
           "videoUrl": "https://www.youtube.com/watch?v=0Zwgnh3gTsw",
@@ -258,13 +258,13 @@
     },
     {
       "id": 12465,
-      "slug": "03-",
+      "slug": "conditionals",
       "title": "პირობითი ოპერატორები",
       "order": 3,
       "lessons": [
         {
           "id": 12466,
-          "slug": "01-26-if-edit",
+          "slug": "if-edit",
           "title": "26 რა არის პირობითი ოპერატორები - if Edit",
           "order": 301,
           "videoUrl": "https://www.youtube.com/watch?v=9QZD5mqe-9U",
@@ -273,7 +273,7 @@
         },
         {
           "id": 12467,
-          "slug": "02-27",
+          "slug": "code-blocks",
           "title": "27 რა არის კოდ ბლოკი",
           "order": 302,
           "videoUrl": "https://www.youtube.com/watch?v=XWA822J0-ac",
@@ -282,7 +282,7 @@
         },
         {
           "id": 12468,
-          "slug": "03-28",
+          "slug": "comparison-operators",
           "title": "28 ტოლობის და მეტობა ნაკლებობების მნიშვნელობებ",
           "order": 303,
           "videoUrl": "https://youtu.be/x_L20BsyGso",
@@ -291,7 +291,7 @@
         },
         {
           "id": 12469,
-          "slug": "04-29-if-else",
+          "slug": "if-else",
           "title": "29 if else",
           "order": 304,
           "videoUrl": "https://youtu.be/kHWPEpJVlVQ",
@@ -300,7 +300,7 @@
         },
         {
           "id": 12470,
-          "slug": "05-30-else-if",
+          "slug": "else-if",
           "title": "30 else if",
           "order": 305,
           "videoUrl": "https://www.youtube.com/watch?v=P3XXfLU3zKA",
@@ -309,7 +309,7 @@
         },
         {
           "id": 12471,
-          "slug": "06-31-if-else-if-else",
+          "slug": "if-else-if-else",
           "title": "31 if, else if, else",
           "order": 306,
           "videoUrl": "https://www.youtube.com/watch?v=IhHBjHQJrfw",
@@ -318,7 +318,7 @@
         },
         {
           "id": 12472,
-          "slug": "07-32-if",
+          "slug": "if",
           "title": "32 if ში ლოგიკური გამართულობის მნიშვნელობა",
           "order": 307,
           "videoUrl": "https://www.youtube.com/watch?v=PJKI2k4CN7s",
@@ -327,7 +327,7 @@
         },
         {
           "id": 12473,
-          "slug": "08-33-if-and",
+          "slug": "if-and",
           "title": "33 if and",
           "order": 308,
           "videoUrl": "https://www.youtube.com/watch?v=iLnOBHUwjRo",
@@ -336,7 +336,7 @@
         },
         {
           "id": 12474,
-          "slug": "09-34-if-and-or",
+          "slug": "if-and-or",
           "title": "34 if and or",
           "order": 309,
           "videoUrl": "https://www.youtube.com/watch?v=C6ULKV91XVA",
@@ -345,7 +345,7 @@
         },
         {
           "id": 12475,
-          "slug": "10-35",
+          "slug": "negation-and-math",
           "title": "35 !() უარყოფა და მათემატიკის პირობები",
           "order": 310,
           "videoUrl": "https://www.youtube.com/watch?v=51A-T2sBxVo",
@@ -354,7 +354,7 @@
         },
         {
           "id": 12476,
-          "slug": "11-36-comment-out",
+          "slug": "comment-out",
           "title": "36 // comment out კომენტარით კოდის გათიშვა",
           "order": 311,
           "videoUrl": "https://www.youtube.com/watch?v=9cd7m9slI8M",
@@ -363,7 +363,7 @@
         },
         {
           "id": 12477,
-          "slug": "12-37-scanner",
+          "slug": "scanner",
           "title": "37 Scanner აპტთან ინტერაქციის საწყისები",
           "order": 312,
           "videoUrl": "https://www.youtube.com/watch?v=_ndjnTlJ518",
@@ -372,7 +372,7 @@
         },
         {
           "id": 12478,
-          "slug": "13-38-scanner",
+          "slug": "scanner-2",
           "title": "38 Scanner რიცხვით მონაცემებთან",
           "order": 313,
           "videoUrl": "https://www.youtube.com/watch?v=4ogNgIHxM7U",
@@ -381,7 +381,7 @@
         },
         {
           "id": 12479,
-          "slug": "14-39-scanner",
+          "slug": "scanner-3",
           "title": "39 Scanner და რიცხვებთან მეტი მუშაობა",
           "order": 314,
           "videoUrl": "https://youtu.be/Je0GsECEg4o",
@@ -390,7 +390,7 @@
         },
         {
           "id": 12480,
-          "slug": "15-40-scanner-boolean",
+          "slug": "scanner-boolean",
           "title": "40 Scanner და boolean ები",
           "order": 315,
           "videoUrl": "https://www.youtube.com/watch?v=JT76SCVG6ZM",
@@ -399,7 +399,7 @@
         },
         {
           "id": 12481,
-          "slug": "16-41-scanner-if",
+          "slug": "scanner-if",
           "title": "41 Scanner და if",
           "order": 316,
           "videoUrl": "https://youtu.be/iu5C3DVa61k",
@@ -410,13 +410,13 @@
     },
     {
       "id": 12720,
-      "slug": "04-loop",
+      "slug": "loops",
       "title": "Loop-ები",
       "order": 4,
       "lessons": [
         {
           "id": 12722,
-          "slug": "01-42",
+          "slug": "functional-code-splitting",
           "title": "42 კოდის ფუნქციური დაყოფა",
           "order": 401,
           "videoUrl": "https://www.youtube.com/watch?v=MHuLbSHFoDk",
@@ -425,7 +425,7 @@
         },
         {
           "id": 12723,
-          "slug": "02-43-while-loop",
+          "slug": "while-loop",
           "title": "43 while loop",
           "order": 402,
           "videoUrl": "https://www.youtube.com/watch?v=Oq7lQcNcuQQ",
@@ -434,7 +434,7 @@
         },
         {
           "id": 12724,
-          "slug": "03-44-infinite-while",
+          "slug": "infinite-while",
           "title": "44 infinite while",
           "order": 403,
           "videoUrl": "https://www.youtube.com/watch?v=sjLkfDxnkzo",
@@ -443,7 +443,7 @@
         },
         {
           "id": 12725,
-          "slug": "04-45-while-if-break",
+          "slug": "while-if-break",
           "title": "45 while და if, break",
           "order": 404,
           "videoUrl": "https://www.youtube.com/watch?v=UpyWSJ2kwIw",
@@ -452,7 +452,7 @@
         },
         {
           "id": 12726,
-          "slug": "05-46-while-break",
+          "slug": "while-break",
           "title": "46 მეტი while. break ის ადგილის ცვლილება",
           "order": 405,
           "videoUrl": "https://www.youtube.com/watch?v=NVSkhHTLaWc",
@@ -461,7 +461,7 @@
         },
         {
           "id": 12727,
-          "slug": "06-47-break-count",
+          "slug": "break-count",
           "title": "47 break count",
           "order": 406,
           "videoUrl": "https://www.youtube.com/watch?v=Gb5szWqvOy4",
@@ -470,7 +470,7 @@
         },
         {
           "id": 12728,
-          "slug": "07-48-break",
+          "slug": "break",
           "title": "48 break ტექსტის მიხედვით",
           "order": 407,
           "videoUrl": "https://www.youtube.com/watch?v=fHDUuDNsgC4",
@@ -479,7 +479,7 @@
         },
         {
           "id": 12729,
-          "slug": "08-49-continue",
+          "slug": "continue",
           "title": "49 continue",
           "order": 408,
           "videoUrl": "https://www.youtube.com/watch?v=DP7mf_MEjxo",
@@ -488,7 +488,7 @@
         },
         {
           "id": 12730,
-          "slug": "09-50-continue",
+          "slug": "continue-2",
           "title": "50 continue და კალკულაციები",
           "order": 409,
           "videoUrl": "https://www.youtube.com/watch?v=2zXYKFRBE5w",
@@ -497,7 +497,7 @@
         },
         {
           "id": 12731,
-          "slug": "10-51-continue-break",
+          "slug": "continue-break",
           "title": "51 continue და break",
           "order": 410,
           "videoUrl": "https://www.youtube.com/watch?v=Dsq8f04VXaI",
@@ -508,13 +508,13 @@
     },
     {
       "id": 12734,
-      "slug": "05-loop",
+      "slug": "advanced-loops-methods",
       "title": "რთული Loop-ები და მეთოდები",
       "order": 5,
       "lessons": [
         {
           "id": 12735,
-          "slug": "01-52-loop",
+          "slug": "loop",
           "title": "52 რიგითობა loop-ებში",
           "order": 501,
           "videoUrl": "https://www.youtube.com/watch?v=NdPvY4PU0UQ",
@@ -523,7 +523,7 @@
         },
         {
           "id": 12736,
-          "slug": "02-53",
+          "slug": "increment-operators",
           "title": "53 ++ ოპერატორები",
           "order": 502,
           "videoUrl": "https://www.youtube.com/watch?v=8ZwNZFn7VFA",
@@ -532,7 +532,7 @@
         },
         {
           "id": 12737,
-          "slug": "03-54-fori",
+          "slug": "fori",
           "title": "54 fori",
           "order": 503,
           "videoUrl": "https://www.youtube.com/watch?v=OXB1d42E0GQ",
@@ -543,13 +543,13 @@
     },
     {
       "id": 12739,
-      "slug": "06-",
+      "slug": "methods",
       "title": "მეთოდები",
       "order": 6,
       "lessons": [
         {
           "id": 12740,
-          "slug": "01-55-methods",
+          "slug": "methods",
           "title": "55 methods",
           "order": 601,
           "videoUrl": "https://www.youtube.com/watch?v=UyXhakmgrWE",
@@ -558,7 +558,7 @@
         },
         {
           "id": 12741,
-          "slug": "02-56",
+          "slug": "method-naming",
           "title": "56 სახელის მნიშვნელობა მეთოდში",
           "order": 602,
           "videoUrl": "https://www.youtube.com/watch?v=4pmcP-dg9O8",
@@ -567,7 +567,7 @@
         },
         {
           "id": 12742,
-          "slug": "03-57-main",
+          "slug": "main",
           "title": "57 main მეთოდი",
           "order": 603,
           "videoUrl": "https://www.youtube.com/watch?v=xQXQ0Xzr4ms",
@@ -576,7 +576,7 @@
         },
         {
           "id": 12743,
-          "slug": "04-58",
+          "slug": "naming-principles",
           "title": "58 მეთოდების სახელების პრინციპი",
           "order": 604,
           "videoUrl": "https://www.youtube.com/watch?v=z9ke-SDIN6Y",
@@ -585,7 +585,7 @@
         },
         {
           "id": 12744,
-          "slug": "05-59",
+          "slug": "execution-order",
           "title": "59 მეთოდების აღსრულების რიგითობა",
           "order": 605,
           "videoUrl": "https://www.youtube.com/watch?v=R7Qh05ow0gA",
@@ -594,7 +594,7 @@
         },
         {
           "id": 12745,
-          "slug": "06-60-2",
+          "slug": "2",
           "title": "60 აღსრულების რიგითობა 2",
           "order": 606,
           "videoUrl": "https://www.youtube.com/watch?v=uutSJmU_wGo",
@@ -603,7 +603,7 @@
         },
         {
           "id": 12746,
-          "slug": "07-61",
+          "slug": "method-in-method",
           "title": "61 მეთოდი მეთოდში",
           "order": 607,
           "videoUrl": "https://www.youtube.com/watch?v=7u-wi5PKQ7Q",
@@ -612,7 +612,7 @@
         },
         {
           "id": 13183,
-          "slug": "08-62",
+          "slug": "parameters",
           "title": "62 პარამეტრები",
           "order": 608,
           "videoUrl": "https://www.youtube.com/watch?v=MYzihDpAzYw",
@@ -621,7 +621,7 @@
         },
         {
           "id": 13184,
-          "slug": "09-63",
+          "slug": "multiple-parameters",
           "title": "63 რამდენიმე პარამეტრი",
           "order": 609,
           "videoUrl": "https://www.youtube.com/watch?v=XyYyEqB4onI",
@@ -630,7 +630,7 @@
         },
         {
           "id": 13185,
-          "slug": "10-64",
+          "slug": "parameter-order",
           "title": "64 პარამეტრების რიგითობა",
           "order": 610,
           "videoUrl": "https://youtu.be/AJyP2-IWC8o",
@@ -639,7 +639,7 @@
         },
         {
           "id": 13186,
-          "slug": "11-65",
+          "slug": "different-type-params",
           "title": "65 სხვადასხვა ტიპის პარამეტრები",
           "order": 611,
           "videoUrl": "https://www.youtube.com/watch?v=bAKt_1ZejQU",
@@ -648,7 +648,7 @@
         },
         {
           "id": 13187,
-          "slug": "12-66",
+          "slug": "data-as-params",
           "title": "66 მონაცემები პარამეტრებად",
           "order": 612,
           "videoUrl": "https://www.youtube.com/watch?v=5J95_xZ4G6w",
@@ -657,7 +657,7 @@
         },
         {
           "id": 13188,
-          "slug": "13-67-code-block",
+          "slug": "code-block",
           "title": "67 პარამეტრები და code block",
           "order": 613,
           "videoUrl": "https://www.youtube.com/watch?v=CXewm1BLEYI",
@@ -666,7 +666,7 @@
         },
         {
           "id": 13189,
-          "slug": "14-68",
+          "slug": "primitive-params",
           "title": "68 პრიმიტივი პარამეტრები",
           "order": 614,
           "videoUrl": "https://www.youtube.com/watch?v=plKDjpxKDzk",
@@ -675,7 +675,7 @@
         },
         {
           "id": 13190,
-          "slug": "15-69",
+          "slug": "param-order-revisited",
           "title": "69 პარამეტრების რიგითობა კიდევ ერთხელ",
           "order": 615,
           "videoUrl": "https://www.youtube.com/watch?v=o5_5Ri6UIUI",
@@ -684,7 +684,7 @@
         },
         {
           "id": 13191,
-          "slug": "16-70-void",
+          "slug": "void",
           "title": "70 void",
           "order": 616,
           "videoUrl": "https://www.youtube.com/watch?v=ese0utk5sdQ",
@@ -693,7 +693,7 @@
         },
         {
           "id": 13192,
-          "slug": "17-71-return",
+          "slug": "return",
           "title": "71 return",
           "order": 617,
           "videoUrl": "https://www.youtube.com/watch?v=SNcvCwARf7M",
@@ -702,7 +702,7 @@
         },
         {
           "id": 13193,
-          "slug": "18-72-return-vs-print",
+          "slug": "return-vs-print",
           "title": "72 return vs print",
           "order": 618,
           "videoUrl": "https://youtu.be/GmQVOdArDiI",
@@ -711,7 +711,7 @@
         },
         {
           "id": 13194,
-          "slug": "19-73-int-gt-double",
+          "slug": "int-gt-double",
           "title": "73 int -&gt; double",
           "order": 619,
           "videoUrl": "https://www.youtube.com/watch?v=lkYR2boEbCM",
@@ -720,7 +720,7 @@
         },
         {
           "id": 13195,
-          "slug": "20-74-variable",
+          "slug": "variable",
           "title": "74 variable ები მეთოდებში",
           "order": 620,
           "videoUrl": "https://www.youtube.com/watch?v=Pr5ZqqqO22s",
@@ -729,7 +729,7 @@
         },
         {
           "id": 13196,
-          "slug": "21-75-return",
+          "slug": "return-2",
           "title": "75 return ის შემდეგ",
           "order": 621,
           "videoUrl": "https://www.youtube.com/watch?v=ODKVtZ5xkBc",
@@ -738,7 +738,7 @@
         },
         {
           "id": 13197,
-          "slug": "22-76-sum-in-return",
+          "slug": "sum-in-return",
           "title": "76 sum in return",
           "order": 622,
           "videoUrl": "https://www.youtube.com/watch?v=ijQZngP5k-w",
@@ -749,13 +749,13 @@
     },
     {
       "id": 13247,
-      "slug": "07-",
+      "slug": "arrays",
       "title": "მასივები",
       "order": 7,
       "lessons": [
         {
           "id": 13248,
-          "slug": "01-77-arraylist",
+          "slug": "arraylist",
           "title": "77 პირველი მასივები - ArrayList",
           "order": 701,
           "videoUrl": "https://www.youtube.com/watch?v=RxzQlRp0Ozg",
@@ -764,7 +764,7 @@
         },
         {
           "id": 13249,
-          "slug": "02-78-arraylist_2",
+          "slug": "arraylist_2",
           "title": "78 პირველი მასივები - ArrayList_2",
           "order": 702,
           "videoUrl": "https://www.youtube.com/watch?v=ra82U51o6K0",
@@ -773,7 +773,7 @@
         },
         {
           "id": 13250,
-          "slug": "03-79-arraylist",
+          "slug": "arraylist-2",
           "title": "79 ArrayList ის სახელის დარქმევა",
           "order": 703,
           "videoUrl": "https://www.youtube.com/watch?v=SWJv8ChKVqE",
@@ -782,7 +782,7 @@
         },
         {
           "id": 13251,
-          "slug": "04-80-edit",
+          "slug": "edit",
           "title": "80 ცვლადის სახელი და მითითება Edit",
           "order": 704,
           "videoUrl": "https://www.youtube.com/watch?v=DwVLs9HjPFg",
@@ -791,7 +791,7 @@
         },
         {
           "id": 13252,
-          "slug": "05-81-another",
+          "slug": "another",
           "title": "81 another",
           "order": 705,
           "videoUrl": "https://www.youtube.com/watch?v=r0vIDuaMMd4",
@@ -800,7 +800,7 @@
         },
         {
           "id": 13253,
-          "slug": "06-82-add",
+          "slug": "add",
           "title": "82 add",
           "order": 706,
           "videoUrl": "https://www.youtube.com/watch?v=0ldPYXli3LI",
@@ -809,7 +809,7 @@
         },
         {
           "id": 13254,
-          "slug": "07-83",
+          "slug": "array-numbering",
           "title": "83 ნუმერაცია მასივებში",
           "order": 707,
           "videoUrl": "https://www.youtube.com/watch?v=Sc_ieMcGzvo",
@@ -818,7 +818,7 @@
         },
         {
           "id": 13255,
-          "slug": "08-84",
+          "slug": "array-equality",
           "title": "84 რატომ არიან ისინი ტოლი?",
           "order": 708,
           "videoUrl": "https://www.youtube.com/watch?v=-RxnqH4Dop0",
@@ -827,7 +827,7 @@
         },
         {
           "id": 13256,
-          "slug": "09-85-index-out",
+          "slug": "index-out",
           "title": "85 index out",
           "order": 709,
           "videoUrl": "https://www.youtube.com/watch?v=xoOtm8flrfw",
@@ -836,7 +836,7 @@
         },
         {
           "id": 13257,
-          "slug": "10-86-remove",
+          "slug": "remove",
           "title": "86 remove",
           "order": 710,
           "videoUrl": "https://www.youtube.com/watch?v=KYts3Ja1CXs",
@@ -845,7 +845,7 @@
         },
         {
           "id": 13258,
-          "slug": "11-87-string",
+          "slug": "string",
           "title": "87 String ების დამატება",
           "order": 711,
           "videoUrl": "https://www.youtube.com/watch?v=lkoWxsJM5No",
@@ -854,7 +854,7 @@
         },
         {
           "id": 13259,
-          "slug": "12-88-double-vs-integer",
+          "slug": "double-vs-integer",
           "title": "88 double vs integer",
           "order": 712,
           "videoUrl": "https://www.youtube.com/watch?v=wXNcL1ZyFr4",
@@ -863,7 +863,7 @@
         },
         {
           "id": 13260,
-          "slug": "13-89-size",
+          "slug": "size",
           "title": "89 size ზომა",
           "order": 713,
           "videoUrl": "https://youtu.be/b8WmCZ8UGXM",
@@ -872,7 +872,7 @@
         },
         {
           "id": 13261,
-          "slug": "14-90-for-arraylist",
+          "slug": "for-arraylist",
           "title": "90 for და ArrayList()",
           "order": 714,
           "videoUrl": "https://www.youtube.com/watch?v=R_FuqJZs9Xs",
@@ -881,7 +881,7 @@
         },
         {
           "id": 13262,
-          "slug": "15-91",
+          "slug": "within-bounds",
           "title": "91 ზღვრების დარღვევის გარეშე",
           "order": 715,
           "videoUrl": "https://www.youtube.com/watch?v=uckCqPuh7gk",
@@ -890,7 +890,7 @@
         },
         {
           "id": 13263,
-          "slug": "16-92-size-for-loop",
+          "slug": "size-for-loop",
           "title": "92 size for loop",
           "order": 716,
           "videoUrl": "https://www.youtube.com/watch?v=NuZvcnK4NyE",
@@ -899,7 +899,7 @@
         },
         {
           "id": 13264,
-          "slug": "17-93-size-for-loop",
+          "slug": "size-for-loop-2",
           "title": "93 size for loop ს შემდეგ",
           "order": 717,
           "videoUrl": "https://www.youtube.com/watch?v=uWARV4IaGSQ",
@@ -908,7 +908,7 @@
         },
         {
           "id": 13265,
-          "slug": "18-94-foreach",
+          "slug": "foreach",
           "title": "94 foreach",
           "order": 718,
           "videoUrl": "https://www.youtube.com/watch?v=FwBh2_bAK1I",
@@ -917,7 +917,7 @@
         },
         {
           "id": 13266,
-          "slug": "19-95-list-as-parameter",
+          "slug": "list-as-parameter",
           "title": "95 List as parameter",
           "order": 719,
           "videoUrl": "https://www.youtube.com/watch?v=ccsqI_W1fuo",
@@ -926,7 +926,7 @@
         },
         {
           "id": 13267,
-          "slug": "20-96-list-as-parameter2",
+          "slug": "list-as-parameter2",
           "title": "96 List as parameter2",
           "order": 720,
           "videoUrl": "https://www.youtube.com/watch?v=pu0qImWrH00",
@@ -935,7 +935,7 @@
         },
         {
           "id": 13268,
-          "slug": "21-97-size",
+          "slug": "size-2",
           "title": "97 size დასაწყისში",
           "order": 721,
           "videoUrl": "https://www.youtube.com/watch?v=tmccrPI1cBk",
@@ -944,7 +944,7 @@
         },
         {
           "id": 13269,
-          "slug": "22-98-contains",
+          "slug": "contains",
           "title": "98 contains",
           "order": 722,
           "videoUrl": "https://www.youtube.com/watch?v=9PcAg4lsjXk",
@@ -953,7 +953,7 @@
         },
         {
           "id": 13270,
-          "slug": "23-99-array-int",
+          "slug": "array-int",
           "title": "99 array int",
           "order": 723,
           "videoUrl": "https://www.youtube.com/watch?v=gB4_Ksh0CLY",
@@ -962,7 +962,7 @@
         },
         {
           "id": 13271,
-          "slug": "24-100-array",
+          "slug": "array",
           "title": "100 array საზღვრებს გარეთ",
           "order": 724,
           "videoUrl": "https://www.youtube.com/watch?v=tDlc56cukBg",
@@ -971,7 +971,7 @@
         },
         {
           "id": 13272,
-          "slug": "25-101-array-why-so-serious",
+          "slug": "array-why-so-serious",
           "title": "101 array why so serious",
           "order": 725,
           "videoUrl": "https://youtu.be/Peb2wWWhBHs",
@@ -980,7 +980,7 @@
         },
         {
           "id": 13273,
-          "slug": "26-102-array-as-parameter",
+          "slug": "array-as-parameter",
           "title": "102 array as parameter",
           "order": 726,
           "videoUrl": "https://youtu.be/fAXRC-B1EqU",
@@ -989,7 +989,7 @@
         },
         {
           "id": 13274,
-          "slug": "27-103-changing-places-in-array",
+          "slug": "changing-places-in-array",
           "title": "103 changing places in array",
           "order": 727,
           "videoUrl": "https://youtu.be/17hE0lCyKSk",
@@ -998,7 +998,7 @@
         },
         {
           "id": 13275,
-          "slug": "28-104-array-length",
+          "slug": "array-length",
           "title": "104 array length",
           "order": 728,
           "videoUrl": "https://youtu.be/WEDWJ5TWdf0",
@@ -1007,7 +1007,7 @@
         },
         {
           "id": 13276,
-          "slug": "29-105-array",
+          "slug": "array-2",
           "title": "105 array {}",
           "order": 729,
           "videoUrl": "https://youtu.be/fZn0Hn0xgRs",
@@ -1016,7 +1016,7 @@
         },
         {
           "id": 13277,
-          "slug": "30-106-array-strings",
+          "slug": "array-strings",
           "title": "106 array strings",
           "order": 730,
           "videoUrl": "https://youtu.be/QDoQHl59Cwo",
@@ -1025,7 +1025,7 @@
         },
         {
           "id": 13278,
-          "slug": "31-107-array-equals",
+          "slug": "array-equals",
           "title": "107 array equals",
           "order": 731,
           "videoUrl": "https://youtu.be/yX46OKhlCwA",
@@ -1034,7 +1034,7 @@
         },
         {
           "id": 13279,
-          "slug": "32-108-array-split",
+          "slug": "array-split",
           "title": "108 array split",
           "order": 732,
           "videoUrl": "https://youtu.be/AfFaEU7LgtE",
@@ -1043,7 +1043,7 @@
         },
         {
           "id": 13280,
-          "slug": "33-109-char-at",
+          "slug": "char-at",
           "title": "109 char at",
           "order": 733,
           "videoUrl": "https://youtu.be/iKEsP16enBo",
@@ -1052,7 +1052,7 @@
         },
         {
           "id": 13281,
-          "slug": "34-110-length",
+          "slug": "length",
           "title": "110 Length",
           "order": 734,
           "videoUrl": "https://youtu.be/X_3sVobZ87c",
@@ -1061,7 +1061,7 @@
         },
         {
           "id": 13282,
-          "slug": "35-111-print-chars",
+          "slug": "print-chars",
           "title": "111 print chars, სიმბოლოები ტექსტიდან",
           "order": 735,
           "videoUrl": "https://www.youtube.com/watch?v=w6D1wT7bbF0",
@@ -1072,13 +1072,13 @@
     },
     {
       "id": 13284,
-      "slug": "08-oop",
+      "slug": "oop",
       "title": "OOP",
       "order": 8,
       "lessons": [
         {
           "id": 13285,
-          "slug": "01-112-oop",
+          "slug": "oop",
           "title": "112 OOP - რაა?",
           "order": 801,
           "videoUrl": "https://www.youtube.com/watch?v=RKBljcWbXEY",
@@ -1087,7 +1087,7 @@
         },
         {
           "id": 13286,
-          "slug": "02-113-new-object",
+          "slug": "new-object",
           "title": "113 new object",
           "order": 802,
           "videoUrl": "https://www.youtube.com/watch?v=OkCm366V79s",
@@ -1096,7 +1096,7 @@
         },
         {
           "id": 13287,
-          "slug": "03-114-new-human",
+          "slug": "new-human",
           "title": "114 new Human",
           "order": 803,
           "videoUrl": "https://www.youtube.com/watch?v=OGkB6x4u7EU",
@@ -1105,7 +1105,7 @@
         },
         {
           "id": 13288,
-          "slug": "04-115-constructor-params",
+          "slug": "constructor-params",
           "title": "115 constructor params",
           "order": 804,
           "videoUrl": "https://www.youtube.com/watch?v=fUup1T_pcNw",
@@ -1114,7 +1114,7 @@
         },
         {
           "id": 13289,
-          "slug": "05-116-with-constructor",
+          "slug": "with-constructor",
           "title": "116 with constructor",
           "order": 805,
           "videoUrl": "https://www.youtube.com/watch?v=AulH_rZMouM",
@@ -1123,7 +1123,7 @@
         },
         {
           "id": 13290,
-          "slug": "06-117-method-in-class",
+          "slug": "method-in-class",
           "title": "117 method in class",
           "order": 806,
           "videoUrl": "https://www.youtube.com/watch?v=8N3g9gm3iw0",
@@ -1132,7 +1132,7 @@
         },
         {
           "id": 13291,
-          "slug": "07-118-static",
+          "slug": "static",
           "title": "118 static",
           "order": 807,
           "videoUrl": "https://www.youtube.com/watch?v=T326R9LA6JM",
@@ -1141,7 +1141,7 @@
         },
         {
           "id": 13292,
-          "slug": "08-119-static",
+          "slug": "static-2",
           "title": "119 static ობიექტის გავლით",
           "order": 808,
           "videoUrl": "https://www.youtube.com/watch?v=v4whpcqGihw",
@@ -1150,7 +1150,7 @@
         },
         {
           "id": 13293,
-          "slug": "09-120-object-static",
+          "slug": "object-static",
           "title": "120 object ცვლადები static",
           "order": 809,
           "videoUrl": "https://www.youtube.com/watch?v=iWrWFQf4Yh4",
@@ -1159,7 +1159,7 @@
         },
         {
           "id": 13294,
-          "slug": "10-121",
+          "slug": "age-modification",
           "title": "121 ასაკის ცვლილება",
           "order": 810,
           "videoUrl": "https://www.youtube.com/watch?v=ePhSpC2YfYc",
@@ -1168,7 +1168,7 @@
         },
         {
           "id": 13295,
-          "slug": "11-122-thisstatic",
+          "slug": "thisstatic",
           "title": "122 this.static?",
           "order": 811,
           "videoUrl": "https://www.youtube.com/watch?v=JBMItTZ7zsw",
@@ -1177,7 +1177,7 @@
         },
         {
           "id": 13296,
-          "slug": "12-123",
+          "slug": "multiple-constructors",
           "title": "123 რამდენიმე კონსტრუქტორი",
           "order": 812,
           "videoUrl": "https://www.youtube.com/watch?v=P3YEV1wOB2k",
@@ -1186,7 +1186,7 @@
         },
         {
           "id": 13297,
-          "slug": "13-124",
+          "slug": "constructors-diff-params",
           "title": "124 კონსტრუქტორები სხვადასხვა პარამეტრით",
           "order": 813,
           "videoUrl": "https://www.youtube.com/watch?v=UNUHIWoX8qw",
@@ -1195,7 +1195,7 @@
         },
         {
           "id": 13298,
-          "slug": "14-125-arraylist-type",
+          "slug": "arraylist-type",
           "title": "125 ArrayList type",
           "order": 814,
           "videoUrl": "https://www.youtube.com/watch?v=DEwmndQDgzk",
@@ -1204,7 +1204,7 @@
         },
         {
           "id": 13299,
-          "slug": "15-126",
+          "slug": "humans-in-array",
           "title": "126 ადამიანების დამატება მასივში",
           "order": 815,
           "videoUrl": "https://www.youtube.com/watch?v=5ny3OeICFzE",
@@ -1213,7 +1213,7 @@
         },
         {
           "id": 13300,
-          "slug": "16-127-new-object-in-array",
+          "slug": "new-object-in-array",
           "title": "127 new object in Array",
           "order": 816,
           "videoUrl": "https://www.youtube.com/watch?v=HR6g3_glfX4",
@@ -1222,7 +1222,7 @@
         },
         {
           "id": 13301,
-          "slug": "17-128-foreach",
+          "slug": "foreach",
           "title": "128 foreach კრიტერიუმებით",
           "order": 817,
           "videoUrl": "https://www.youtube.com/watch?v=WwRPyPb1GvQ",
@@ -1233,13 +1233,13 @@
     },
     {
       "id": 13303,
-      "slug": "09-",
+      "slug": "file-reading",
       "title": "ფაილებიდან კითხვა",
       "order": 9,
       "lessons": [
         {
           "id": 13304,
-          "slug": "01-129",
+          "slug": "what-are-files",
           "title": "129 რა არის ფაილები",
           "order": 901,
           "videoUrl": "https://www.youtube.com/watch?v=zZbZa_iaEAo",
@@ -1248,7 +1248,7 @@
         },
         {
           "id": 13305,
-          "slug": "02-130",
+          "slug": "reading-a-file",
           "title": "130 ფაილის წაკითხვა",
           "order": 902,
           "videoUrl": "https://www.youtube.com/watch?v=PnMsVMkgosQ",
@@ -1257,7 +1257,7 @@
         },
         {
           "id": 13306,
-          "slug": "03-131-try-catch",
+          "slug": "try-catch",
           "title": "131 try catch",
           "order": 903,
           "videoUrl": "https://www.youtube.com/watch?v=iQtogoPasr4",
@@ -1266,7 +1266,7 @@
         },
         {
           "id": 13307,
-          "slug": "04-132-read-from-exact-file",
+          "slug": "read-from-exact-file",
           "title": "132 read from exact file",
           "order": 904,
           "videoUrl": "https://www.youtube.com/watch?v=PiiuMA0hfVA",
@@ -1275,7 +1275,7 @@
         },
         {
           "id": 13308,
-          "slug": "05-133-read-from-multiple-files",
+          "slug": "read-from-multiple-files",
           "title": "133 read from multiple files",
           "order": 905,
           "videoUrl": "https://www.youtube.com/watch?v=g-TgQIcHjmo",
@@ -1286,13 +1286,13 @@
     },
     {
       "id": 13310,
-      "slug": "10-",
+      "slug": "advanced-objects",
       "title": "ნამდვილად ობიექტები",
       "order": 10,
       "lessons": [
         {
           "id": 13311,
-          "slug": "01-134-obj-as-param",
+          "slug": "obj-as-param",
           "title": "134 obj as param",
           "order": 1001,
           "videoUrl": "https://www.youtube.com/watch?v=1yMxeOjW-M0",
@@ -1301,7 +1301,7 @@
         },
         {
           "id": 13312,
-          "slug": "02-135-object-reach",
+          "slug": "object-reach",
           "title": "135 object reach",
           "order": 1002,
           "videoUrl": "https://www.youtube.com/watch?v=he-3Pi5gf7o",
@@ -1310,7 +1310,7 @@
         },
         {
           "id": 13313,
-          "slug": "03-136-main",
+          "slug": "main",
           "title": "136 main",
           "order": 1003,
           "videoUrl": "https://www.youtube.com/watch?v=KGtN_2T0JQ4",
@@ -1319,7 +1319,7 @@
         },
         {
           "id": 13314,
-          "slug": "04-137-array-in-obj",
+          "slug": "array-in-obj",
           "title": "137 array in obj",
           "order": 1004,
           "videoUrl": "https://www.youtube.com/watch?v=B1bpmzpoWf4",
@@ -1328,7 +1328,7 @@
         },
         {
           "id": 13315,
-          "slug": "05-138-method-to-iself",
+          "slug": "method-to-iself",
           "title": "138 method to iself",
           "order": 1005,
           "videoUrl": "https://www.youtube.com/watch?v=y1TwSdfZVCs",
@@ -1337,7 +1337,7 @@
         },
         {
           "id": 13316,
-          "slug": "06-139-object-in-object",
+          "slug": "object-in-object",
           "title": "139 object in object",
           "order": 1006,
           "videoUrl": "https://www.youtube.com/watch?v=USyFboPEBCE",
@@ -1346,7 +1346,7 @@
         },
         {
           "id": 13317,
-          "slug": "07-140-object-to-another",
+          "slug": "object-to-another",
           "title": "140 object to another",
           "order": 1007,
           "videoUrl": "https://www.youtube.com/watch?v=rGPyaHVBlQc",
@@ -1355,7 +1355,7 @@
         },
         {
           "id": 13318,
-          "slug": "08-141-how-the-objects-are-connected",
+          "slug": "how-the-objects-are-connected",
           "title": "141 how the objects are connected",
           "order": 1008,
           "videoUrl": "https://www.youtube.com/watch?v=qFIckDLuDXo",
@@ -1364,7 +1364,7 @@
         },
         {
           "id": 13319,
-          "slug": "09-142-real-connection",
+          "slug": "real-connection",
           "title": "142 real connection",
           "order": 1009,
           "videoUrl": "https://www.youtube.com/watch?v=7gTTXz9dtiE",
@@ -1373,7 +1373,7 @@
         },
         {
           "id": 13320,
-          "slug": "10-143-oop-more-details",
+          "slug": "oop-more-details",
           "title": "143 OOP more details",
           "order": 1010,
           "videoUrl": "https://www.youtube.com/watch?v=-9kpkrp5_Hk",
@@ -1382,7 +1382,7 @@
         },
         {
           "id": 13321,
-          "slug": "11-144-going-deeper-in-oop",
+          "slug": "going-deeper-in-oop",
           "title": "144 going deeper in OOP",
           "order": 1011,
           "videoUrl": "https://www.youtube.com/watch?v=HDmM5mHHyws",
@@ -1391,7 +1391,7 @@
         },
         {
           "id": 13322,
-          "slug": "12-145-another-classes",
+          "slug": "another-classes",
           "title": "145 another classes",
           "order": 1012,
           "videoUrl": "https://www.youtube.com/watch?v=E9L5BurW0J0",
@@ -1400,7 +1400,7 @@
         },
         {
           "id": 13323,
-          "slug": "13-146-author-and-songs",
+          "slug": "author-and-songs",
           "title": "146 Author and Songs",
           "order": 1013,
           "videoUrl": "https://www.youtube.com/watch?v=XfsenrV8QkY",
@@ -1409,7 +1409,7 @@
         },
         {
           "id": 13324,
-          "slug": "14-147-separating-methods",
+          "slug": "separating-methods",
           "title": "147 separating methods",
           "order": 1014,
           "videoUrl": "https://www.youtube.com/watch?v=JKhP77mVUaE",
@@ -1418,7 +1418,7 @@
         },
         {
           "id": 13325,
-          "slug": "15-148-author-in-song",
+          "slug": "author-in-song",
           "title": "148 author in Song",
           "order": 1015,
           "videoUrl": "https://www.youtube.com/watch?v=giWhQrsGT3w",
@@ -1427,7 +1427,7 @@
         },
         {
           "id": 13326,
-          "slug": "16-149-adding-another-to-a-song",
+          "slug": "adding-another-to-a-song",
           "title": "149 adding another to a song",
           "order": 1016,
           "videoUrl": "https://www.youtube.com/watch?v=sorwh2T8bZw",
@@ -1436,7 +1436,7 @@
         },
         {
           "id": 13327,
-          "slug": "17-150-song-to-author",
+          "slug": "song-to-author",
           "title": "150 song to author",
           "order": 1017,
           "videoUrl": "https://www.youtube.com/watch?v=GIOxrbnsvoE",
@@ -1445,7 +1445,7 @@
         },
         {
           "id": 13328,
-          "slug": "18-151-block-to-block",
+          "slug": "block-to-block",
           "title": "151 block to block",
           "order": 1018,
           "videoUrl": "https://www.youtube.com/watch?v=uHyevwwTHpI",
@@ -1456,13 +1456,13 @@
     },
     {
       "id": 13330,
-      "slug": "11-hashmap",
+      "slug": "hashmap",
       "title": "HashMap",
       "order": 11,
       "lessons": [
         {
           "id": 13331,
-          "slug": "01-152-hashmap",
+          "slug": "hashmap",
           "title": "152 HashMap ",
           "order": 1101,
           "videoUrl": "https://www.youtube.com/watch?v=qZC-UFI0iXY",
@@ -1471,7 +1471,7 @@
         },
         {
           "id": 13332,
-          "slug": "02-153-hashmap_2",
+          "slug": "hashmap_2",
           "title": "153 HashMap_2",
           "order": 1102,
           "videoUrl": "https://www.youtube.com/watch?v=VFdmhMfAkgo",
@@ -1480,7 +1480,7 @@
         },
         {
           "id": 13333,
-          "slug": "03-154-hashmap-impl",
+          "slug": "hashmap-impl",
           "title": "154 HashMap impl ",
           "order": 1103,
           "videoUrl": "https://www.youtube.com/watch?v=E2gE9CdXaVg",
@@ -1489,7 +1489,7 @@
         },
         {
           "id": 13334,
-          "slug": "04-155-hashmap-what-for",
+          "slug": "hashmap-what-for",
           "title": "155 HashMap what for",
           "order": 1104,
           "videoUrl": "https://www.youtube.com/watch?v=tt71O5saoAo",
@@ -1498,7 +1498,7 @@
         },
         {
           "id": 13335,
-          "slug": "05-156-hasmap-how-it-works",
+          "slug": "hasmap-how-it-works",
           "title": "156 HasMap how it works",
           "order": 1105,
           "videoUrl": "https://www.youtube.com/watch?v=Slhl_Cv6fKI",
@@ -1507,7 +1507,7 @@
         },
         {
           "id": 13336,
-          "slug": "06-157-same-key",
+          "slug": "same-key",
           "title": "157 same key",
           "order": 1106,
           "videoUrl": "https://www.youtube.com/watch?v=iQ7py9vUkq4",
@@ -1516,7 +1516,7 @@
         },
         {
           "id": 13337,
-          "slug": "07-158-big-case-lower-case",
+          "slug": "big-case-lower-case",
           "title": "158 big case lower case",
           "order": 1107,
           "videoUrl": "https://www.youtube.com/watch?v=MGegSQSV_ZQ",
@@ -1525,7 +1525,7 @@
         },
         {
           "id": 13338,
-          "slug": "08-159-tolowercase",
+          "slug": "tolowercase",
           "title": "159 toLowerCase",
           "order": 1108,
           "videoUrl": "https://www.youtube.com/watch?v=0GTCNEwta-E",
@@ -1534,7 +1534,7 @@
         },
         {
           "id": 13339,
-          "slug": "09-160-keyset",
+          "slug": "keyset",
           "title": "160 keyset",
           "order": 1109,
           "videoUrl": "https://www.youtube.com/watch?v=YVgpff6ARBQ",
@@ -1543,7 +1543,7 @@
         },
         {
           "id": 13340,
-          "slug": "10-161-sequence",
+          "slug": "sequence",
           "title": "161 sequence",
           "order": 1110,
           "videoUrl": "https://www.youtube.com/watch?v=G10IVBPmAn8",
@@ -1552,7 +1552,7 @@
         },
         {
           "id": 13341,
-          "slug": "11-162-values",
+          "slug": "values",
           "title": "162 values",
           "order": 1111,
           "videoUrl": "https://www.youtube.com/watch?v=nr77t12NjOs",
@@ -1561,7 +1561,7 @@
         },
         {
           "id": 13342,
-          "slug": "12-163-list-in-hashmap",
+          "slug": "list-in-hashmap",
           "title": "163 list in HashMap",
           "order": 1112,
           "videoUrl": "https://www.youtube.com/watch?v=qkU9QrCqXwg",
@@ -1570,7 +1570,7 @@
         },
         {
           "id": 13343,
-          "slug": "13-164-list-in-hash-hash-in-list",
+          "slug": "list-in-hash-hash-in-list",
           "title": "164 list in hash, hash in list",
           "order": 1113,
           "videoUrl": "https://www.youtube.com/watch?v=uEmTk8Hpcfo",
@@ -1579,7 +1579,7 @@
         },
         {
           "id": 13344,
-          "slug": "14-165-hashmap-explained",
+          "slug": "hashmap-explained",
           "title": "165 HashMap explained",
           "order": 1114,
           "videoUrl": "https://www.youtube.com/watch?v=WbhTfQ76Sj8",
@@ -1588,7 +1588,7 @@
         },
         {
           "id": 13345,
-          "slug": "15-166-equals",
+          "slug": "equals",
           "title": "166 equals",
           "order": 1115,
           "videoUrl": "https://www.youtube.com/watch?v=fyutd0y968Y",
@@ -1597,7 +1597,7 @@
         },
         {
           "id": 13346,
-          "slug": "16-167-equals-string",
+          "slug": "equals-string",
           "title": "167 equals String",
           "order": 1116,
           "videoUrl": "https://www.youtube.com/watch?v=F1RKY09Pads",
@@ -1606,7 +1606,7 @@
         },
         {
           "id": 13347,
-          "slug": "17-168-object-vs-string",
+          "slug": "object-vs-string",
           "title": "168 Object vs String",
           "order": 1117,
           "videoUrl": "https://www.youtube.com/watch?v=Txt7ppgTLWU",
@@ -1615,7 +1615,7 @@
         },
         {
           "id": 13348,
-          "slug": "18-169-equals",
+          "slug": "equals-2",
           "title": "169 equals გადაწერა",
           "order": 1118,
           "videoUrl": "https://www.youtube.com/watch?v=0CpyHAKwKk0",
@@ -1624,7 +1624,7 @@
         },
         {
           "id": 13349,
-          "slug": "19-170-equals-edit",
+          "slug": "equals-edit",
           "title": "170 equals Edit",
           "order": 1119,
           "videoUrl": "https://www.youtube.com/watch?v=Ij903qxISko",
@@ -1633,7 +1633,7 @@
         },
         {
           "id": 13350,
-          "slug": "20-171-instanceof",
+          "slug": "instanceof",
           "title": "171 instanceof",
           "order": 1120,
           "videoUrl": "https://www.youtube.com/watch?v=Dc93uRHpM3A",
@@ -1642,7 +1642,7 @@
         },
         {
           "id": 13351,
-          "slug": "21-172-equals-implemented",
+          "slug": "equals-implemented",
           "title": "172 equals implemented",
           "order": 1121,
           "videoUrl": "https://www.youtube.com/watch?v=3yuaDE-6zHs",
@@ -1651,7 +1651,7 @@
         },
         {
           "id": 13352,
-          "slug": "22-173-equals-explained",
+          "slug": "equals-explained",
           "title": "173 equals explained",
           "order": 1122,
           "videoUrl": "https://www.youtube.com/watch?v=U-ofegC2gxw",
@@ -1660,7 +1660,7 @@
         },
         {
           "id": 13353,
-          "slug": "23-174-other-class-equals",
+          "slug": "other-class-equals",
           "title": "174 other class equals",
           "order": 1123,
           "videoUrl": "https://www.youtube.com/watch?v=Mgv4ClXeMHI",
@@ -1669,7 +1669,7 @@
         },
         {
           "id": 13354,
-          "slug": "24-175-equals-in-lists",
+          "slug": "equals-in-lists",
           "title": "175 equals in lists",
           "order": 1124,
           "videoUrl": "https://www.youtube.com/watch?v=NV2TeBqooww",
@@ -1678,7 +1678,7 @@
         },
         {
           "id": 13355,
-          "slug": "25-176-our-equals-in-our-equals",
+          "slug": "our-equals-in-our-equals",
           "title": "176 our equals in our equals",
           "order": 1125,
           "videoUrl": "https://www.youtube.com/watch?v=LQSkJ-s5b4U",
@@ -1687,7 +1687,7 @@
         },
         {
           "id": 13356,
-          "slug": "26-177-equals",
+          "slug": "equals-3",
           "title": "177 equals!",
           "order": 1126,
           "videoUrl": "https://www.youtube.com/watch?v=zVv1eA_sBsw",
@@ -1698,13 +1698,13 @@
     },
     {
       "id": 13374,
-      "slug": "12-object",
+      "slug": "inheritance",
       "title": "Object",
       "order": 12,
       "lessons": [
         {
           "id": 13375,
-          "slug": "01-178-extension-object",
+          "slug": "extension-object",
           "title": "178 extension Object",
           "order": 1201,
           "videoUrl": "https://www.youtube.com/watch?v=ZQgrYcMuF_0",
@@ -1713,7 +1713,7 @@
         },
         {
           "id": 13376,
-          "slug": "02-179-extends",
+          "slug": "extends",
           "title": "179 extends",
           "order": 1202,
           "videoUrl": "https://www.youtube.com/watch?v=za6Lvt49QNw",
@@ -1722,7 +1722,7 @@
         },
         {
           "id": 13377,
-          "slug": "03-180-parameters-first",
+          "slug": "parameters-first",
           "title": "180 parameters first",
           "order": 1203,
           "videoUrl": "https://www.youtube.com/watch?v=_JAonypkMq8",
@@ -1731,7 +1731,7 @@
         },
         {
           "id": 13378,
-          "slug": "04-181-private",
+          "slug": "private",
           "title": "181 private",
           "order": 1204,
           "videoUrl": "https://www.youtube.com/watch?v=GR2_KQUqKlY",
@@ -1740,7 +1740,7 @@
         },
         {
           "id": 13379,
-          "slug": "05-182-super-1",
+          "slug": "super-1",
           "title": "182 super 1",
           "order": 1205,
           "videoUrl": "https://www.youtube.com/watch?v=a3ZzHcsEUYk",
@@ -1749,7 +1749,7 @@
         },
         {
           "id": 13380,
-          "slug": "06-183-public-edit",
+          "slug": "public-edit",
           "title": "183 public Edit",
           "order": 1206,
           "videoUrl": "https://www.youtube.com/watch?v=09VUmkVMQeU",
@@ -1758,7 +1758,7 @@
         },
         {
           "id": 13381,
-          "slug": "07-184-public",
+          "slug": "public",
           "title": "184 public)",
           "order": 1207,
           "videoUrl": "https://www.youtube.com/watch?v=lCAvoj3O1vM",
@@ -1767,7 +1767,7 @@
         },
         {
           "id": 13382,
-          "slug": "08-185-protected",
+          "slug": "protected",
           "title": "185 protected",
           "order": 1208,
           "videoUrl": "https://www.youtube.com/watch?v=mHhaxtzcAzg",
@@ -1776,7 +1776,7 @@
         },
         {
           "id": 13383,
-          "slug": "09-186-same-method",
+          "slug": "same-method",
           "title": "186 same method",
           "order": 1209,
           "videoUrl": "https://www.youtube.com/watch?v=V7VvgXp5rpo",
@@ -1785,7 +1785,7 @@
         },
         {
           "id": 13384,
-          "slug": "10-187-inheritance",
+          "slug": "inheritance",
           "title": "187 inheritance",
           "order": 1210,
           "videoUrl": "https://www.youtube.com/watch?v=HW5LeLUI_cM",
@@ -1794,7 +1794,7 @@
         },
         {
           "id": 13385,
-          "slug": "11-188",
+          "slug": "overriding-methods",
           "title": "188",
           "order": 1211,
           "videoUrl": "https://www.youtube.com/watch?v=yJ0T1XhX6Jo",
@@ -1803,7 +1803,7 @@
         },
         {
           "id": 13386,
-          "slug": "12-189-methods-are-in-objects",
+          "slug": "methods-are-in-objects",
           "title": "189 methods are in objects",
           "order": 1212,
           "videoUrl": "https://www.youtube.com/watch?v=z8gG3fhY7sM",
@@ -1814,13 +1814,13 @@
     },
     {
       "id": 13388,
-      "slug": "13-abstraction",
+      "slug": "abstraction",
       "title": "Abstraction",
       "order": 13,
       "lessons": [
         {
           "id": 13389,
-          "slug": "01-190-abstract-class",
+          "slug": "abstract-class",
           "title": "190 Abstract class",
           "order": 1301,
           "videoUrl": "https://www.youtube.com/watch?v=jLMCLn9zSkU",
@@ -1829,7 +1829,7 @@
         },
         {
           "id": 13390,
-          "slug": "02-191-object-from-abstract",
+          "slug": "object-from-abstract",
           "title": "191 object from abstract",
           "order": 1302,
           "videoUrl": "https://www.youtube.com/watch?v=yqeEFAxkbOI",
@@ -1838,7 +1838,7 @@
         },
         {
           "id": 13391,
-          "slug": "03-192-real-class-from-abstract",
+          "slug": "real-class-from-abstract",
           "title": "192 real class from abstract",
           "order": 1303,
           "videoUrl": "https://www.youtube.com/watch?v=m2qXALI1rjY",
@@ -1847,7 +1847,7 @@
         },
         {
           "id": 13392,
-          "slug": "04-193-abstract-to-abstract",
+          "slug": "abstract-to-abstract",
           "title": "193 abstract to abstract",
           "order": 1304,
           "videoUrl": "https://www.youtube.com/watch?v=ABu1bUXtAto",
@@ -1858,13 +1858,13 @@
     },
     {
       "id": 13394,
-      "slug": "14-inheritance",
+      "slug": "interfaces",
       "title": "Inheritance",
       "order": 14,
       "lessons": [
         {
           "id": 13395,
-          "slug": "01-194-interfaces",
+          "slug": "interfaces",
           "title": "194 interfaces",
           "order": 1401,
           "videoUrl": "https://www.youtube.com/watch?v=dgq71GhKzfY",
@@ -1873,7 +1873,7 @@
         },
         {
           "id": 13396,
-          "slug": "02-195-implementing-interfaces",
+          "slug": "implementing-interfaces",
           "title": "195 implementing interfaces",
           "order": 1402,
           "videoUrl": "https://www.youtube.com/watch?v=gcaHCN5JC4E",
@@ -1882,7 +1882,7 @@
         },
         {
           "id": 13397,
-          "slug": "03-196-other-incompatible-obj",
+          "slug": "other-incompatible-obj",
           "title": "196 other incompatible obj",
           "order": 1403,
           "videoUrl": "https://www.youtube.com/watch?v=q4RomBZQv4g",
@@ -1891,7 +1891,7 @@
         },
         {
           "id": 13398,
-          "slug": "04-197-variables-and-interfaces",
+          "slug": "variables-and-interfaces",
           "title": "197 variables and interfaces",
           "order": 1404,
           "videoUrl": "https://www.youtube.com/watch?v=eu82az4JuL0",
@@ -1900,7 +1900,7 @@
         },
         {
           "id": 13399,
-          "slug": "05-198-two-objects-one-interface",
+          "slug": "two-objects-one-interface",
           "title": "198 two objects one interface",
           "order": 1405,
           "videoUrl": "https://www.youtube.com/watch?v=VS9y2_SBzmw",
@@ -1909,7 +1909,7 @@
         },
         {
           "id": 13400,
-          "slug": "06-199-interface-implements-extends",
+          "slug": "interface-implements-extends",
           "title": "199 interface implements extends",
           "order": 1406,
           "videoUrl": "https://www.youtube.com/watch?v=ac9Urw4MN9c",
@@ -1920,13 +1920,13 @@
     },
     {
       "id": 13481,
-      "slug": "15-wip",
+      "slug": "collections-interfaces",
       "title": "WIP",
       "order": 15,
       "lessons": [
         {
           "id": 13482,
-          "slug": "01-200",
+          "slug": "constructor-in-interface",
           "title": "200 კონსტრუქტორი ინტერფეისში",
           "order": 1501,
           "videoUrl": "https://youtu.be/cm8LI6n8szM",
@@ -1935,7 +1935,7 @@
         },
         {
           "id": 13483,
-          "slug": "02-201-structure-with-interfaces",
+          "slug": "structure-with-interfaces",
           "title": "201 structure with interfaces",
           "order": 1502,
           "videoUrl": "https://youtu.be/_4run028fR8",
@@ -1944,7 +1944,7 @@
         },
         {
           "id": 13484,
-          "slug": "03-202",
+          "slug": "implementing-interfaces",
           "title": "202 ინტერფეისების იმპლიმენტაცია",
           "order": 1503,
           "videoUrl": "https://youtu.be/TNRWcOwPbIE",
@@ -1953,7 +1953,7 @@
         },
         {
           "id": 13485,
-          "slug": "04-203-static-in-interface",
+          "slug": "static-in-interface",
           "title": "203 static in interface",
           "order": 1504,
           "videoUrl": "https://youtu.be/Md8PtqGU22g",
@@ -1962,7 +1962,7 @@
         },
         {
           "id": 13486,
-          "slug": "05-204-default",
+          "slug": "default",
           "title": "204 default მეთოდები",
           "order": 1505,
           "videoUrl": "https://youtu.be/YtXky3dsjtk",
@@ -1971,7 +1971,7 @@
         },
         {
           "id": 13487,
-          "slug": "06-205-list",
+          "slug": "list",
           "title": "205 List",
           "order": 1506,
           "videoUrl": "https://youtu.be/1y8qD58IvvM",
@@ -1980,7 +1980,7 @@
         },
         {
           "id": 13488,
-          "slug": "07-206-map-interface",
+          "slug": "map-interface",
           "title": "206 Map interface",
           "order": 1507,
           "videoUrl": "https://youtu.be/DA_ecPieexk",
@@ -1989,7 +1989,7 @@
         },
         {
           "id": 13489,
-          "slug": "08-207-set",
+          "slug": "set",
           "title": "207 set",
           "order": 1508,
           "videoUrl": "https://youtu.be/X26eZ2VsgSc",
@@ -1998,7 +1998,7 @@
         },
         {
           "id": 13490,
-          "slug": "09-208-collections",
+          "slug": "collections",
           "title": "208 collections კოლექციები",
           "order": 1509,
           "videoUrl": "https://youtu.be/WOnUOrpNSCQ",
@@ -2007,7 +2007,7 @@
         },
         {
           "id": 13491,
-          "slug": "10-209-interfaces",
+          "slug": "interfaces",
           "title": "209 interfaces კიდევ ერთხელ",
           "order": 1510,
           "videoUrl": "https://youtu.be/lVZFQUtGWcM",
@@ -2016,7 +2016,7 @@
         },
         {
           "id": 13492,
-          "slug": "11-210-abstraction-encapsulation-inheritance-polymorph",
+          "slug": "abstraction-encapsulation-inheritance-polymorph",
           "title": "210 abstraction encapsulation inheritance polymorph თავიდან",
           "order": 1511,
           "videoUrl": "https://youtu.be/98qXaNPpjm0",
@@ -2027,13 +2027,13 @@
     },
     {
       "id": 13521,
-      "slug": "16-streams",
+      "slug": "streams",
       "title": "streams ნაკადები",
       "order": 16,
       "lessons": [
         {
           "id": 13523,
-          "slug": "01-211-streams",
+          "slug": "streams",
           "title": "211 streams ნაკადი?",
           "order": 1601,
           "videoUrl": "https://youtu.be/ELz2SmVQh8s",
@@ -2042,7 +2042,7 @@
         },
         {
           "id": 13524,
-          "slug": "02-212-streams",
+          "slug": "streams-2",
           "title": "212 streams პირველი შედეგი",
           "order": 1602,
           "videoUrl": "https://youtu.be/gKvuyNvNCS8",
@@ -2051,7 +2051,7 @@
         },
         {
           "id": 13525,
-          "slug": "03-213-stream",
+          "slug": "stream",
           "title": "213 stream ახსნა",
           "order": 1603,
           "videoUrl": "https://youtu.be/ezXsLC5GpZc",
@@ -2060,7 +2060,7 @@
         },
         {
           "id": 13526,
-          "slug": "04-214-streams-lamda",
+          "slug": "streams-lamda",
           "title": "214 streams lamda",
           "order": 1604,
           "videoUrl": "https://youtu.be/qGjfAgPpXNA",
@@ -2069,7 +2069,7 @@
         },
         {
           "id": 13527,
-          "slug": "05-215-stream",
+          "slug": "stream-2",
           "title": "215 stream რა არის მიღმა?",
           "order": 1605,
           "videoUrl": "https://youtu.be/qGuc7pxDbkI",
@@ -2078,7 +2078,7 @@
         },
         {
           "id": 13528,
-          "slug": "06-216-streams-objects",
+          "slug": "streams-objects",
           "title": "216 streams objects",
           "order": 1606,
           "videoUrl": "https://youtu.be/zxVoYnIRkpE",
@@ -2087,7 +2087,7 @@
         },
         {
           "id": 13529,
-          "slug": "07-217-terminals",
+          "slug": "terminals",
           "title": "217 terminals",
           "order": 1607,
           "videoUrl": "https://youtu.be/fOHtwgrSMqs",
@@ -2096,7 +2096,7 @@
         },
         {
           "id": 13530,
-          "slug": "08-218",
+          "slug": "stream-mystery",
           "title": "218 ?",
           "order": 1608,
           "videoUrl": "https://youtu.be/A_Cf1GVup1s",
@@ -2107,13 +2107,13 @@
     },
     {
       "id": 13531,
-      "slug": "17-files",
+      "slug": "files",
       "title": "Files ფაილები",
       "order": 17,
       "lessons": [
         {
           "id": 13532,
-          "slug": "01-219",
+          "slug": "read-files-create-objects",
           "title": "219 ფაილების წაკითხვა და ობიექტების შექმნა",
           "order": 1701,
           "videoUrl": "https://youtu.be/uyREzd1ND08",
@@ -2122,7 +2122,7 @@
         },
         {
           "id": 13533,
-          "slug": "02-220",
+          "slug": "read-real-songs",
           "title": "220 ფაილიდან კითხვა, ნამდვილი სიმღერები",
           "order": 1702,
           "videoUrl": "https://youtu.be/HszSJWFhmSk",
@@ -2131,7 +2131,7 @@
         },
         {
           "id": 13534,
-          "slug": "03-221-comparable",
+          "slug": "comparable",
           "title": "221 comparable",
           "order": 1703,
           "videoUrl": "https://youtu.be/zopbW7ZMq2g",
@@ -2140,7 +2140,7 @@
         },
         {
           "id": 13535,
-          "slug": "04-222-sort",
+          "slug": "sort",
           "title": "222 sort",
           "order": 1704,
           "videoUrl": "https://youtu.be/ojDgYs-VDaA",
@@ -2149,7 +2149,7 @@
         },
         {
           "id": 13536,
-          "slug": "05-223-lists-sorted",
+          "slug": "lists-sorted",
           "title": "223 lists sorted",
           "order": 1705,
           "videoUrl": "https://youtu.be/yl06mY3O2D0",
@@ -2158,7 +2158,7 @@
         },
         {
           "id": 13537,
-          "slug": "06-224-collections-sorted",
+          "slug": "collections-sorted",
           "title": "224 Collections sorted",
           "order": 1706,
           "videoUrl": "https://youtu.be/bWICfy0qWpg",
@@ -2167,7 +2167,7 @@
         },
         {
           "id": 13559,
-          "slug": "07-225-sort-text-sum",
+          "slug": "sort-text-sum",
           "title": "225 sort text sum",
           "order": 1707,
           "isPreview": false
@@ -2176,13 +2176,13 @@
     },
     {
       "id": 13563,
-      "slug": "18-regex",
+      "slug": "regex",
       "title": "REGEX",
       "order": 18,
       "lessons": [
         {
           "id": 13564,
-          "slug": "01-226-regex",
+          "slug": "regex",
           "title": "226 REGEX",
           "order": 1801,
           "videoUrl": "https://youtu.be/5YjDNF8Rfvo",
@@ -2191,7 +2191,7 @@
         },
         {
           "id": 13565,
-          "slug": "02-227-regex-with-defined-start",
+          "slug": "regex-with-defined-start",
           "title": "227 regex with defined start",
           "order": 1802,
           "videoUrl": "https://youtu.be/5NY2i2B_Su4",
@@ -2200,7 +2200,7 @@
         },
         {
           "id": 13566,
-          "slug": "03-228-regex-or",
+          "slug": "regex-or",
           "title": "228 regex or",
           "order": 1803,
           "videoUrl": "https://youtu.be/GI36h95DQIs",
@@ -2209,7 +2209,7 @@
         },
         {
           "id": 13567,
-          "slug": "04-229-regex-symbols",
+          "slug": "regex-symbols",
           "title": "229 regex symbols",
           "order": 1804,
           "videoUrl": "https://youtu.be/bKycWadCQ5Y",
@@ -2218,7 +2218,7 @@
         },
         {
           "id": 13568,
-          "slug": "05-230-regex-text",
+          "slug": "regex-text",
           "title": "230 regex text",
           "order": 1805,
           "videoUrl": "https://youtu.be/JuZSadrSxS4",
@@ -2227,7 +2227,7 @@
         },
         {
           "id": 13569,
-          "slug": "06-231-regex-mail",
+          "slug": "regex-mail",
           "title": "231 REGEX mail",
           "order": 1806,
           "videoUrl": "https://youtu.be/FbqyIkbtXqE",
@@ -2238,13 +2238,13 @@
     },
     {
       "id": 13572,
-      "slug": "19-exceptions",
+      "slug": "exceptions",
       "title": "Exceptions",
       "order": 19,
       "lessons": [
         {
           "id": 13573,
-          "slug": "01-232-exceptions-try-catch",
+          "slug": "exceptions-try-catch",
           "title": "232 Exceptions try catch",
           "order": 1901,
           "videoUrl": "https://youtu.be/scxSQtm5pXo",
@@ -2253,7 +2253,7 @@
         },
         {
           "id": 13574,
-          "slug": "02-233-throw",
+          "slug": "throw",
           "title": "233 throw",
           "order": 1902,
           "videoUrl": "https://youtu.be/YOvXKH33tzQ",
@@ -2262,7 +2262,7 @@
         },
         {
           "id": 13575,
-          "slug": "03-234-try-with-resources",
+          "slug": "try-with-resources",
           "title": "234 try with resources",
           "order": 1903,
           "videoUrl": "https://youtu.be/Cc5qF78E5Ck",
@@ -2271,7 +2271,7 @@
         },
         {
           "id": 13576,
-          "slug": "04-235-add-throws-to-signature",
+          "slug": "add-throws-to-signature",
           "title": "235 add throws to signature",
           "order": 1904,
           "videoUrl": "https://youtu.be/1cub_tBHvxI",
@@ -2280,7 +2280,7 @@
         },
         {
           "id": 13577,
-          "slug": "05-236-throws-exception",
+          "slug": "throws-exception",
           "title": "236 throws exception",
           "order": 1905,
           "videoUrl": "https://youtu.be/XTG81AiX7QY",
@@ -2289,7 +2289,7 @@
         },
         {
           "id": 13578,
-          "slug": "06-237-our-custom-exp",
+          "slug": "our-custom-exp",
           "title": "237 our custom exp",
           "order": 1906,
           "isPreview": false
@@ -2298,13 +2298,13 @@
     },
     {
       "id": 13580,
-      "slug": "20-file-create",
+      "slug": "file-create",
       "title": "file create",
       "order": 20,
       "lessons": [
         {
           "id": 13581,
-          "slug": "01-238-create-a-file",
+          "slug": "create-a-file",
           "title": "238 create a file",
           "order": 2001,
           "videoUrl": "https://youtu.be/tVllYCiV8Ks",
@@ -2313,7 +2313,7 @@
         },
         {
           "id": 13582,
-          "slug": "02-239-from-one-file-to-another",
+          "slug": "from-one-file-to-another",
           "title": "239 from one file to another",
           "order": 2002,
           "videoUrl": "https://youtu.be/kCf_UcuqAOQ",
@@ -2324,13 +2324,13 @@
     },
     {
       "id": 13627,
-      "slug": "21-reality",
+      "slug": "generics-javafx",
       "title": "Reality",
       "order": 21,
       "lessons": [
         {
           "id": 13628,
-          "slug": "01-240-interface-in-obj-p",
+          "slug": "interface-in-obj-p",
           "title": "240 interface in obj p",
           "order": 2101,
           "videoUrl": "https://youtu.be/Uk4Z78tmnYQ",
@@ -2339,7 +2339,7 @@
         },
         {
           "id": 13629,
-          "slug": "02-241-multiple-generics",
+          "slug": "multiple-generics",
           "title": "241 multiple generics",
           "order": 2102,
           "videoUrl": "https://youtu.be/fFpACgd8ibQ",
@@ -2348,7 +2348,7 @@
         },
         {
           "id": 13630,
-          "slug": "03-242-generics-in-return",
+          "slug": "generics-in-return",
           "title": "242 generics in return",
           "order": 2103,
           "videoUrl": "https://youtu.be/36NRGfYQNQk",
@@ -2357,7 +2357,7 @@
         },
         {
           "id": 13631,
-          "slug": "04-243-implement-generics-interface",
+          "slug": "implement-generics-interface",
           "title": "243 implement generics interface",
           "order": 2104,
           "videoUrl": "https://youtu.be/sOhfZjhdXXQ",
@@ -2366,7 +2366,7 @@
         },
         {
           "id": 13632,
-          "slug": "05-244-generics-as-names",
+          "slug": "generics-as-names",
           "title": "244 generics as names",
           "order": 2105,
           "videoUrl": "https://youtu.be/7pyPpfHuOAw",
@@ -2375,7 +2375,7 @@
         },
         {
           "id": 13633,
-          "slug": "06-245-random",
+          "slug": "random",
           "title": "245 random",
           "order": 2106,
           "videoUrl": "https://youtu.be/w4QFW53pJMs",
@@ -2384,7 +2384,7 @@
         },
         {
           "id": 13634,
-          "slug": "07-246-random-minus",
+          "slug": "random-minus",
           "title": "246 random minus",
           "order": 2107,
           "videoUrl": "https://youtu.be/9UZsVeAPdqs",
@@ -2393,7 +2393,7 @@
         },
         {
           "id": 13635,
-          "slug": "08-247-random-double",
+          "slug": "random-double",
           "title": "247 random double",
           "order": 2108,
           "videoUrl": "https://youtu.be/k9FuJwbv-os",
@@ -2402,7 +2402,7 @@
         },
         {
           "id": 13636,
-          "slug": "09-248-adding-javafx",
+          "slug": "adding-javafx",
           "title": "248 adding javafx",
           "order": 2109,
           "videoUrl": "https://youtu.be/YvPiq1VlbKM",
@@ -2411,7 +2411,7 @@
         },
         {
           "id": 13637,
-          "slug": "10-249-adding-javafx-to-app",
+          "slug": "adding-javafx-to-app",
           "title": "249 adding javafx to app",
           "order": 2110,
           "videoUrl": "https://youtu.be/ULg6aFUda3o",
@@ -2420,7 +2420,7 @@
         },
         {
           "id": 13638,
-          "slug": "11-250-adding-runtime",
+          "slug": "adding-runtime",
           "title": "250 adding runtime",
           "order": 2111,
           "videoUrl": "https://youtu.be/0VjwZvRRY48",
@@ -2429,7 +2429,7 @@
         },
         {
           "id": 13639,
-          "slug": "12-251-running-app",
+          "slug": "running-app",
           "title": "251 running app",
           "order": 2112,
           "videoUrl": "https://youtu.be/mI9NFTOA-x0",
@@ -2438,7 +2438,7 @@
         },
         {
           "id": 13640,
-          "slug": "13-252-adding-button",
+          "slug": "adding-button",
           "title": "252 adding button",
           "order": 2113,
           "videoUrl": "https://youtu.be/MeBVbzNPZo8",
@@ -2447,7 +2447,7 @@
         },
         {
           "id": 13641,
-          "slug": "14-253-adding-two-options-on-scene",
+          "slug": "adding-two-options-on-scene",
           "title": "253 adding two options on scene",
           "order": 2114,
           "videoUrl": "https://youtu.be/UCi-iP2ejwY",
@@ -2456,7 +2456,7 @@
         },
         {
           "id": 13642,
-          "slug": "15-254-what-is-flowpane",
+          "slug": "what-is-flowpane",
           "title": "254 what is flowpane",
           "order": 2115,
           "videoUrl": "https://youtu.be/iWA2ncoi4Lo",
@@ -2465,7 +2465,7 @@
         },
         {
           "id": 13643,
-          "slug": "16-255-borderpane",
+          "slug": "borderpane",
           "title": "255 borderpane",
           "order": 2116,
           "videoUrl": "https://youtu.be/-lKt1KWgIBk",
@@ -2474,7 +2474,7 @@
         },
         {
           "id": 13644,
-          "slug": "17-256-text-area",
+          "slug": "text-area",
           "title": "256 text area",
           "order": 2117,
           "videoUrl": "https://youtu.be/fPbRDqHXEAw",
@@ -2483,7 +2483,7 @@
         },
         {
           "id": 13790,
-          "slug": "18-257-borderpane-with-boxes",
+          "slug": "borderpane-with-boxes",
           "title": "257 borderpane with boxes",
           "order": 2118,
           "videoUrl": "https://youtu.be/AlkQLGue9tE",
@@ -2492,7 +2492,7 @@
         },
         {
           "id": 13791,
-          "slug": "19-258-set-on-action",
+          "slug": "set-on-action",
           "title": "258 set on action",
           "order": 2119,
           "videoUrl": "https://youtu.be/rOIVJWbKbeg",
@@ -2501,7 +2501,7 @@
         },
         {
           "id": 13792,
-          "slug": "20-259-button-lambda",
+          "slug": "button-lambda",
           "title": "259 button lambda",
           "order": 2120,
           "videoUrl": "https://youtu.be/bXm_qWhS73w",
@@ -2510,7 +2510,7 @@
         },
         {
           "id": 13793,
-          "slug": "21-260-copying-text",
+          "slug": "copying-text",
           "title": "260 copying text",
           "order": 2121,
           "videoUrl": "https://www.youtube.com/watch?v=vsp877APNEc",
@@ -2519,7 +2519,7 @@
         },
         {
           "id": 13794,
-          "slug": "22-261-listener",
+          "slug": "listener",
           "title": "261 listener",
           "order": 2122,
           "videoUrl": "https://youtu.be/QL4UJjoh8QQ",
@@ -2528,7 +2528,7 @@
         },
         {
           "id": 13795,
-          "slug": "23-262-from-a-different-class",
+          "slug": "from-a-different-class",
           "title": "262 from a different class",
           "order": 2123,
           "videoUrl": "https://youtu.be/noRKvRWub30",
@@ -2537,7 +2537,7 @@
         },
         {
           "id": 13796,
-          "slug": "24-263-different-class-with-params",
+          "slug": "different-class-with-params",
           "title": "263 different class with params",
           "order": 2124,
           "videoUrl": "https://youtu.be/RcYxqjmMvc4",
@@ -2546,7 +2546,7 @@
         },
         {
           "id": 13797,
-          "slug": "25-264-two-screens",
+          "slug": "two-screens",
           "title": "264 two screens",
           "order": 2125,
           "videoUrl": "https://youtu.be/OfWCWhzk8xw",
@@ -2555,7 +2555,7 @@
         },
         {
           "id": 13798,
-          "slug": "26-265-password-you-entered",
+          "slug": "password-you-entered",
           "title": "265 password you entered",
           "order": 2126,
           "videoUrl": "https://youtu.be/94eJ1wbajA4",
@@ -2564,7 +2564,7 @@
         },
         {
           "id": 13799,
-          "slug": "27-266-splitting-views",
+          "slug": "splitting-views",
           "title": "266 splitting views",
           "order": 2127,
           "videoUrl": "https://youtu.be/nnfPUtozmH8",

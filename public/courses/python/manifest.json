@@ -8,13 +8,13 @@
   "topics": [
     {
       "id": 10982,
-      "slug": "01-topic",
+      "slug": "introduction",
       "title": "შესავალი და კურსის შესახებ",
       "order": 1,
       "lessons": [
         {
           "id": 10983,
-          "slug": "02-lesson",
+          "slug": "welcome",
           "title": "მისალმება",
           "order": 101,
           "videoUrl": "https://youtu.be/8AdxMhkEjGM",
@@ -23,7 +23,7 @@
         },
         {
           "id": 11360,
-          "slug": "03-lesson",
+          "slug": "course-overview",
           "title": "რას ისწავლი ამ კურსზე?",
           "order": 103,
           "videoUrl": "https://youtu.be/KHNW1un769c",
@@ -32,7 +32,7 @@
         },
         {
           "id": 11376,
-          "slug": "04-bitcamp",
+          "slug": "bitcamp-certificates",
           "title": "BitCamp - ის სერტიფიკატების შესახებ",
           "order": 104,
           "videoUrl": "https://youtu.be/jFqv9FLAQiw",
@@ -41,7 +41,7 @@
         },
         {
           "id": 11378,
-          "slug": "05-harvard",
+          "slug": "harvard-certificate",
           "title": "Harvard - ის სერტიფიკატი",
           "order": 105,
           "videoUrl": "https://youtu.be/36rvn1g0bFE",
@@ -52,13 +52,13 @@
     },
     {
       "id": 11361,
-      "slug": "02-topic",
+      "slug": "tools",
       "title": "აუცილებელი ხელსაწყოები",
       "order": 2,
       "lessons": [
         {
           "id": 11362,
-          "slug": "01-github",
+          "slug": "github-account",
           "title": "Github - ის ანგარიშის შექმნა",
           "order": 201,
           "videoUrl": "https://youtu.be/4Isnp-omQMA",
@@ -67,7 +67,7 @@
         },
         {
           "id": 11380,
-          "slug": "02-cs50dev",
+          "slug": "cs50dev-account",
           "title": "CS50.DEV ანგარიშის შექმნა",
           "order": 202,
           "videoUrl": "https://youtu.be/S_O7rbAN92M",
@@ -76,7 +76,7 @@
         },
         {
           "id": 11381,
-          "slug": "03-lesson",
+          "slug": "code-editors",
           "title": "რა არის კოდის ედიტორი?",
           "order": 203,
           "videoUrl": "https://youtu.be/TxhSwWIN4Pg",
@@ -85,7 +85,7 @@
         },
         {
           "id": 11382,
-          "slug": "04-vs-code",
+          "slug": "vs-code-structure",
           "title": "VS Code - სტრუქტურა",
           "order": 204,
           "videoUrl": "https://youtu.be/IIGRS26iCzw",
@@ -96,13 +96,13 @@
     },
     {
       "id": 11383,
-      "slug": "03-topic",
+      "slug": "first-program",
       "title": "დაწერე შენი პირველი პროგრამა",
       "order": 3,
       "lessons": [
         {
           "id": 11384,
-          "slug": "01-hello-world",
+          "slug": "hello-world",
           "title": "ჩემი პირველი პროგრამა | Hello World!",
           "order": 301,
           "videoUrl": "https://youtu.be/sszcwgmQeyU",
@@ -111,7 +111,7 @@
         },
         {
           "id": 11385,
-          "slug": "02-lesson",
+          "slug": "functions-and-arguments",
           "title": "ფუნქცია და არგუმენტი",
           "order": 302,
           "videoUrl": "https://youtu.be/Xl17qkp7aZM",
@@ -120,7 +120,7 @@
         },
         {
           "id": 11386,
-          "slug": "03-bugs",
+          "slug": "bugs",
           "title": "შეცდომები - BUGS",
           "order": 303,
           "videoUrl": "https://youtu.be/L8HlANPmzbw",
@@ -131,13 +131,13 @@
     },
     {
       "id": 11387,
-      "slug": "04-variables",
+      "slug": "variables",
       "title": "ცვლადები | Variables",
       "order": 4,
       "lessons": [
         {
           "id": 11388,
-          "slug": "01-lesson",
+          "slug": "return-values-and-variables",
           "title": "დაბრუნებული მნიშვნელობა და ცვლადი",
           "order": 401,
           "videoUrl": "https://youtu.be/yM9VAG1BZ0I",
@@ -146,7 +146,7 @@
         },
         {
           "id": 11389,
-          "slug": "02-lesson",
+          "slug": "concatenation",
           "title": "კონკატენაცია",
           "order": 402,
           "videoUrl": "https://youtu.be/w1aZYQX2DHk",
@@ -157,13 +157,13 @@
     },
     {
       "id": 11390,
-      "slug": "05-topic",
+      "slug": "comments-pseudocode",
       "title": "კომენტარები და ფსევდო კოდი",
       "order": 5,
       "lessons": [
         {
           "id": 11391,
-          "slug": "01-lesson",
+          "slug": "comments",
           "title": "კომენტარები",
           "order": 501,
           "videoUrl": "https://youtu.be/VxOstdDCJh8",
@@ -172,7 +172,7 @@
         },
         {
           "id": 11392,
-          "slug": "02-lesson",
+          "slug": "pseudocode",
           "title": "ფსევდოკოდი",
           "order": 502,
           "videoUrl": "https://youtu.be/DjdBvNGKlTI",
@@ -183,13 +183,13 @@
     },
     {
       "id": 11393,
-      "slug": "06-topic",
+      "slug": "function-arguments",
       "title": "ფუნქციის არგუმენტები",
       "order": 6,
       "lessons": [
         {
           "id": 11394,
-          "slug": "01-lesson",
+          "slug": "multiple-arguments",
           "title": "ფუნცქია მრავალი არგუმენტით",
           "order": 601,
           "videoUrl": "https://youtu.be/pGZtNQ_WYoM",
@@ -198,7 +198,7 @@
         },
         {
           "id": 11395,
-          "slug": "02-lesson",
+          "slug": "named-arguments",
           "title": "დასახელებული არგუმენტები",
           "order": 602,
           "videoUrl": "https://youtu.be/y6ThrMO_uIQ",
@@ -209,13 +209,13 @@
     },
     {
       "id": 11396,
-      "slug": "07-string",
+      "slug": "strings",
       "title": "String | ტექსტი",
       "order": 7,
       "lessons": [
         {
           "id": 11397,
-          "slug": "01-string",
+          "slug": "formatted-string",
           "title": "ფორმატირებული String",
           "order": 701,
           "videoUrl": "https://youtu.be/9naF5KxxDjU",
@@ -224,7 +224,7 @@
         },
         {
           "id": 11398,
-          "slug": "02-striing",
+          "slug": "string-methods",
           "title": "Striing - ის მეთოდები",
           "order": 702,
           "videoUrl": "https://youtu.be/ajSwc7dw7J4",
@@ -233,7 +233,7 @@
         },
         {
           "id": 11399,
-          "slug": "03-lesson",
+          "slug": "method-chaining",
           "title": "მეთოდების გამოყენების სტილი",
           "order": 703,
           "videoUrl": "https://youtu.be/xkRaOkWacBg",
@@ -242,7 +242,7 @@
         },
         {
           "id": 11400,
-          "slug": "04-lesson",
+          "slug": "string-splitting",
           "title": "ტექსტის გახლეჩვა",
           "order": 704,
           "videoUrl": "https://youtu.be/fnaFbHhtK3w",
@@ -253,13 +253,13 @@
     },
     {
       "id": 11401,
-      "slug": "08-topic",
+      "slug": "numbers-operators",
       "title": "რიცხვები და ოპერატორები",
       "order": 8,
       "lessons": [
         {
           "id": 11402,
-          "slug": "01-lesson",
+          "slug": "math-operators",
           "title": "მათემატიკური ოპერატორები",
           "order": 801,
           "videoUrl": "https://youtu.be/y-Jw1SdESBY",
@@ -268,7 +268,7 @@
         },
         {
           "id": 11403,
-          "slug": "02-lesson",
+          "slug": "interactive-mode",
           "title": "ინტერაქტიული რეჟიმი",
           "order": 802,
           "videoUrl": "https://youtu.be/uVQ-aIoCHeQ",
@@ -277,7 +277,7 @@
         },
         {
           "id": 11404,
-          "slug": "03-lesson",
+          "slug": "addition",
           "title": "შეკრება",
           "order": 803,
           "videoUrl": "https://youtu.be/iqXZdTsnGyw",
@@ -286,7 +286,7 @@
         },
         {
           "id": 11405,
-          "slug": "04-lesson",
+          "slug": "type-conversion",
           "title": "ტიპის კონვერტაცია",
           "order": 804,
           "videoUrl": "https://youtu.be/SE4SdK6RQA4",
@@ -295,7 +295,7 @@
         },
         {
           "id": 11406,
-          "slug": "05-lesson",
+          "slug": "floats",
           "title": "წილადები",
           "order": 805,
           "videoUrl": "https://youtu.be/A-R6sHyesy4",
@@ -304,7 +304,7 @@
         },
         {
           "id": 11407,
-          "slug": "06-lesson",
+          "slug": "rounding",
           "title": "დამრგვალება",
           "order": 806,
           "videoUrl": "https://youtu.be/LaYXJXE-Tj4",
@@ -313,7 +313,7 @@
         },
         {
           "id": 11408,
-          "slug": "07-lesson",
+          "slug": "number-formatting",
           "title": "რიცხვების ფორმატირება",
           "order": 807,
           "videoUrl": "https://youtu.be/PMDhN9f2xYU",
@@ -322,7 +322,7 @@
         },
         {
           "id": 11409,
-          "slug": "08-lesson",
+          "slug": "division-formatting-rounding",
           "title": "გაყოფა, ფორმატირებული სტრინგი და დამრგვალება",
           "order": 808,
           "videoUrl": "https://youtu.be/JWU_wANmTnI",
@@ -333,13 +333,13 @@
     },
     {
       "id": 11410,
-      "slug": "09-advanced",
+      "slug": "advanced-functions",
       "title": "ფინქციები (advanced)",
       "order": 9,
       "lessons": [
         {
           "id": 11411,
-          "slug": "01-lesson",
+          "slug": "create-functions",
           "title": "საკუთარი ფუნქციების შექმნა",
           "order": 901,
           "videoUrl": "https://youtu.be/zyiWswjTBcs",
@@ -348,7 +348,7 @@
         },
         {
           "id": 11412,
-          "slug": "02-lesson",
+          "slug": "default-parameters",
           "title": "ფუნქციის ნაგულისხმევი პარამეტრები",
           "order": 902,
           "videoUrl": "https://youtu.be/3jtG5yj9Zl8",
@@ -357,7 +357,7 @@
         },
         {
           "id": 11413,
-          "slug": "03-lesson",
+          "slug": "refactoring-functions",
           "title": "ფუნქციების რეორგანიზება",
           "order": 903,
           "videoUrl": "https://youtu.be/l54KKqXjNqg",
@@ -368,20 +368,20 @@
     },
     {
       "id": 24596,
-      "slug": "10-topic",
+      "slug": "learning-tips",
       "title": "თუ დავალებების გაკეთება გაგიჭირდა",
       "order": 10,
       "lessons": [
         {
           "id": 24598,
-          "slug": "01-lesson",
+          "slug": "learn-how-to-learn",
           "title": "\"ისწავლე როგორ ისწავლო\" - გაიარე ტრენინგი",
           "order": 1001,
           "isPreview": false
         },
         {
           "id": 24597,
-          "slug": "02-lesson",
+          "slug": "hire-a-mentor",
           "title": "აიყვანე პირადი მენტორი",
           "order": 1002,
           "isPreview": false
@@ -390,48 +390,48 @@
     },
     {
       "id": 11414,
-      "slug": "11-0",
+      "slug": "problem-set-0",
       "title": "დავალებები 0",
       "order": 11,
       "lessons": [
         {
           "id": 11416,
-          "slug": "01-lesson",
+          "slug": "instructions",
           "title": "დავალებების შესრულების ინსტრუქცია",
           "order": 1101,
           "isPreview": false
         },
         {
           "id": 11418,
-          "slug": "02-01-indoor-voice",
+          "slug": "indoor-voice",
           "title": "დავალება 0.1 - შინაგანი ხმა - Indoor Voice",
           "order": 1102,
           "isPreview": false
         },
         {
           "id": 11509,
-          "slug": "03-02-playback-speed",
+          "slug": "playback-speed",
           "title": "დავალება 0.2 საუბრის სიჩქარე - Playback Speed",
           "order": 1103,
           "isPreview": false
         },
         {
           "id": 11510,
-          "slug": "04-03-making-faces",
+          "slug": "making-faces",
           "title": "დავალება 0.3 ცვალებადი სახეები - Making Faces",
           "order": 1104,
           "isPreview": false
         },
         {
           "id": 11511,
-          "slug": "05-04-einstein",
+          "slug": "einstein",
           "title": "დავალება 0.4 აინშტაინი - Einstein",
           "order": 1105,
           "isPreview": false
         },
         {
           "id": 11512,
-          "slug": "06-05-tip-calculator",
+          "slug": "tip-calculator",
           "title": "დავალება 0.5 \"თიფის\" კალკულატორი - Tip Calculator",
           "order": 1106,
           "isPreview": false
@@ -440,13 +440,13 @@
     },
     {
       "id": 11513,
-      "slug": "12-conditionals",
+      "slug": "conditionals",
       "title": "პირობითი კონსტრუქციები | Conditionals",
       "order": 12,
       "lessons": [
         {
           "id": 11514,
-          "slug": "01-lesson",
+          "slug": "comparison-operators",
           "title": "შედარების ოპერატორები",
           "order": 1201,
           "videoUrl": "https://youtu.be/EiIhC4qS17g",
@@ -455,7 +455,7 @@
         },
         {
           "id": 11515,
-          "slug": "02-if",
+          "slug": "if-block",
           "title": "IF ბლოკი",
           "order": 1202,
           "videoUrl": "https://youtu.be/0MZUft8AbIA",
@@ -464,7 +464,7 @@
         },
         {
           "id": 11516,
-          "slug": "03-lesson",
+          "slug": "multiple-conditions",
           "title": "მრავალი პირობის დაკმაყოფილება",
           "order": 1203,
           "videoUrl": "https://youtu.be/aqgY8oFgLYY",
@@ -473,7 +473,7 @@
         },
         {
           "id": 11517,
-          "slug": "04-lesson",
+          "slug": "conditions-flowchart",
           "title": "მრავალი პირობის გრაფიკული რეპრეზენტაცია",
           "order": 1204,
           "videoUrl": "https://youtu.be/7bJZlw4wQOk",
@@ -482,7 +482,7 @@
         },
         {
           "id": 11518,
-          "slug": "05-elif",
+          "slug": "elif",
           "title": "elif",
           "order": 1205,
           "videoUrl": "https://youtu.be/Rj2XIWVS9BA",
@@ -491,7 +491,7 @@
         },
         {
           "id": 11519,
-          "slug": "06-elif",
+          "slug": "elif-flowchart",
           "title": "elif - ის გრაფიკული რეპრეზენტაცია",
           "order": 1206,
           "videoUrl": "https://youtu.be/OeQzipDBgtU",
@@ -500,7 +500,7 @@
         },
         {
           "id": 11520,
-          "slug": "07-else",
+          "slug": "else",
           "title": "else",
           "order": 1207,
           "videoUrl": "https://youtu.be/aTbeTLmxX8k",
@@ -509,7 +509,7 @@
         },
         {
           "id": 11521,
-          "slug": "08-or",
+          "slug": "or-operator",
           "title": "or - ლოგიკური \"ან\" ოპერატორი",
           "order": 1208,
           "videoUrl": "https://youtu.be/d91xiNeemQ0",
@@ -518,7 +518,7 @@
         },
         {
           "id": 11522,
-          "slug": "09-lesson",
+          "slug": "simple-equality",
           "title": "მარტივი ტოლობა",
           "order": 1209,
           "videoUrl": "https://youtu.be/pvfDaMY6RqI",
@@ -527,7 +527,7 @@
         },
         {
           "id": 11523,
-          "slug": "10-lesson",
+          "slug": "simple-inequality",
           "title": "მარტივი უტოლობა",
           "order": 1210,
           "videoUrl": "https://youtu.be/USWR34mY8Yg",
@@ -538,13 +538,13 @@
     },
     {
       "id": 11524,
-      "slug": "13-topic",
+      "slug": "mini-project",
       "title": "მინი პროექტი",
       "order": 13,
       "lessons": [
         {
           "id": 11525,
-          "slug": "01-grade",
+          "slug": "grade-system",
           "title": "შაფასების სისტემა | Grade",
           "order": 1301,
           "videoUrl": "https://youtu.be/TNJrVGse3KU",
@@ -553,7 +553,7 @@
         },
         {
           "id": 11526,
-          "slug": "02-lesson",
+          "slug": "simplify-grading",
           "title": "შეფასების სისტემის გამარტივება",
           "order": 1302,
           "videoUrl": "https://youtu.be/8WtRAjf8Xas",
@@ -564,13 +564,13 @@
     },
     {
       "id": 11527,
-      "slug": "14-topic",
+      "slug": "parity",
       "title": "ლუწ-კენტობა",
       "order": 14,
       "lessons": [
         {
           "id": 11528,
-          "slug": "01-lesson",
+          "slug": "check-parity",
           "title": "ლუწ-კენტობის დადგენა",
           "order": 1401,
           "videoUrl": "https://youtu.be/L3phstN9uV8",
@@ -579,7 +579,7 @@
         },
         {
           "id": 11529,
-          "slug": "02-is_even",
+          "slug": "is-even",
           "title": "is_even ფუნქციის შექმნა",
           "order": 1402,
           "videoUrl": "https://youtu.be/WItAYW3M4XQ",
@@ -588,7 +588,7 @@
         },
         {
           "id": 11530,
-          "slug": "03-is_even",
+          "slug": "improve-is-even",
           "title": "is_even ფუნქციის გაუმჯობესება",
           "order": 1403,
           "videoUrl": "https://youtu.be/umucFbwu7O8",
@@ -599,13 +599,13 @@
     },
     {
       "id": 11531,
-      "slug": "15-match",
+      "slug": "match-case",
       "title": "და თუ დაემთხვევა? | Match",
       "order": 15,
       "lessons": [
         {
           "id": 11532,
-          "slug": "01-match-case",
+          "slug": "match-case",
           "title": "Match / Case",
           "order": 1501,
           "videoUrl": "https://youtu.be/nQODJzaNOnc",
@@ -616,41 +616,41 @@
     },
     {
       "id": 11533,
-      "slug": "16-1",
+      "slug": "problem-set-1",
       "title": "დავალებები 1",
       "order": 16,
       "lessons": [
         {
           "id": 11534,
-          "slug": "01-11-deep-thought",
+          "slug": "deep-thought",
           "title": "დავალება 1.1 Deep Thought",
           "order": 1601,
           "isPreview": false
         },
         {
           "id": 11535,
-          "slug": "02-12-home-federal-savings-bank",
+          "slug": "home-federal-savings-bank",
           "title": "დავალება 1.2 Home Federal Savings Bank",
           "order": 1602,
           "isPreview": false
         },
         {
           "id": 11536,
-          "slug": "03-13-file-extensions",
+          "slug": "file-extensions",
           "title": "დავალება 1.3 File Extensions",
           "order": 1603,
           "isPreview": false
         },
         {
           "id": 11537,
-          "slug": "04-14-math-interpreter",
+          "slug": "math-interpreter",
           "title": "დავალება 1.4 Math Interpreter",
           "order": 1604,
           "isPreview": false
         },
         {
           "id": 11538,
-          "slug": "05-15-meal-time",
+          "slug": "meal-time",
           "title": "დავალება 1.5 Meal Time",
           "order": 1605,
           "isPreview": false
@@ -659,13 +659,13 @@
     },
     {
       "id": 11539,
-      "slug": "17-while",
+      "slug": "while-loop",
       "title": "While ციკლი",
       "order": 17,
       "lessons": [
         {
           "id": 11540,
-          "slug": "01-roar",
+          "slug": "roar",
           "title": "Roar - ღრიალი",
           "order": 1701,
           "videoUrl": "https://youtu.be/HO8ugC95MgE",
@@ -674,7 +674,7 @@
         },
         {
           "id": 11541,
-          "slug": "02-lesson",
+          "slug": "loops-intro",
           "title": "გამეორება / ციკლი",
           "order": 1702,
           "videoUrl": "https://youtu.be/53f1j8xJzk0",
@@ -683,7 +683,7 @@
         },
         {
           "id": 11542,
-          "slug": "03-while",
+          "slug": "while-implementation",
           "title": "While ციკლის იმპლემენტაცია",
           "order": 1703,
           "videoUrl": "https://youtu.be/q_4aX73RydE",
@@ -692,7 +692,7 @@
         },
         {
           "id": 11543,
-          "slug": "04-while",
+          "slug": "while-improvement",
           "title": "While ციკლი - გაუმჯობესება",
           "order": 1704,
           "videoUrl": "https://youtu.be/Ook3BIRfEVI",
@@ -701,7 +701,7 @@
         },
         {
           "id": 11544,
-          "slug": "05-lesson",
+          "slug": "increment-shorthand",
           "title": "ინკრემენტაციის მოკლე ჩანაწერი",
           "order": 1705,
           "videoUrl": "https://youtu.be/usuhhfEnHv4",
@@ -712,13 +712,13 @@
     },
     {
       "id": 11545,
-      "slug": "18-for",
+      "slug": "for-loop",
       "title": "For ციკლი",
       "order": 18,
       "lessons": [
         {
           "id": 11546,
-          "slug": "01-for",
+          "slug": "for-loop",
           "title": "For ციკლი",
           "order": 1801,
           "videoUrl": "https://youtu.be/1cc074UXx0E",
@@ -727,7 +727,7 @@
         },
         {
           "id": 11547,
-          "slug": "02-range",
+          "slug": "range",
           "title": "დიაპაზონი - range()",
           "order": 1802,
           "videoUrl": "https://youtu.be/pK0Wo54sScE",
@@ -736,7 +736,7 @@
         },
         {
           "id": 11548,
-          "slug": "03-for",
+          "slug": "unused-variable",
           "title": "for ციკლის გამოუყენებელი ცვლადი",
           "order": 1803,
           "videoUrl": "https://youtu.be/CeSneseU69s",
@@ -745,7 +745,7 @@
         },
         {
           "id": 11549,
-          "slug": "04-lesson",
+          "slug": "string-multiplication",
           "title": "სტრიქონის გამრავლება",
           "order": 1804,
           "videoUrl": "https://youtu.be/0BKLuip3LTU",
@@ -756,13 +756,13 @@
     },
     {
       "id": 11550,
-      "slug": "19-topic",
+      "slug": "validation",
       "title": "ვალიდაცია",
       "order": 19,
       "lessons": [
         {
           "id": 11551,
-          "slug": "01-if",
+          "slug": "nested-if-blocks",
           "title": "უსასრულოდ ჩალაგებული if ბლოკები",
           "order": 1901,
           "videoUrl": "https://youtu.be/uxTLjcLYY2E",
@@ -771,7 +771,7 @@
         },
         {
           "id": 11552,
-          "slug": "02-break-continue",
+          "slug": "break-continue",
           "title": "წყვეტა და გაგრძელება / break & continue",
           "order": 1902,
           "videoUrl": "https://youtu.be/TaTnUopFUA4",
@@ -780,7 +780,7 @@
         },
         {
           "id": 11553,
-          "slug": "03-lesson",
+          "slug": "improve-validation",
           "title": "ვალიდაციის კოდის გაუმჯობესება",
           "order": 1903,
           "videoUrl": "https://youtu.be/g-LzI68l6pg",
@@ -789,7 +789,7 @@
         },
         {
           "id": 11554,
-          "slug": "04-lesson",
+          "slug": "separation-of-concerns",
           "title": "პასუხისმგებლობების განაწილება",
           "order": 1904,
           "videoUrl": "https://youtu.be/a6_48pWidFE",
@@ -800,13 +800,13 @@
     },
     {
       "id": 11555,
-      "slug": "20-list",
+      "slug": "lists",
       "title": "სია / list",
       "order": 20,
       "lessons": [
         {
           "id": 11556,
-          "slug": "01-list",
+          "slug": "list-and-printing",
           "title": "სია / list და მისი ელემენტების გამობეჭდვა",
           "order": 2001,
           "videoUrl": "https://youtu.be/SIe72l33oSk",
@@ -815,7 +815,7 @@
         },
         {
           "id": 11557,
-          "slug": "02-list",
+          "slug": "list-elements-indexing",
           "title": "სიის / list ელემენტები და ინდექსაცია",
           "order": 2002,
           "videoUrl": "https://youtu.be/E6YElBnRnfk",
@@ -824,7 +824,7 @@
         },
         {
           "id": 11558,
-          "slug": "03-lesson",
+          "slug": "indexes-and-values",
           "title": "ინდექსებისა და მნიშნველობების ერთდროული გამოყენება",
           "order": 2003,
           "videoUrl": "https://youtu.be/kxZJfHiUYiM",
@@ -835,13 +835,13 @@
     },
     {
       "id": 11559,
-      "slug": "21-dict",
+      "slug": "dictionaries",
       "title": "ლექსიკონი / dict",
       "order": 21,
       "lessons": [
         {
           "id": 11560,
-          "slug": "01-dict",
+          "slug": "what-is-a-dict",
           "title": "\"ლექსიკონი\" / dict ზოგადი განმარტება",
           "order": 2101,
           "videoUrl": "https://youtu.be/73toX1Fze4I",
@@ -850,7 +850,7 @@
         },
         {
           "id": 11561,
-          "slug": "02-dict",
+          "slug": "dict-implementation",
           "title": "dict - ის იმპლემენტაცია",
           "order": 2102,
           "videoUrl": "https://youtu.be/_6THcdhnNgo",
@@ -859,7 +859,7 @@
         },
         {
           "id": 11562,
-          "slug": "03-dict-list",
+          "slug": "dict-and-list-combo",
           "title": "dict და list კომბინაციაში",
           "order": 2103,
           "videoUrl": "https://youtu.be/CRWrP8Q18dY",
@@ -870,13 +870,13 @@
     },
     {
       "id": 11563,
-      "slug": "22-topic",
+      "slug": "nested-loops",
       "title": "ჩალაგებული ციკლები",
       "order": 22,
       "lessons": [
         {
           "id": 11564,
-          "slug": "01-lesson",
+          "slug": "nested-loops-intro",
           "title": "ჩალაგებული ციკლები, აბსტრაქცია და მოტივაცია",
           "order": 2201,
           "videoUrl": "https://youtu.be/aCdIIRn6HYQ",
@@ -887,41 +887,41 @@
     },
     {
       "id": 11565,
-      "slug": "23-2",
+      "slug": "problem-set-2",
       "title": "დავალებები 2",
       "order": 23,
       "lessons": [
         {
           "id": 11567,
-          "slug": "01-21-camelcase",
+          "slug": "camel-case",
           "title": "დავალება 2.1 აქლემის კუზი - camelCase",
           "order": 2301,
           "isPreview": false
         },
         {
           "id": 11569,
-          "slug": "02-22-coke-machine",
+          "slug": "coke-machine",
           "title": "დავალება 2.2 კოკა-კოლას აპარატი - Coke Machine",
           "order": 2302,
           "isPreview": false
         },
         {
           "id": 11570,
-          "slug": "03-23-twttr",
+          "slug": "twttr",
           "title": "დავალება 2.3 twttr",
           "order": 2303,
           "isPreview": false
         },
         {
           "id": 11571,
-          "slug": "04-24-vanity-plates",
+          "slug": "vanity-plates",
           "title": "დავალება 2.4 Vanity Plates",
           "order": 2304,
           "isPreview": false
         },
         {
           "id": 11572,
-          "slug": "05-25-nutrition-facts",
+          "slug": "nutrition-facts",
           "title": "დავალება 2.5 Nutrition Facts",
           "order": 2305,
           "isPreview": false
@@ -930,13 +930,13 @@
     },
     {
       "id": 11573,
-      "slug": "24-topic",
+      "slug": "exceptions",
       "title": "შეცდომები",
       "order": 24,
       "lessons": [
         {
           "id": 11574,
-          "slug": "01-o-exceptions",
+          "slug": "exceptions-intro",
           "title": "შეცდომებo / Exceptions",
           "order": 2401,
           "videoUrl": "https://youtu.be/7kpcsUCsPns",
@@ -945,7 +945,7 @@
         },
         {
           "id": 11575,
-          "slug": "02-syntaxerror",
+          "slug": "syntax-error",
           "title": "SyntaxError",
           "order": 2402,
           "videoUrl": "https://youtu.be/tff3UwMaA28",
@@ -954,7 +954,7 @@
         },
         {
           "id": 11576,
-          "slug": "03-valueerror",
+          "slug": "value-error",
           "title": "ValueError",
           "order": 2403,
           "videoUrl": "https://youtu.be/g_8DjXBz4w4",
@@ -963,7 +963,7 @@
         },
         {
           "id": 11577,
-          "slug": "04-error-handling-try-except",
+          "slug": "try-except",
           "title": "Error Handling | Try : Except",
           "order": 2404,
           "videoUrl": "https://youtu.be/a9rD2Xo-saE",
@@ -972,7 +972,7 @@
         },
         {
           "id": 11578,
-          "slug": "05-nameerror",
+          "slug": "name-error",
           "title": "NameError",
           "order": 2405,
           "videoUrl": "https://youtu.be/ceeHv6LXb7k",
@@ -981,7 +981,7 @@
         },
         {
           "id": 11579,
-          "slug": "06-try-except-else",
+          "slug": "try-except-else",
           "title": "Try : Except : Else",
           "order": 2406,
           "videoUrl": "https://youtu.be/nOsfm_GBEr0",
@@ -990,7 +990,7 @@
         },
         {
           "id": 11580,
-          "slug": "07-lesson",
+          "slug": "infinite-loop",
           "title": "უსასრულო ციკლით",
           "order": 2407,
           "videoUrl": "https://youtu.be/XIN0c_7wsgQ",
@@ -999,7 +999,7 @@
         },
         {
           "id": 11581,
-          "slug": "08-get_int",
+          "slug": "get-int",
           "title": "შექმენი get_int ფუნცქია",
           "order": 2408,
           "videoUrl": "https://youtu.be/BShlCpDzcG0",
@@ -1008,7 +1008,7 @@
         },
         {
           "id": 11582,
-          "slug": "09-pass",
+          "slug": "pass",
           "title": "გაატარე | pass",
           "order": 2409,
           "videoUrl": "https://youtu.be/HD5skfLaVIc",
@@ -1019,13 +1019,13 @@
     },
     {
       "id": 11583,
-      "slug": "25-3",
+      "slug": "problem-set-3",
       "title": "დავალებები 3",
       "order": 25,
       "lessons": [
         {
           "id": 11587,
-          "slug": "01-31",
+          "slug": "fuel-gauge",
           "title": "დავალება 3.1 საწვავის ოდენობა მანქანის ავზში",
           "order": 2501,
           "isPreview": false
@@ -1039,14 +1039,14 @@
         },
         {
           "id": 11590,
-          "slug": "03-33",
+          "slug": "grocery-list",
           "title": "დავალება 3.3 საყიდლების სია",
           "order": 2503,
           "isPreview": false
         },
         {
           "id": 11591,
-          "slug": "04-34-outdated",
+          "slug": "outdated",
           "title": "დავალება 3.4 Outdated",
           "order": 2504,
           "isPreview": false
@@ -1055,13 +1055,13 @@
     },
     {
       "id": 11592,
-      "slug": "26-topic",
+      "slug": "libraries-modules",
       "title": "ბიბლიოთეკები, მოდულები, პაკეტები",
       "order": 26,
       "lessons": [
         {
           "id": 11593,
-          "slug": "01-lesson",
+          "slug": "libraries-intro",
           "title": "შესავალი",
           "order": 2601,
           "videoUrl": "https://youtu.be/d9yk_6KJWeE",
@@ -1070,7 +1070,7 @@
         },
         {
           "id": 11594,
-          "slug": "02-lesson",
+          "slug": "modules",
           "title": "მოდულები",
           "order": 2602,
           "videoUrl": "https://youtu.be/aPOIzXUWRtg",
@@ -1079,7 +1079,7 @@
         },
         {
           "id": 11595,
-          "slug": "03-import-randomchoice",
+          "slug": "import-random-choice",
           "title": "ჩატვირთვა და შემთხვევითი ამორჩევა | import random.choice",
           "order": 2603,
           "videoUrl": "https://youtu.be/zeK-k-DoO_A",
@@ -1088,7 +1088,7 @@
         },
         {
           "id": 11596,
-          "slug": "04-from",
+          "slug": "from-import",
           "title": "დააიმპორტე მხოლოდ ის რაც გჭირდება | from",
           "order": 2604,
           "videoUrl": "https://youtu.be/AnFUa72Q_3U",
@@ -1097,7 +1097,7 @@
         },
         {
           "id": 11597,
-          "slug": "05-randint",
+          "slug": "randint",
           "title": "randint",
           "order": 2605,
           "videoUrl": "https://youtu.be/Q4jELsU5Yys",
@@ -1106,7 +1106,7 @@
         },
         {
           "id": 11598,
-          "slug": "06-shuffle",
+          "slug": "shuffle",
           "title": "აჩეხე | Shuffle",
           "order": 2606,
           "videoUrl": "https://youtu.be/Hpv8hnq9TaQ",
@@ -1115,7 +1115,7 @@
         },
         {
           "id": 11599,
-          "slug": "07-mean",
+          "slug": "mean",
           "title": "საშუალო არითმეტიკულის გამოთვლა | mean",
           "order": 2607,
           "videoUrl": "https://youtu.be/L5aVN9XQS94",
@@ -1124,7 +1124,7 @@
         },
         {
           "id": 11600,
-          "slug": "08-sys-argv",
+          "slug": "sys-argv",
           "title": "sys მოდული და argv სია",
           "order": 2608,
           "videoUrl": "https://youtu.be/fWHKtBtVnbA",
@@ -1133,7 +1133,7 @@
         },
         {
           "id": 11601,
-          "slug": "09-indexerror",
+          "slug": "indexerror",
           "title": "IndexError ის მართვა",
           "order": 2609,
           "videoUrl": "https://youtu.be/MHwvZZGWoNc",
@@ -1142,7 +1142,7 @@
         },
         {
           "id": 11602,
-          "slug": "10-len",
+          "slug": "len-and-bounds",
           "title": "len და მკაცრი საზღვრები",
           "order": 2610,
           "videoUrl": "https://youtu.be/XuYaPBLubC4",
@@ -1151,7 +1151,7 @@
         },
         {
           "id": 11603,
-          "slug": "11-sysexit",
+          "slug": "sys-exit",
           "title": "sys.exit",
           "order": 2611,
           "videoUrl": "https://youtu.be/swtvwvETspA",
@@ -1160,7 +1160,7 @@
         },
         {
           "id": 11604,
-          "slug": "12-lesson",
+          "slug": "multiple-args",
           "title": "მრავალი არგუმენტი",
           "order": 2612,
           "videoUrl": "https://youtu.be/PJaN3xxpyy8",
@@ -1169,7 +1169,7 @@
         },
         {
           "id": 11605,
-          "slug": "13-slice",
+          "slug": "slice",
           "title": "ლისტის ნაჭრის სინტაქსი | slice",
           "order": 2613,
           "videoUrl": "https://youtu.be/CcUT9umYPkY",
@@ -1178,7 +1178,7 @@
         },
         {
           "id": 11606,
-          "slug": "14-cowsay",
+          "slug": "cowsay",
           "title": "ძროხა თქვი | cowsay",
           "order": 2614,
           "videoUrl": "https://youtu.be/lsbQn7WjLiQ",
@@ -1187,14 +1187,14 @@
         },
         {
           "id": 11607,
-          "slug": "15-api-requests-json",
+          "slug": "api-requests-json",
           "title": "API, requests, json",
           "order": 2615,
           "isPreview": false
         },
         {
           "id": 11608,
-          "slug": "16-lesson",
+          "slug": "create-modules",
           "title": "შექმენი ბიბლიოთეკები / მოდულები",
           "order": 2616,
           "videoUrl": "https://youtu.be/2jUx8XkTKK4",
@@ -1205,13 +1205,13 @@
     },
     {
       "id": 11609,
-      "slug": "27-4",
+      "slug": "problem-set-4",
       "title": "დავალებები 4",
       "order": 27,
       "lessons": [
         {
           "id": 11610,
-          "slug": "01-41-emojize",
+          "slug": "emojize",
           "title": "დავალება 4.1 ემოჯირება | Emojize",
           "order": 2701,
           "isPreview": false
@@ -1225,28 +1225,28 @@
         },
         {
           "id": 11616,
-          "slug": "03-43-adieu-adieu",
+          "slug": "adieu-adieu",
           "title": "დავალება 4.3 Adieu, Adieu",
           "order": 2703,
           "isPreview": false
         },
         {
           "id": 11617,
-          "slug": "04-44-guessing-game",
+          "slug": "guessing-game",
           "title": "დავალება 4.4 გამოცნობანა | Guessing Game",
           "order": 2704,
           "isPreview": false
         },
         {
           "id": 11618,
-          "slug": "05-45-little-professor",
+          "slug": "little-professor",
           "title": "დავალება 4.5 პატარა პროფესორი | Little Professor",
           "order": 2705,
           "isPreview": false
         },
         {
           "id": 11620,
-          "slug": "06-46-bitcoin-bitcoin-price-index",
+          "slug": "bitcoin-price-index",
           "title": "დავალება 4.6 Bitcoin - ის ფასის ინდექსი | Bitcoin Price Index",
           "order": 2706,
           "isPreview": false
@@ -1255,13 +1255,13 @@
     },
     {
       "id": 11621,
-      "slug": "28-unit",
+      "slug": "unit-tests",
       "title": "შესავალი unit ტესტებში",
       "order": 28,
       "lessons": [
         {
           "id": 11622,
-          "slug": "01-unit-tests",
+          "slug": "unit-tests-intro",
           "title": "Unit Tests",
           "order": 2801,
           "videoUrl": "https://youtu.be/cF8UmpN7bVU",
@@ -1270,7 +1270,7 @@
         },
         {
           "id": 11623,
-          "slug": "02-calculatorpy",
+          "slug": "calculator-py",
           "title": "calculator.py",
           "order": 2802,
           "videoUrl": "https://youtu.be/5Bxr3BSo_1w",
@@ -1279,7 +1279,7 @@
         },
         {
           "id": 11624,
-          "slug": "03-test_calculatorpy",
+          "slug": "test-calculator-py",
           "title": "test_calculator.py",
           "order": 2803,
           "videoUrl": "https://youtu.be/wp5lCZSd0Ts",
@@ -1288,14 +1288,14 @@
         },
         {
           "id": 11625,
-          "slug": "04-assert",
+          "slug": "assert",
           "title": "assert",
           "order": 2804,
           "isPreview": false
         },
         {
           "id": 11626,
-          "slug": "05-assertionerror",
+          "slug": "assertion-error",
           "title": "AssertionError - ის მართვა",
           "order": 2805,
           "videoUrl": "https://youtu.be/VlPJ5mf_ITc",
@@ -1304,7 +1304,7 @@
         },
         {
           "id": 11627,
-          "slug": "06-pytest",
+          "slug": "pytest",
           "title": "pytest",
           "order": 2806,
           "videoUrl": "https://youtu.be/OxtvH6nAhKE",
@@ -1313,7 +1313,7 @@
         },
         {
           "id": 11628,
-          "slug": "07-lesson",
+          "slug": "test-categorization",
           "title": "ტესტების კატეგორიზება",
           "order": 2807,
           "videoUrl": "https://youtu.be/49ACe3bpl7M",
@@ -1322,7 +1322,7 @@
         },
         {
           "id": 11629,
-          "slug": "08-typeerror",
+          "slug": "type-error",
           "title": "TypeError",
           "order": 2808,
           "videoUrl": "https://youtu.be/n8Ccyz1zHLw",
@@ -1331,7 +1331,7 @@
         },
         {
           "id": 11630,
-          "slug": "09-side-effects",
+          "slug": "side-effects",
           "title": "გვერდითი ეფექტები | Side Effects",
           "order": 2809,
           "videoUrl": "https://youtu.be/cayE0T8t6Hc",
@@ -1340,7 +1340,7 @@
         },
         {
           "id": 11631,
-          "slug": "10-lesson",
+          "slug": "collections-packages",
           "title": "კოლექციები / პაკეტები",
           "order": 2810,
           "videoUrl": "https://youtu.be/Za_KMqaB0lQ",
@@ -1351,34 +1351,34 @@
     },
     {
       "id": 11632,
-      "slug": "29-5",
+      "slug": "problem-set-5",
       "title": "დავალებები 5",
       "order": 29,
       "lessons": [
         {
           "id": 11633,
-          "slug": "01-51-testing-my-twttr",
+          "slug": "testing-my-twttr",
           "title": "დავალება 5.1 Testing my twttr",
           "order": 2901,
           "isPreview": false
         },
         {
           "id": 11634,
-          "slug": "02-52",
+          "slug": "back-to-the-bank",
           "title": "დავალება 5.2 უკან ბანკში",
           "order": 2902,
           "isPreview": false
         },
         {
           "id": 11635,
-          "slug": "03-53-re-requesting-a-vanity-plate",
+          "slug": "re-requesting-a-vanity-plate",
           "title": "დავალება 5.3 Re-requesting a Vanity Plate",
           "order": 2903,
           "isPreview": false
         },
         {
           "id": 11636,
-          "slug": "04-54-re-requesting-a-vanity-plate",
+          "slug": "re-requesting-a-vanity-plate-2",
           "title": "დავალება 5.4 Re-requesting a Vanity Plate",
           "order": 2904,
           "isPreview": false
@@ -1387,13 +1387,13 @@
     },
     {
       "id": 11637,
-      "slug": "30-io",
+      "slug": "file-io",
       "title": "ფაილები და I/O",
       "order": 30,
       "lessons": [
         {
           "id": 11638,
-          "slug": "01-lesson",
+          "slug": "file-io-intro",
           "title": "შესავალი",
           "order": 3001,
           "videoUrl": "https://youtu.be/-KGGwcqfNkU",
@@ -1402,7 +1402,7 @@
         },
         {
           "id": 11639,
-          "slug": "02-lesson",
+          "slug": "why-file-io",
           "title": "რაში გვჭირდება ფაილებთან მუშაობა",
           "order": 3002,
           "videoUrl": "https://youtu.be/r4nmUQmlKHM",
@@ -1411,7 +1411,7 @@
         },
         {
           "id": 11640,
-          "slug": "03-lesson",
+          "slug": "add-to-list",
           "title": "ჩაამატე ელემენტები სიაში",
           "order": 3003,
           "videoUrl": "https://youtu.be/bfAbGgW8WHI",
@@ -1420,7 +1420,7 @@
         },
         {
           "id": 11641,
-          "slug": "04-open-w-mode",
+          "slug": "open-write-mode",
           "title": "open | ჩაწერის რეჟიმი - w mode",
           "order": 3004,
           "videoUrl": "https://youtu.be/rXJygzMaBJ4",
@@ -1429,7 +1429,7 @@
         },
         {
           "id": 11642,
-          "slug": "05-a-append-mode",
+          "slug": "append-mode",
           "title": "ჩამატების რეჟიმი - a (append) mode",
           "order": 3005,
           "videoUrl": "https://youtu.be/xpPGkq2e0QE",
@@ -1438,7 +1438,7 @@
         },
         {
           "id": 11643,
-          "slug": "06-with",
+          "slug": "with-block",
           "title": "with ბლოკი",
           "order": 3006,
           "videoUrl": "https://youtu.be/Gglo7ZZd4E0",
@@ -1447,7 +1447,7 @@
         },
         {
           "id": 11644,
-          "slug": "07-r-read-mode",
+          "slug": "read-mode",
           "title": "წაკითხვის რეჟიმი - r (read) mode",
           "order": 3007,
           "videoUrl": "https://youtu.be/gm7Nk7m5VYQ",
@@ -1456,7 +1456,7 @@
         },
         {
           "id": 11645,
-          "slug": "08-lesson",
+          "slug": "elegant-file-reading",
           "title": "ფაილის წაკითხვის ელეგანტური გზა",
           "order": 3008,
           "videoUrl": "https://youtu.be/XCFTiXH4Ock",
@@ -1465,7 +1465,7 @@
         },
         {
           "id": 11646,
-          "slug": "09-lesson",
+          "slug": "sort-file-values",
           "title": "დაასორტირე ფაილიდან ამოღებული მნიშვნელობები",
           "order": 3009,
           "videoUrl": "https://youtu.be/DXP6COke144",
@@ -1474,14 +1474,14 @@
         },
         {
           "id": 11647,
-          "slug": "10-with",
+          "slug": "sorting-with-block",
           "title": "სორტირება with ბლოკში",
           "order": 3010,
           "isPreview": false
         },
         {
           "id": 11648,
-          "slug": "11-csv",
+          "slug": "what-is-csv",
           "title": "რა არის CSV?",
           "order": 3011,
           "videoUrl": "https://youtu.be/NztANRImv9Y",
@@ -1490,7 +1490,7 @@
         },
         {
           "id": 11649,
-          "slug": "12-unpack",
+          "slug": "unpack",
           "title": "unpack - ინფორმაციის ამოღება ცვლადებში",
           "order": 3012,
           "videoUrl": "https://youtu.be/8FplaLoGE68",
@@ -1499,7 +1499,7 @@
         },
         {
           "id": 11650,
-          "slug": "13-lesson",
+          "slug": "sorting-revisited",
           "title": "ისევ სორტირება",
           "order": 3013,
           "videoUrl": "https://youtu.be/-qgooVsbFqc",
@@ -1508,7 +1508,7 @@
         },
         {
           "id": 11651,
-          "slug": "14-dict",
+          "slug": "dict-complex-structures",
           "title": "dict - ების გამოყენება მეტად კომპლექსური სტრუქტურებისთვის",
           "order": 3014,
           "videoUrl": "https://youtu.be/gE-6Q_AHKqs",
@@ -1517,7 +1517,7 @@
         },
         {
           "id": 11652,
-          "slug": "15-lesson",
+          "slug": "function-as-argument",
           "title": "ფუნქცია როგორც არგუმენტი",
           "order": 3015,
           "videoUrl": "https://youtu.be/6W454bxa5qM",
@@ -1526,7 +1526,7 @@
         },
         {
           "id": 11653,
-          "slug": "16-lambda",
+          "slug": "lambda",
           "title": "lambda | ანონიმური ფუნქცია",
           "order": 3016,
           "videoUrl": "https://youtu.be/FqaF1GFfUwQ",
@@ -1535,7 +1535,7 @@
         },
         {
           "id": 11654,
-          "slug": "17-csv",
+          "slug": "csv-module",
           "title": "CSV მოდულის გამოყენება",
           "order": 3017,
           "videoUrl": "https://youtu.be/7U9Xfs14Z18",
@@ -1544,7 +1544,7 @@
         },
         {
           "id": 11655,
-          "slug": "18-dictreader",
+          "slug": "dict-reader",
           "title": "DictReader - წამკითხველი",
           "order": 3018,
           "videoUrl": "https://youtu.be/qOfje0B82ig",
@@ -1553,7 +1553,7 @@
         },
         {
           "id": 11656,
-          "slug": "19-writer",
+          "slug": "writer",
           "title": "writer | ჩამწერი",
           "order": 3019,
           "videoUrl": "https://youtu.be/Uh_vndD72VY",
@@ -1562,7 +1562,7 @@
         },
         {
           "id": 11657,
-          "slug": "20-dictwriter",
+          "slug": "dict-writer",
           "title": "DictWriter | ჩამწერი",
           "order": 3020,
           "videoUrl": "https://youtu.be/Xc_dBdy5j0Q",
@@ -1571,7 +1571,7 @@
         },
         {
           "id": 11658,
-          "slug": "21-lesson",
+          "slug": "teach-cat-to-run",
           "title": "ასწავლე კატას სირბილი",
           "order": 3021,
           "videoUrl": "https://youtu.be/6UXYr5eBvjY",
@@ -1582,34 +1582,34 @@
     },
     {
       "id": 11659,
-      "slug": "31-6",
+      "slug": "problem-set-6",
       "title": "დავალებები 6",
       "order": 31,
       "lessons": [
         {
           "id": 11660,
-          "slug": "01-61-lines-of-code",
+          "slug": "lines-of-code",
           "title": "დავალება 6.1 Lines of Code",
           "order": 3101,
           "isPreview": false
         },
         {
           "id": 11661,
-          "slug": "02-62-pizza-py",
+          "slug": "pizza-py",
           "title": "დავალება 6.2 Pizza Py",
           "order": 3102,
           "isPreview": false
         },
         {
           "id": 11662,
-          "slug": "03-63-scourgify",
+          "slug": "scourgify",
           "title": "დავალება 6.3 Scourgify",
           "order": 3103,
           "isPreview": false
         },
         {
           "id": 11664,
-          "slug": "04-64-cs50-p-shirt",
+          "slug": "cs50-p-shirt",
           "title": "დავალება 6.4 CS50 P-Shirt",
           "order": 3104,
           "isPreview": false
@@ -1618,13 +1618,13 @@
     },
     {
       "id": 11665,
-      "slug": "32-topic",
+      "slug": "regex",
       "title": "რეგულარული გამოსახულებები",
       "order": 32,
       "lessons": [
         {
           "id": 11666,
-          "slug": "01-lesson",
+          "slug": "regex-intro",
           "title": "შესავალი",
           "order": 3201,
           "videoUrl": "https://youtu.be/kf4plxQ4WwY",
@@ -1633,7 +1633,7 @@
         },
         {
           "id": 11667,
-          "slug": "02-validatepy",
+          "slug": "validate-py",
           "title": "validate.py",
           "order": 3202,
           "videoUrl": "https://youtu.be/2FQL-4ZMPDk",
@@ -1642,7 +1642,7 @@
         },
         {
           "id": 11668,
-          "slug": "03-research",
+          "slug": "re-search",
           "title": "re.search",
           "order": 3203,
           "videoUrl": "https://youtu.be/8E3mY5BNgK0",
@@ -1651,7 +1651,7 @@
         },
         {
           "id": 11669,
-          "slug": "04-lesson",
+          "slug": "anchors",
           "title": "დასაწყისის და დასასრულის დაფიქსირება",
           "order": 3204,
           "videoUrl": "https://youtu.be/iTkQxiO3mNc",
@@ -1660,7 +1660,7 @@
         },
         {
           "id": 11670,
-          "slug": "05-lesson",
+          "slug": "character-sets",
           "title": "სიმბოლოების სეტი და აკრძალვა",
           "order": 3205,
           "videoUrl": "https://youtu.be/z28GdaKCvcI",
@@ -1669,7 +1669,7 @@
         },
         {
           "id": 11671,
-          "slug": "06-lesson",
+          "slug": "character-ranges",
           "title": "დასაშვებ სიმბოლოთა დიაპაზონები",
           "order": 3206,
           "videoUrl": "https://youtu.be/y2xGebBjyM8",
@@ -1678,7 +1678,7 @@
         },
         {
           "id": 11672,
-          "slug": "07-lesson",
+          "slug": "character-classes",
           "title": "სიმბოლოთა კლასები",
           "order": 3207,
           "videoUrl": "https://youtu.be/fp9hHdx6ALw",
@@ -1687,7 +1687,7 @@
         },
         {
           "id": 11673,
-          "slug": "08-research-flags",
+          "slug": "re-search-flags",
           "title": "re.search - flags",
           "order": 3208,
           "videoUrl": "https://youtu.be/C8WW474kz-M",
@@ -1696,7 +1696,7 @@
         },
         {
           "id": 11674,
-          "slug": "09-lesson",
+          "slug": "regex-groups",
           "title": "წესების ჯგუფები",
           "order": 3209,
           "videoUrl": "https://youtu.be/2ejnOWel8sI",
@@ -1705,7 +1705,7 @@
         },
         {
           "id": 11675,
-          "slug": "10-lesson",
+          "slug": "or-combinator",
           "title": "\"ან\" კომბინაცია",
           "order": 3210,
           "videoUrl": "https://youtu.be/rUGbopSjrOg",
@@ -1714,7 +1714,7 @@
         },
         {
           "id": 11676,
-          "slug": "11-regex",
+          "slug": "email-regex",
           "title": "როგორია ელ.ფოსტის ვალიდაციის ნამდვილი regex?",
           "order": 3211,
           "videoUrl": "https://youtu.be/WXvCVA8ev1Y",
@@ -1723,7 +1723,7 @@
         },
         {
           "id": 11677,
-          "slug": "12-lesson",
+          "slug": "data-cleaning",
           "title": "მონაცემთა გაწმენდა",
           "order": 3212,
           "videoUrl": "https://youtu.be/A5N7ZYt8WPQ",
@@ -1732,7 +1732,7 @@
         },
         {
           "id": 11678,
-          "slug": "13-lesson",
+          "slug": "capturing-groups",
           "title": "ჯგუფების გამოჭერა",
           "order": 3213,
           "videoUrl": "https://youtu.be/4zjwY9rxsVY",
@@ -1741,7 +1741,7 @@
         },
         {
           "id": 11679,
-          "slug": "14-lesson",
+          "slug": "whitespace-handling",
           "title": "არააუცილებელი სფეისების პრობლემის გადაჭრა",
           "order": 3214,
           "videoUrl": "https://youtu.be/hDCSXO87ZWc",
@@ -1750,7 +1750,7 @@
         },
         {
           "id": 11680,
-          "slug": "15-walrus",
+          "slug": "walrus-operator",
           "title": "Walrus - ოპერატორი",
           "order": 3215,
           "videoUrl": "https://youtu.be/Y_WcHZtDKaA",
@@ -1759,7 +1759,7 @@
         },
         {
           "id": 11682,
-          "slug": "16-url-username",
+          "slug": "url-username",
           "title": "URL - იდან username - ის ამოღება",
           "order": 3216,
           "videoUrl": "https://youtu.be/LAwa2DxOf_I",
@@ -1768,7 +1768,7 @@
         },
         {
           "id": 11683,
-          "slug": "17-resub-regex",
+          "slug": "re-sub",
           "title": "re.sub() და regex",
           "order": 3217,
           "videoUrl": "https://youtu.be/NewhrKb03UQ",
@@ -1777,7 +1777,7 @@
         },
         {
           "id": 11684,
-          "slug": "18-lesson",
+          "slug": "regex-summary",
           "title": "შეჯამება",
           "order": 3218,
           "videoUrl": "https://youtu.be/HjgFicvWnSk",
@@ -1788,13 +1788,13 @@
     },
     {
       "id": 11685,
-      "slug": "33-7",
+      "slug": "problem-set-7",
       "title": "დავალებები 7",
       "order": 33,
       "lessons": [
         {
           "id": 11686,
-          "slug": "01-lesson",
+          "slug": "assignments",
           "title": "დავალებები",
           "order": 3301,
           "isPreview": false
@@ -1803,13 +1803,13 @@
     },
     {
       "id": 11687,
-      "slug": "34-oop",
+      "slug": "oop",
       "title": "OOP",
       "order": 34,
       "lessons": [
         {
           "id": 11688,
-          "slug": "01-lesson",
+          "slug": "oop-intro",
           "title": "შესავალი",
           "order": 3401,
           "videoUrl": "https://youtu.be/09-z_r8liSw",
@@ -1818,7 +1818,7 @@
         },
         {
           "id": 11689,
-          "slug": "02-lesson",
+          "slug": "procedural-approach",
           "title": "პროცედურულად",
           "order": 3402,
           "videoUrl": "https://youtu.be/N-apIvCeuhs",
@@ -1827,7 +1827,7 @@
         },
         {
           "id": 11690,
-          "slug": "03-tuples",
+          "slug": "tuples",
           "title": "Tuples",
           "order": 3403,
           "videoUrl": "https://youtu.be/tyT3hk16nCU",
@@ -1836,7 +1836,7 @@
         },
         {
           "id": 11691,
-          "slug": "04-tuple",
+          "slug": "immutable-tuple",
           "title": "არამუტირებადი tuple",
           "order": 3404,
           "videoUrl": "https://youtu.be/p3JUMqCHkUA",
@@ -1845,7 +1845,7 @@
         },
         {
           "id": 11692,
-          "slug": "05-tuples-vs-lists",
+          "slug": "tuples-vs-lists",
           "title": "Tuples VS Lists",
           "order": 3405,
           "videoUrl": "https://youtu.be/HOa7CSio1Y8",
@@ -1854,7 +1854,7 @@
         },
         {
           "id": 11693,
-          "slug": "06-dictionaries",
+          "slug": "oop-dictionaries",
           "title": "Dictionaries",
           "order": 3406,
           "videoUrl": "https://youtu.be/qVfB8_79riI",
@@ -1863,7 +1863,7 @@
         },
         {
           "id": 11694,
-          "slug": "07-class",
+          "slug": "class-syntax",
           "title": "class სინტაქსი",
           "order": 3407,
           "videoUrl": "https://youtu.be/j7XBYm9lJiA",
@@ -1872,7 +1872,7 @@
         },
         {
           "id": 11695,
-          "slug": "08-__init__",
+          "slug": "init-method",
           "title": "__init__ მეთოდი",
           "order": 3408,
           "videoUrl": "https://youtu.be/IHeRAohSaQ8",
@@ -1881,7 +1881,7 @@
         },
         {
           "id": 11696,
-          "slug": "09-lesson",
+          "slug": "class-validation",
           "title": "კლასში ჩაშენებული ვალიდაცია",
           "order": 3409,
           "videoUrl": "https://youtu.be/ZV2CObHZt9E",
@@ -1890,7 +1890,7 @@
         },
         {
           "id": 11697,
-          "slug": "10-__str__",
+          "slug": "str-method",
           "title": "__str__ სპეციალური მეთოდი",
           "order": 3410,
           "videoUrl": "https://youtu.be/DtDcH0hmdXM",
@@ -1899,7 +1899,7 @@
         },
         {
           "id": 11698,
-          "slug": "11-lesson",
+          "slug": "breaking-validation",
           "title": "ვალიდაციის საზღვრების გარღვევა",
           "order": 3411,
           "videoUrl": "https://youtu.be/7EBkQO-oo68",
@@ -1908,7 +1908,7 @@
         },
         {
           "id": 11699,
-          "slug": "12-setters-getters",
+          "slug": "setters-getters",
           "title": "Setters & Getters",
           "order": 3412,
           "videoUrl": "https://youtu.be/UR8HekRbTOw",
@@ -1917,7 +1917,7 @@
         },
         {
           "id": 11700,
-          "slug": "13-lesson",
+          "slug": "types-and-classes",
           "title": "ტიპები და კლასები",
           "order": 3413,
           "videoUrl": "https://youtu.be/OIwEyt_cKvc",
@@ -1926,7 +1926,7 @@
         },
         {
           "id": 11701,
-          "slug": "14-lesson",
+          "slug": "class-methods",
           "title": "კლასის მეთოდი",
           "order": 3414,
           "videoUrl": "https://youtu.be/lh9w7TGCHpI",
@@ -1935,7 +1935,7 @@
         },
         {
           "id": 11702,
-          "slug": "15-lesson",
+          "slug": "inheritance",
           "title": "მემკვიდრეობითობა",
           "order": 3415,
           "videoUrl": "https://youtu.be/evWY5K-MKWA",
@@ -1944,7 +1944,7 @@
         },
         {
           "id": 11703,
-          "slug": "16-operator-overloading",
+          "slug": "operator-overloading",
           "title": "Operator Overloading",
           "order": 3416,
           "videoUrl": "https://youtu.be/iVa8ZNUGtk8",
@@ -1955,13 +1955,13 @@
     },
     {
       "id": 11704,
-      "slug": "35-8",
+      "slug": "problem-set-8",
       "title": "დავალებები 8",
       "order": 35,
       "lessons": [
         {
           "id": 11705,
-          "slug": "01-lesson",
+          "slug": "assignments",
           "title": "დავალებები",
           "order": 3501,
           "isPreview": false
@@ -1970,13 +1970,13 @@
     },
     {
       "id": 11706,
-      "slug": "36-etc-python",
+      "slug": "etc-python",
       "title": "Etc. მნიშვნელოვანი იარაღები Python - ში",
       "order": 36,
       "lessons": [
         {
           "id": 11707,
-          "slug": "01-lesson",
+          "slug": "etc-intro",
           "title": "შესავალი",
           "order": 3601,
           "videoUrl": "https://youtu.be/2OBcunpsBr8",
@@ -1985,7 +1985,7 @@
         },
         {
           "id": 11708,
-          "slug": "02-set",
+          "slug": "set",
           "title": "წყება / set",
           "order": 3602,
           "videoUrl": "https://youtu.be/Buxozu6cIqw",
@@ -1994,7 +1994,7 @@
         },
         {
           "id": 11710,
-          "slug": "03-globals",
+          "slug": "globals",
           "title": "გლობალური ცვლადები | globals",
           "order": 3603,
           "videoUrl": "https://youtu.be/tH7laMtfZ4Y",
@@ -2003,7 +2003,7 @@
         },
         {
           "id": 11711,
-          "slug": "04-constants",
+          "slug": "constants",
           "title": "მუდმივები | constants",
           "order": 3604,
           "videoUrl": "https://youtu.be/DcRHFtmnass",
@@ -2012,7 +2012,7 @@
         },
         {
           "id": 11712,
-          "slug": "05-type-hints-mypy",
+          "slug": "type-hints-mypy",
           "title": "Type hints & mypy",
           "order": 3605,
           "videoUrl": "https://youtu.be/AVUzaHC8iHA",
@@ -2021,7 +2021,7 @@
         },
         {
           "id": 11713,
-          "slug": "06-return-types",
+          "slug": "return-types",
           "title": "return types",
           "order": 3606,
           "videoUrl": "https://youtu.be/xkVPVlCq3Is",
@@ -2030,7 +2030,7 @@
         },
         {
           "id": 11714,
-          "slug": "07-docstrings",
+          "slug": "docstrings",
           "title": "დოკუმენტაციის სტრიქონი | docstrings",
           "order": 3607,
           "videoUrl": "https://youtu.be/m8t4-w3Yw98",
@@ -2039,7 +2039,7 @@
         },
         {
           "id": 11715,
-          "slug": "08-sysargv",
+          "slug": "sys-argv",
           "title": "sys.argv",
           "order": 3608,
           "videoUrl": "https://youtu.be/nPNombnMWog",
@@ -2048,7 +2048,7 @@
         },
         {
           "id": 11716,
-          "slug": "09-argparse",
+          "slug": "argparse",
           "title": "argparse",
           "order": 3609,
           "videoUrl": "https://youtu.be/pkQjiuZpAn8",
@@ -2057,7 +2057,7 @@
         },
         {
           "id": 11717,
-          "slug": "10-unpacking",
+          "slug": "unpacking",
           "title": "unpacking",
           "order": 3610,
           "videoUrl": "https://youtu.be/117udVp3iGY",
@@ -2066,7 +2066,7 @@
         },
         {
           "id": 11718,
-          "slug": "11-args-kwargs",
+          "slug": "args-kwargs",
           "title": "args & kwargs",
           "order": 3611,
           "videoUrl": "https://youtu.be/c6WdaNY7MgY",
@@ -2075,7 +2075,7 @@
         },
         {
           "id": 11719,
-          "slug": "12-map",
+          "slug": "map",
           "title": "map | ტრანსფორმაცია",
           "order": 3612,
           "videoUrl": "https://youtu.be/w2E4ZHIdMAw",
@@ -2084,7 +2084,7 @@
         },
         {
           "id": 11720,
-          "slug": "13-list-comprehensions",
+          "slug": "list-comprehensions",
           "title": "list comprehensions",
           "order": 3613,
           "videoUrl": "https://youtu.be/wdbIzvDNShU",
@@ -2093,7 +2093,7 @@
         },
         {
           "id": 11721,
-          "slug": "14-filter-in-list-comprehensions",
+          "slug": "filter-in-list-comprehensions",
           "title": "filter in list comprehensions",
           "order": 3614,
           "videoUrl": "https://youtu.be/oGhVzLcDFfw",
@@ -2102,7 +2102,7 @@
         },
         {
           "id": 11722,
-          "slug": "15-filter-lambda",
+          "slug": "filter-lambda",
           "title": "filter & lambda",
           "order": 3615,
           "videoUrl": "https://youtu.be/NFjhuGCP83c",
@@ -2111,7 +2111,7 @@
         },
         {
           "id": 11723,
-          "slug": "16-dict-comprehensions",
+          "slug": "dict-comprehensions",
           "title": "dict comprehensions",
           "order": 3616,
           "videoUrl": "https://youtu.be/e9BZIhwwRQM",
@@ -2120,14 +2120,14 @@
         },
         {
           "id": 11724,
-          "slug": "17-enumerate",
+          "slug": "enumerate",
           "title": "enumerate",
           "order": 3617,
           "isPreview": false
         },
         {
           "id": 11725,
-          "slug": "18-yield",
+          "slug": "yield",
           "title": "გენერატორები | yield",
           "order": 3618,
           "videoUrl": "https://youtu.be/6gm52_TE74A",
@@ -2136,7 +2136,7 @@
         },
         {
           "id": 11726,
-          "slug": "19-lesson",
+          "slug": "etc-summary",
           "title": "შეჯამება",
           "order": 3619,
           "videoUrl": "https://youtu.be/jz3jmW4JKqU",
@@ -2147,13 +2147,13 @@
     },
     {
       "id": 11727,
-      "slug": "37-topic",
+      "slug": "final-project",
       "title": "ფინალური პროექტი",
       "order": 37,
       "lessons": [
         {
           "id": 11728,
-          "slug": "01-lesson",
+          "slug": "final-project-brief",
           "title": "ფინალური პროექტი",
           "order": 3701,
           "isPreview": false
