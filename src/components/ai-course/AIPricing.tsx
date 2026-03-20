@@ -73,10 +73,10 @@ export function AIPricing() {
               <div className="text-center mb-8">
                 <div className="flex items-center justify-center gap-3 mb-2">
                   <span className="text-2xl text-text-secondary line-through">₾790</span>
-                  <Badge className="bg-red-100 text-red-700 border-red-200 hover:bg-red-100 hover:text-red-700">დაზოგე 87%</Badge>
+                  <Badge className="bg-red-100 text-red-700 border-red-200 hover:bg-red-100 hover:text-red-700">დაზოგე 81%</Badge>
                 </div>
                 <div className="flex items-baseline justify-center gap-1">
-                  <span className="text-5xl sm:text-6xl font-bold text-text-primary">₾99</span>
+                   <span className="text-5xl sm:text-6xl font-bold text-text-primary">₾149</span>
                   <span className="text-text-secondary text-lg">სულ</span>
                 </div>
                 <p className="text-accent font-medium mt-2">

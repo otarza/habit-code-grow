@@ -109,10 +109,10 @@ export function AIRegistrationForm() {
                 <div className="flex items-center justify-between">
                   <div>
                     <span className="text-text-secondary line-through text-lg">₾790</span>
-                    <div className="text-4xl font-bold text-text-primary">₾99</div>
+                    <div className="text-4xl font-bold text-text-primary">₾149</div>
                   </div>
                   <Badge className="bg-red-100 text-red-700 border-red-200 text-lg px-4 py-2">
-                    -87%
+                    -81%
                   </Badge>
                 </div>
                 <p className="text-accent font-medium mt-2">
