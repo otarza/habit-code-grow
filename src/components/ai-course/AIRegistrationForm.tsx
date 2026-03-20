@@ -160,7 +160,7 @@ export function AIRegistrationForm() {
               </a>
 
               <a
-                href="https://wa.me/995557151290?text=%E1%83%A0%E1%83%94%E1%83%92%E1%83%98%E1%83%A1%E1%83%A2%E1%83%A0%E1%83%90%E1%83%AA%E1%83%98%E1%83%90%20AI%20%E1%83%99%E1%83%A3%E1%83%A0%E1%83%A1%E1%83%96%E1%83%94"
+                href="https://wa.me/995557151290?text=w51912096"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-center gap-3 w-full bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold py-4 px-6 rounded-xl transition-colors text-lg shadow-lg mt-4"
