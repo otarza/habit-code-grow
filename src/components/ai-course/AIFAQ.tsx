@@ -79,7 +79,7 @@ export function AIFAQ() {
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
-              href="https://m.me/bitcamp.ge?ref=w49324136"
+              href="https://m.me/bitcamp.ge?ref=AI"
               target="_blank"
               rel="noopener noreferrer"
               className="text-secondary hover:underline font-medium"

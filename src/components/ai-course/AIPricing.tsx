@@ -76,7 +76,7 @@ export function AIPricing() {
                   <Badge className="bg-red-100 text-red-700 border-red-200 hover:bg-red-100 hover:text-red-700">დაზოგე 81%</Badge>
                 </div>
                 <div className="flex items-baseline justify-center gap-1">
-                   <span className="text-5xl sm:text-6xl font-bold text-text-primary">₾149</span>
+                  <span className="text-5xl sm:text-6xl font-bold text-text-primary">₾149</span>
                   <span className="text-text-secondary text-lg">სულ</span>
                 </div>
                 <p className="text-accent font-medium mt-2">
@@ -175,7 +175,7 @@ export function AIPricing() {
           <p className="text-text-secondary max-w-2xl mx-auto">
             კითხვები გაქვს? დაგვიკავშირდი{" "}
             <a
-              href="https://m.me/bitcamp.ge?ref=w49324136"
+              href="https://m.me/bitcamp.ge?ref=AI"
               target="_blank"
               rel="noopener noreferrer"
               className="text-secondary hover:underline font-medium"
