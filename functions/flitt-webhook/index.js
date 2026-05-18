@@ -15,6 +15,11 @@ const PRODUCT_MAP = {
     template: "course-access-ai-bootcamp",
     name: "AI Bootcamp Self-Paced",
   },
+  "74de94a0a998fdf3f37f433e90448cd5dd11ee97": {
+    slug: "bootcamp",
+    template: "course-access-ai-bootcamp",
+    name: "AI Bootcamp Self-Paced",
+  },
 };
 
 // Fallback used when product_id isn't in the map (e.g. unknown / new product)
@@ -68,6 +73,7 @@ functions.http("flittWebhook", async (req, res) => {
         amount: amountGel,
         currency: payload.currency || "GEL",
         product_name: product.name,
+        base64_email: toBase64Url(email),
       },
       MessageStream: MESSAGE_STREAM,
     });
@@ -146,3 +152,10 @@ function extractEmail(payload) {
   return null;
 }
 
+function toBase64Url(value) {
+  return Buffer.from(String(value), "utf8")
+    .toString("base64")
+    .replace(/\+/g, "-")
+    .replace(/\//g, "_")
+    .replace(/=+$/g, "");
+}

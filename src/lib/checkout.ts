@@ -3,7 +3,7 @@ type CheckoutProduct = "bootcamp" | "pro";
 // Flitt embed "button" IDs — one per payment-link product created in Flitt dashboard.
 // Fill in `pro` when the corresponding Flitt product is created.
 export const FLITT_BUTTONS: Partial<Record<CheckoutProduct, string>> = {
-  bootcamp: "a0e5974bbff69a3970e39b77a5b1e20f6b0d2223",
+  bootcamp: "74de94a0a998fdf3f37f433e90448cd5dd11ee97",
   // pro: "<flitt-button-id-for-pro-tier>",
 };
 

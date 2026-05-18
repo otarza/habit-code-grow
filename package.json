@@ -6,8 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build && node scripts/prerender.js",
-    "build:campaign": "vite build && node scripts/prerender.js --routes=/ai,/ai-bootcamp,/terms,/privacy,/thank-you",
-    "build:bootcamp": "vite build && node scripts/prerender.js --routes=/ai-bootcamp",
+    "build:campaign": "vite build && node scripts/prerender.js --routes=/ai,/ai-bootcamp,/learn/ai-bootcamp,/terms,/privacy,/thank-you",
+    "build:bootcamp": "vite build && node scripts/prerender.js --routes=/ai-bootcamp,/learn/ai-bootcamp",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
     "preview": "vite preview"

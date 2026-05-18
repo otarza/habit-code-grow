@@ -12,13 +12,23 @@ interface LessonViewProps {
   topicSlug: string;
   lessonSlug: string;
   manifest: CourseManifest;
+  routeBasePath?: string;
+  contentBaseUrl?: string;
 }
 
-export function LessonView({ courseSlug, topicSlug, lessonSlug, manifest }: LessonViewProps) {
+export function LessonView({
+  courseSlug,
+  topicSlug,
+  lessonSlug,
+  manifest,
+  routeBasePath,
+  contentBaseUrl = '/courses',
+}: LessonViewProps) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [lessonMeta, setLessonMeta] = useState<LessonMeta | null>(null);
   const [content, setContent] = useState('');
+  const basePath = routeBasePath ?? `/courses/${courseSlug}`;
 
   useEffect(() => {
     async function loadLesson() {
@@ -26,7 +36,7 @@ export function LessonView({ courseSlug, topicSlug, lessonSlug, manifest }: Less
       setError(null);
 
       try {
-        const response = await fetch(`/courses/${courseSlug}/${topicSlug}/${lessonSlug}.md`);
+        const response = await fetch(`${contentBaseUrl}/${courseSlug}/${topicSlug}/${lessonSlug}.md`);
 
         if (!response.ok) {
           throw new Error('გაკვეთილი ვერ მოიძებნა');
@@ -50,7 +60,7 @@ export function LessonView({ courseSlug, topicSlug, lessonSlug, manifest }: Less
     }
 
     loadLesson();
-  }, [courseSlug, topicSlug, lessonSlug]);
+  }, [contentBaseUrl, courseSlug, topicSlug, lessonSlug]);
 
   const { prev, next } = findAdjacentLessons(manifest, topicSlug, lessonSlug);
 
@@ -70,7 +80,7 @@ export function LessonView({ courseSlug, topicSlug, lessonSlug, manifest }: Less
       <div className="flex flex-col items-center justify-center min-h-[400px] text-center">
         <p className="text-destructive mb-4">{error}</p>
         <Button asChild variant="outline">
-          <Link to={`/courses/${courseSlug}`}>დაბრუნება კურსზე</Link>
+          <Link to={basePath}>დაბრუნება კურსზე</Link>
         </Button>
       </div>
     );
@@ -82,7 +92,7 @@ export function LessonView({ courseSlug, topicSlug, lessonSlug, manifest }: Less
       <nav className="text-sm text-muted-foreground mb-6">
         <ol className="flex items-center gap-2 flex-wrap">
           <li>
-            <Link to={`/courses/${courseSlug}`} className="hover:text-foreground transition-colors">
+            <Link to={basePath} className="hover:text-foreground transition-colors">
               {manifest.title}
             </Link>
           </li>
@@ -125,7 +135,7 @@ export function LessonView({ courseSlug, topicSlug, lessonSlug, manifest }: Less
       <nav className="flex items-center justify-between mt-12 pt-8 border-t">
         {prev ? (
           <Link
-            to={`/courses/${courseSlug}/${prev.topicSlug}/${prev.lessonSlug}`}
+            to={`${basePath}/${prev.topicSlug}/${prev.lessonSlug}`}
             className={cn(
               "flex items-center gap-2 text-sm font-medium",
               "text-muted-foreground hover:text-foreground transition-colors"
@@ -141,7 +151,7 @@ export function LessonView({ courseSlug, topicSlug, lessonSlug, manifest }: Less
 
         {next ? (
           <Link
-            to={`/courses/${courseSlug}/${next.topicSlug}/${next.lessonSlug}`}
+            to={`${basePath}/${next.topicSlug}/${next.lessonSlug}`}
             className={cn(
               "flex items-center gap-2 text-sm font-medium",
               "text-muted-foreground hover:text-foreground transition-colors"

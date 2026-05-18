@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { ChevronDown, ChevronRight, BookOpen, PlayCircle, Menu, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -10,17 +10,25 @@ import bitcampLogo from '@/assets/bitcamp-logo.png';
 interface CourseSidebarProps {
   manifest: CourseManifest;
   className?: string;
+  routeBasePath?: string;
 }
 
-function TopicSection({ topic, courseSlug, currentTopicSlug, currentLessonSlug, onLessonClick }: {
+function TopicSection({ topic, courseSlug, currentTopicSlug, currentLessonSlug, onLessonClick, routeBasePath }: {
   topic: TopicInfo;
   courseSlug: string;
   currentTopicSlug?: string;
   currentLessonSlug?: string;
   onLessonClick?: () => void;
+  routeBasePath?: string;
 }) {
   const isCurrentTopic = topic.slug === currentTopicSlug;
   const [isExpanded, setIsExpanded] = useState(isCurrentTopic);
+
+  useEffect(() => {
+    if (isCurrentTopic) {
+      setIsExpanded(true);
+    }
+  }, [isCurrentTopic]);
 
   return (
     <div className="mb-2">
@@ -48,7 +56,7 @@ function TopicSection({ topic, courseSlug, currentTopicSlug, currentLessonSlug, 
             return (
               <li key={lesson.slug}>
                 <Link
-                  to={`/courses/${courseSlug}/${topic.slug}/${lesson.slug}`}
+                  to={`${routeBasePath ?? `/courses/${courseSlug}`}/${topic.slug}/${lesson.slug}`}
                   onClick={onLessonClick}
                   className={cn(
                     "flex items-center px-3 py-1.5 text-sm rounded-md transition-colors",
@@ -74,9 +82,10 @@ function TopicSection({ topic, courseSlug, currentTopicSlug, currentLessonSlug, 
   );
 }
 
-export function CourseSidebar({ manifest, className }: CourseSidebarProps) {
+export function CourseSidebar({ manifest, className, routeBasePath }: CourseSidebarProps) {
   const { topicSlug, lessonSlug } = useParams<{ topicSlug: string; lessonSlug: string }>();
   const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const basePath = routeBasePath ?? `/courses/${manifest.slug}`;
 
   const sidebarContent = (
     <>
@@ -89,7 +98,7 @@ export function CourseSidebar({ manifest, className }: CourseSidebarProps) {
 
       {/* Course title */}
       <div className="p-4 border-b">
-        <Link to={`/courses/${manifest.slug}`} onClick={() => setIsMobileOpen(false)} className="block">
+        <Link to={basePath} onClick={() => setIsMobileOpen(false)} className="block">
           <h2 className="font-semibold text-lg leading-tight hover:text-primary transition-colors">
             {manifest.title}
           </h2>
@@ -109,6 +118,7 @@ export function CourseSidebar({ manifest, className }: CourseSidebarProps) {
               currentTopicSlug={topicSlug}
               currentLessonSlug={lessonSlug}
               onLessonClick={() => setIsMobileOpen(false)}
+              routeBasePath={basePath}
             />
           ))}
         </nav>

@@ -120,11 +120,22 @@ Red pyramid, dark navy, with vibrant pixel art accents and animations
     --surface-muted: 210 19% 12%;
     --card: 210 19% 10%;
     --card-foreground: 210 10% 95%;
+    --popover: 210 19% 10%;
+    --popover-foreground: 210 10% 95%;
+    --primary: 0 75% 62%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 0 75% 55%;
+    --secondary-foreground: 0 0% 100%;
+    --accent: 210 18% 16%;
+    --accent-foreground: 210 10% 95%;
+    --muted: 210 18% 14%;
+    --muted-foreground: 210 8% 68%;
     --text-primary: 210 10% 95%;
     --text-secondary: 210 5% 75%;
     --text-muted: 210 5% 60%;
     --border: 210 19% 18%;
     --input: 210 19% 18%;
+    --ring: 0 75% 62%;
   }
 }
 

@@ -9,6 +9,7 @@ const __dirname = path.dirname(__filename);
 const rootDir = path.resolve(__dirname, '..');
 const distDir = path.join(rootDir, 'dist');
 const coursesDir = path.join(rootDir, 'public', 'courses');
+const learnCoursesDir = path.join(rootDir, 'public', 'learn-content');
 
 function getArgValue(name) {
     const prefix = `${name}=`;
@@ -54,6 +55,33 @@ if (!explicitRoutes && fs.existsSync(coursesDir)) {
                 }
             } catch (err) {
                 console.error(`Error reading manifest for ${courseSlug}:`, err);
+            }
+        }
+    }
+}
+
+// Dynamically extract soft-gated course routes. Content is still static, but the
+// visible course area lives under /learn so it can show the magic-link gate.
+if (!explicitRoutes && fs.existsSync(learnCoursesDir)) {
+    const courses = fs.readdirSync(learnCoursesDir).filter(f => fs.statSync(path.join(learnCoursesDir, f)).isDirectory());
+    for (const courseSlug of courses) {
+        routes.push(`/learn/${courseSlug}`);
+
+        const manifestPath = path.join(learnCoursesDir, courseSlug, 'manifest.json');
+        if (fs.existsSync(manifestPath)) {
+            try {
+                const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
+                if (manifest.topics) {
+                    for (const topic of manifest.topics) {
+                        if (topic.lessons) {
+                            for (const lesson of topic.lessons) {
+                                routes.push(`/learn/${courseSlug}/${topic.slug}/${lesson.slug}`);
+                            }
+                        }
+                    }
+                }
+            } catch (err) {
+                console.error(`Error reading learn manifest for ${courseSlug}:`, err);
             }
         }
     }

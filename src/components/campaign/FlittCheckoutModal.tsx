@@ -89,9 +89,9 @@ function buildFlittOptions(buttonId: string, email: string) {
       hide_button_title: true,
     },
     css_variable: {
-      main: "#DA291C",
-      card_bg: "#1C1C20",
-      card_shadow: "#0A0A0B",
+      main: "#7d8ff8",
+      card_bg: "#353535",
+      card_shadow: "#9ADBE8",
     },
   };
 }

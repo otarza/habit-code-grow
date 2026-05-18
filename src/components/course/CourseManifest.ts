@@ -21,7 +21,7 @@ export interface TopicInfo {
 }
 
 export interface CourseManifest {
-  id: string;
+  id: string | number;
   title: string;
   slug: string;
   description: string;
@@ -33,9 +33,9 @@ export interface CourseManifest {
 /**
  * Load course manifest from public directory
  */
-export async function loadCourseManifest(courseSlug: string): Promise<CourseManifest | null> {
+export async function loadCourseManifest(courseSlug: string, contentBaseUrl = '/courses'): Promise<CourseManifest | null> {
   try {
-    const response = await fetch(`/courses/${courseSlug}/manifest.json`);
+    const response = await fetch(`${contentBaseUrl}/${courseSlug}/manifest.json`);
     if (!response.ok) {
       console.error(`Failed to load manifest for ${courseSlug}: ${response.status}`);
       return null;

@@ -9,6 +9,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 
 interface CourseOverviewProps {
   manifest: CourseManifest;
+  routeBasePath?: string;
+  contentBaseUrl?: string;
 }
 
 function VideoEmbed({ url }: { url: string }) {
@@ -44,14 +46,15 @@ function VideoEmbed({ url }: { url: string }) {
   return <video src={url} controls className="w-full h-full" />;
 }
 
-export function CourseOverview({ manifest }: CourseOverviewProps) {
+export function CourseOverview({ manifest, routeBasePath, contentBaseUrl = '/courses' }: CourseOverviewProps) {
   const [description, setDescription] = useState('');
   const [loading, setLoading] = useState(true);
+  const basePath = routeBasePath ?? `/courses/${manifest.slug}`;
 
   useEffect(() => {
     async function loadOverview() {
       try {
-        const response = await fetch(`/courses/${manifest.slug}/index.md`);
+        const response = await fetch(`${contentBaseUrl}/${manifest.slug}/index.md`);
         if (response.ok) {
           const text = await response.text();
           const { content } = parseFrontmatter(text);
@@ -65,7 +68,7 @@ export function CourseOverview({ manifest }: CourseOverviewProps) {
     }
 
     loadOverview();
-  }, [manifest.slug]);
+  }, [contentBaseUrl, manifest.slug]);
 
   const totalLessons = manifest.topics.reduce((acc, t) => acc + t.lessons.length, 0);
   const totalVideos = manifest.topics.reduce(
@@ -101,7 +104,7 @@ export function CourseOverview({ manifest }: CourseOverviewProps) {
 
         {firstLesson && (
           <Button asChild size="lg">
-            <Link to={`/courses/${manifest.slug}/${manifest.topics[0].slug}/${firstLesson.slug}`}>
+            <Link to={`${basePath}/${manifest.topics[0].slug}/${firstLesson.slug}`}>
               დაიწყე სწავლა
             </Link>
           </Button>
@@ -131,8 +134,8 @@ export function CourseOverview({ manifest }: CourseOverviewProps) {
 
         <div className="space-y-4">
           {manifest.topics.map((topic, topicIndex) => {
-            // Filter out the first lesson from the first topic (it's displayed as video intro)
-            const displayLessons = topicIndex === 0 ? topic.lessons.slice(1) : topic.lessons;
+            // Filter out the first lesson from the first topic only when it is already displayed as video intro.
+            const displayLessons = topicIndex === 0 && firstLesson?.videoUrl ? topic.lessons.slice(1) : topic.lessons;
 
             return (
               <Card key={topic.slug}>
@@ -152,7 +155,7 @@ export function CourseOverview({ manifest }: CourseOverviewProps) {
                     {displayLessons.map((lesson, lessonIndex) => (
                       <li key={lesson.slug}>
                         <Link
-                          to={`/courses/${manifest.slug}/${topic.slug}/${lesson.slug}`}
+                          to={`${basePath}/${topic.slug}/${lesson.slug}`}
                           className="flex items-center gap-3 py-2 px-3 rounded-lg hover:bg-accent transition-colors"
                         >
                           <span className="text-xs text-muted-foreground font-mono w-8">

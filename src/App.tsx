@@ -14,6 +14,7 @@ import Terms from "./pages/Terms";
 import Privacy from "./pages/Privacy";
 import AIBootcamp from "./pages/AIBootcamp";
 import ThankYou from "./pages/ThankYou";
+import LearnCoursePage from "./pages/LearnCoursePage";
 
 const queryClient = new QueryClient();
 
@@ -34,6 +35,8 @@ const App = () => (
           {/* Independence Day campaign */}
           <Route path="/ai-bootcamp" element={<AIBootcamp />} />
           <Route path="/thank-you" element={<ThankYou />} />
+          <Route path="/learn/:courseSlug" element={<LearnCoursePage />} />
+          <Route path="/learn/:courseSlug/:topicSlug/:lessonSlug" element={<LearnCoursePage />} />
           {/* Courses routes */}
           <Route path="/courses" element={<CoursesIndex />} />
           <Route path="/courses/:courseSlug" element={<CoursePage />} />
