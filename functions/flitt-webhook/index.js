@@ -178,3 +178,38 @@ function toBase64Url(value) {
     .replace(/\//g, "_")
     .replace(/=+$/g, "");
 }
+
+// ───────────────────────────────────────────────────────────────────────
+// Browser-redirect helper (separate function deployment).
+//
+// Flitt POSTs back to the configured Success/Decline URLs with order data.
+// GitHub Pages only serves GET → POST returns 405 Method Not Allowed.
+// This function accepts the POST and 303-redirects the buyer (as a GET)
+// to our static /thank-you page with the relevant fields as query params.
+// ───────────────────────────────────────────────────────────────────────
+functions.http("flittRedirect", (req, res) => {
+  const targetBase = process.env.THANK_YOU_URL || "https://www.bitcamp.ge/thank-you";
+
+  // We set ?status=success or ?status=declined on the Flitt-dashboard URL
+  // — Flitt preserves our query string when it appends its own POST body.
+  const status = (req.query.status || "").toString();
+
+  const body =
+    typeof req.body === "object" && req.body !== null ? req.body : {};
+
+  const params = new URLSearchParams();
+  if (status) params.set("status", status);
+
+  // Pass through useful Flitt fields (browser-visible only; the source of
+  // truth for fulfillment is the signed server-callback, not these).
+  const passthrough = ["order_id", "order_status", "payment_id", "amount", "currency"];
+  for (const field of passthrough) {
+    const value = body[field] ?? req.query[field];
+    if (value !== undefined && value !== null && value !== "") {
+      params.set(field, String(value));
+    }
+  }
+
+  const qs = params.toString();
+  res.redirect(303, qs ? `${targetBase}?${qs}` : targetBase);
+});
