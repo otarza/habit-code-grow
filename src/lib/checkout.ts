@@ -9,7 +9,7 @@ type CheckoutProduct = "bootcamp" | "pro";
 // Add the `pro` link once that payment-link product is created in Flitt.
 export const FLITT_LINKS: Partial<Record<CheckoutProduct, string>> = {
   bootcamp:
-    "https://pay.flitt.com/merchants/a1a4a4e30664fd373149649e9bc5b98bb4bd35b9/41f1b22012027a5ddbc8399115fe0040/index.html?button=74de94a0a998fdf3f37f433e90448cd5dd11ee97",
+    "https://pay.flitt.com/merchants/a1a4a4e30664fd373149649e9bc5b98bb4bd35b9/c18b51f1b4d94e80286b8718cc25805492dd01ac/index.html?button=74de94a0a998fdf3f37f433e90448cd5dd11ee97",
   // pro: "<flitt-hosted-link-for-pro-tier>",
 };
 
