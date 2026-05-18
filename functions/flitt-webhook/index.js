@@ -9,18 +9,19 @@ const MESSAGE_STREAM = process.env.POSTMARK_STREAM || "outbound";
 
 // Map Flitt's `product_id` (set per payment link in Flitt dashboard)
 // to our internal product slug + Postmark template alias.
-// Fill in real product_id values after creating products in Flitt dashboard.
 const PRODUCT_MAP = {
-  // "<flitt-product-id>": { slug, template, name }
-  // Example — update with real product_id from Flitt:
-  // "12345": { slug: "bootcamp", template: "course-access-bootcamp", name: "AI Bootcamp Self-Paced" },
+  "btcp-ai-bootcamp": {
+    slug: "bootcamp",
+    template: "course-access-ai-bootcamp",
+    name: "AI Bootcamp Self-Paced",
+  },
 };
 
 // Fallback used when product_id isn't in the map (e.g. unknown / new product)
 // Lets a sale still complete; we can fix the mapping after seeing the first real callback.
 const FALLBACK_PRODUCT = {
   slug: "bootcamp",
-  template: "course-access-bootcamp",
+  template: "course-access-ai-bootcamp",
   name: "AI Bootcamp Self-Paced",
 };
 
@@ -58,24 +59,41 @@ functions.http("flittWebhook", async (req, res) => {
   const amountGel = (Number(payload.amount) / 100).toFixed(2);
 
   try {
-    await postmarkClient.sendEmailWithTemplate({
+    const result = await postmarkClient.sendEmailWithTemplate({
       From: FROM_EMAIL,
       To: email,
       TemplateAlias: product.template,
       TemplateModel: {
-        name: extractName(payload),
         order_id: payload.order_id,
         amount: amountGel,
         currency: payload.currency || "GEL",
         product_name: product.name,
-        // Template-specific links — set as Postmark template defaults so the function
-        // doesn't need to know course URLs. Override here if you'd rather pass them.
       },
       MessageStream: MESSAGE_STREAM,
     });
-    console.log("EMAIL_SENT", payload.order_id, email, product.slug);
+    console.log(
+      "POSTMARK_RESPONSE",
+      payload.order_id,
+      email,
+      product.slug,
+      JSON.stringify({
+        MessageID: result.MessageID,
+        SubmittedAt: result.SubmittedAt,
+        To: result.To,
+        ErrorCode: result.ErrorCode,
+        Message: result.Message,
+      })
+    );
   } catch (err) {
-    console.error("POSTMARK_FAIL", payload.order_id, err.message);
+    console.error(
+      "POSTMARK_FAIL",
+      payload.order_id,
+      JSON.stringify({
+        message: err.message,
+        code: err.code,
+        statusCode: err.statusCode,
+      })
+    );
     // Still 200 — we have the callback logged; we don't want Flitt's 24h retry
     // storm if the issue is our side. Recover manually from logs.
     return res.status(200).send("Email failed; logged");
@@ -92,26 +110,35 @@ function verifySignature(payload, secret) {
   const { signature, response_signature_string } = payload;
   if (!signature || !response_signature_string) return false;
 
-  // Flitt: SHA1 hex of `secret|response_signature_string`
-  const toSign = `${secret}|${response_signature_string}`;
+  // Flitt sends `response_signature_string` with the secret MASKED at the start
+  // (e.g. "**********|val1|val2|..."). Replace everything before the first pipe
+  // with our real secret, then SHA1-hex the result.
+  const toSign = response_signature_string.replace(/^[^|]*/, secret);
   const computed = crypto.createHash("sha1").update(toSign).digest("hex");
 
   return computed.toLowerCase() === String(signature).toLowerCase();
 }
 
 function extractEmail(payload) {
-  // 1. Custom "Additional field" with callback field name = "email" (Flitt dashboard)
-  if (payload.email) return payload.email;
-  // 2. Flitt's native sender_email (only present when `show_email: true` in embed)
+  // 1. Flitt's native sender_email — present in real callbacks even when only
+  // a custom "Additional field" was used in the dashboard
   if (payload.sender_email) return payload.sender_email;
-  // 3. Some setups nest additional fields under `additional_info` as JSON
-  if (payload.additional_info) {
+  // 2. Top-level `email` field (if Flitt ever flattens it that way)
+  if (payload.email) return payload.email;
+  // 3. merchant_data is a JSON array of custom field objects in real Flitt callbacks:
+  //    [{"name":"email","label":"...","value":"buyer@example.com"}, ...]
+  if (payload.merchant_data) {
     try {
-      const ai =
-        typeof payload.additional_info === "string"
-          ? JSON.parse(payload.additional_info)
-          : payload.additional_info;
-      if (ai && ai.email) return ai.email;
+      const md =
+        typeof payload.merchant_data === "string"
+          ? JSON.parse(payload.merchant_data)
+          : payload.merchant_data;
+      if (Array.isArray(md)) {
+        const f = md.find((x) => x && x.name === "email" && x.value);
+        if (f) return f.value;
+      } else if (md && md.email) {
+        return md.email;
+      }
     } catch {
       // not JSON — ignore
     }
@@ -119,21 +146,3 @@ function extractEmail(payload) {
   return null;
 }
 
-function extractName(payload) {
-  // Flitt doesn't have a dedicated name field; try merchant_data first
-  // (we can pass a name field via Flitt payment link's Additional fields → callback name `name`)
-  if (payload.name) return payload.name;
-  if (payload.merchant_data) {
-    try {
-      const md = typeof payload.merchant_data === "string"
-        ? JSON.parse(payload.merchant_data)
-        : payload.merchant_data;
-      if (md && md.name) return md.name;
-    } catch {
-      // merchant_data isn't JSON — ignore
-    }
-  }
-  // Fallback: use the email local part
-  if (payload.sender_email) return payload.sender_email.split("@")[0];
-  return "";
-}

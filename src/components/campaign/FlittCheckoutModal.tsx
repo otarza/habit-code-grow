@@ -82,7 +82,7 @@ function buildFlittOptions(buttonId: string) {
       },
       api_domain: "pay.flitt.com",
       card_icons: ["mastercard", "visa"],
-      show_email: false,
+      show_email: true,
       methods_disabled: [],
       fullScreen: false,
       hide_button_title: true,
