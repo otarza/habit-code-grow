@@ -48,7 +48,7 @@ functions.http("flittWebhook", async (req, res) => {
 
   const product = PRODUCT_MAP[String(payload.product_id)] || FALLBACK_PRODUCT;
 
-  const email = payload.sender_email;
+  const email = extractEmail(payload);
   if (!email) {
     console.error("NO_EMAIL", payload.order_id);
     // 200 — we acknowledge; manual recovery from logs
@@ -97,6 +97,26 @@ function verifySignature(payload, secret) {
   const computed = crypto.createHash("sha1").update(toSign).digest("hex");
 
   return computed.toLowerCase() === String(signature).toLowerCase();
+}
+
+function extractEmail(payload) {
+  // 1. Custom "Additional field" with callback field name = "email" (Flitt dashboard)
+  if (payload.email) return payload.email;
+  // 2. Flitt's native sender_email (only present when `show_email: true` in embed)
+  if (payload.sender_email) return payload.sender_email;
+  // 3. Some setups nest additional fields under `additional_info` as JSON
+  if (payload.additional_info) {
+    try {
+      const ai =
+        typeof payload.additional_info === "string"
+          ? JSON.parse(payload.additional_info)
+          : payload.additional_info;
+      if (ai && ai.email) return ai.email;
+    } catch {
+      // not JSON — ignore
+    }
+  }
+  return null;
 }
 
 function extractName(payload) {
