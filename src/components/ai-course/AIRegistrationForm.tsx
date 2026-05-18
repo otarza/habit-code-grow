@@ -18,7 +18,7 @@ export function AIRegistrationForm() {
   const trustIndicators = [
     { icon: CheckCircle2, text: "მყისიერი წვდომა გადახდის შემდეგ" },
     { icon: Shield, text: "უსაფრთხო გადახდა" },
-    { icon: Zap, text: "400+ სტუდენტი უკვე სწავლობს" },
+    { icon: Zap, text: "2 000+ კმაყოფილი სტუდენტი უკვე სწავლობს" },
   ];
 
   return (

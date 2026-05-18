@@ -14,7 +14,7 @@ export function ChallengeSection() {
         "Simple milestone celebrations",
         "Evidence-based learning techniques"
       ],
-      price: "$97",
+      price: "₾265",
       ctaText: "Start the 21-Day Challenge",
       popular: true
     },

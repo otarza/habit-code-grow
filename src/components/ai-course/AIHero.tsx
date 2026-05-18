@@ -131,7 +131,7 @@ export function AIHero() {
               <div className="text-text-inverse/70 text-xs sm:text-sm">Living Course</div>
             </div>
             <div className="text-center p-4 bg-surface/5 backdrop-blur-sm rounded-lg border border-white/10">
-              <div className="text-2xl sm:text-3xl font-bold text-secondary mb-1">400+</div>
+              <div className="text-2xl sm:text-3xl font-bold text-secondary mb-1">2 000+</div>
               <div className="text-text-inverse/70 text-xs sm:text-sm">მონაწილე</div>
             </div>
             <div className="text-center p-4 bg-surface/5 backdrop-blur-sm rounded-lg border border-white/10">

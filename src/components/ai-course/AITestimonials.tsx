@@ -161,7 +161,7 @@ export function AITestimonials() {
           </Badge>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-text-primary mb-6">
             რას ამბობს ჩვენი{" "}
-            <span className="text-secondary">400+ სტუდენტი</span>
+            <span className="text-secondary">2 000+ კმაყოფილი სტუდენტი</span>
           </h2>
           <p className="text-lg sm:text-xl text-text-secondary max-w-3xl mx-auto">
             რეალური შედეგები რეალური ადამიანებისგან, რომლებმაც უკვე გაიარეს ეს პროგრამა.
@@ -218,7 +218,7 @@ export function AITestimonials() {
         {/* Social Proof Banner */}
         <div className="mt-16 text-center">
           <div className="inline-flex items-center gap-4 bg-accent/10 border-2 border-accent/20 rounded-xl px-8 py-4">
-            <div className="text-4xl font-bold text-accent">400+</div>
+            <div className="text-4xl font-bold text-accent">2 000+</div>
             <div className="text-left">
               <div className="font-semibold text-text-primary">სტუდენტი უკვე სწავლობს</div>
               <div className="text-sm text-text-secondary">და ეს რიცხვი იზრდება ყოველდღე</div>

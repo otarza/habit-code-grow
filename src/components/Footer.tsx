@@ -102,6 +102,37 @@ export function Footer() {
           🔒 <strong>ტრანსფორმაციის 100% - იანი გარანტია</strong> • დაასრულე ჩელენჯები და გახდი საკუთარი თავის საუკეთესო ვერსია.
         </p>
       </div>
+
+      {/* Legal block */}
+      <div className="bg-primary border-t border-primary-foreground/10 py-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Payment logos */}
+          <div className="flex items-center gap-3 mb-4 flex-wrap">
+            {["visa", "mastercard", "apple-pay", "google-pay"].map((name) => (
+              <img
+                key={name}
+                src={`/assets/payment/${name}.svg`}
+                alt={name}
+                className="h-6 opacity-50"
+                style={{ filter: "grayscale(1) brightness(2)" }}
+              />
+            ))}
+          </div>
+          {/* Legal text */}
+          <p className="text-primary-foreground/40 text-xs leading-relaxed mb-2">
+            ო. ზაკალაშვილი (ი/მ) · ს/კ: 01001071740 · მირიან მეფის ქუჩა, 11გ, ბინა #39 · ტელ: +995 557 15 12 90 · hello@bitcamp.ge
+          </p>
+          <div className="flex gap-4 text-xs">
+            <a href="/terms" className="text-primary-foreground/40 hover:text-primary-foreground/70 transition-colors">
+              მომსახურების პირობები
+            </a>
+            <span className="text-primary-foreground/20">·</span>
+            <a href="/privacy" className="text-primary-foreground/40 hover:text-primary-foreground/70 transition-colors">
+              კონფიდენციალურობა
+            </a>
+          </div>
+        </div>
+      </div>
     </footer>
   );
 }

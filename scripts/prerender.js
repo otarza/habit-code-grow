@@ -10,8 +10,18 @@ const rootDir = path.resolve(__dirname, '..');
 const distDir = path.join(rootDir, 'dist');
 const coursesDir = path.join(rootDir, 'public', 'courses');
 
+function getArgValue(name) {
+    const prefix = `${name}=`;
+    const match = process.argv.find(arg => arg.startsWith(prefix));
+    return match ? match.slice(prefix.length) : undefined;
+}
+
+const explicitRoutes = getArgValue('--routes');
+
 // Base routes
-const routes = [
+const routes = explicitRoutes
+    ? explicitRoutes.split(',').map(route => route.trim()).filter(Boolean)
+    : [
     '/',
     '/ai',
     '/fullstack-ai',
@@ -20,7 +30,7 @@ const routes = [
 ];
 
 // Dynamically extract all course routes
-if (fs.existsSync(coursesDir)) {
+if (!explicitRoutes && fs.existsSync(coursesDir)) {
     const courses = fs.readdirSync(coursesDir).filter(f => fs.statSync(path.join(coursesDir, f)).isDirectory());
     for (const courseSlug of courses) {
         routes.push(`/courses/${courseSlug}`); // Course landing

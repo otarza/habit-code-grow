@@ -10,6 +10,10 @@ import PythonSQL from "./pages/PythonSQL";
 import CoursePage from "./pages/CoursePage";
 import CoursesIndex from "./pages/CoursesIndex";
 import NotFound from "./pages/NotFound";
+import Terms from "./pages/Terms";
+import Privacy from "./pages/Privacy";
+import AIBootcamp from "./pages/AIBootcamp";
+import ThankYou from "./pages/ThankYou";
 
 const queryClient = new QueryClient();
 
@@ -24,6 +28,12 @@ const App = () => (
           <Route path="/fullstack-ai" element={<FullStackAI />} />
           <Route path="/ai" element={<AIPromptEngineering />} />
           <Route path="/python-sql" element={<PythonSQL />} />
+          {/* Legal pages (Flitt compliance) */}
+          <Route path="/terms" element={<Terms />} />
+          <Route path="/privacy" element={<Privacy />} />
+          {/* Independence Day campaign */}
+          <Route path="/ai-bootcamp" element={<AIBootcamp />} />
+          <Route path="/thank-you" element={<ThankYou />} />
           {/* Courses routes */}
           <Route path="/courses" element={<CoursesIndex />} />
           <Route path="/courses/:courseSlug" element={<CoursePage />} />
