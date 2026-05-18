@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { X } from "lucide-react";
+import { ArrowRight, X } from "lucide-react";
 import type { FlittOpenEventDetail } from "@/lib/checkout";
 
 const FLITT_CSS = "https://pay.flitt.com/latest/checkout-vue/checkout.css";
@@ -10,18 +10,7 @@ const FLITT_FONTS = [
   "https://pay.flitt.com/icons/dist/fonts/inter-semibold.woff2",
 ];
 
-const FIELDS_TEMPLATE_ID = "f-fields";
-const FIELDS_TEMPLATE_HTML =
-  '<div><input-text name="email" validate="required|email" custom></input-text></div>';
-
-function ensureFieldsTemplate() {
-  if (document.getElementById(FIELDS_TEMPLATE_ID)) return;
-  const tpl = document.createElement("script");
-  tpl.type = "text/x-vue-template";
-  tpl.id = FIELDS_TEMPLATE_ID;
-  tpl.innerHTML = FIELDS_TEMPLATE_HTML;
-  document.head.appendChild(tpl);
-}
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 type FlittCheckout = (selector: string, options: Record<string, unknown>) => void;
 
@@ -37,7 +26,6 @@ function loadFlitt(): Promise<FlittCheckout> {
       return;
     }
 
-    // Preload fonts (best-effort; no failure handling needed)
     FLITT_FONTS.forEach((href) => {
       if (document.querySelector(`link[href="${href}"]`)) return;
       const link = document.createElement("link");
@@ -49,7 +37,6 @@ function loadFlitt(): Promise<FlittCheckout> {
       document.head.appendChild(link);
     });
 
-    // Stylesheet
     if (!document.querySelector(`link[href="${FLITT_CSS}"]`)) {
       const css = document.createElement("link");
       css.rel = "stylesheet";
@@ -57,7 +44,6 @@ function loadFlitt(): Promise<FlittCheckout> {
       document.head.appendChild(css);
     }
 
-    // Script
     const existing = document.querySelector<HTMLScriptElement>(`script[src="${FLITT_JS}"]`);
     if (existing) {
       existing.addEventListener("load", () => {
@@ -83,12 +69,14 @@ function loadFlitt(): Promise<FlittCheckout> {
   return flittLoading;
 }
 
-function buildFlittOptions(buttonId: string) {
+function buildFlittOptions(buttonId: string, email: string) {
   return {
-    params: { button: buttonId },
+    params: {
+      button: buttonId,
+      customer_data: { email },
+    },
     options: {
       theme: { type: "light", preset: "reset" },
-      methods: ["card"],
       endpoint: {
         button: "/latest/checkout-v2/button/index.html",
         gateway: "/latest/checkout-v2/index.html",
@@ -112,6 +100,9 @@ export function FlittCheckoutModal() {
   const [isOpen, setIsOpen] = useState(false);
   const [detail, setDetail] = useState<FlittOpenEventDetail | null>(null);
   const [status, setStatus] = useState<"idle" | "loading" | "ready" | "error">("idle");
+  const [step, setStep] = useState<"email" | "payment">("email");
+  const [email, setEmail] = useState("");
+  const [emailError, setEmailError] = useState("");
   const mountRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -119,28 +110,26 @@ export function FlittCheckoutModal() {
       const ce = e as CustomEvent<FlittOpenEventDetail>;
       setDetail(ce.detail);
       setIsOpen(true);
+      setStep("email");
+      setEmail("");
+      setEmailError("");
+      setStatus("idle");
     };
     window.addEventListener("flitt:open", handler);
     return () => window.removeEventListener("flitt:open", handler);
   }, []);
 
   useEffect(() => {
-    if (!isOpen || !detail) return;
+    if (!isOpen || !detail || step !== "payment") return;
 
     let cancelled = false;
     setStatus("loading");
-
-    // Inject the f-fields Vue template before checkout mounts — Flitt's embed
-    // reads this template by ID and renders the declared custom fields (email
-    // with required+email validation) client-side. This is the documented
-    // alternative to dashboard-defined custom fields, which break Apple Pay.
-    ensureFieldsTemplate();
 
     loadFlitt()
       .then((checkout) => {
         if (cancelled || !mountRef.current) return;
         mountRef.current.innerHTML = '<div id="flitt-mount-target"></div>';
-        checkout("#flitt-mount-target", buildFlittOptions(detail.buttonId));
+        checkout("#flitt-mount-target", buildFlittOptions(detail.buttonId, email));
         setStatus("ready");
       })
       .catch((err) => {
@@ -152,7 +141,7 @@ export function FlittCheckoutModal() {
     return () => {
       cancelled = true;
     };
-  }, [isOpen, detail]);
+  }, [isOpen, detail, step, email]);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -169,6 +158,18 @@ export function FlittCheckoutModal() {
   }, [isOpen]);
 
   if (!isOpen || !detail) return null;
+
+  const handleEmailSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const trimmed = email.trim();
+    if (!EMAIL_RE.test(trimmed)) {
+      setEmailError("შეიყვანე ვალიდური ელ. ფოსტა");
+      return;
+    }
+    setEmail(trimmed);
+    setEmailError("");
+    setStep("payment");
+  };
 
   return (
     <div
@@ -200,20 +201,58 @@ export function FlittCheckoutModal() {
         </header>
 
         <div className="campaign-modal__body">
-          {status === "loading" && (
-            <div className="campaign-modal__status">იტვირთება უსაფრთხო გადახდის ფანჯარა…</div>
+          {step === "email" ? (
+            <form className="campaign-modal__email-step" onSubmit={handleEmailSubmit}>
+              <label htmlFor="campaign-modal-email" className="campaign-modal__label">
+                ელ. ფოსტა
+              </label>
+              <input
+                id="campaign-modal-email"
+                type="email"
+                inputMode="email"
+                autoComplete="email"
+                autoCapitalize="off"
+                autoCorrect="off"
+                spellCheck={false}
+                value={email}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                  if (emailError) setEmailError("");
+                }}
+                placeholder="email@example.com"
+                className={`campaign-modal__input${emailError ? " campaign-modal__input--error" : ""}`}
+                required
+                autoFocus
+              />
+              {emailError && (
+                <div className="campaign-modal__field-error">{emailError}</div>
+              )}
+              <p className="campaign-modal__hint">
+                ამ მისამართზე გამოვაგზავნით კურსზე წვდომას გადახდის შემდეგ.
+              </p>
+              <button type="submit" className="campaign-modal__continue">
+                <span>გაგრძელება — ₾{detail.value}</span>
+                <ArrowRight aria-hidden="true" size={18} />
+              </button>
+            </form>
+          ) : (
+            <>
+              {status === "loading" && (
+                <div className="campaign-modal__status">იტვირთება უსაფრთხო გადახდის ფანჯარა…</div>
+              )}
+              {status === "error" && (
+                <div className="campaign-modal__status campaign-modal__status--error">
+                  გადახდის ფანჯრის ჩატვირთვა ვერ მოხერხდა. სცადე თავიდან ან მოგვწერე
+                  hello@bitcamp.ge
+                </div>
+              )}
+              <div
+                ref={mountRef}
+                className="campaign-modal__flitt"
+                style={status === "ready" ? undefined : { opacity: 0, height: 0, overflow: "hidden" }}
+              />
+            </>
           )}
-          {status === "error" && (
-            <div className="campaign-modal__status campaign-modal__status--error">
-              გადახდის ფანჯრის ჩატვირთვა ვერ მოხერხდა. სცადე თავიდან ან მოგვწერე
-              hello@bitcamp.ge
-            </div>
-          )}
-          <div
-            ref={mountRef}
-            className="campaign-modal__flitt"
-            style={status === "ready" ? undefined : { opacity: 0, height: 0, overflow: "hidden" }}
-          />
         </div>
       </div>
     </div>
