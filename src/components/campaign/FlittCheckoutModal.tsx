@@ -10,6 +10,19 @@ const FLITT_FONTS = [
   "https://pay.flitt.com/icons/dist/fonts/inter-semibold.woff2",
 ];
 
+const FIELDS_TEMPLATE_ID = "f-fields";
+const FIELDS_TEMPLATE_HTML =
+  '<div><input-text name="email" validate="required|email" custom></input-text></div>';
+
+function ensureFieldsTemplate() {
+  if (document.getElementById(FIELDS_TEMPLATE_ID)) return;
+  const tpl = document.createElement("script");
+  tpl.type = "text/x-vue-template";
+  tpl.id = FIELDS_TEMPLATE_ID;
+  tpl.innerHTML = FIELDS_TEMPLATE_HTML;
+  document.head.appendChild(tpl);
+}
+
 type FlittCheckout = (selector: string, options: Record<string, unknown>) => void;
 
 let flittLoading: Promise<FlittCheckout> | null = null;
@@ -82,7 +95,7 @@ function buildFlittOptions(buttonId: string) {
       },
       api_domain: "pay.flitt.com",
       card_icons: ["mastercard", "visa"],
-      show_email: true,
+      show_email: false,
       methods_disabled: [],
       fullScreen: false,
       hide_button_title: true,
@@ -116,6 +129,12 @@ export function FlittCheckoutModal() {
 
     let cancelled = false;
     setStatus("loading");
+
+    // Inject the f-fields Vue template before checkout mounts — Flitt's embed
+    // reads this template by ID and renders the declared custom fields (email
+    // with required+email validation) client-side. This is the documented
+    // alternative to dashboard-defined custom fields, which break Apple Pay.
+    ensureFieldsTemplate();
 
     loadFlitt()
       .then((checkout) => {
