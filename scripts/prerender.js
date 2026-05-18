@@ -24,9 +24,13 @@ const routes = explicitRoutes
     : [
     '/',
     '/ai',
+    '/ai-bootcamp',
     '/fullstack-ai',
     '/python-sql',
-    '/courses'
+    '/courses',
+    '/terms',
+    '/privacy',
+    '/thank-you'
 ];
 
 // Dynamically extract all course routes
