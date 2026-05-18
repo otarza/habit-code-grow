@@ -1,10 +1,16 @@
 type CheckoutProduct = "bootcamp" | "pro";
 
-// Flitt embed "button" IDs — one per payment-link product created in Flitt dashboard.
-// Fill in `pro` when the corresponding Flitt product is created.
-export const FLITT_BUTTONS: Partial<Record<CheckoutProduct, string>> = {
-  bootcamp: "74de94a0a998fdf3f37f433e90448cd5dd11ee97",
-  // pro: "<flitt-button-id-for-pro-tier>",
+// Flitt hosted payment-link URLs — full URL to each payment page.
+// Each link is pre-configured in Flitt dashboard with:
+//   - Response URL (where buyer redirects after payment, success or decline)
+//   - Cancel URL (if buyer clicks Cancel)
+//   - Server Callback URL (our Cloud Function for sending welcome email)
+//   - Required custom fields (email)
+// Add the `pro` link once that payment-link product is created in Flitt.
+export const FLITT_LINKS: Partial<Record<CheckoutProduct, string>> = {
+  bootcamp:
+    "https://pay.flitt.com/merchants/a1a4a4e30664fd373149649e9bc5b98bb4bd35b9/41f1b22012027a5ddbc8399115fe0040/index.html?button=74de94a0a998fdf3f37f433e90448cd5dd11ee97",
+  // pro: "<flitt-hosted-link-for-pro-tier>",
 };
 
 const CHECKOUT_META: Record<CheckoutProduct, { name: string; value: number }> = {
@@ -41,28 +47,13 @@ function trackInitiateCheckout(product: CheckoutProduct) {
   });
 }
 
-export type FlittOpenEventDetail = {
-  product: CheckoutProduct;
-  buttonId: string;
-  name: string;
-  value: number;
-};
-
 export function handleBuy(product: CheckoutProduct) {
-  const buttonId = FLITT_BUTTONS[product];
-  if (!buttonId) {
-    console.error(`[checkout] No Flitt button ID configured for product: ${product}`);
+  const link = FLITT_LINKS[product];
+  if (!link) {
+    console.error(`[checkout] No Flitt link configured for product: ${product}`);
     return;
   }
 
   trackInitiateCheckout(product);
-
-  const detail: FlittOpenEventDetail = {
-    product,
-    buttonId,
-    name: CHECKOUT_META[product].name,
-    value: CHECKOUT_META[product].value,
-  };
-
-  window.dispatchEvent(new CustomEvent("flitt:open", { detail }));
+  window.location.href = link;
 }

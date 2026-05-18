@@ -113,13 +113,32 @@ function verifySignature(payload, secret) {
     console.error("MISSING_SECRET_ENV");
     return false;
   }
-  const { signature, response_signature_string } = payload;
-  if (!signature || !response_signature_string) return false;
+  const { signature } = payload;
+  if (!signature) return false;
 
-  // Flitt sends `response_signature_string` with the secret MASKED at the start
-  // (e.g. "**********|val1|val2|..."). Replace everything before the first pipe
-  // with our real secret, then SHA1-hex the result.
-  const toSign = response_signature_string.replace(/^[^|]*/, secret);
+  let toSign;
+
+  if (payload.response_signature_string) {
+    // Path 1: Flitt provides the pre-formatted message with secret masked at
+    // start (e.g. "**********|val1|val2|..."). Replace the mask with the
+    // real secret and SHA1.
+    toSign = payload.response_signature_string.replace(/^[^|]*/, secret);
+  } else {
+    // Path 2: Flitt didn't include response_signature_string (observed on
+    // some Apple Pay callbacks). Build it manually per Flitt's standard
+    // algorithm: SHA1(secret + "|" + values-of-non-empty-fields-sorted-by-key)
+    const excluded = new Set(["signature", "response_signature_string"]);
+    const values = Object.keys(payload)
+      .filter((k) => !excluded.has(k))
+      .filter((k) => {
+        const v = payload[k];
+        return v !== "" && v !== null && v !== undefined;
+      })
+      .sort()
+      .map((k) => String(payload[k]));
+    toSign = secret + "|" + values.join("|");
+  }
+
   const computed = crypto.createHash("sha1").update(toSign).digest("hex");
 
   return computed.toLowerCase() === String(signature).toLowerCase();
