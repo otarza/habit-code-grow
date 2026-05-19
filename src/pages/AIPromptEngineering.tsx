@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import { CampaignFooter } from "@/components/campaign/CampaignFooter";
 import { CampaignStickyCta } from "@/components/campaign/CampaignStickyCta";
+import { FlittCheckoutModal } from "@/components/campaign/FlittCheckoutModal";
 import { SEO } from "@/components/SEO";
 import { handleBuy } from "@/lib/checkout";
 
@@ -584,6 +585,7 @@ export default function AIPromptEngineering() {
       </main>
 
       <CampaignFooter />
+      <FlittCheckoutModal />
     </div>
   );
 }
