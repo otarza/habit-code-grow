@@ -1,7 +1,7 @@
 ---
-title: "რა არის Prompting?"
-order: 104
-videoUrl: "https://www.youtube.com/watch?v=uSUbJvCaznY"
+title: "References — თეორია"
+order: 110
+videoUrl: "https://www.youtube.com/watch?v=_LbKKBomqFk"
 ---
 
 ვიდეო გაკვეთილი — ნახე ვიდეო და გაიარე პრაქტიკული მაგალითები.

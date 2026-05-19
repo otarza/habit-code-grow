@@ -1,7 +1,7 @@
 ---
-title: "რა არის Prompting?"
-order: 104
-videoUrl: "https://www.youtube.com/watch?v=uSUbJvCaznY"
+title: "კონტექსტი — პრაქტიკა"
+order: 109
+videoUrl: "https://www.youtube.com/watch?v=GJ2MwupkSHA"
 ---
 
 ვიდეო გაკვეთილი — ნახე ვიდეო და გაიარე პრაქტიკული მაგალითები.

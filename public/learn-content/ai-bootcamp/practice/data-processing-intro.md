@@ -1,7 +1,7 @@
 ---
-title: "რა არის Prompting?"
-order: 104
-videoUrl: "https://www.youtube.com/watch?v=uSUbJvCaznY"
+title: "მონაცემების დამუშავება — შესავალი"
+order: 207
+videoUrl: "https://www.youtube.com/watch?v=90Ynf1k-_UI"
 ---
 
 ვიდეო გაკვეთილი — ნახე ვიდეო და გაიარე პრაქტიკული მაგალითები.

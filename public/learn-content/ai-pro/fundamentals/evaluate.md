@@ -1,7 +1,7 @@
 ---
-title: "რა არის Prompting?"
-order: 104
-videoUrl: "https://www.youtube.com/watch?v=uSUbJvCaznY"
+title: "შეფასება (Evaluate)"
+order: 113
+videoUrl: "https://www.youtube.com/watch?v=FHA9x7C6oXI"
 ---
 
 ვიდეო გაკვეთილი — ნახე ვიდეო და გაიარე პრაქტიკული მაგალითები.

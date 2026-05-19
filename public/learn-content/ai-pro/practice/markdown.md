@@ -1,7 +1,7 @@
 ---
-title: "რა არის Prompting?"
-order: 104
-videoUrl: "https://www.youtube.com/watch?v=uSUbJvCaznY"
+title: "Markdown ფორმატი"
+order: 210
+videoUrl: "https://www.youtube.com/watch?v=-N7UwqDQ8iw"
 ---
 
 ვიდეო გაკვეთილი — ნახე ვიდეო და გაიარე პრაქტიკული მაგალითები.
