@@ -15,12 +15,14 @@ const courseAccess = {
     emailStorageKey: 'bitcamp_soft_access_ai_bootcamp_email',
     title: 'AI Prompt Engineering Bootcamp',
     buyPath: '/ai-bootcamp',
+    buyLabel: 'შეიძინე AI Bootcamp — ₾99',
   },
   'ai-pro': {
     storageKey: 'bitcamp_soft_access_ai_pro',
     emailStorageKey: 'bitcamp_soft_access_ai_pro_email',
     title: 'AI Bootcamp Mentored',
     buyPath: '/ai',
+    buyLabel: 'შეიძინე მენტორული Bootcamp — ₾249',
   },
 } as const;
 
@@ -55,7 +57,15 @@ function decodeAccessEmail(value: string) {
   }
 }
 
-function AccessGate({ title, buyPath }: { title: string; buyPath: string }) {
+function AccessGate({
+  title,
+  buyPath,
+  buyLabel,
+}: {
+  title: string;
+  buyPath: string;
+  buyLabel: string;
+}) {
   return (
     <div className="dark min-h-screen bg-background text-foreground flex items-center justify-center px-4">
       <div className="w-full max-w-lg rounded-2xl border border-white/10 bg-white/[0.04] p-6 sm:p-8 shadow-2xl">
@@ -78,18 +88,20 @@ function AccessGate({ title, buyPath }: { title: string; buyPath: string }) {
             </p>
           </div>
         </div>
-        <div className="mt-7 grid gap-3 sm:grid-cols-2">
-          <Button asChild size="lg" className="w-full min-w-0 bg-white text-slate-950 hover:bg-white/90">
-            <Link to={buyPath}>შეიძინე AI Bootcamp — ₾99</Link>
-          </Button>
+        <div className="mt-7 flex flex-col items-center gap-4">
           <Button
             asChild
             size="lg"
-            variant="outline"
-            className="w-full min-w-0 whitespace-normal border-white/20 bg-transparent text-white hover:bg-white/10 hover:text-white"
+            className="w-full bg-white text-slate-950 hover:bg-white/90"
           >
-            <Link to="/">მთავარზე დაბრუნება</Link>
+            <Link to={buyPath}>{buyLabel}</Link>
           </Button>
+          <Link
+            to="/"
+            className="text-sm text-white/55 hover:text-white/85 transition-colors"
+          >
+            მთავარზე დაბრუნება
+          </Link>
         </div>
       </div>
     </div>
@@ -182,7 +194,7 @@ export default function LearnCoursePage() {
   }
 
   if (!hasAccess) {
-    return <AccessGate title={config.title} buyPath={config.buyPath} />;
+    return <AccessGate title={config.title} buyPath={config.buyPath} buyLabel={config.buyLabel} />;
   }
 
   if (loading) {
