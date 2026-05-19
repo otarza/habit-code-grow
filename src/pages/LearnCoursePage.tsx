@@ -16,6 +16,12 @@ const courseAccess = {
     title: 'AI Prompt Engineering Bootcamp',
     buyPath: '/ai-bootcamp',
   },
+  'ai-pro': {
+    storageKey: 'bitcamp_soft_access_ai_pro',
+    emailStorageKey: 'bitcamp_soft_access_ai_pro_email',
+    title: 'AI Bootcamp Mentored',
+    buyPath: '/ai',
+  },
 } as const;
 
 type LearnCourseSlug = keyof typeof courseAccess;

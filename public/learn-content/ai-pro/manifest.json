@@ -1,0 +1,49 @@
+{
+  "id": "ai-pro",
+  "title": "AI Bootcamp Mentored",
+  "slug": "ai-pro",
+  "description": "სრული AI პროგრამა მენტორშიფითა და Discord ჯგუფით — ChatGPT, Gemini და Claude პრაქტიკული გამოყენებისთვის T.C.R.E.I. ფორმულით.",
+  "thumbnail": "/ai-meta.png",
+  "exportedAt": "2026-05-18T00:00:00.000Z",
+  "topics": [
+    {
+      "slug": "fundamentals",
+      "title": "მოდული 1 — Prompting-ის საფუძვლები",
+      "order": 1,
+      "lessons": [
+        { "slug": "welcome", "title": "კურსის შესავალი", "order": 101 },
+        { "slug": "how-ai-tools-work", "title": "როგორ მუშაობს ChatGPT, Gemini და Claude", "order": 102 },
+        { "slug": "what-is-prompting", "title": "რა არის Prompting?", "order": 103 },
+        { "slug": "bad-prompt-anatomy", "title": "ცუდი პრომპტის ანატომია", "order": 104 },
+        { "slug": "clear-task", "title": "ამოცანის ზუსტად ჩამოყალიბება", "order": 105 },
+        { "slug": "role", "title": "როლის მიცემა AI-სთვის", "order": 106 },
+        { "slug": "context", "title": "კონტექსტი", "order": 107 },
+        { "slug": "rules", "title": "შეზღუდვები და წესები", "order": 108 },
+        { "slug": "examples", "title": "მაგალითებით სწავლება", "order": 109 },
+        { "slug": "output-format", "title": "შედეგის ფორმატის მოთხოვნა", "order": 110 },
+        { "slug": "tone-audience", "title": "ტონის და აუდიტორიის მართვა", "order": 111 },
+        { "slug": "iteration", "title": "გამეორება და გაუმჯობესება", "order": 112 },
+        { "slug": "frameworks", "title": "Prompting Frameworks", "order": 113 },
+        { "slug": "tcrei-model", "title": "T.C.R.E.I. მოდელი", "order": 114 },
+        { "slug": "tcrei-text", "title": "T.C.R.E.I. პრაქტიკა: ტექსტი", "order": 115 },
+        { "slug": "tcrei-work", "title": "T.C.R.E.I. პრაქტიკა: სამუშაო დავალება", "order": 116 },
+        { "slug": "prompt-review", "title": "პრომპტის შეფასება და დახვეწა", "order": 117 },
+        { "slug": "first-project", "title": "პირველი პრაქტიკული პროექტი", "order": 118 }
+      ]
+    },
+    {
+      "slug": "practice",
+      "title": "მოდული 2 — პრაქტიკული სამუშაო პროცესები",
+      "order": 2,
+      "lessons": [
+        { "slug": "advanced-prompting", "title": "Advanced Prompting-ის შესავალი", "order": 201 },
+        { "slug": "prompt-chaining", "title": "Prompt Chaining", "order": 202 },
+        { "slug": "splitting-work", "title": "გრძელი ამოცანების დაყოფა", "order": 203 },
+        { "slug": "table-data", "title": "ცხრილური მონაცემები", "order": 204 },
+        { "slug": "csv-processing", "title": "CSV ფაილების დამუშავება", "order": 205 },
+        { "slug": "structured-answers", "title": "სტრუქტურირებული პასუხები", "order": 206 },
+        { "slug": "json", "title": "JSON — ფორმატების მეფე", "order": 207 }
+      ]
+    }
+  ]
+}

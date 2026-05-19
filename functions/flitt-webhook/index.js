@@ -9,17 +9,25 @@ const MESSAGE_STREAM = process.env.POSTMARK_STREAM || "outbound";
 
 // Map Flitt's `product_id` (set per payment link in Flitt dashboard)
 // to our internal product slug + Postmark template alias.
+const BOOTCAMP_PRODUCT = {
+  slug: "bootcamp",
+  template: "course-access-ai-bootcamp",
+  name: "AI Bootcamp Self-Paced",
+};
+
+const PRO_PRODUCT = {
+  slug: "pro",
+  template: "course-access-ai-pro",
+  name: "AI Bootcamp Mentored",
+};
+
 const PRODUCT_MAP = {
-  "btcp-ai-bootcamp": {
-    slug: "bootcamp",
-    template: "course-access-ai-bootcamp",
-    name: "AI Bootcamp Self-Paced",
-  },
-  "74de94a0a998fdf3f37f433e90448cd5dd11ee97": {
-    slug: "bootcamp",
-    template: "course-access-ai-bootcamp",
-    name: "AI Bootcamp Self-Paced",
-  },
+  // Bootcamp (₾99 self-paced) — both the dashboard product_id and button hash
+  "btcp-ai-bootcamp": BOOTCAMP_PRODUCT,
+  "74de94a0a998fdf3f37f433e90448cd5dd11ee97": BOOTCAMP_PRODUCT,
+  // Pro (₾249 mentored)
+  "btcp-ai-pro": PRO_PRODUCT,
+  "811bb88862b6e4eb4b1a1bfdb86ba16cac23d8f8": PRO_PRODUCT,
 };
 
 // Fallback used when product_id isn't in the map (e.g. unknown / new product)
