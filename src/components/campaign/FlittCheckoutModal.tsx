@@ -76,7 +76,10 @@ function buildFlittOptions(buttonId: string, email: string) {
       customer_data: { email },
     },
     options: {
-      theme: { type: "light", preset: "reset" },
+      // Match the design template configured in Flitt portal:
+      // https://portal.flitt.com/#/solutions/design/edit/4056248/c18b51f1b4d94e80286b8718cc25805492dd01ac
+      // (BitCamp Template 0 — dark theme, plain layout, default purple button)
+      theme: { type: "dark", preset: "reset" },
       endpoint: {
         button: "/latest/checkout-v2/button/index.html",
         gateway: "/latest/checkout-v2/index.html",
@@ -89,9 +92,9 @@ function buildFlittOptions(buttonId: string, email: string) {
       hide_button_title: true,
     },
     css_variable: {
-      main: "#DA291C",
-      card_bg: "#1C1C20",
-      card_shadow: "#0A0A0B",
+      main: "#7d8ff8",
+      card_bg: "#353535",
+      card_shadow: "#9ADBE8",
     },
   };
 }
