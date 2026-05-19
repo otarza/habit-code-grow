@@ -29,9 +29,7 @@ export const PRODUCTS: Record<CheckoutProduct, ProductConfig> = {
   },
   pro: {
     mode: "embed",
-    // TODO: replace with the real Flitt button ID for the mentored product.
-    // Until then, clicking Buy will log an error and do nothing.
-    buttonId: "",
+    buttonId: "811bb88862b6e4eb4b1a1bfdb86ba16cac23d8f8",
     name: "AI Bootcamp მენტორობით",
     value: 249,
   },
