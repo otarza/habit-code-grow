@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { CampaignFooter } from "@/components/campaign/CampaignFooter";
@@ -8,6 +9,12 @@ const PRODUCT_LABELS: Record<string, string> = {
   pro: "AI Bootcamp მენტორობით",
 };
 
+// Default values per product slug — used when Flitt's redirect doesn't carry amount/currency
+const PRODUCT_DEFAULTS: Record<string, { value: number; currency: string }> = {
+  bootcamp: { value: 99, currency: "GEL" },
+  pro: { value: 249, currency: "GEL" },
+};
+
 type Variant = "success" | "declined" | "default";
 
 function resolveVariant(status: string | null): Variant {
@@ -15,6 +22,57 @@ function resolveVariant(status: string | null): Variant {
   if (s === "success" || s === "approved") return "success";
   if (s === "declined" || s === "failed" || s === "fail") return "declined";
   return "default";
+}
+
+type WindowWithAnalytics = Window & {
+  fbq?: (event: string, name: string, params?: Record<string, unknown>, opts?: Record<string, unknown>) => void;
+  gtag?: (event: string, name: string, params?: Record<string, unknown>) => void;
+};
+
+function trackPurchase(args: {
+  product: string;
+  orderId: string;
+  value: number;
+  currency: string;
+}) {
+  // sessionStorage dedup — guards against refresh on the thank-you page firing duplicate purchases.
+  // Note: Meta's eventID (passed below) also dedupes server-side, but client-side guard saves the call entirely.
+  const key = `bitcamp_purchase_fired_${args.orderId}`;
+  if (sessionStorage.getItem(key)) return;
+  sessionStorage.setItem(key, "1");
+
+  const win = window as WindowWithAnalytics;
+  const meta = PRODUCT_LABELS[args.product] ?? PRODUCT_LABELS.bootcamp;
+
+  // Meta Pixel
+  win.fbq?.(
+    "track",
+    "Purchase",
+    {
+      value: args.value,
+      currency: args.currency,
+      content_ids: [args.product],
+      content_name: meta,
+      content_type: "product",
+      num_items: 1,
+    },
+    { eventID: args.orderId } // dedup key for Meta (works with server-side Conversions API too)
+  );
+
+  // Google Analytics — GA4 ecommerce purchase event
+  win.gtag?.("event", "purchase", {
+    transaction_id: args.orderId,
+    value: args.value,
+    currency: args.currency,
+    items: [
+      {
+        item_id: args.product,
+        item_name: meta,
+        price: args.value,
+        quantity: 1,
+      },
+    ],
+  });
 }
 
 const ctaButtonStyle: React.CSSProperties = {
@@ -61,6 +119,22 @@ export default function ThankYou() {
   const product = params.get("product") ?? "bootcamp";
   const productLabel = PRODUCT_LABELS[product] ?? PRODUCT_LABELS.bootcamp;
   const orderId = params.get("order_id");
+
+  // Fire Purchase tracking on successful redirect.
+  // Flitt sometimes appends `amount` in tetri (e.g. "9900" = ₾99.00); fall back to product default.
+  useEffect(() => {
+    if (variant !== "success" || !orderId) return;
+    const rawAmount = params.get("amount");
+    const parsed = rawAmount ? Number(rawAmount) : NaN;
+    const defaults = PRODUCT_DEFAULTS[product] ?? PRODUCT_DEFAULTS.bootcamp;
+    // Flitt passes amount in smallest unit (tetri). If we get a value > 999, it's likely tetri → divide.
+    const value = Number.isFinite(parsed) && parsed > 0
+      ? parsed > 999 ? parsed / 100 : parsed
+      : defaults.value;
+    const currency = params.get("currency") || defaults.currency;
+
+    trackPurchase({ product, orderId, value, currency });
+  }, [variant, orderId, product, params]);
 
   const title =
     variant === "success"
