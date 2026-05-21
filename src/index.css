@@ -1371,9 +1371,10 @@ Red pyramid, dark navy, with vibrant pixel art accents and animations
   color: #15803d;
   font-weight: 600;
   margin: -4px 0 8px;
+  line-height: 1.5;
   display: flex;
-  align-items: center;
-  gap: 4px;
+  align-items: flex-start;
+  gap: 6px;
 }
 
 .campaign-modal__continue {

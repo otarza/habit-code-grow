@@ -48,7 +48,7 @@ export const PROMO_CODES: Record<string, PromoCode> = {
   bavshvebi: {
     product: "bootcamp",
     buttonId: "712f14e9fe23dd46c2693b292afd3aed99271a51",
-    label: "ბავშვების ფასი 🎁",
+    label: "მადლობა დიუშენის კუნთოვანი დისტროფიით დაავადებული ბავშვების პეტიციის ხელმოწერისთვის 🙏",
   },
 };
 
