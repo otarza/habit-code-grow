@@ -16,6 +16,7 @@ import {
 import { Countdown } from "@/components/campaign/Countdown";
 import { CampaignFooter } from "@/components/campaign/CampaignFooter";
 import { CampaignStickyCta } from "@/components/campaign/CampaignStickyCta";
+import { FlittCheckoutModal } from "@/components/campaign/FlittCheckoutModal";
 import { handleBuy } from "@/lib/checkout";
 
 const paymentLogos = ["visa", "mastercard", "apple-pay", "google-pay"] as const;
@@ -699,6 +700,7 @@ export default function AIBootcamp() {
       </main>
 
       <CampaignFooter />
+      <FlittCheckoutModal />
     </div>
   );
 }

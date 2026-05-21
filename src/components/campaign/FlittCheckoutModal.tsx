@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { ArrowRight, X } from "lucide-react";
-import type { FlittOpenEventDetail } from "@/lib/checkout";
+import { resolvePromoCode, type FlittOpenEventDetail, type PromoCode } from "@/lib/checkout";
 
 const FLITT_CSS = "https://pay.flitt.com/latest/checkout-vue/checkout.css";
 const FLITT_JS = "https://pay.flitt.com/latest/checkout-vue/checkout.js";
@@ -106,7 +106,16 @@ export function FlittCheckoutModal() {
   const [step, setStep] = useState<"email" | "payment">("email");
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState("");
+  const [promoCode, setPromoCode] = useState("");
+  const [activeButtonId, setActiveButtonId] = useState<string | null>(null);
   const mountRef = useRef<HTMLDivElement>(null);
+
+  // Resolve promo code live as the buyer types — silently ignores codes that
+  // don't match or that target a different product than the one being purchased.
+  const appliedPromo: PromoCode | null = useMemo(() => {
+    if (!detail) return null;
+    return resolvePromoCode(promoCode, detail.product);
+  }, [promoCode, detail]);
 
   useEffect(() => {
     const handler = (e: Event) => {
@@ -116,6 +125,8 @@ export function FlittCheckoutModal() {
       setStep("email");
       setEmail("");
       setEmailError("");
+      setPromoCode("");
+      setActiveButtonId(null);
       setStatus("idle");
     };
     window.addEventListener("flitt:open", handler);
@@ -123,7 +134,7 @@ export function FlittCheckoutModal() {
   }, []);
 
   useEffect(() => {
-    if (!isOpen || !detail || step !== "payment") return;
+    if (!isOpen || !detail || step !== "payment" || !activeButtonId) return;
 
     let cancelled = false;
     setStatus("loading");
@@ -132,7 +143,7 @@ export function FlittCheckoutModal() {
       .then((checkout) => {
         if (cancelled || !mountRef.current) return;
         mountRef.current.innerHTML = '<div id="flitt-mount-target"></div>';
-        checkout("#flitt-mount-target", buildFlittOptions(detail.buttonId, email));
+        checkout("#flitt-mount-target", buildFlittOptions(activeButtonId, email));
         setStatus("ready");
       })
       .catch((err) => {
@@ -144,7 +155,7 @@ export function FlittCheckoutModal() {
     return () => {
       cancelled = true;
     };
-  }, [isOpen, detail, step, email]);
+  }, [isOpen, detail, step, email, activeButtonId]);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -164,6 +175,7 @@ export function FlittCheckoutModal() {
 
   const handleEmailSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!detail) return;
     const trimmed = email.trim();
     if (!EMAIL_RE.test(trimmed)) {
       setEmailError("შეიყვანე ვალიდური ელ. ფოსტა");
@@ -171,6 +183,7 @@ export function FlittCheckoutModal() {
     }
     setEmail(trimmed);
     setEmailError("");
+    setActiveButtonId(appliedPromo ? appliedPromo.buttonId : detail.buttonId);
     setStep("payment");
   };
 
@@ -190,7 +203,8 @@ export function FlittCheckoutModal() {
           <div>
             <span className="campaign-modal__eyebrow">გადახდა</span>
             <strong className="campaign-modal__title">
-              {detail.name} — ₾{detail.value}
+              {detail.name}
+              {appliedPromo ? " — ფასდაკლება 🎁" : ` — ₾${detail.value}`}
             </strong>
           </div>
           <button
@@ -233,8 +247,33 @@ export function FlittCheckoutModal() {
               <p className="campaign-modal__hint">
                 ამ მისამართზე გამოვაგზავნით კურსზე წვდომას გადახდის შემდეგ.
               </p>
+
+              <label htmlFor="campaign-modal-promo" className="campaign-modal__label campaign-modal__label--secondary">
+                პრომო კოდი <span className="campaign-modal__label-meta">(არასავალდებულო)</span>
+              </label>
+              <input
+                id="campaign-modal-promo"
+                type="text"
+                inputMode="text"
+                autoComplete="off"
+                autoCapitalize="characters"
+                autoCorrect="off"
+                spellCheck={false}
+                value={promoCode}
+                onChange={(e) => setPromoCode(e.target.value)}
+                placeholder="თუ გაქვს — შეიყვანე აქ"
+                className={`campaign-modal__input${appliedPromo ? " campaign-modal__input--success" : ""}`}
+              />
+              {appliedPromo && (
+                <div className="campaign-modal__promo-applied">✓ {appliedPromo.label}</div>
+              )}
+
               <button type="submit" className="campaign-modal__continue">
-                <span>გაგრძელება — ₾{detail.value}</span>
+                <span>
+                  {appliedPromo
+                    ? "გაგრძელება ფასდაკლებით"
+                    : `გაგრძელება — ₾${detail.value}`}
+                </span>
                 <ArrowRight aria-hidden="true" size={18} />
               </button>
             </form>

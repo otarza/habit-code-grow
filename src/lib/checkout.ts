@@ -18,12 +18,11 @@ type ProductConfig = {
     }
 );
 
-// Per-product checkout config. Add a `pro` Flitt button ID once the payment
-// link product is created in Flitt dashboard.
+// Per-product checkout config.
 export const PRODUCTS: Record<CheckoutProduct, ProductConfig> = {
   bootcamp: {
-    mode: "redirect",
-    link: "https://pay.flitt.com/merchants/a1a4a4e30664fd373149649e9bc5b98bb4bd35b9/c18b51f1b4d94e80286b8718cc25805492dd01ac/index.html?button=74de94a0a998fdf3f37f433e90448cd5dd11ee97",
+    mode: "embed",
+    buttonId: "74de94a0a998fdf3f37f433e90448cd5dd11ee97",
     name: "AI Bootcamp Self-Paced",
     value: 99,
   },
@@ -34,6 +33,33 @@ export const PRODUCTS: Record<CheckoutProduct, ProductConfig> = {
     value: 249,
   },
 };
+
+export type PromoCode = {
+  product: CheckoutProduct;
+  buttonId: string;
+  label: string;
+};
+
+// Promo codes — case-insensitive (normalize to lowercase). When the buyer
+// enters a code that matches a key here, we route them to the alternate
+// Flitt button (presumably set to a discounted price in Flitt dashboard).
+// Add new codes as { lowercase_key: { product, buttonId, label } }.
+export const PROMO_CODES: Record<string, PromoCode> = {
+  bavshvebi: {
+    product: "bootcamp",
+    buttonId: "712f14e9fe23dd46c2693b292afd3aed99271a51",
+    label: "ბავშვების ფასი 🎁",
+  },
+};
+
+export function resolvePromoCode(raw: string, product: CheckoutProduct): PromoCode | null {
+  const normalized = (raw || "").trim().toLowerCase();
+  if (!normalized) return null;
+  const match = PROMO_CODES[normalized];
+  if (!match) return null;
+  if (match.product !== product) return null;
+  return match;
+}
 
 export type FlittOpenEventDetail = {
   product: CheckoutProduct;
