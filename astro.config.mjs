@@ -24,9 +24,6 @@ export default defineConfig({
         'react-helmet-async': path.resolve(__dirname, './src/lib/mock-helmet.tsx')
       }
     },
-    ssr: {
-      noExternal: ['react-syntax-highlighter']
-    },
     optimizeDeps: {
       include: ['react-syntax-highlighter']
     }
