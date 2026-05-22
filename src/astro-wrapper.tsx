@@ -2,6 +2,7 @@ import React from 'react';
 import { ReactProviders } from './components/ReactProviders';
 import AIBootcampOriginal from './react-pages/AIBootcamp';
 import AIPromptEngineeringOriginal from './react-pages/AIPromptEngineering';
+import AIPromptsLibraryOriginal from './react-pages/AIPromptsLibrary';
 import CoursePageOriginal from './react-pages/CoursePage';
 import CoursesIndexOriginal from './react-pages/CoursesIndex';
 import FullStackAIOriginal from './react-pages/FullStackAI';
@@ -15,6 +16,7 @@ import ThankYouOriginal from './react-pages/ThankYou';
 
 export const AIBootcamp = (props: any) => <ReactProviders><AIBootcampOriginal {...props} /></ReactProviders>;
 export const AIPromptEngineering = (props: any) => <ReactProviders><AIPromptEngineeringOriginal {...props} /></ReactProviders>;
+export const AIPromptsLibrary = (props: any) => <ReactProviders><AIPromptsLibraryOriginal {...props} /></ReactProviders>;
 export const CoursePage = (props: any) => <ReactProviders><CoursePageOriginal {...props} /></ReactProviders>;
 export const CoursesIndex = (props: any) => <ReactProviders><CoursesIndexOriginal {...props} /></ReactProviders>;
 export const FullStackAI = (props: any) => <ReactProviders><FullStackAIOriginal {...props} /></ReactProviders>;

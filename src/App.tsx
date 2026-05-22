@@ -15,6 +15,7 @@ import Privacy from "./pages/Privacy";
 import AIBootcamp from "./pages/AIBootcamp";
 import ThankYou from "./pages/ThankYou";
 import LearnCoursePage from "./pages/LearnCoursePage";
+import AIPromptsLibrary from "./pages/AIPromptsLibrary";
 
 const queryClient = new QueryClient();
 
@@ -41,6 +42,8 @@ const App = () => (
           <Route path="/courses" element={<CoursesIndex />} />
           <Route path="/courses/:courseSlug" element={<CoursePage />} />
           <Route path="/courses/:courseSlug/:topicSlug/:lessonSlug" element={<CoursePage />} />
+          {/* Resources */}
+          <Route path="/resources/ai-prompts-library" element={<AIPromptsLibrary />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
