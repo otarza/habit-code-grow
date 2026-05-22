@@ -26,6 +26,9 @@ export default defineConfig({
     },
     ssr: {
       noExternal: ['react-syntax-highlighter']
+    },
+    optimizeDeps: {
+      include: ['react-syntax-highlighter']
     }
   }
 });
