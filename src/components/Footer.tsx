@@ -40,7 +40,7 @@ export function Footer() {
             <div className="flex items-center mb-4">
               <img
                 className="h-8 w-auto invert"
-                src={bitcampLogo}
+                src={(bitcampLogo as any).src || bitcampLogo}
                 alt="Bitcamp"
               />
               <span className="ml-3 text-xl font-bold">

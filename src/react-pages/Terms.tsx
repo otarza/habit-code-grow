@@ -15,7 +15,7 @@ export default function Terms() {
         <div style={{ maxWidth: "920px", margin: "0 auto" }}>
           <Link to="/">
             <img
-              src={bitcampLogo}
+              src={(bitcampLogo as any).src || bitcampLogo}
               alt="BitCamp"
               style={{ height: "32px", filter: "invert(1)", opacity: 0.9 }}
             />

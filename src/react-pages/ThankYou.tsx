@@ -154,7 +154,7 @@ export default function ThankYou() {
       <header style={{ padding: "20px 24px", borderBottom: "1px solid var(--cp-border)" }}>
         <div style={{ maxWidth: "920px", margin: "0 auto" }}>
           <Link to="/">
-            <img src={bitcampLogo} alt="BitCamp" style={{ height: "28px", filter: "invert(1)", opacity: 0.85 }} />
+            <img src={(bitcampLogo as any).src || bitcampLogo} alt="BitCamp" style={{ height: "28px", filter: "invert(1)", opacity: 0.85 }} />
           </Link>
         </div>
       </header>

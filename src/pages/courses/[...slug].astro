@@ -1,0 +1,53 @@
+---
+import fs from 'fs';
+import path from 'path';
+import Layout from '../../layouts/Layout.astro';
+import { CoursePage as CoursePage } from '../../astro-wrapper';
+
+export async function getStaticPaths() {
+  const coursesDir = path.join(process.cwd(), 'public', 'courses');
+  const paths = [];
+
+  if (fs.existsSync(coursesDir)) {
+    const courses = fs.readdirSync(coursesDir).filter(f => fs.statSync(path.join(coursesDir, f)).isDirectory());
+    for (const courseSlug of courses) {
+      // To avoid fetching manifest multiple times, let's load it once here
+      let manifest = null;
+      const manifestPath = path.join(coursesDir, courseSlug, 'manifest.json');
+      if (fs.existsSync(manifestPath)) {
+        try {
+          manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
+        } catch (err) {
+          console.error(`Error reading manifest for ${courseSlug}:`, err);
+        }
+      }
+
+      // Base course page
+      paths.push({ 
+        params: { slug: courseSlug },
+        props: { manifest, courseSlug, topicSlug: null, lessonSlug: null }
+      });
+
+      if (manifest && manifest.topics) {
+        for (const topic of manifest.topics) {
+          if (topic.lessons) {
+            for (const lesson of topic.lessons) {
+              paths.push({ 
+                params: { slug: `${courseSlug}/${topic.slug}/${lesson.slug}` },
+                props: { manifest, courseSlug, topicSlug: topic.slug, lessonSlug: lesson.slug }
+              });
+            }
+          }
+        }
+      }
+    }
+  }
+
+  return paths;
+}
+const { manifest, courseSlug, topicSlug, lessonSlug } = Astro.props;
+---
+
+<Layout>
+  <CoursePage client:load manifest={manifest} courseSlug={courseSlug} topicSlug={topicSlug} lessonSlug={lessonSlug} />
+</Layout>

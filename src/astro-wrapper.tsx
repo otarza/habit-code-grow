@@ -1,0 +1,27 @@
+import React from 'react';
+import { ReactProviders } from './components/ReactProviders';
+import AIBootcampOriginal from './react-pages/AIBootcamp';
+import AIPromptEngineeringOriginal from './react-pages/AIPromptEngineering';
+import CoursePageOriginal from './react-pages/CoursePage';
+import CoursesIndexOriginal from './react-pages/CoursesIndex';
+import FullStackAIOriginal from './react-pages/FullStackAI';
+import IndexOriginal from './react-pages/Index';
+import LearnCoursePageOriginal from './react-pages/LearnCoursePage';
+import NotFoundOriginal from './react-pages/NotFound';
+import PrivacyOriginal from './react-pages/Privacy';
+import PythonSQLOriginal from './react-pages/PythonSQL';
+import TermsOriginal from './react-pages/Terms';
+import ThankYouOriginal from './react-pages/ThankYou';
+
+export const AIBootcamp = (props: any) => <ReactProviders><AIBootcampOriginal {...props} /></ReactProviders>;
+export const AIPromptEngineering = (props: any) => <ReactProviders><AIPromptEngineeringOriginal {...props} /></ReactProviders>;
+export const CoursePage = (props: any) => <ReactProviders><CoursePageOriginal {...props} /></ReactProviders>;
+export const CoursesIndex = (props: any) => <ReactProviders><CoursesIndexOriginal {...props} /></ReactProviders>;
+export const FullStackAI = (props: any) => <ReactProviders><FullStackAIOriginal {...props} /></ReactProviders>;
+export const Index = (props: any) => <ReactProviders><IndexOriginal {...props} /></ReactProviders>;
+export const LearnCoursePage = (props: any) => <ReactProviders><LearnCoursePageOriginal {...props} /></ReactProviders>;
+export const NotFound = (props: any) => <ReactProviders><NotFoundOriginal {...props} /></ReactProviders>;
+export const Privacy = (props: any) => <ReactProviders><PrivacyOriginal {...props} /></ReactProviders>;
+export const PythonSQL = (props: any) => <ReactProviders><PythonSQLOriginal {...props} /></ReactProviders>;
+export const Terms = (props: any) => <ReactProviders><TermsOriginal {...props} /></ReactProviders>;
+export const ThankYou = (props: any) => <ReactProviders><ThankYouOriginal {...props} /></ReactProviders>;

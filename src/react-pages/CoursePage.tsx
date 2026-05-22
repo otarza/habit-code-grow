@@ -7,55 +7,23 @@ import { LessonView } from '@/components/course/LessonView';
 import { CourseManifest, loadCourseManifest } from '@/components/course/CourseManifest';
 import { Button } from '@/components/ui/button';
 
-export default function CoursePage() {
-  const { courseSlug, topicSlug, lessonSlug } = useParams<{
-    courseSlug: string;
-    topicSlug?: string;
-    lessonSlug?: string;
-  }>();
+interface CoursePageProps {
+  manifest: CourseManifest | null;
+  courseSlug: string;
+  topicSlug: string | null;
+  lessonSlug: string | null;
+}
 
-  const [manifest, setManifest] = useState<CourseManifest | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+export default function CoursePage({ manifest, courseSlug, topicSlug, lessonSlug }: CoursePageProps) {
+  // We no longer need useParams since we get slugs as props from Astro
+  // We also don't need useEffect to fetch the manifest since Astro passes it
 
-  useEffect(() => {
-    async function loadCourse() {
-      if (!courseSlug) {
-        setError('კურსი არ არის მითითებული');
-        setLoading(false);
-        return;
-      }
 
-      setLoading(true);
-      setError(null);
-
-      const loadedManifest = await loadCourseManifest(courseSlug);
-
-      if (!loadedManifest) {
-        setError('კურსი ვერ მოიძებნა');
-      } else {
-        setManifest(loadedManifest);
-      }
-
-      setLoading(false);
-    }
-
-    loadCourse();
-  }, [courseSlug]);
-
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-pulse text-muted-foreground">კურსი იტვირთება...</div>
-      </div>
-    );
-  }
-
-  if (error || !manifest) {
+  if (!manifest) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center text-center p-4">
         <h1 className="text-2xl font-bold mb-4">კურსი ვერ მოიძებნა</h1>
-        <p className="text-muted-foreground mb-6">{error}</p>
+        <p className="text-muted-foreground mb-6">კურსი არ არის მითითებული ან ვერ მოიძებნა</p>
         <Button asChild variant="outline">
           <Link to="/">
             <ArrowLeft className="h-4 w-4 mr-2" />

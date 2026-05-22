@@ -92,7 +92,7 @@ export function CourseSidebar({ manifest, className, routeBasePath }: CourseSide
       {/* Logo */}
       <div className="p-5 border-b flex justify-center">
         <Link to="/" onClick={() => setIsMobileOpen(false)}>
-          <img src={bitcampLogo} alt="BitCamp" className="h-10" />
+          <img src={(bitcampLogo as any).src || bitcampLogo} alt="BitCamp" className="h-10" />
         </Link>
       </div>
 

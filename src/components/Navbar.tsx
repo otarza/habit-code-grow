@@ -24,7 +24,7 @@ export function Navbar() {
           <div className="flex-shrink-0 flex items-center">
             <img
               className="h-8 w-auto"
-              src={bitcampLogo}
+              src={(bitcampLogo as any).src || bitcampLogo}
               alt="Bitcamp"
             />
           </div>

@@ -34,10 +34,12 @@ function getAccessConfig(courseSlug?: string) {
 }
 
 function hasStoredAccess(storageKey: string) {
+  if (typeof window === 'undefined') return false;
   return window.localStorage.getItem(storageKey) === 'true';
 }
 
 function getStoredEmail(storageKey: string) {
+  if (typeof window === 'undefined') return '';
   return window.localStorage.getItem(storageKey) || '';
 }
 
@@ -108,12 +110,14 @@ function AccessGate({
   );
 }
 
-export default function LearnCoursePage() {
-  const { courseSlug, topicSlug, lessonSlug } = useParams<{
-    courseSlug: string;
-    topicSlug?: string;
-    lessonSlug?: string;
-  }>();
+interface LearnCoursePageProps {
+  manifest: CourseManifest | null;
+  courseSlug: string;
+  topicSlug: string | null;
+  lessonSlug: string | null;
+}
+
+export default function LearnCoursePage({ manifest, courseSlug, topicSlug, lessonSlug }: LearnCoursePageProps) {
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -121,9 +125,6 @@ export default function LearnCoursePage() {
   const routeBasePath = `/learn/${courseSlug}`;
   const [hasAccess, setHasAccess] = useState(() => (config ? hasStoredAccess(config.storageKey) : false));
   const [profileEmail, setProfileEmail] = useState(() => (config ? getStoredEmail(config.emailStorageKey) : ''));
-  const [manifest, setManifest] = useState<CourseManifest | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
 
   const accessToken = useMemo(() => {
     const params = new URLSearchParams(location.search);
@@ -152,32 +153,8 @@ export default function LearnCoursePage() {
     window.localStorage.removeItem(config.emailStorageKey);
     setHasAccess(false);
     setProfileEmail('');
-    setManifest(null);
     navigate(routeBasePath, { replace: true });
   }
-
-  useEffect(() => {
-    async function loadCourse() {
-      if (!courseSlug || !config || !hasAccess) {
-        setLoading(false);
-        return;
-      }
-
-      setLoading(true);
-      setError(null);
-
-      const loadedManifest = await loadCourseManifest(courseSlug, LEARN_CONTENT_BASE_URL);
-      if (!loadedManifest) {
-        setError('კურსი ვერ მოიძებნა');
-      } else {
-        setManifest(loadedManifest);
-      }
-
-      setLoading(false);
-    }
-
-    loadCourse();
-  }, [config, courseSlug, hasAccess]);
 
   if (!config) {
     return (
@@ -197,19 +174,11 @@ export default function LearnCoursePage() {
     return <AccessGate title={config.title} buyPath={config.buyPath} buyLabel={config.buyLabel} />;
   }
 
-  if (loading) {
-    return (
-      <div className="dark min-h-screen bg-background text-foreground flex items-center justify-center">
-        <div className="animate-pulse text-muted-foreground">კურსი იტვირთება...</div>
-      </div>
-    );
-  }
-
-  if (error || !manifest) {
+  if (!manifest) {
     return (
       <div className="dark min-h-screen bg-background text-foreground flex flex-col items-center justify-center text-center p-4">
         <h1 className="text-2xl font-bold mb-4">კურსი ვერ მოიძებნა</h1>
-        <p className="text-muted-foreground mb-6">{error}</p>
+        <p className="text-muted-foreground mb-6">კურსი არ არის მითითებული ან ვერ მოიძებნა</p>
         <Button asChild variant="outline">
           <Link to={config.buyPath}>
             <ArrowLeft className="h-4 w-4 mr-2" />
