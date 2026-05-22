@@ -23,6 +23,9 @@ export default defineConfig({
         'react-router-dom': path.resolve(__dirname, './src/lib/mock-router.tsx'),
         'react-helmet-async': path.resolve(__dirname, './src/lib/mock-helmet.tsx')
       }
+    },
+    ssr: {
+      noExternal: ['react-syntax-highlighter']
     }
   }
 });
