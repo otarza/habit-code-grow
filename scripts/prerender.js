@@ -31,7 +31,8 @@ const routes = explicitRoutes
     '/courses',
     '/terms',
     '/privacy',
-    '/thank-you'
+    '/thank-you',
+    '/resources/ai-prompts-library'
 ];
 
 // Dynamically extract all course routes
