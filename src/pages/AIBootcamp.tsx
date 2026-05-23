@@ -200,6 +200,10 @@ function PriceBlock({ align = "left" }: { align?: "left" | "center" }) {
   return (
     <div className={`campaign-price campaign-price--${align}`}>
       <p className="campaign-price__label">დამოუკიდებლობის ფასი</p>
+      <div className="campaign-price__row">
+        <span className="campaign-price__old">₾199</span>
+        <span className="campaign-price__save">დაზოგე ₾100</span>
+      </div>
       <div className="campaign-price__new">₾99</div>
     </div>
   );
@@ -623,9 +627,10 @@ export default function AIBootcamp() {
               <div className="campaign-cta-price-line">
                 <div>
                   <span>დღევანდელი ფასი</span>
+                  <span className="campaign-price__old">₾199</span>
                   <strong>₾99</strong>
                 </div>
-                <span className="campaign-price__save">26 მაისამდე</span>
+                <span className="campaign-price__save">დაზოგე ₾100</span>
               </div>
               <CtaButton label="დაიწყე სწავლა — ₾99" onClick={buy} />
               <PaymentLogos compact />
@@ -683,9 +688,10 @@ export default function AIBootcamp() {
               <div className="campaign-final__price-row">
                 <div>
                   <span>დღევანდელი ფასი</span>
+                  <span className="campaign-price__old">₾199</span>
                   <strong>₾99</strong>
                 </div>
-                <span className="campaign-price__save">26 მაისამდე</span>
+                <span className="campaign-price__save">დაზოგე ₾100</span>
               </div>
               <CtaButton label="დაიწყე სწავლა — ₾99" onClick={buy} />
               <p>
