@@ -1,5 +1,6 @@
 const functions = require("@google-cloud/functions-framework");
 const crypto = require("crypto");
+const { Firestore, FieldValue } = require("@google-cloud/firestore");
 const postmark = require("postmark");
 
 const FLITT_SECRET = process.env.FLITT_SECRET_KEY;
@@ -11,12 +12,14 @@ const MESSAGE_STREAM = process.env.POSTMARK_STREAM || "outbound";
 // to our internal product slug + Postmark template alias.
 const BOOTCAMP_PRODUCT = {
   slug: "bootcamp",
+  courseSlug: "ai-bootcamp",
   template: "course-access-ai-bootcamp",
   name: "AI Bootcamp Self-Paced",
 };
 
 const PRO_PRODUCT = {
   slug: "pro",
+  courseSlug: "ai-pro",
   template: "course-access-ai-pro",
   name: "AI Bootcamp Mentored",
 };
@@ -34,10 +37,12 @@ const PRODUCT_MAP = {
 // Lets a sale still complete; we can fix the mapping after seeing the first real callback.
 const FALLBACK_PRODUCT = {
   slug: "bootcamp",
+  courseSlug: "ai-bootcamp",
   template: "course-access-ai-bootcamp",
   name: "AI Bootcamp Self-Paced",
 };
 
+const firestore = new Firestore();
 const postmarkClient = new postmark.ServerClient(POSTMARK_TOKEN);
 
 functions.http("flittWebhook", async (req, res) => {
@@ -62,7 +67,7 @@ functions.http("flittWebhook", async (req, res) => {
 
   const product = PRODUCT_MAP[String(payload.product_id)] || FALLBACK_PRODUCT;
 
-  const email = extractEmail(payload);
+  const email = normalizeEmail(extractEmail(payload));
   if (!email) {
     console.error("NO_EMAIL", payload.order_id);
     // 200 — we acknowledge; manual recovery from logs
@@ -70,6 +75,34 @@ functions.http("flittWebhook", async (req, res) => {
   }
 
   const amountGel = (Number(payload.amount) / 100).toFixed(2);
+
+  try {
+    await upsertCourseAccess({
+      email,
+      courseSlug: product.courseSlug,
+      source: "flitt_purchase",
+      metadata: {
+        orderId: String(payload.order_id || ""),
+        paymentId: String(payload.payment_id || ""),
+        productId: String(payload.product_id || ""),
+        amount: amountGel,
+        currency: payload.currency || "GEL",
+      },
+    });
+    console.log("ENTITLEMENT_UPSERTED", payload.order_id, email, product.courseSlug);
+  } catch (err) {
+    console.error(
+      "ENTITLEMENT_FAIL",
+      payload.order_id,
+      JSON.stringify({
+        email,
+        courseSlug: product.courseSlug,
+        message: err.message,
+      })
+    );
+    // Continue sending the purchase email so the buyer still receives access.
+    // The signed callback remains logged for manual recovery.
+  }
 
   try {
     const result = await postmarkClient.sendEmailWithTemplate({
@@ -177,6 +210,45 @@ function extractEmail(payload) {
     }
   }
   return null;
+}
+
+async function upsertCourseAccess({ email, courseSlug, source, metadata }) {
+  const emailHash = hashEmail(email);
+  const docRef = firestore.collection("course_access").doc(emailHash);
+
+  await docRef.set(
+    {
+      email,
+      emailNormalized: email,
+      updatedAt: FieldValue.serverTimestamp(),
+      courses: {
+        [courseSlug]: {
+          status: "active",
+          source,
+          grantedAt: FieldValue.serverTimestamp(),
+          updatedAt: FieldValue.serverTimestamp(),
+          ...metadata,
+        },
+      },
+    },
+    { merge: true }
+  );
+
+  await firestore.collection("course_access_events").add({
+    emailHash,
+    courseSlug,
+    type: "purchased",
+    createdAt: FieldValue.serverTimestamp(),
+    metadata,
+  });
+}
+
+function normalizeEmail(value) {
+  return String(value || "").trim().toLowerCase();
+}
+
+function hashEmail(email) {
+  return crypto.createHash("sha256").update(email).digest("hex");
 }
 
 function toBase64Url(value) {

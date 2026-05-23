@@ -11,6 +11,7 @@
     "dev": "FLITT_SECRET_KEY=test POSTMARK_SERVER_TOKEN=test functions-framework --target=flittWebhook --port=8081"
   },
   "dependencies": {
+    "@google-cloud/firestore": "^8.6.0",
     "@google-cloud/functions-framework": "^3.4.2",
     "postmark": "^4.0.5"
   }

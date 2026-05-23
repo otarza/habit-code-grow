@@ -27,7 +27,7 @@ This should work generically for every current and future paid course.
 - Postmark login template: `course-login-link` created.
 - Frontend learning gate: email request form implemented for `/learn/:courseSlug`.
 - Import tooling: `scripts/import-course-access.js` added with dry-run and apply modes.
-- Phase 2 integrations: not started; `flitt-webhook` and Telegram bot remain untouched.
+- Phase 2 integrations: implemented for `flitt-webhook`, Telegram manager bot, and local invite script.
 
 ## Target Architecture
 

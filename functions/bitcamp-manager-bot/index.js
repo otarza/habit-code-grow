@@ -13,6 +13,8 @@
  */
 
 const functions = require("@google-cloud/functions-framework");
+const crypto = require("crypto");
+const { Firestore, FieldValue } = require("@google-cloud/firestore");
 const postmark = require("postmark");
 
 const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
@@ -40,6 +42,7 @@ const COURSES = {
   },
 };
 
+const firestore = new Firestore();
 const postmarkClient = new postmark.ServerClient(POSTMARK_TOKEN);
 
 functions.http("telegramBot", async (req, res) => {
@@ -134,6 +137,17 @@ async function handleInvite(chatId, text) {
   const magicLink = `https://www.bitcamp.ge/learn/${course.slug}?access=${base64Email}`;
 
   try {
+    await upsertCourseAccess({
+      email,
+      courseSlug: course.slug,
+      source: "telegram_invite",
+      metadata: {
+        orderId,
+        note,
+        invitedBy: "telegram_bot",
+      },
+    });
+
     const result = await postmarkClient.sendEmailWithTemplate({
       From: FROM,
       To: email,
@@ -163,6 +177,7 @@ async function handleInvite(chatId, text) {
       `✅ <b>Invite sent</b>\n\n` +
         `To: <code>${escapeHtml(email)}</code>\n` +
         `Course: <b>${escapeHtml(course.name)}</b>\n` +
+        `Access: <b>active</b>\n` +
         `Order: <code>${escapeHtml(orderId)}</code>\n` +
         `Postmark MessageID: <code>${escapeHtml(result.MessageID)}</code>\n\n` +
         `<a href="${magicLink}">Magic link</a> (works the same as a paid customer)`
@@ -174,6 +189,37 @@ async function handleInvite(chatId, text) {
       `❌ Send failed: ${escapeHtml(err.message || "unknown error")}`
     );
   }
+}
+
+async function upsertCourseAccess({ email, courseSlug, source, metadata }) {
+  const emailHash = hashEmail(email);
+  const docRef = firestore.collection("course_access").doc(emailHash);
+
+  await docRef.set(
+    {
+      email,
+      emailNormalized: email,
+      updatedAt: FieldValue.serverTimestamp(),
+      courses: {
+        [courseSlug]: {
+          status: "active",
+          source,
+          grantedAt: FieldValue.serverTimestamp(),
+          updatedAt: FieldValue.serverTimestamp(),
+          ...metadata,
+        },
+      },
+    },
+    { merge: true }
+  );
+
+  await firestore.collection("course_access_events").add({
+    emailHash,
+    courseSlug,
+    type: "telegram_invite",
+    createdAt: FieldValue.serverTimestamp(),
+    metadata,
+  });
 }
 
 async function sendMessage(chatId, text) {
@@ -201,6 +247,10 @@ async function sendMessage(chatId, text) {
 
 function escapeHtml(s) {
   return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
+function hashEmail(email) {
+  return crypto.createHash("sha256").update(email).digest("hex");
 }
 
 function toBase64Url(value) {
