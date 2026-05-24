@@ -186,13 +186,39 @@ function verifySignature(payload, secret) {
 }
 
 function extractEmail(payload) {
-  // 1. Flitt's native sender_email — present in real callbacks even when only
-  // a custom "Additional field" was used in the dashboard
-  if (payload.sender_email) return payload.sender_email;
-  // 2. Top-level `email` field (if Flitt ever flattens it that way)
-  if (payload.email) return payload.email;
-  // 3. merchant_data is a JSON array of custom field objects in real Flitt callbacks:
+  // 1. The email collected in our checkout modal. Flitt forwards this as
+  // additional_info.reservation_data, while sender_email may come from the
+  // payer account, Apple Pay, or a remembered card/browser identity.
+  const reservationEmail = extractReservationEmail(payload);
+  if (reservationEmail) return reservationEmail;
+  // 2. merchant_data is a JSON array of custom field objects in real Flitt callbacks:
   //    [{"name":"email","label":"...","value":"buyer@example.com"}, ...]
+  const merchantEmail = extractMerchantEmail(payload);
+  if (merchantEmail) return merchantEmail;
+  // 3. Top-level `email` field (if Flitt ever flattens it that way)
+  if (payload.email) return payload.email;
+  // 4. Fallback to Flitt's native payer email.
+  if (payload.sender_email) return payload.sender_email;
+  return null;
+}
+
+function extractReservationEmail(payload) {
+  if (!payload.additional_info) return null;
+
+  try {
+    const info = parseMaybeJson(payload.additional_info);
+    if (!info || !info.reservation_data) return null;
+
+    const reservation = parseMaybeJson(info.reservation_data);
+    if (reservation && reservation.email) return reservation.email;
+  } catch {
+    // not JSON — ignore
+  }
+
+  return null;
+}
+
+function extractMerchantEmail(payload) {
   if (payload.merchant_data) {
     try {
       const md =
@@ -210,6 +236,10 @@ function extractEmail(payload) {
     }
   }
   return null;
+}
+
+function parseMaybeJson(value) {
+  return typeof value === "string" ? JSON.parse(value) : value;
 }
 
 async function upsertCourseAccess({ email, courseSlug, source, metadata }) {
