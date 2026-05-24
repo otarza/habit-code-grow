@@ -73,6 +73,8 @@ function buildFlittOptions(buttonId: string, email: string) {
   return {
     params: {
       button: buttonId,
+      sender_email: email,
+      merchant_data: JSON.stringify({ email }),
       customer_data: { email },
     },
     options: {
