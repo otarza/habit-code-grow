@@ -52,7 +52,8 @@
       "order": 3,
       "lessons": [
         { "slug": "ideal-customer-persona", "title": "იდეალური მომხმარებლის პერსონა: პროფილის შექმნა", "order": 301 },
-        { "slug": "brand-voice-guide", "title": "ბრენდის ხმის სახელმძღვანელოს შექმნა", "order": 302 }
+        { "slug": "brand-voice-guide", "title": "ბრენდის ხმის სახელმძღვანელოს შექმნა", "order": 302 },
+        { "slug": "synthesis-audience-brand-voice", "title": "სინთეზი — აუდიტორია + ბრენდის ხმა", "order": 303 }
       ]
     }
   ]
