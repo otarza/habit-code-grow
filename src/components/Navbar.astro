@@ -1,0 +1,177 @@
+---
+import { Image } from 'astro:assets';
+import bitcampLogo from '@/assets/bitcamp-logo.png';
+
+interface Props {
+  /**
+   * When true, navbar sticks below an existing top bar (e.g. /ai page's
+   * announcement bar). Defaults to false (sticky to top of viewport).
+   */
+  withTopBar?: boolean;
+}
+
+const { withTopBar = false } = Astro.props;
+
+// Anchors are local (#x) on the homepage; absolute (/#x) elsewhere so the
+// browser navigates home and lets the native scroll-to-anchor take over.
+const isHome = Astro.url.pathname === '/' || Astro.url.pathname === '';
+const linkFor = (anchor: string) => (isHome ? `#${anchor}` : `/#${anchor}`);
+
+// CTA copy adapts on /ai (mentored bootcamp page).
+const isAIPage = Astro.url.pathname === '/ai';
+const ctaLabel = isAIPage ? 'გახდი AI არქიტექტორი' : 'დაიწყე 21 დღიანი ჩელენჯით';
+
+const navItems = [
+  { name: 'როგორ მუშაობს', anchor: 'how-it-works' },
+  { name: 'ფასები', anchor: 'pricing' },
+  { name: 'წარმატება', anchor: 'success' },
+  { name: 'კითხვები', anchor: 'faq' },
+];
+---
+
+<nav
+  class:list={[
+    'bg-surface/95 backdrop-blur-md border-b border-border sticky z-50',
+    withTopBar ? 'top-[52px]' : 'top-0',
+  ]}
+  aria-label="მთავარი ნავიგაცია"
+>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-16">
+      {/* Logo */}
+      <a href="/" class="flex-shrink-0 flex items-center" aria-label="BitCamp — მთავარი">
+        <Image src={bitcampLogo} alt="Bitcamp" height={32} class="h-8 w-auto" />
+      </a>
+
+      {/* Desktop nav links */}
+      <ul class="hidden md:flex items-baseline space-x-8 list-none m-0 p-0">
+        {navItems.map((item) => (
+          <li>
+            <a
+              href={linkFor(item.anchor)}
+              class="text-text-secondary hover:text-text-primary px-3 py-2 text-sm font-medium transition-colors"
+            >
+              {item.name}
+            </a>
+          </li>
+        ))}
+      </ul>
+
+      {/* Desktop CTAs */}
+      <div class="hidden md:flex items-center gap-3">
+        <a
+          href={linkFor('free-courses')}
+          class="inline-flex items-center gap-1 px-3 py-2 text-sm font-medium text-text-secondary hover:text-primary transition-colors"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"></path>
+            <path d="M20 3v4"></path><path d="M22 5h-4"></path>
+            <path d="M4 17v2"></path><path d="M5 18H3"></path>
+          </svg>
+          უფასო კურსები
+        </a>
+        <a
+          href="/courses"
+          class="inline-flex items-center px-3 py-1.5 text-sm font-medium border border-primary text-primary rounded-md hover:bg-primary hover:text-primary-foreground transition-colors"
+        >
+          კურსები
+        </a>
+        <a
+          href={linkFor('pricing')}
+          class="inline-flex items-center px-4 py-2 text-sm font-semibold bg-primary text-primary-foreground rounded-md hover:bg-primary-hover transition-colors"
+        >
+          {ctaLabel}
+        </a>
+      </div>
+
+      {/* Mobile bar */}
+      <div class="md:hidden flex items-center gap-2">
+        <a
+          href={linkFor('free-courses')}
+          class="inline-flex items-center gap-1 text-xs px-2 py-1 text-text-secondary hover:text-primary"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"></path>
+          </svg>
+          უფასო კურსები
+        </a>
+        <button
+          type="button"
+          class="text-text-secondary hover:text-text-primary p-2"
+          aria-label="მენიუ"
+          aria-expanded="false"
+          aria-controls="navbar-mobile-panel"
+          data-navbar-toggle
+        >
+          <svg class="h-6 w-6 navbar-icon-open" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+          <svg class="h-6 w-6 navbar-icon-close hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    {/* Mobile panel */}
+    <div id="navbar-mobile-panel" class="md:hidden border-t border-border" hidden>
+      <ul class="px-2 pt-2 pb-3 space-y-1 list-none m-0">
+        {navItems.map((item) => (
+          <li>
+            <a
+              href={linkFor(item.anchor)}
+              class="block px-3 py-2 text-base font-medium text-text-secondary hover:text-text-primary"
+            >
+              {item.name}
+            </a>
+          </li>
+        ))}
+        <li class="pt-4 space-y-3 list-none">
+          <a
+            href={linkFor('free-courses')}
+            class="inline-flex w-full items-center justify-center gap-1 px-3 py-2 text-sm text-text-secondary hover:text-primary"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"></path>
+              <path d="M20 3v4"></path><path d="M22 5h-4"></path>
+            </svg>
+            უფასო კურსები
+          </a>
+          <a
+            href="/courses"
+            class="inline-flex w-full items-center justify-center px-3 py-2 text-sm font-medium border border-primary text-primary rounded-md hover:bg-primary hover:text-primary-foreground"
+          >
+            კურსები
+          </a>
+          <a
+            href={linkFor('pricing')}
+            class="inline-flex w-full items-center justify-center px-4 py-2 text-sm font-semibold bg-primary text-primary-foreground rounded-md hover:bg-primary-hover"
+          >
+            {ctaLabel}
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>('[data-navbar-toggle]');
+  const panel = document.querySelector<HTMLElement>('#navbar-mobile-panel');
+  const iconOpen = toggle?.querySelector<SVGElement>('.navbar-icon-open');
+  const iconClose = toggle?.querySelector<SVGElement>('.navbar-icon-close');
+
+  if (toggle && panel && iconOpen && iconClose) {
+    const setOpen = (open: boolean) => {
+      panel.hidden = !open;
+      toggle.setAttribute('aria-expanded', String(open));
+      iconOpen.classList.toggle('hidden', open);
+      iconClose.classList.toggle('hidden', !open);
+    };
+    toggle.addEventListener('click', () => setOpen(panel.hidden));
+    // Close the panel when a link inside it is clicked (lets the browser navigate cleanly)
+    panel.addEventListener('click', (event) => {
+      if (event.target instanceof HTMLAnchorElement) setOpen(false);
+    });
+  }
+</script>

@@ -1,0 +1,167 @@
+---
+import { Image } from 'astro:assets';
+import bitcampLogo from '@/assets/bitcamp-logo.png';
+
+interface Props {
+  /**
+   * On the AI mentored page (/ai) the final CTA flips to mentorship copy.
+   */
+  variant?: 'default' | 'ai';
+}
+
+const { variant = 'default' } = Astro.props;
+
+const isAIVariant = variant === 'ai' || Astro.url.pathname === '/ai';
+const ctaLabel = isAIVariant ? 'გახდი AI არქიტექტორი' : 'დაიწყე 21 დღიანი ჩელენჯი';
+
+const currentYear = new Date().getFullYear();
+
+const paymentLogos = ['visa', 'mastercard', 'apple-pay', 'google-pay'] as const;
+
+const challengesLinks = [
+  { name: '21 დღიანი ჩელენჯი', href: '/#21-day' },
+  { name: '30 დღიანი ჩელენჯი', href: '/#21-day' },
+  { name: '100 დღიანი ჩელენჯი', href: '/#21-day' },
+  { name: 'როგორ მუშაობს?', href: '/#how-it-works' },
+];
+
+const socialLinks = [
+  { name: 'YouTube', href: 'https://www.youtube.com/@bitcampge' },
+  { name: 'Facebook', href: 'https://www.facebook.com/bitcamp.ge' },
+  { name: 'LinkedIn', href: 'https://www.linkedin.com/in/otarza/' },
+];
+---
+
+<footer class="bg-primary text-primary-foreground">
+  {/* Final CTA */}
+  <div class="border-b border-primary-foreground/20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div class="text-center">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4">
+          დღეს იწყება შენი თავგადასავალი ტექნოლოგიების სამყაროში
+        </h2>
+        <p class="text-xl text-primary-foreground/90 mb-8 max-w-2xl mx-auto">
+          დააღწიე თავი მუდმივად გადადებული საქმისა და განუხორციელებელი გეგმების ციკლს.
+          დაიწყე ნამდვილი ჩვევებისა და უნარების ათვისება — ისინი ხომ მთელი ცხოვრება გაგყვება.
+        </p>
+        <div class="flex justify-center w-full px-4">
+          <a
+            href="/#pricing"
+            class="group w-full max-w-lg inline-flex items-center justify-center gap-2 bg-secondary text-secondary-foreground hover:bg-secondary-hover px-3 sm:px-10 h-12 sm:h-16 rounded-md text-sm sm:text-xl font-bold whitespace-nowrap transition-colors"
+          >
+            {ctaLabel}
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-hover:translate-x-1 transition-transform flex-shrink-0" aria-hidden="true">
+              <path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {/* Main footer */}
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+      {/* Brand */}
+      <div class="lg:col-span-2">
+        <div class="flex items-center mb-4">
+          <Image src={bitcampLogo} alt="Bitcamp" height={32} class="h-8 w-auto invert" />
+          <span class="ml-3 text-xl font-bold">სწავლა და ბრძოლა</span>
+        </div>
+        <p class="text-primary-foreground/80 mb-6 max-w-md leading-relaxed">
+          ვქმნით უალტერნატივო ჩვევებს ტექნოლოგიების სამყაროში გზის გასაკვალად. ვქმნით
+          დამოუკიდებელ და შეუპოვარ პროფესიონალებს. 2018 წლიდან ვმუშაობთ ათასობით სტუდენტთან
+          და საფუძველი ჩავუყარეთ თითოეული მათგანის ცხოვრებისა და კარიერის შეუჩერებელ
+          ტრანსფორმაციას.
+        </p>
+      </div>
+
+      {/* Challenges */}
+      <div>
+        <h3 class="font-semibold mb-4">ჩელენჯები</h3>
+        <ul class="space-y-3 text-primary-foreground/80 list-none p-0 m-0">
+          {challengesLinks.map((link) => (
+            <li>
+              <a href={link.href} class="hover:text-primary-foreground transition-colors">
+                {link.name}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {/* Social */}
+      <div>
+        <h3 class="font-semibold mb-4">ბმულები</h3>
+        <ul class="space-y-3 text-primary-foreground/80 list-none p-0 m-0">
+          {socialLinks.map((link) => (
+            <li>
+              <a
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="hover:text-primary-foreground transition-colors"
+              >
+                {link.name}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+
+    {/* Bottom */}
+    <div class="border-t border-primary-foreground/20 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+      <p class="text-primary-foreground/60 text-sm text-center md:text-left">
+        © {currentYear} Bitcamp — სწავლა და ბრძოლა. ყველა საავტორო უფლების თავზეც გავიარეთ.
+      </p>
+      <div class="flex items-center gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary-foreground/60" aria-hidden="true">
+          <rect width="20" height="16" x="2" y="4" rx="2"></rect>
+          <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+        </svg>
+        <a href="mailto:hello@bitcamp.ge" class="text-primary-foreground/60 hover:text-primary-foreground/90 text-sm transition-colors">
+          hello@bitcamp.ge
+        </a>
+      </div>
+    </div>
+  </div>
+
+  {/* Trust signal strip */}
+  <div class="bg-primary-hover text-center py-4">
+    <p class="text-primary-foreground/80 text-sm">
+      🔒 <strong>ტრანსფორმაციის 100%-იანი გარანტია</strong> · დაასრულე ჩელენჯები და გახდი
+      საკუთარი თავის საუკეთესო ვერსია.
+    </p>
+  </div>
+
+  {/* Legal block */}
+  <div class="bg-primary border-t border-primary-foreground/10 py-6">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center gap-3 mb-4 flex-wrap">
+        {paymentLogos.map((name) => (
+          <img
+            src={`/assets/payment/${name}.svg`}
+            alt={name}
+            class="h-6 opacity-50"
+            style="filter: grayscale(1) brightness(2);"
+            loading="lazy"
+          />
+        ))}
+      </div>
+      <p class="text-primary-foreground/40 text-xs leading-relaxed mb-2">
+        ო. ზაკალაშვილი (ი/მ) · ს/კ: 01001071740 · მირიან მეფის ქუჩა, 11გ, ბინა #39 · ტელ:
+        +995 557 15 12 90 · hello@bitcamp.ge
+      </p>
+      <div class="flex gap-4 text-xs">
+        <a href="/terms" class="text-primary-foreground/40 hover:text-primary-foreground/70 transition-colors">
+          მომსახურების პირობები
+        </a>
+        <span class="text-primary-foreground/20">·</span>
+        <a href="/privacy" class="text-primary-foreground/40 hover:text-primary-foreground/70 transition-colors">
+          კონფიდენციალურობა
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
