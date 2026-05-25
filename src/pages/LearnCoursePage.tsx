@@ -377,6 +377,7 @@ export default function LearnCoursePage() {
               manifest={manifest}
               routeBasePath={routeBasePath}
               contentBaseUrl={LEARN_CONTENT_BASE_URL}
+              viewerEmail={profileEmail}
             />
           ) : (
             <CourseOverview

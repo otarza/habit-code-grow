@@ -1,0 +1,16 @@
+{
+  "name": "course-comments-api",
+  "version": "1.0.0",
+  "private": true,
+  "main": "index.js",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "functions-framework --target=courseCommentsApi --port=8084"
+  },
+  "dependencies": {
+    "@google-cloud/firestore": "^8.6.0",
+    "@google-cloud/functions-framework": "^3.4.2"
+  }
+}
