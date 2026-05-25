@@ -1,0 +1,162 @@
+---
+import { Image } from 'astro:assets';
+import heroCoding from '@/assets/hero-coding.jpg';
+
+// Georgian month names in genitive case (for "{month}'s cohort filling up").
+// Computed at build time; refreshes per deploy. Live updates would need a client
+// script but the value is informational only.
+const georgianMonthsGenitive = [
+  'იანვრის', 'თებერვლის', 'მარტის', 'აპრილის', 'მაისის', 'ივნისის',
+  'ივლისის', 'აგვისტოს', 'სექტემბრის', 'ოქტომბრის', 'ნოემბრის', 'დეკემბრის',
+];
+const currentMonth = georgianMonthsGenitive[new Date().getMonth()];
+---
+
+<section class="relative min-h-screen flex items-center bg-gradient-hero overflow-hidden">
+  {/* Background image overlay */}
+  <div class="absolute inset-0 z-0">
+    <Image
+      src={heroCoding}
+      alt=""
+      class="w-full h-full object-cover opacity-5"
+      width={1920}
+      height={1080}
+      loading="eager"
+    />
+    <div class="absolute inset-0 bg-gradient-to-br from-gray-900 via-primary/90 to-gray-900"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
+  </div>
+
+  {/* Content */}
+  <div class="relative z-10 w-full max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 text-center">
+    <div class="w-full max-w-4xl mx-auto">
+      {/* Scarcity badge */}
+      <div class="inline-flex items-center gap-2 bg-red-500 text-white px-3 sm:px-6 py-2 sm:py-3 rounded-full text-xs sm:text-sm font-bold mb-6 mt-8 sm:mt-6 animate-pulse max-w-full">
+        <div class="w-2 h-2 sm:w-3 sm:h-3 bg-white rounded-full animate-ping flex-shrink-0"></div>
+        <span class="whitespace-nowrap">{currentMonth} ნაკადი ივსება</span>
+      </div>
+
+      {/* Main headline */}
+      <h1 class="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold text-text-inverse mb-6 leading-tight px-2 sm:px-4 max-w-4xl mx-auto break-words">
+        თუ გინდა დაიწყო ტექნოლოგიური კარიერა ნულიდან,{' '}
+        <span class="text-secondary">სწორ ადგილას მოხვდი</span>
+      </h1>
+
+      {/* Subheadline */}
+      <p class="text-base sm:text-lg md:text-xl text-text-inverse/90 mb-8 leading-relaxed max-w-3xl mx-auto px-3 sm:px-6 break-words">
+        21 დღეში ჩამოგიყალიბდება დისციპლინა და მყარად დაადგები ტექნოლოგიების ათვისების
+        გზას. ყოველდღიური ჩართულობით დაძლევ მოტივაციის ნაკლებობის პრობლემას.
+      </p>
+
+      {/* Trust indicators */}
+      <div class="flex flex-col items-center justify-center gap-3 mb-12 px-3 sm:px-6 w-full max-w-4xl mx-auto">
+        <div class="flex items-center gap-2 bg-surface/10 backdrop-blur-sm rounded-full px-3 sm:px-4 py-2 w-full sm:max-w-sm justify-center">
+          <div class="w-2 h-2 bg-secondary rounded-full animate-pulse flex-shrink-0"></div>
+          <span class="text-text-inverse/80 text-xs sm:text-sm text-center break-words">
+            ჩვენ ვიცით რა სირთულეებს აწყდები
+          </span>
+        </div>
+        <div class="flex items-center gap-2 bg-surface/10 backdrop-blur-sm rounded-full px-3 sm:px-4 py-2 w-full sm:max-w-sm justify-center">
+          <div class="w-2 h-2 bg-accent rounded-full animate-pulse flex-shrink-0"></div>
+          <span class="text-text-inverse/80 text-xs sm:text-sm text-center break-words">
+            გაგიძღვებით იმ მომავლისკენ სადაც ყველა მათგანს გადალახავ
+          </span>
+        </div>
+      </div>
+
+      {/* CTAs */}
+      <div class="flex flex-col sm:flex-row justify-center items-center gap-4 mb-16 px-3 sm:px-6">
+        <a
+          href="#free-courses"
+          class="group inline-flex items-center justify-center gap-2 w-full sm:w-auto sm:max-w-md bg-secondary text-secondary-foreground hover:bg-secondary-hover px-6 sm:px-8 py-3 sm:py-4 rounded-md text-xs sm:text-sm md:text-base font-bold transition-colors"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0" aria-hidden="true">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" x2="12" y1="15" y2="3"></line>
+          </svg>
+          <span class="break-words">დაიწყე უფასო კურსით</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-hover:translate-x-1 transition-transform flex-shrink-0" aria-hidden="true">
+            <path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path>
+          </svg>
+        </a>
+        <a
+          href="#pricing"
+          class="group inline-flex items-center justify-center gap-2 w-full sm:w-auto sm:max-w-md bg-surface/10 backdrop-blur-sm border-2 border-text-inverse/30 text-text-inverse hover:bg-text-inverse hover:text-primary px-6 sm:px-8 py-3 sm:py-4 rounded-md text-xs sm:text-sm md:text-base font-semibold transition-colors"
+        >
+          <span class="break-words">იხილე სამენტორო პროგრამა</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-hover:translate-x-1 transition-transform flex-shrink-0" aria-hidden="true">
+            <path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path>
+          </svg>
+        </a>
+      </div>
+
+      {/* Trust badge + Discord */}
+      <div class="flex flex-col items-center gap-3 mb-8 px-3">
+        <div class="inline-flex items-center gap-2 bg-green-100/10 backdrop-blur-sm text-green-300 px-3 sm:px-4 py-2 rounded-full text-xs sm:text-sm font-semibold">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" x2="12" y1="15" y2="3"></line>
+          </svg>
+          <span class="break-words">50K+ სტუდენტმა დაიწყო უფასო კურსებით</span>
+        </div>
+        <a
+          href="https://discord.gg/AGAW3xmGPr"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-text-inverse/80 hover:text-text-inverse text-sm underline underline-offset-4 transition-colors"
+        >
+          ან შემოუერთდი Discord საზოგადოებას უფასოდ
+        </a>
+      </div>
+
+      {/* Social proof stats */}
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-8 max-w-3xl mx-auto mb-8 px-3 sm:px-0">
+        <div class="text-center">
+          <div class="text-3xl font-bold text-secondary mb-2">21+ დღე</div>
+          <div class="text-text-inverse/80">ჩვევის ჩამოსაყალიბებლად</div>
+        </div>
+        <div class="text-center">
+          <div class="text-3xl font-bold text-accent mb-2">50K+</div>
+          <div class="text-text-inverse/80">სტუდენტი 5 წელში</div>
+        </div>
+        <div class="text-center">
+          <div class="text-3xl font-bold text-secondary mb-2">95%</div>
+          <div class="text-text-inverse/80">წარმატების ალბათობა</div>
+        </div>
+      </div>
+
+      {/* Live viewers (fake social proof, mirrors production) */}
+      <div class="inline-flex items-center gap-2 bg-green-100/10 backdrop-blur-sm text-green-300 px-4 py-2 rounded-full text-sm font-semibold mb-8 sm:mb-6">
+        <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+        <span>ახლა საიტს ათვალიერებს <span data-live-viewers>—</span> ადამიანი</span>
+      </div>
+    </div>
+  </div>
+
+  {/* Scroll indicator */}
+  <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+    <div class="w-6 h-10 border-2 border-text-inverse/30 rounded-full flex justify-center">
+      <div class="w-1 h-3 bg-text-inverse/60 rounded-full mt-2 animate-pulse"></div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Live viewer count — fake social proof, mirrors production's random generator.
+  // Buckets by hour of day so business hours show higher counts.
+  const el = document.querySelector<HTMLElement>('[data-live-viewers]');
+  if (el) {
+    const generate = () => {
+      const hour = new Date().getHours();
+      let n: number;
+      if (hour >= 9 && hour <= 18) n = Math.floor(Math.random() * 150) + 180;
+      else if (hour >= 19 && hour <= 23) n = Math.floor(Math.random() * 130) + 120;
+      else n = Math.floor(Math.random() * 90) + 60;
+      el.textContent = String(n);
+    };
+    generate();
+    setInterval(generate, Math.random() * 20000 + 20000);
+  }
+</script>
