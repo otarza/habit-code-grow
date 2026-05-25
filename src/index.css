@@ -1104,16 +1104,19 @@ Red pyramid, dark navy, with vibrant pixel art accents and animations
 
 .campaign-price__old {
   color: var(--cp-text-muted);
-  font-size: 18px;
+  font-size: 26px;
+  font-weight: 650;
+  line-height: 1;
   text-decoration: line-through;
+  text-decoration-thickness: 2px;
 }
 
 .campaign-price__save {
   border-radius: 6px;
-  padding: 3px 7px;
+  padding: 4px 8px;
   background: var(--cp-accent-soft);
   color: var(--cp-accent-text);
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 700;
 }
 

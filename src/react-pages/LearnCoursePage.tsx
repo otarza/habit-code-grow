@@ -1,6 +1,6 @@
-import { useEffect, useMemo, useState } from 'react';
+import { type FormEvent, useEffect, useMemo, useState } from 'react';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
-import { ArrowLeft, LockKeyhole, LogOut, MailCheck, ShieldCheck } from 'lucide-react';
+import { ArrowLeft, CheckCircle2, Loader2, LockKeyhole, LogOut, MailCheck, ShieldCheck } from 'lucide-react';
 import { CourseSidebar } from '@/components/course/CourseSidebar';
 import { CourseOverview } from '@/components/course/CourseOverview';
 import { LessonView } from '@/components/course/LessonView';
@@ -8,6 +8,10 @@ import { CourseManifest, loadCourseManifest } from '@/components/course/CourseMa
 import { Button } from '@/components/ui/button';
 
 const LEARN_CONTENT_BASE_URL = '/learn-content';
+const COURSE_ACCESS_API_URL =
+  import.meta.env.VITE_COURSE_ACCESS_API_URL ||
+  'https://us-central1-bitcamp-flitt.cloudfunctions.net/course-access-api';
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const courseAccess = {
   'ai-bootcamp': {
@@ -60,14 +64,52 @@ function decodeAccessEmail(value: string) {
 }
 
 function AccessGate({
+  courseSlug,
   title,
   buyPath,
   buyLabel,
 }: {
+  courseSlug: string;
   title: string;
   buyPath: string;
   buyLabel: string;
 }) {
+  const [email, setEmail] = useState('');
+  const [status, setStatus] = useState<'idle' | 'loading' | 'sent' | 'error'>('idle');
+  const [error, setError] = useState('');
+
+  async function requestMagicLink(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    const normalizedEmail = email.trim().toLowerCase();
+    if (!EMAIL_RE.test(normalizedEmail)) {
+      setStatus('error');
+      setError('შეიყვანე სწორი ელფოსტა.');
+      return;
+    }
+
+    setStatus('loading');
+    setError('');
+
+    try {
+      await fetch(COURSE_ACCESS_API_URL, {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: normalizedEmail,
+          courseSlug,
+        }),
+      });
+
+      setStatus('sent');
+    } catch {
+      setStatus('error');
+      setError('ბმულის მოთხოვნა დროებით ვერ გაიგზავნა. სცადე რამდენიმე წუთში.');
+    }
+  }
+
   return (
     <div className="dark min-h-screen bg-background text-foreground flex items-center justify-center px-4">
       <div className="w-full max-w-lg rounded-2xl border border-white/10 bg-white/[0.04] p-6 sm:p-8 shadow-2xl">
@@ -76,17 +118,71 @@ function AccessGate({
         </div>
         <p className="text-sm font-semibold uppercase tracking-[0.14em] text-red-300">Magic Link Access</p>
         <h1 className="mt-3 text-2xl sm:text-3xl font-bold leading-tight">
-          {title}-ზე წვდომისთვის შეამოწმე ელფოსტა.
+          {title}-ზე წვდომისთვის მიიღე შესვლის ბმული.
         </h1>
         <p className="mt-4 text-base leading-7 text-white/70">
-          თუ კურსი უკვე შეიძინე, ელფოსტაში მოძებნე BitCamp-ის Magic Link და გახსენი ამავე
-          ბრაუზერში. წვდომა ავტომატურად გააქტიურდება.
+          შეიყვანე ის ელფოსტა, რომლითაც კურსზე დარეგისტრირდი ან შეიძინე. თუ ამ ელფოსტას
+          აქვს წვდომა, შესვლის ბმულს inbox-ში მიიღებ.
         </p>
+
+        <form onSubmit={requestMagicLink} className="mt-6 space-y-3">
+          <label htmlFor="course-access-email" className="sr-only">
+            ელფოსტა
+          </label>
+          <input
+            id="course-access-email"
+            type="email"
+            inputMode="email"
+            autoComplete="email"
+            value={email}
+            onChange={(event) => {
+              setEmail(event.target.value);
+              if (status === 'error') {
+                setStatus('idle');
+                setError('');
+              }
+            }}
+            placeholder="student@example.com"
+            className="h-12 w-full rounded-xl border border-white/10 bg-black/30 px-4 text-base text-white outline-none transition-colors placeholder:text-white/35 focus:border-red-300/60"
+          />
+          <Button
+            type="submit"
+            size="lg"
+            disabled={status === 'loading'}
+            className="w-full bg-white text-slate-950 hover:bg-white/90 disabled:cursor-not-allowed disabled:opacity-70"
+          >
+            {status === 'loading' ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />
+                იგზავნება...
+              </>
+            ) : (
+              'გამომიგზავნე შესვლის ბმული'
+            )}
+          </Button>
+        </form>
+
+        {status === 'sent' ? (
+          <div className="mt-4 rounded-xl border border-emerald-400/15 bg-emerald-400/10 p-4">
+            <div className="flex gap-3">
+              <CheckCircle2 className="mt-1 h-5 w-5 flex-shrink-0 text-emerald-300" aria-hidden="true" />
+              <p className="text-sm leading-6 text-emerald-100/80">
+                თუ ამ ელფოსტას აქვს კურსზე წვდომა, შესვლის ბმული უკვე გამოგზავნილია.
+              </p>
+            </div>
+          </div>
+        ) : null}
+
+        {status === 'error' && error ? (
+          <p className="mt-3 text-sm text-red-200">{error}</p>
+        ) : null}
+
         <div className="mt-6 rounded-xl border border-white/10 bg-black/20 p-4">
           <div className="flex gap-3">
             <MailCheck className="mt-1 h-5 w-5 flex-shrink-0 text-red-300" aria-hidden="true" />
             <p className="text-sm leading-6 text-white/65">
-              ახალი ხარ? ჯერ შეიძინე კურსი და გადახდის შემდეგ მიიღებ Magic Link-ს ელფოსტაზე.
+              თუ კურსი ჯერ არ გაქვს შეძენილი, გადახდის შემდეგ იგივე ელფოსტით ავტომატურად
+              მიიღებ წვდომას.
             </p>
           </div>
         </div>
@@ -171,7 +267,14 @@ export default function LearnCoursePage({ manifest, courseSlug, topicSlug, lesso
   }
 
   if (!hasAccess) {
-    return <AccessGate title={config.title} buyPath={config.buyPath} buyLabel={config.buyLabel} />;
+    return (
+      <AccessGate
+        courseSlug={courseSlug!}
+        title={config.title}
+        buyPath={config.buyPath}
+        buyLabel={config.buyLabel}
+      />
+    );
   }
 
   if (!manifest) {
@@ -243,6 +346,7 @@ export default function LearnCoursePage({ manifest, courseSlug, topicSlug, lesso
               manifest={manifest}
               routeBasePath={routeBasePath}
               contentBaseUrl={LEARN_CONTENT_BASE_URL}
+              viewerEmail={profileEmail}
             />
           ) : (
             <CourseOverview

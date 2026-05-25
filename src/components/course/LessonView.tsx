@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { ChevronLeft, ChevronRight, Clock, PlayCircle } from 'lucide-react';
 import { MarkdownContent } from './MarkdownContent';
 import { CourseManifest, findAdjacentLessons } from './CourseManifest';
+import { LessonComments } from './LessonComments';
 import { parseFrontmatter, LessonMeta } from '@/lib/markdown';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -14,6 +15,7 @@ interface LessonViewProps {
   manifest: CourseManifest;
   routeBasePath?: string;
   contentBaseUrl?: string;
+  viewerEmail?: string;
 }
 
 export function LessonView({
@@ -23,6 +25,7 @@ export function LessonView({
   manifest,
   routeBasePath,
   contentBaseUrl = '/courses',
+  viewerEmail,
 }: LessonViewProps) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -130,6 +133,15 @@ export function LessonView({
 
       {/* Lesson content */}
       <MarkdownContent content={content} />
+
+      <LessonComments
+        courseSlug={courseSlug}
+        topicSlug={topicSlug}
+        lessonSlug={lessonSlug}
+        lessonTitle={lessonMeta?.title}
+        courseTitle={manifest.title}
+        viewerEmail={viewerEmail}
+      />
 
       {/* Navigation */}
       <nav className="flex items-center justify-between mt-12 pt-8 border-t">

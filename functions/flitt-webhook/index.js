@@ -1,5 +1,6 @@
 const functions = require("@google-cloud/functions-framework");
 const crypto = require("crypto");
+const { Firestore, FieldValue } = require("@google-cloud/firestore");
 const postmark = require("postmark");
 
 const FLITT_SECRET = process.env.FLITT_SECRET_KEY;
@@ -11,12 +12,14 @@ const MESSAGE_STREAM = process.env.POSTMARK_STREAM || "outbound";
 // to our internal product slug + Postmark template alias.
 const BOOTCAMP_PRODUCT = {
   slug: "bootcamp",
+  courseSlug: "ai-bootcamp",
   template: "course-access-ai-bootcamp",
   name: "AI Bootcamp Self-Paced",
 };
 
 const PRO_PRODUCT = {
   slug: "pro",
+  courseSlug: "ai-pro",
   template: "course-access-ai-pro",
   name: "AI Bootcamp Mentored",
 };
@@ -34,10 +37,12 @@ const PRODUCT_MAP = {
 // Lets a sale still complete; we can fix the mapping after seeing the first real callback.
 const FALLBACK_PRODUCT = {
   slug: "bootcamp",
+  courseSlug: "ai-bootcamp",
   template: "course-access-ai-bootcamp",
   name: "AI Bootcamp Self-Paced",
 };
 
+const firestore = new Firestore();
 const postmarkClient = new postmark.ServerClient(POSTMARK_TOKEN);
 
 functions.http("flittWebhook", async (req, res) => {
@@ -62,7 +67,7 @@ functions.http("flittWebhook", async (req, res) => {
 
   const product = PRODUCT_MAP[String(payload.product_id)] || FALLBACK_PRODUCT;
 
-  const email = extractEmail(payload);
+  const email = normalizeEmail(extractEmail(payload));
   if (!email) {
     console.error("NO_EMAIL", payload.order_id);
     // 200 — we acknowledge; manual recovery from logs
@@ -70,6 +75,34 @@ functions.http("flittWebhook", async (req, res) => {
   }
 
   const amountGel = (Number(payload.amount) / 100).toFixed(2);
+
+  try {
+    await upsertCourseAccess({
+      email,
+      courseSlug: product.courseSlug,
+      source: "flitt_purchase",
+      metadata: {
+        orderId: String(payload.order_id || ""),
+        paymentId: String(payload.payment_id || ""),
+        productId: String(payload.product_id || ""),
+        amount: amountGel,
+        currency: payload.currency || "GEL",
+      },
+    });
+    console.log("ENTITLEMENT_UPSERTED", payload.order_id, email, product.courseSlug);
+  } catch (err) {
+    console.error(
+      "ENTITLEMENT_FAIL",
+      payload.order_id,
+      JSON.stringify({
+        email,
+        courseSlug: product.courseSlug,
+        message: err.message,
+      })
+    );
+    // Continue sending the purchase email so the buyer still receives access.
+    // The signed callback remains logged for manual recovery.
+  }
 
   try {
     const result = await postmarkClient.sendEmailWithTemplate({
@@ -153,13 +186,39 @@ function verifySignature(payload, secret) {
 }
 
 function extractEmail(payload) {
-  // 1. Flitt's native sender_email — present in real callbacks even when only
-  // a custom "Additional field" was used in the dashboard
-  if (payload.sender_email) return payload.sender_email;
-  // 2. Top-level `email` field (if Flitt ever flattens it that way)
-  if (payload.email) return payload.email;
-  // 3. merchant_data is a JSON array of custom field objects in real Flitt callbacks:
+  // 1. The email collected in our checkout modal. Flitt forwards this as
+  // additional_info.reservation_data, while sender_email may come from the
+  // payer account, Apple Pay, or a remembered card/browser identity.
+  const reservationEmail = extractReservationEmail(payload);
+  if (reservationEmail) return reservationEmail;
+  // 2. merchant_data is a JSON array of custom field objects in real Flitt callbacks:
   //    [{"name":"email","label":"...","value":"buyer@example.com"}, ...]
+  const merchantEmail = extractMerchantEmail(payload);
+  if (merchantEmail) return merchantEmail;
+  // 3. Top-level `email` field (if Flitt ever flattens it that way)
+  if (payload.email) return payload.email;
+  // 4. Fallback to Flitt's native payer email.
+  if (payload.sender_email) return payload.sender_email;
+  return null;
+}
+
+function extractReservationEmail(payload) {
+  if (!payload.additional_info) return null;
+
+  try {
+    const info = parseMaybeJson(payload.additional_info);
+    if (!info || !info.reservation_data) return null;
+
+    const reservation = parseMaybeJson(info.reservation_data);
+    if (reservation && reservation.email) return reservation.email;
+  } catch {
+    // not JSON — ignore
+  }
+
+  return null;
+}
+
+function extractMerchantEmail(payload) {
   if (payload.merchant_data) {
     try {
       const md =
@@ -177,6 +236,49 @@ function extractEmail(payload) {
     }
   }
   return null;
+}
+
+function parseMaybeJson(value) {
+  return typeof value === "string" ? JSON.parse(value) : value;
+}
+
+async function upsertCourseAccess({ email, courseSlug, source, metadata }) {
+  const emailHash = hashEmail(email);
+  const docRef = firestore.collection("course_access").doc(emailHash);
+
+  await docRef.set(
+    {
+      email,
+      emailNormalized: email,
+      updatedAt: FieldValue.serverTimestamp(),
+      courses: {
+        [courseSlug]: {
+          status: "active",
+          source,
+          grantedAt: FieldValue.serverTimestamp(),
+          updatedAt: FieldValue.serverTimestamp(),
+          ...metadata,
+        },
+      },
+    },
+    { merge: true }
+  );
+
+  await firestore.collection("course_access_events").add({
+    emailHash,
+    courseSlug,
+    type: "purchased",
+    createdAt: FieldValue.serverTimestamp(),
+    metadata,
+  });
+}
+
+function normalizeEmail(value) {
+  return String(value || "").trim().toLowerCase();
+}
+
+function hashEmail(email) {
+  return crypto.createHash("sha256").update(email).digest("hex");
 }
 
 function toBase64Url(value) {
