@@ -1,5 +1,6 @@
 import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
+import sitemap from '@astrojs/sitemap';
 import tailwind from '@astrojs/tailwind';
 
 import path from 'path';
@@ -11,8 +12,10 @@ const __dirname = path.dirname(__filename);
 // https://astro.build/config
 export default defineConfig({
   site: 'https://www.bitcamp.ge',
+  trailingSlash: 'never',
   integrations: [
     react(),
+    sitemap(),
     tailwind({
       applyBaseStyles: false,
     }),
