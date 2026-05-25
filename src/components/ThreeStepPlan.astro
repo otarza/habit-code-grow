@@ -1,0 +1,112 @@
+---
+// 3-step horizontal plan with arrow connectors between steps (desktop only).
+// Each step has numbered icon badge + title + description.
+// Footer CTA scrolls to #pricing.
+
+const steps = [
+  {
+    number: '1',
+    iconKey: 'message',
+    title: 'დაჯავშნე უფასო კონსულტაცია',
+    description:
+      'გაგესაუბრებით, ერთად გავარკვევთ რაში გჭირდება დახმარება, მოგიმზადებთ პირადად შენზე მორგებულ სასწავლო გეგმას',
+    color: 'bg-secondary',
+  },
+  {
+    number: '2',
+    iconKey: 'clipboard',
+    title: 'აირჩიე ჯგუფური ან პირადი მენტორის მომსახურება',
+    description:
+      'ერთად გადავწყვიტოთ რა ტიპის მომსახურება გჭირდება - ჯგუფური სამეცადინო სესიები თუ პირადი მენტორის ჩართულობა შენს განვითარებაში',
+    color: 'bg-primary',
+  },
+  {
+    number: '3',
+    iconKey: 'rocket',
+    title: 'დაიწყებ შეუქცევად ტრანსფორმაციას',
+    description: 'ჩვენი ყოველდღიური ჩართულობითა და პერსონალური თანადგომით - შენ შეძლებ!',
+    color: 'bg-accent',
+  },
+];
+---
+
+<section class="py-20 bg-gradient-to-b from-surface to-background">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16">
+      <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-text-primary mb-6 px-4 break-words">
+        როგორ დაიწყებ?
+      </h2>
+      <p class="text-base sm:text-lg md:text-xl text-text-secondary max-w-3xl mx-auto leading-relaxed px-6 break-words">
+        სამი მარტივი ნაბიჯი შენი ტექნოლოგიური კარიერის დასაწყებად
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-8 mb-12">
+      {steps.map((step, index) => (
+        <div class="relative">
+          {/* Arrow connector to next step (desktop only) */}
+          {index < steps.length - 1 && (
+            <div class="hidden md:block absolute top-1/2 right-0 translate-x-1/2 -translate-y-1/2 z-10">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-text-muted/30" aria-hidden="true">
+                <path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path>
+              </svg>
+            </div>
+          )}
+
+          <article class="p-6 sm:p-8 text-center bg-card text-card-foreground border border-border rounded-lg shadow-soft hover:shadow-medium transition-shadow duration-300 h-full">
+            <div class:list={[step.color, 'w-16 h-16 sm:w-20 sm:h-20 rounded-2xl flex items-center justify-center mx-auto mb-6 relative']}>
+              {step.iconKey === 'message' && (
+                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white" aria-hidden="true">
+                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                </svg>
+              )}
+              {step.iconKey === 'clipboard' && (
+                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white" aria-hidden="true">
+                  <rect width="8" height="4" x="8" y="2" rx="1" ry="1"></rect>
+                  <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+                  <path d="m9 14 2 2 4-4"></path>
+                </svg>
+              )}
+              {step.iconKey === 'rocket' && (
+                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white" aria-hidden="true">
+                  <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"></path>
+                  <path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"></path>
+                  <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"></path>
+                  <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"></path>
+                </svg>
+              )}
+              <div class="absolute -top-2 -right-2 w-6 h-6 sm:w-8 sm:h-8 bg-white rounded-full flex items-center justify-center shadow-lg">
+                <span class="font-bold text-text-primary text-sm sm:text-base">{step.number}</span>
+              </div>
+            </div>
+
+            <h3 class="text-lg sm:text-xl font-bold text-text-primary mb-3 px-2 break-words normal-case" style="font-feature-settings: normal;">
+              {step.title}
+            </h3>
+            <p class="text-sm sm:text-base text-text-secondary leading-relaxed px-2 break-words">
+              {step.description}
+            </p>
+          </article>
+        </div>
+      ))}
+    </div>
+
+    {/* Footer CTA */}
+    <div class="text-center px-4">
+      <div class="inline-block p-6 sm:p-8 bg-gradient-to-r from-primary/5 to-secondary/5 border-2 border-primary/20 rounded-lg w-full max-w-md">
+        <p class="text-base sm:text-lg font-semibold text-text-primary mb-6 break-words">
+          მზად ხარ დაიწყო? პირველი ნაბიჯი უფასოა!
+        </p>
+        <a
+          href="#pricing"
+          class="group inline-flex items-center justify-center gap-2 w-full px-6 py-3 bg-secondary text-secondary-foreground hover:bg-secondary-hover rounded-md text-sm sm:text-base font-bold transition-colors"
+        >
+          <span class="break-words">დაჯავშნე უფასო კონსულტაცია</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-hover:translate-x-1 transition-transform flex-shrink-0" aria-hidden="true">
+            <path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

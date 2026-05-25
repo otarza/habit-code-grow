@@ -3,16 +3,18 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Navbar from '../components/Navbar.astro';
 import Hero from '../components/Hero.astro';
 import FreeCoursesSection from '../components/FreeCoursesSection.astro';
+import Testimonials from '../components/Testimonials.astro';
+import ProblemSolution from '../components/ProblemSolution.astro';
+import ThreeStepPlan from '../components/ThreeStepPlan.astro';
 import PricingSection from '../components/PricingSection.astro';
 import FAQ from '../components/FAQ.astro';
 import Footer from '../components/Footer.astro';
 ---
 
 <!--
-  Phase 1 interim homepage. Composes the chrome + 4 ported sections.
-  Phase 2 inserts the remaining sections in their production order between
-  Hero and FAQ: VideoExplainer, Testimonials, ProblemSolution, ThreeStepPlan,
-  HowItWorks, SuccessFailureContrast, ChallengeTransformation, StickyCtaBar.
+  Phase 1 interim homepage. 9 of 13 sections ported. Remaining for next
+  batch: VideoExplainer, HowItWorks, SuccessFailureContrast,
+  ChallengeTransformation, StickyCtaBar.
 -->
 <BaseLayout
   title="BitCamp — სწავლა და ბრძოლა"
@@ -21,6 +23,9 @@ import Footer from '../components/Footer.astro';
   <Navbar />
   <FreeCoursesSection />
   <Hero />
+  <Testimonials />
+  <ProblemSolution />
+  <ThreeStepPlan />
   <PricingSection />
   <FAQ />
   <Footer />

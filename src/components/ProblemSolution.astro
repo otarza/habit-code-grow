@@ -1,0 +1,135 @@
+---
+// Two-column layout: Problem (left, 3 destructive-styled boxes) vs.
+// Solution (right, 3 challenge tier cards 21/30/100 + footer pill).
+// All static; no JS.
+
+const problems = [
+  {
+    title: 'არ გაქვს დისციპლინა',
+    body: 'კარგავ მოტივაციას პირველივე სირთულესთან შეჯახებისას',
+  },
+  {
+    title: 'მარტო ხარ',
+    body: 'არავისთან ხარ პასუხიმგებელი და არავინ გაძალიერებს ყოველდღე',
+  },
+  {
+    title: 'არავინ გეხმარება ჩვევების ჩამოყალიბებაში',
+    body: 'არ გყავს ადამიანი ვინც გვერდში დაგიდება რთული მომენტების გადალახვისას',
+  },
+];
+
+const challenges = [
+  {
+    days: '21',
+    title: 'შექმენი ფუნდამენტი',
+    body: '21 დღის განმაბლობაში, ყოველდღიური, 30-60 წუთიანი სასწავლო სესიებით ჩამოგიყალიბდება ჩვევა - ის რაც ასე ძალიან გჭირდება წარმატებისთვის',
+    bgClass: 'bg-gradient-to-br from-secondary-light to-secondary/5 border-secondary/20',
+    badgeClass: 'bg-secondary text-secondary-foreground',
+  },
+  {
+    days: '30',
+    title: 'ჩაუჯექი',
+    body: '30 დღიან ჩელენჯში უკვე გამომუშავებული ჩვევის გამყარება ხდება ისე რომ კოდის წერა და AI - იარაღების გამოყენება ბუნებრივი პროცესია შენთვის',
+    bgClass: 'bg-gradient-to-br from-primary-light to-primary/5 border-primary/20',
+    badgeClass: 'bg-primary text-primary-foreground',
+  },
+  {
+    days: '100',
+    title: 'ჩააჭირე',
+    body: '100 დღიან ჩელენჯში შენი სამყარო იცვლება და ახალი უნარები შენი ყოველდღიურობის განუყოფელი ნაწილი ხდება',
+    bgClass: 'bg-gradient-to-br from-accent-light to-accent/5 border-accent/20',
+    badgeClass: 'bg-accent text-accent-foreground',
+  },
+];
+---
+
+<section class="py-20 bg-surface">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid lg:grid-cols-2 gap-16 items-start">
+      {/* Problem side */}
+      <div>
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-12 h-12 bg-destructive/10 rounded-xl flex items-center justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-destructive" aria-hidden="true">
+              <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path>
+              <path d="M12 9v4"></path>
+              <path d="M12 17h.01"></path>
+            </svg>
+          </div>
+          <h2 class="text-3xl font-bold text-text-primary normal-case" style="font-feature-settings: normal;">
+            რა გაფერხებს?
+          </h2>
+        </div>
+
+        <p class="text-lg text-text-secondary leading-relaxed mb-6">
+          ყოველდღიურად მუშაობა გიჭირს და მარტო ხარ სწავლაში. შენ არც ზარმაცი ხარ და არც
+          ინტელექტი გაკლია:
+        </p>
+
+        <div class="space-y-4">
+          {problems.map((p) => (
+            <div class="flex items-start gap-4 p-4 bg-destructive/5 rounded-lg border border-destructive/20">
+              <div class="w-2 h-2 bg-destructive rounded-full mt-2 flex-shrink-0"></div>
+              <div>
+                <h4 class="font-semibold text-text-primary mb-1 normal-case" style="font-feature-settings: normal;">
+                  {p.title}
+                </h4>
+                <p class="text-text-secondary">{p.body}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Solution side */}
+      <div>
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-12 h-12 bg-secondary/10 rounded-xl flex items-center justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-secondary" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"></circle>
+              <circle cx="12" cy="12" r="6"></circle>
+              <circle cx="12" cy="12" r="2"></circle>
+            </svg>
+          </div>
+          <h2 class="text-3xl font-bold text-text-primary normal-case" style="font-feature-settings: normal;">
+            ჩვენ ვიქნებით შენი მეგზური
+          </h2>
+        </div>
+
+        <p class="text-lg text-text-secondary leading-relaxed mb-6">
+          <strong>5 წელია ვეხმარებით ადამიანებს ამ პრობლემის გადაჭრაში.</strong> 50K+
+          ქართველს დავეხმარეთ დეველოპერად ქცევაში, კარიერის ცვლილებასა თუ პიროვნულ
+          ტრანსფორმაციაში.
+        </p>
+
+        <div class="space-y-4">
+          {challenges.map((c) => (
+            <div class:list={['p-6 rounded-lg border', c.bgClass]}>
+              <div class="flex items-start gap-4">
+                <div class:list={['w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0', c.badgeClass]}>
+                  <span class="font-bold text-sm">{c.days}</span>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-text-primary mb-2 normal-case" style="font-feature-settings: normal;">
+                    {c.title}
+                  </h4>
+                  <p class="text-text-secondary">{c.body}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div class="flex items-center gap-3 p-4 bg-secondary/10 rounded-lg mt-4">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-secondary flex-shrink-0" aria-hidden="true">
+            <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline>
+            <polyline points="16 7 22 7 22 13"></polyline>
+          </svg>
+          <p class="font-semibold text-text-primary">
+            მიზანი: გახდე დამოუკიდებელი თანამედროვე ტექნოლოგიების ათვისებაში
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
