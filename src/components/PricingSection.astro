@@ -1,0 +1,210 @@
+---
+// Three mentorship pricing tiers. CTAs link directly to the existing Tally
+// hosted forms (`/r/{formId}`); production opens these in a modal via
+// TallyModal — the standalone hosted page provides equivalent UX with no
+// React island required.
+//
+// The custom card-* classes (course-challenge / course-premium / course-emigrant)
+// used in production are decorative gradient treatments defined in index.css.
+// Phase 1 uses neutral card styling; Phase 2 polish can revisit.
+
+const CHALLENGE_FORM = 'https://tally.so/r/npQK01';
+const MENTORSHIP_FORM = 'https://tally.so/r/mO6z8Y';
+
+const services = [
+  {
+    id: 'group-mentorship',
+    iconKey: 'users',
+    title: 'ჯგუფური სამენტორო',
+    description:
+      '21 დღიანი ინტენსიური ჩელენჯი ჯგუფურ გარემოში, სადაც გადადგამ აუცილებელ პირველ ნაბიჯებს',
+    features: [
+      '21 დღიანი ინტენსიური ჩელენჯი',
+      'ყოველკვირეული ჯგუფური სამეცადინო სესიები',
+      '10-15 კაციანი ჯგუფები მაქსიმალური ეფექტისთვის',
+      'Discord - ის დახურული საზოგადოება',
+      'მხარდაჭერა და მოტივაცია',
+      'სერტიფიკატი დასრულებისას',
+    ],
+    price: '350₾',
+    originalPrice: '433₾',
+    priceLabel: 'ერთჯერადი',
+    duration: '21 დღე ჯგუფურ გარემოში',
+    ctaText: 'დაიწყე ტრანსფორმაცია',
+    ctaUrl: CHALLENGE_FORM,
+    popular: true,
+  },
+  {
+    id: 'personal-mentorship',
+    iconKey: 'star',
+    title: 'პირადი მენტორი',
+    description:
+      'პრემიუმ მომსახურება. აიყვანე პირადი მენტორი თუ გსურს მაქსიმალური შედეგი უმოკლეს დროში. პირადად შენთვის შექმნილ სამეცადინო სესიებზე მენტორი მთლიანად შენზეა ფოკუსირებული',
+    features: [
+      '1-1 - ზე ყოველდღიური სესიები მხოლოდ შენთვის',
+      '100% - ით შენთვის შექმნილი სასწავლო პროგრამა',
+      'დავალებების დეტალური განხილვა და კოდის რევიუ',
+      'მენტორის სრული ყურადღება და ფოკუსი შენზე',
+      'პირდაპირი კომუნიკაცია მენტორთან ნებისმიერ დროს',
+      'სწრაფი პროგრესი და ინდივიდუალური მიდგომა',
+    ],
+    price: '650₾',
+    originalPrice: null,
+    priceLabel: 'დან თვეში*',
+    duration: '*საბოლოო ფასი შეთანხმებადია კონსულტაციისას',
+    ctaText: 'მიიღე უფასო კონსულტაცია',
+    ctaUrl: MENTORSHIP_FORM,
+    popular: false,
+  },
+  {
+    id: 'emigrant-mentorship',
+    iconKey: 'globe',
+    title: 'ემიგრანტებისთვის',
+    description:
+      'ემიგრანტი ხარ? მიიღე განსაკუთრებული პრიობები და ისწავლე პირად მენტორთან 1-1 - ზე შენთვის მოსახერხებელ დროებში',
+    features: [
+      'მოქნილი გრაფიკი ნებისმიერი სასაათო სარტყელისთვის',
+      'პირადი მენტორი გამეცადინებს 1-1 - ზე',
+      'სასწავლო პროგრამას მოვარგებთ შენს მიზნებს',
+      'სურვილის შემთხვევაში ჩაგრთავთ ჯგუფურ პროექტებში',
+      'კვირაში 3-4 სესია შენთვის მოსახერხებელ დროს',
+      'კარიერული მხარდაჭერა საზღვარგარეთ',
+    ],
+    price: 'ფასი შეთანხმებადია',
+    originalPrice: null,
+    priceLabel: '',
+    duration: 'განსაკუთრებული პირობები ემიგრანტებისთვის',
+    ctaText: 'ჩაეწერე კონსულტაციაზე',
+    ctaUrl: MENTORSHIP_FORM,
+    popular: false,
+  },
+];
+---
+
+<section id="pricing" class="relative py-20 bg-surface">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    {/* Section header */}
+    <div class="text-center mb-16">
+      <h2 class="text-4xl md:text-5xl font-bold text-text-primary mb-6">
+        აირჩიე სასურველი სამენტორო მომსახურება
+      </h2>
+      <p class="text-xl text-text-secondary max-w-3xl mx-auto leading-relaxed">
+        ჩვენი სამენტორო ერთადერთი ფორმატია საქართველოში სადაც შენ ხარ მთავარი და არა ლექტორი
+      </p>
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 mt-6 text-sm text-text-muted px-4">
+        {['პერსონალური მხარდაჭერა', 'Discord საზოგადოება', 'ღია კომუნიკაცია მენტორთან'].map((label) => (
+          <div class="flex items-center gap-2 whitespace-nowrap">
+            <div class="w-4 h-4 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
+              <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="text-white" aria-hidden="true">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </div>
+            <span>{label}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    {/* Pricing cards */}
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+      {services.map((service) => (
+        <article
+          id={service.id}
+          class:list={[
+            'relative bg-card text-card-foreground rounded-lg border border-border p-8 h-full flex flex-col',
+            service.popular ? 'ring-2 ring-primary shadow-glow' : 'shadow-soft',
+          ]}
+        >
+          {service.popular && (
+            <div class="absolute -top-3 left-1/2 transform -translate-x-1/2">
+              <span class="bg-gradient-cta text-text-inverse px-4 py-1 rounded-full text-sm font-semibold">
+                პოპულარული
+              </span>
+            </div>
+          )}
+
+          <div class="text-center flex-1 flex flex-col">
+            {/* Icon */}
+            <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/20 to-primary/10 mb-6 mx-auto">
+              {service.iconKey === 'users' && (
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary" aria-hidden="true">
+                  <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="9" cy="7" r="4"></circle>
+                  <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
+              )}
+              {service.iconKey === 'star' && (
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary" aria-hidden="true">
+                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                </svg>
+              )}
+              {service.iconKey === 'globe' && (
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary" aria-hidden="true">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path>
+                  <path d="M2 12h20"></path>
+                </svg>
+              )}
+            </div>
+
+            <h3 class="text-2xl font-bold text-text-primary mb-3 normal-case" style="font-feature-settings: normal;">
+              {service.title}
+            </h3>
+            <p class="text-text-secondary mb-6 leading-relaxed">{service.description}</p>
+
+            {/* Price */}
+            <div class="mb-6">
+              <div class="flex items-baseline justify-center gap-2 mb-2 flex-wrap">
+                {service.originalPrice && (
+                  <span class="text-lg text-text-muted line-through">{service.originalPrice}</span>
+                )}
+                <span class="text-4xl font-bold text-text-primary">{service.price}</span>
+                {service.priceLabel && (
+                  <span class="text-lg text-text-secondary">/{service.priceLabel}</span>
+                )}
+              </div>
+              {service.duration && (
+                <div class="text-sm text-text-muted">{service.duration}</div>
+              )}
+              {service.originalPrice && (
+                <div class="inline-flex items-center gap-1 bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs font-semibold mt-2">
+                  <span>25% ფასდაკლება</span>
+                </div>
+              )}
+            </div>
+
+            {/* Features */}
+            <ul class="space-y-3 mb-8 text-left flex-1 list-none p-0">
+              {service.features.map((feature) => (
+                <li class="flex items-start gap-3">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-secondary mt-0.5 flex-shrink-0" aria-hidden="true">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                  <span class="text-text-secondary">{feature}</span>
+                </li>
+              ))}
+            </ul>
+
+            {/* CTA */}
+            <div class="mt-auto">
+              <a
+                href={service.ctaUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class:list={[
+                  'w-full inline-flex items-center justify-center px-6 py-3 rounded-md text-base font-semibold transition-colors',
+                  service.popular
+                    ? 'bg-secondary text-secondary-foreground hover:bg-secondary-hover'
+                    : 'bg-primary text-primary-foreground hover:bg-primary-hover',
+                ]}
+              >
+                {service.ctaText}
+              </a>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
