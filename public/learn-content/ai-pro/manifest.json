@@ -45,6 +45,15 @@
         { "slug": "markdown", "title": "Markdown ფორმატი", "order": 210 },
         { "slug": "json", "title": "JSON — ფორმატების მეფე", "order": 211 }
       ]
+    },
+    {
+      "slug": "customer-profile",
+      "title": "მოდული 3 — პროდუქტიულობა და ბიზნესი",
+      "order": 3,
+      "lessons": [
+        { "slug": "ideal-customer-persona", "title": "იდეალური მომხმარებლის პერსონა: პროფილის შექმნა", "order": 301 },
+        { "slug": "brand-voice-guide", "title": "ბრენდის ხმის სახელმძღვანელოს შექმნა", "order": 302 }
+      ]
     }
   ]
 }
