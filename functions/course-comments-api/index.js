@@ -286,8 +286,7 @@ function cleanLabel(value) {
 function maskEmail(email) {
   const [name, domain] = String(email).split("@");
   if (!name || !domain) return "სტუდენტი";
-  const visible = name.slice(0, Math.min(2, name.length));
-  return `${visible}${name.length > 2 ? "***" : "*"}@${domain}`;
+  return name;
 }
 
 function timestampToMillis(value) {
