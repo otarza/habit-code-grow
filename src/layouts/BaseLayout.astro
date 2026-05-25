@@ -1,0 +1,89 @@
+---
+import '@/index.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+  canonical?: string;
+  noindex?: boolean;
+  bodyClass?: string;
+}
+
+const {
+  title = 'BitCamp — სწავლა და ბრძოლა',
+  description = 'ისწავლე AI, Python, SQL პროგრამირება BitCamp-ში — უფასო კურსები, ჩელენჯები და მენტორობა.',
+  ogImage = 'https://www.bitcamp.ge/hero-og-image.png',
+  canonical,
+  noindex = false,
+  bodyClass = '',
+} = Astro.props;
+
+const SITE_ORIGIN = 'https://www.bitcamp.ge';
+const canonicalUrl = canonical ?? new URL(Astro.url.pathname, SITE_ORIGIN).toString();
+---
+
+<!doctype html>
+<html lang="ka">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+    {noindex && <meta name="robots" content="noindex" />}
+
+    {/* OpenGraph */}
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+
+    {/* Twitter */}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content={canonicalUrl} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <meta name="generator" content={Astro.generator} />
+
+    {/* Google Analytics */}
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DG50GBH71S"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-DG50GBH71S');
+    </script>
+
+    {/* Meta Pixel */}
+    <script is:inline>
+      !function(f,b,e,v,n,t,s)
+      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+      n.queue=[];t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t,s)}(window, document,'script',
+      'https://connect.facebook.net/en_US/fbevents.js');
+      fbq('init', '4105632136386341');
+      fbq('track', 'PageView');
+    </script>
+  </head>
+  <body class={bodyClass}>
+    {/* Meta Pixel noscript fallback */}
+    <noscript>
+      <img
+        height="1"
+        width="1"
+        style="display:none"
+        src="https://www.facebook.com/tr?id=4105632136386341&ev=PageView&noscript=1"
+      />
+    </noscript>
+
+    <slot />
+  </body>
+</html>

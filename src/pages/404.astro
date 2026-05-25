@@ -1,8 +1,65 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import { NotFound as PageComponent } from '../astro-wrapper';
+import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<Layout>
-    <PageComponent client:load />
-</Layout>
+<BaseLayout
+  title="გვერდი ვერ მოიძებნა — BitCamp"
+  description="მოთხოვნილი გვერდი ვერ მოიძებნა."
+  noindex
+  bodyClass="campaign-page"
+>
+  <main class="not-found">
+    <div class="not-found__panel">
+      <p class="not-found__kicker">404</p>
+      <h1 class="not-found__title">გვერდი ვერ მოიძებნა</h1>
+      <p class="not-found__lede">
+        თქვენ მიერ მოთხოვნილი გვერდი არ არსებობს ან გადატანილია სხვა მისამართზე.
+      </p>
+      <a href="/" class="not-found__cta">მთავარ გვერდზე →</a>
+    </div>
+  </main>
+</BaseLayout>
+
+<style>
+  .not-found {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 48px 24px;
+  }
+  .not-found__panel {
+    text-align: center;
+    max-width: 480px;
+  }
+  .not-found__kicker {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--cp-text-muted);
+    letter-spacing: 0.2em;
+    margin-bottom: 12px;
+  }
+  .not-found__title {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--cp-text-primary);
+    margin-bottom: 12px;
+    line-height: 1.2;
+  }
+  .not-found__lede {
+    color: var(--cp-text-secondary);
+    font-size: 15px;
+    line-height: 1.7;
+    margin-bottom: 28px;
+  }
+  .not-found__cta {
+    display: inline-block;
+    padding: 12px 24px;
+    background: var(--cp-cta-bg);
+    color: var(--cp-cta-text);
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 15px;
+  }
+</style>

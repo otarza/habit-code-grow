@@ -1,8 +1,241 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import { Terms as PageComponent } from '../astro-wrapper';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { Image } from 'astro:assets';
+import bitcampLogo from '@/assets/bitcamp-logo.png';
+
+const LAST_UPDATED = '2026 წლის 17 მაისი';
 ---
 
-<Layout>
-    <PageComponent client:load />
-</Layout>
+<BaseLayout
+  title="მომსახურების პირობები — BitCamp"
+  description="BitCamp-ის მომსახურების პირობები: ფასები, გადახდა, დაბრუნება, ინტელექტუალური საკუთრება და მომხმარებლის ვალდებულებები."
+  canonical="https://www.bitcamp.ge/terms"
+  bodyClass="campaign-page"
+>
+  <div class="terms-shell">
+    <header class="terms-header">
+      <div class="terms-header__inner">
+        <a href="/" aria-label="BitCamp — მთავარი">
+          <Image src={bitcampLogo} alt="BitCamp" height={32} class="terms-logo" />
+        </a>
+      </div>
+    </header>
+
+    <main class="terms-main">
+      <h1 class="terms-h1">მომსახურების პირობები</h1>
+      <p class="terms-meta">ბოლო განახლება: {LAST_UPDATED}</p>
+
+      <section class="terms-section">
+        <h2 class="terms-h2">1. ზოგადი დებულებები</h2>
+        <div class="terms-body">
+          <p>
+            წინამდებარე პირობები არეგულირებს ურთიერთობას ო. ზაკალაშვილს (ი/მ) (ს/კ:
+            01001071740, მისამართი: მირიან მეფის ქუჩა, 11გ, ბინა #39, შემდგომში „კომპანია")
+            და ვებგვერდის bitcamp.ge მომხმარებელს შორის.
+          </p>
+          <p>
+            ვებგვერდით სარგებლობით, თქვენ ეთანხმებით ამ პირობებს. თუ არ ეთანხმებით, გთხოვთ,
+            არ გამოიყენოთ ვებგვერდი.
+          </p>
+        </div>
+      </section>
+
+      <section class="terms-section">
+        <h2 class="terms-h2">2. მომსახურების აღწერა</h2>
+        <div class="terms-body">
+          <p>
+            კომპანია გთავაზობთ ონლაინ საგანმანათლებლო კურსებს ხელოვნური ინტელექტის,
+            პროგრამირებისა და ციფრული უნარების მიმართულებით. კურსები ხელმისაწვდომია ვიდეო
+            ფორმატში, შესაბამისი მასალებითა და დახმარებით.
+          </p>
+        </div>
+      </section>
+
+      <section class="terms-section">
+        <h2 class="terms-h2">3. ფასი და გადახდა</h2>
+        <div class="terms-body">
+          <ul>
+            <li>ყველა ფასი მითითებულია ქართულ ლარში (₾) დღგ-ს ჩათვლით.</li>
+            <li>
+              გადახდა ხდება ბანკის ბარათით (VISA, Mastercard), Google Pay-ით, Apple Pay-ით
+              ან საბანკო გადარიცხვით.
+            </li>
+            <li>
+              გადახდის შემდეგ მომხმარებელი იღებს წვდომას შესყიდულ კურსზე ელექტრონული ფოსტის
+              მეშვეობით 1 საათში (სამუშაო საათებში).
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="terms-section">
+        <h2 class="terms-h2">4. დაბრუნების და გაუქმების პოლიტიკა</h2>
+        <div class="terms-body">
+          <ul>
+            <li>
+              მომხმარებელს უფლება აქვს მოითხოვოს თანხის სრული დაბრუნება შესყიდვიდან 14 დღის
+              განმავლობაში, თუ მან არ დაიწყო კურსის გავლა.
+            </li>
+            <li>
+              კურსის გავლის დაწყების შემდეგ (პირველი მოდულის გახსნა) თანხის დაბრუნება არ
+              ხდება.
+            </li>
+            <li>დაბრუნების მოთხოვნა იგზავნება ელფოსტაზე: hello@bitcamp.ge</li>
+            <li>
+              დაბრუნება ხდება იმავე გადახდის მეთოდით, რომლითაც განხორციელდა შესყიდვა, 7
+              სამუშაო დღის განმავლობაში.
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="terms-section">
+        <h2 class="terms-h2">5. ინტელექტუალური საკუთრება</h2>
+        <div class="terms-body">
+          <p>
+            ვებგვერდზე და კურსებში წარმოდგენილი ყველა მასალა (ვიდეო, ტექსტი, კოდი, გრაფიკა)
+            წარმოადგენს კომპანიის ან მისი ლიცენზიის მფლობელების საკუთრებას. მათი კოპირება,
+            გავრცელება ან გასაჯაროება დაუშვებელია.
+          </p>
+        </div>
+      </section>
+
+      <section class="terms-section">
+        <h2 class="terms-h2">6. მომხმარებლის ვალდებულებები</h2>
+        <div class="terms-body">
+          <ul>
+            <li>მომხმარებელი ვალდებულია მიაწოდოს ნამდვილი და სრული ინფორმაცია.</li>
+            <li>კურსის წვდომა პერსონალურია — სხვა პირისთვის გადაცემა აკრძალულია.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="terms-section">
+        <h2 class="terms-h2">7. პასუხისმგებლობის შეზღუდვა</h2>
+        <div class="terms-body">
+          <p>
+            კომპანია არ აგებს პასუხს მომხმარებლის მიერ კურსის გავლის შედეგად მიღებულ ან
+            გამოტოვებულ შემოსავალზე. კურსები წარმოადგენს საგანმანათლებლო რესურსს და არ
+            წარმოადგენს გარანტიას კონკრეტული შედეგისთვის.
+          </p>
+        </div>
+      </section>
+
+      <section class="terms-section">
+        <h2 class="terms-h2">8. პერსონალური მონაცემები</h2>
+        <div class="terms-body">
+          <p>
+            პერსონალური მონაცემების დამუშავება რეგულირდება ცალკე დოკუმენტით —
+            <a href="/privacy">კონფიდენციალურობის პოლიტიკა</a>.
+          </p>
+        </div>
+      </section>
+
+      <section class="terms-section">
+        <h2 class="terms-h2">9. პირობების ცვლილება</h2>
+        <div class="terms-body">
+          <p>
+            კომპანია იტოვებს უფლებას, ცალმხრივად შეიტანოს ცვლილებები ამ პირობებში.
+            ცვლილებები ძალაში შედის ვებგვერდზე გამოქვეყნებისთანავე.
+          </p>
+        </div>
+      </section>
+
+      <section class="terms-section terms-section--last">
+        <h2 class="terms-h2">10. საკონტაქტო ინფორმაცია</h2>
+        <div class="terms-body terms-contact">
+          <p>ო. ზაკალაშვილი (ი/მ)</p>
+          <p>ს/კ: 01001071740</p>
+          <p>მისამართი: მირიან მეფის ქუჩა, 11გ, ბინა #39</p>
+          <p>ტელ: +995 557 15 12 90</p>
+          <p>ელ-ფოსტა: hello@bitcamp.ge</p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="terms-footer">
+      © 2026 BitCamp · ო. ზაკალაშვილი (ი/მ) · ს/კ: 01001071740
+    </footer>
+  </div>
+</BaseLayout>
+
+<style>
+  .terms-shell {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  .terms-header {
+    padding: 24px;
+    border-bottom: 1px solid var(--cp-border);
+  }
+  .terms-header__inner {
+    max-width: 920px;
+    margin: 0 auto;
+  }
+  .terms-logo {
+    filter: invert(1);
+    opacity: 0.9;
+    width: auto;
+  }
+  .terms-main {
+    flex: 1;
+    width: 100%;
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 64px 24px;
+  }
+  .terms-h1 {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--cp-text-primary);
+    margin-bottom: 8px;
+    line-height: 1.15;
+  }
+  .terms-meta {
+    color: var(--cp-text-muted);
+    font-size: 15px;
+    margin-bottom: 48px;
+  }
+  .terms-section {
+    margin-bottom: 40px;
+  }
+  .terms-section--last {
+    margin-bottom: 0;
+  }
+  .terms-h2 {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--cp-text-primary);
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--cp-border);
+  }
+  .terms-body {
+    color: var(--cp-text-secondary);
+    font-size: 15px;
+    line-height: 1.8;
+  }
+  .terms-body p + p {
+    margin-top: 12px;
+  }
+  .terms-body ul {
+    padding-left: 20px;
+    line-height: 2;
+    margin: 0;
+  }
+  .terms-body a {
+    color: var(--cp-accent-text);
+  }
+  .terms-contact p {
+    line-height: 2;
+    margin: 0;
+  }
+  .terms-footer {
+    border-top: 1px solid var(--cp-border);
+    padding: 32px 24px;
+    text-align: center;
+    font-size: 13px;
+    color: var(--cp-text-muted);
+  }
+</style>
