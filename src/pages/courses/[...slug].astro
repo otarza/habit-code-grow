@@ -1,0 +1,27 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import LessonView from '../../components/course/LessonView.astro';
+
+/**
+ * Phase 3 turn 2: minimal route that renders any course lesson by id.
+ * Subsequent turns add the course-overview path (e.g. /courses/python),
+ * CourseSidebar, CourseOverview, and prev/next navigation.
+ */
+export async function getStaticPaths() {
+  const entries = await getCollection('courses');
+  return entries
+    .filter((entry) => !entry.id.endsWith('/index'))
+    .map((entry) => ({
+      params: { slug: entry.id },
+      props: { entry },
+    }));
+}
+
+const { entry } = Astro.props;
+const title = ((entry.data.title as string | undefined) ?? entry.id) + ' | BitCamp';
+---
+
+<BaseLayout title={title} description={`BitCamp კურსი: ${entry.data.title ?? entry.id}`}>
+  <LessonView entry={entry} />
+</BaseLayout>

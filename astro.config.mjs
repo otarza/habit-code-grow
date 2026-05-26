@@ -5,6 +5,8 @@ import tailwind from '@astrojs/tailwind';
 
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { remarkAbsoluteAssets } from './src/lib/remark-absolute-assets.mjs';
+import { remarkVideoShortcodes } from './src/lib/remark-video-shortcodes.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -20,6 +22,15 @@ export default defineConfig({
       applyBaseStyles: false,
     }),
   ],
+  markdown: {
+    remarkPlugins: [remarkAbsoluteAssets, remarkVideoShortcodes],
+    shikiConfig: {
+      // Matches the One Dark Pro feel of the production react-syntax-highlighter
+      // setup. Built-in Shiki runs at build time — zero client JS for code highlighting.
+      theme: 'one-dark-pro',
+      wrap: true,
+    },
+  },
   vite: {
     resolve: {
       alias: {

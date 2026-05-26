@@ -1,0 +1,33 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import LessonView from '../../components/course/LessonView.astro';
+
+/**
+ * Phase 3 turn 2: minimal route that renders any gated lesson by id.
+ * Subsequent turns add CourseOverview, CourseSidebar, prev/next nav,
+ * LessonComments island, and a stub AccessGate (Phase 6 makes it real).
+ *
+ * NOTE: noindex applied via BaseLayout — gated pages should not be in search.
+ */
+export async function getStaticPaths() {
+  const entries = await getCollection('learn');
+  return entries
+    .filter((entry) => !entry.id.endsWith('/index'))
+    .map((entry) => ({
+      params: { slug: entry.id },
+      props: { entry },
+    }));
+}
+
+const { entry } = Astro.props;
+const title = ((entry.data.title as string | undefined) ?? entry.id) + ' | BitCamp';
+---
+
+<BaseLayout
+  title={title}
+  description={`BitCamp გაკვეთილი: ${entry.data.title ?? entry.id}`}
+  noindex
+>
+  <LessonView entry={entry} />
+</BaseLayout>

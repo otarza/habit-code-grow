@@ -1,0 +1,182 @@
+---
+import { render, type CollectionEntry } from 'astro:content';
+
+interface Props {
+  entry: CollectionEntry<'learn'> | CollectionEntry<'courses'>;
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const { title, videoUrl, videoDuration } = entry.data;
+const displayTitle = (title as string | undefined) ?? entry.id.split('/').pop() ?? entry.id;
+
+/**
+ * Resolve a video URL into an embeddable iframe src.
+ * Mirrors the shortcode remark plugin logic for lesson-frontmatter `videoUrl`.
+ */
+function resolveEmbed(rawUrl: string | undefined) {
+  if (!rawUrl) return null;
+  const yt = rawUrl.match(
+    /(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([^&\n?#/]+)/,
+  );
+  if (yt) return { kind: 'iframe' as const, src: `https://www.youtube.com/embed/${yt[1]}` };
+  const vm = rawUrl.match(/vimeo\.com\/(?:video\/)?(\d+)/);
+  if (vm) return { kind: 'iframe' as const, src: `https://player.vimeo.com/video/${vm[1]}` };
+  return { kind: 'video' as const, src: rawUrl };
+}
+
+const embed = resolveEmbed(videoUrl as string | undefined);
+---
+
+<article class="lesson">
+  <header class="lesson__header">
+    <h1 class="lesson__title">{displayTitle}</h1>
+    {videoDuration && (
+      <p class="lesson__meta">⏱ {videoDuration}</p>
+    )}
+  </header>
+
+  {embed && (
+    <div class="lesson__video">
+      {embed.kind === 'iframe' ? (
+        <iframe
+          src={embed.src}
+          title={`${displayTitle} — video`}
+          loading="lazy"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen
+        ></iframe>
+      ) : (
+        <video src={embed.src} controls preload="metadata"></video>
+      )}
+    </div>
+  )}
+
+  <div class="lesson__body prose">
+    <Content />
+  </div>
+</article>
+
+<style is:global>
+  /* Container around block-level video embeds (from remark plugin) */
+  .video-embed {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    margin: 1.5rem 0;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    background: #0f172a;
+  }
+  .video-embed iframe,
+  .video-embed video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+</style>
+
+<style>
+  .lesson {
+    max-width: 56rem;
+    margin: 0 auto;
+    padding: 2rem 1rem 4rem;
+  }
+  .lesson__header {
+    margin-bottom: 1.5rem;
+  }
+  .lesson__title {
+    font-size: 1.875rem;
+    line-height: 1.2;
+    font-weight: 700;
+    color: var(--cp-text-primary, hsl(220 47% 15%));
+  }
+  @media (min-width: 768px) {
+    .lesson__title {
+      font-size: 2.25rem;
+    }
+  }
+  .lesson__meta {
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+    color: var(--cp-text-muted, hsl(220 9% 46%));
+  }
+  .lesson__video {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    margin: 1.5rem 0 2rem;
+    border-radius: 0.75rem;
+    overflow: hidden;
+    background: #0f172a;
+  }
+  .lesson__video iframe,
+  .lesson__video video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+  .lesson__body {
+    color: var(--cp-text-secondary, hsl(220 15% 30%));
+    line-height: 1.7;
+  }
+  .lesson__body :global(h2) {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 2rem 0 1rem;
+    color: var(--cp-text-primary, hsl(220 47% 15%));
+  }
+  .lesson__body :global(h3) {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 1.5rem 0 0.75rem;
+    color: var(--cp-text-primary, hsl(220 47% 15%));
+  }
+  .lesson__body :global(p) {
+    margin: 0.75rem 0;
+  }
+  .lesson__body :global(ul),
+  .lesson__body :global(ol) {
+    padding-left: 1.5rem;
+    margin: 0.75rem 0;
+  }
+  .lesson__body :global(li) {
+    margin: 0.25rem 0;
+  }
+  .lesson__body :global(a) {
+    color: var(--cp-accent-text, hsl(258 90% 56%));
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .lesson__body :global(pre) {
+    /* Shiki injects its own background; we just provide rounded corners + scroll */
+    border-radius: 0.5rem;
+    padding: 1rem;
+    margin: 1rem 0;
+    overflow-x: auto;
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+  .lesson__body :global(code:not(pre code)) {
+    background: hsl(220 14% 96%);
+    padding: 0.15rem 0.4rem;
+    border-radius: 0.25rem;
+    font-size: 0.875em;
+  }
+  .lesson__body :global(img) {
+    max-width: 100%;
+    height: auto;
+    border-radius: 0.5rem;
+    margin: 1rem 0;
+  }
+  .lesson__body :global(blockquote) {
+    border-left: 4px solid var(--cp-accent-text, hsl(258 90% 56%));
+    padding-left: 1rem;
+    margin: 1rem 0;
+    color: var(--cp-text-muted, hsl(220 9% 46%));
+  }
+</style>
