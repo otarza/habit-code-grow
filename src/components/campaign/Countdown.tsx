@@ -1,6 +1,46 @@
 import { useEffect, useState } from "react";
 
-const TARGET = new Date("2026-05-26T23:59:59+04:00").getTime();
+const CAMPAIGN_DEADLINE = new Date("2026-05-26T23:59:59+04:00").getTime();
+const OVERTIME_DEADLINE = new Date("2026-05-27T02:59:59+04:00").getTime();
+
+export type CampaignCountdownPhase = "standard" | "overtime" | "ended";
+
+export type CampaignCountdownState = {
+  phase: CampaignCountdownPhase;
+  diff: number;
+};
+
+export function getCampaignCountdownState(now: number): CampaignCountdownState {
+  if (now <= CAMPAIGN_DEADLINE) {
+    return {
+      phase: "standard",
+      diff: CAMPAIGN_DEADLINE - now,
+    };
+  }
+
+  if (now <= OVERTIME_DEADLINE) {
+    return {
+      phase: "overtime",
+      diff: OVERTIME_DEADLINE - now,
+    };
+  }
+
+  return {
+    phase: "ended",
+    diff: 0,
+  };
+}
+
+export function useCampaignCountdownState() {
+  const [now, setNow] = useState(Date.now());
+
+  useEffect(() => {
+    const id = setInterval(() => setNow(Date.now()), 1000);
+    return () => clearInterval(id);
+  }, []);
+
+  return getCampaignCountdownState(now);
+}
 
 function Cell({ n, label }: { n: number; label: string }) {
   return (
@@ -11,18 +51,11 @@ function Cell({ n, label }: { n: number; label: string }) {
   );
 }
 
-export function Countdown() {
-  const [now, setNow] = useState(Date.now());
+export function CountdownDisplay({ state }: { state: CampaignCountdownState }) {
+  const diff = Math.max(0, state.diff);
 
-  useEffect(() => {
-    const id = setInterval(() => setNow(Date.now()), 1000);
-    return () => clearInterval(id);
-  }, []);
-
-  const diff = Math.max(0, TARGET - now);
-
-  if (diff === 0) {
-    return <div className="campaign-countdown campaign-countdown--ended">შეთავაზება დასრულდა</div>;
+  if (state.phase === "ended") {
+    return <div className="campaign-countdown campaign-countdown--ended">ოვერტაიმი დასრულდა</div>;
   }
 
   const days = Math.floor(diff / 86_400_000);
@@ -31,7 +64,7 @@ export function Countdown() {
   const seconds = Math.floor((diff % 60_000) / 1_000);
 
   return (
-    <div className="campaign-countdown">
+    <div className={`campaign-countdown campaign-countdown--${state.phase}`}>
       <Cell n={days} label="დღე" />
       <span className="campaign-countdown__separator" aria-hidden="true">
         :
@@ -47,4 +80,9 @@ export function Countdown() {
       <Cell n={seconds} label="წამი" />
     </div>
   );
+}
+
+export function Countdown() {
+  const state = useCampaignCountdownState();
+  return <CountdownDisplay state={state} />;
 }

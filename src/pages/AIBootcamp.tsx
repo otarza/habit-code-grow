@@ -13,7 +13,7 @@ import {
   Video,
   Workflow,
 } from "lucide-react";
-import { Countdown } from "@/components/campaign/Countdown";
+import { CountdownDisplay, type CampaignCountdownState, useCampaignCountdownState } from "@/components/campaign/Countdown";
 import { CampaignFooter } from "@/components/campaign/CampaignFooter";
 import { CampaignStickyCta } from "@/components/campaign/CampaignStickyCta";
 import { FlittCheckoutModal } from "@/components/campaign/FlittCheckoutModal";
@@ -122,7 +122,7 @@ const faqs = [
   },
   {
     q: "რა მოხდება 26 მაისის შემდეგ?",
-    a: "26 მაისს 23:59 საათზე ₾99-იანი დამოუკიდებლობის შეთავაზება იხურება. შემდეგ თვითსწავლის ვერსია აღარ იქნება ამ ფასად ხელმისაწვდომი.",
+    a: "26 მაისს 23:59 საათზე მთავარი დამოუკიდებლობის ტაიმერი ჩერდება. იმავე ღამეს მოქმედებს მხოლოდ 3-საათიანი ოვერტაიმი 02:59-მდე; ამის შემდეგ ₾99 ფასი აღარ იქნება ხელმისაწვდომი.",
   },
   {
     q: "რა ხდება შეძენის შემდეგ?",
@@ -209,14 +209,62 @@ function PriceBlock({ align = "left" }: { align?: "left" | "center" }) {
   );
 }
 
-function HeroOffer({ className = "", onBuy }: { className?: string; onBuy: () => void }) {
+function GeorgianFlagMark() {
   return (
-    <div className={`campaign-hero__offer ${className}`}>
+    <div className="campaign-flag-mark" aria-hidden="true">
+      <span />
+      <span />
+      <span />
+      <span />
+      <span />
+    </div>
+  );
+}
+
+function getTimingCopy(timing: CampaignCountdownState) {
+  if (timing.phase === "overtime") {
+    return {
+      label: "დამოუკიდებლობის ტაიმერი დასრულდა",
+      value: "ოვერტაიმი 02:59-მდე",
+      note: "დამატებითი 3 საათი მათთვის, ვინც ბოლო წუთს ვერ მოასწრო.",
+    };
+  }
+
+  if (timing.phase === "ended") {
+    return {
+      label: "ოვერტაიმი დასრულდა",
+      value: "₾99 ფასი დახურულია",
+      note: "შემდეგი ფასი ეტაპობრივად დაბრუნდება სრულ ფასთან.",
+    };
+  }
+
+  return {
+    label: "შეთავაზება იხურება",
+    value: "26 მაისს, 23:59-ზე",
+    note: "",
+  };
+}
+
+function HeroOffer({
+  className = "",
+  onBuy,
+  timing,
+}: {
+  className?: string;
+  onBuy: () => void;
+  timing: CampaignCountdownState;
+}) {
+  const timingCopy = getTimingCopy(timing);
+
+  return (
+    <div className={`campaign-hero__offer campaign-hero__offer--${timing.phase} ${className}`}>
+      <GeorgianFlagMark />
       <div className="campaign-offer-heading">
-        <span>შეთავაზება იხურება</span>
-        <strong>26 მაისს, 23:59-ზე</strong>
+        <span>{timingCopy.label}</span>
+        <strong>{timingCopy.value}</strong>
       </div>
-      <Countdown />
+      <CountdownDisplay state={timing} />
+      {timingCopy.note && <p className="campaign-overtime-note">{timingCopy.note}</p>}
       <div className="campaign-hero__buy">
         <PriceBlock />
         <CtaButton label="დაიწყე სწავლა — ₾99" onClick={onBuy} />
@@ -344,6 +392,8 @@ function FAQAccordion({ items }: { items: typeof faqs }) {
 
 export default function AIBootcamp() {
   const buy = () => handleBuy("bootcamp");
+  const campaignTiming = useCampaignCountdownState();
+  const timingCopy = getTimingCopy(campaignTiming);
 
   return (
     <div className="campaign-page campaign-page--bootcamp">
@@ -368,7 +418,7 @@ export default function AIBootcamp() {
         <section className="campaign-hero">
           <div className="campaign-shell campaign-hero__grid">
             <div className="campaign-hero__copy">
-              <p className="campaign-eyebrow">საქართველოს დამოუკიდებლობის დღისადმი მიძღვნილი შეთავაზება · სრულდება 26 მაისს</p>
+              <p className="campaign-eyebrow">საქართველოს დამოუკიდებლობის დღის შეთავაზება · 26 მაისი + 3-საათიანი ოვერტაიმი</p>
               <h1>
                 დაიწყე AI-ს სწორად გამოყენება <span className="campaign-nowrap">2 დღეში</span>
               </h1>
@@ -397,11 +447,11 @@ export default function AIBootcamp() {
 
               <InstructorTrustCard />
 
-              <HeroOffer className="campaign-hero__offer--inline" onBuy={buy} />
+              <HeroOffer className="campaign-hero__offer--inline" onBuy={buy} timing={campaignTiming} />
             </div>
 
             <div className="campaign-hero__visual">
-              <HeroOffer className="campaign-hero__offer--desktop" onBuy={buy} />
+              <HeroOffer className="campaign-hero__offer--desktop" onBuy={buy} timing={campaignTiming} />
               <HeroCoursePreview />
             </div>
           </div>
@@ -610,12 +660,13 @@ export default function AIBootcamp() {
               <p className="campaign-kicker">დამოუკიდებლობის ფასი</p>
               <h2>დაიწყე Bootcamp ახლა და შეინარჩუნე ₾99 ფასი.</h2>
               <p>
-                26 მაისის 23:59-ის შემდეგ შეთავაზება იხურება და კურსი უბრუნდება ჩვეულ ფასს.
+                26 მაისის 23:59-ზე მთავარი ტაიმერი ჩერდება. იმავე ღამეს რჩება მხოლოდ 3-საათიანი
+                ოვერტაიმი, შემდეგ კი ფასი ეტაპობრივად ბრუნდება სრულ ფასთან.
               </p>
               <div className="campaign-cta-band__meta">
                 <span>
                   <CalendarDays aria-hidden="true" size={16} />
-                  26 მაისი • 23:59
+                  ოვერტაიმი • 02:59-მდე
                 </span>
                 <span>
                   <ShieldCheck aria-hidden="true" size={16} />
@@ -679,12 +730,14 @@ export default function AIBootcamp() {
                 პრომპტების ბიბლიოთეკას, რომ სწავლა საკუთარ ტემპში დაიწყო.
               </p>
             </FadeIn>
-            <FadeIn className="campaign-final__panel">
+            <FadeIn className={`campaign-final__panel campaign-final__panel--${campaignTiming.phase}`}>
+              <GeorgianFlagMark />
               <div className="campaign-final__deadline">
-                <span>შეთავაზება იხურება</span>
-                <strong>26 მაისს, 23:59-ზე</strong>
+                <span>{timingCopy.label}</span>
+                <strong>{timingCopy.value}</strong>
               </div>
-              <Countdown />
+              <CountdownDisplay state={campaignTiming} />
+              {timingCopy.note && <p className="campaign-overtime-note">{timingCopy.note}</p>}
               <div className="campaign-final__price-row">
                 <div>
                   <span>დღევანდელი ფასი</span>
