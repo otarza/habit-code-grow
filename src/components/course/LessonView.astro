@@ -1,5 +1,6 @@
 ---
 import { render, type CollectionEntry } from 'astro:content';
+import { LessonCommentsBoundary } from '@/components/learn/LessonCommentsBoundary';
 
 interface AdjacentLesson {
   topicSlug: string;
@@ -7,13 +8,22 @@ interface AdjacentLesson {
   title: string;
 }
 
+interface CommentsConfig {
+  courseSlug: string;
+  topicSlug: string;
+  lessonSlug: string;
+  courseTitle?: string;
+}
+
 interface Props {
   entry: CollectionEntry<'learn'> | CollectionEntry<'courses'>;
   adjacent?: { prev: AdjacentLesson | null; next: AdjacentLesson | null } | null;
   routeBasePath?: string;
+  /** Mount the moderated comments island for this lesson (gated /learn only). */
+  comments?: CommentsConfig | null;
 }
 
-const { entry, adjacent, routeBasePath } = Astro.props;
+const { entry, adjacent, routeBasePath, comments } = Astro.props;
 const { Content } = await render(entry);
 const { title, videoUrl, videoDuration } = entry.data;
 const displayTitle = (title as string | undefined) ?? entry.id.split('/').pop() ?? entry.id;
@@ -85,6 +95,17 @@ const embed = resolveEmbed(videoUrl as string | undefined);
         </a>
       ) : <span class="lesson__nav-link lesson__nav-link--placeholder"></span>}
     </nav>
+  )}
+
+  {comments && (
+    <LessonCommentsBoundary
+      client:visible
+      courseSlug={comments.courseSlug}
+      topicSlug={comments.topicSlug}
+      lessonSlug={comments.lessonSlug}
+      courseTitle={comments.courseTitle}
+      lessonTitle={displayTitle}
+    />
   )}
 </article>
 

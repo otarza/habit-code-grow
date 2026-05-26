@@ -86,7 +86,17 @@ const adjacent =
           routeBasePath={routeBasePath}
         />
       ) : (
-        <LessonView entry={props.entry} adjacent={adjacent} routeBasePath={routeBasePath} />
+        <LessonView
+          entry={props.entry}
+          adjacent={adjacent}
+          routeBasePath={routeBasePath}
+          comments={{
+            courseSlug: props.courseSlug,
+            topicSlug: props.topicSlug,
+            lessonSlug: props.lessonSlug,
+            courseTitle: manifest?.title,
+          }}
+        />
       )}
     </main>
   </div>
