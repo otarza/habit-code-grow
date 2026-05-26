@@ -1,0 +1,557 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { Countdown } from '@/components/campaign/Countdown';
+import { FlittCheckoutModal } from '@/components/campaign/FlittCheckoutModal';
+import CampaignFooter from '@/components/campaign/CampaignFooter.astro';
+import CampaignStickyCta from '@/components/campaign/CampaignStickyCta.astro';
+
+const outcomes = [
+  {
+    label: 'შედეგი 01',
+    title: 'AI-სგან იღებ ზუსტ პასუხებს',
+    body: 'T.C.R.E.I. ფორმულის დახმარებით, პირველივე ცდაზე მიიღებ სასურველ შედეგს და დაზოგავ დროს.',
+    iconKey: 'message',
+  },
+  {
+    label: 'შედეგი 02',
+    title: 'ამუშავებ მონაცემებს წამებში',
+    body: 'ისწავლი CSV ფაილების დამუშავებას და რთული დავალებების ეტაპობრივად შესრულებას (Prompt Chaining).',
+    iconKey: 'database',
+  },
+  {
+    label: 'შედეგი 03',
+    title: 'AI ხდება შენი ყოველდღიური ინსტრუმენტი',
+    body: 'ისწავლი AI-ს ეფექტურად გამოყენებას ისე, რომ ის შენი ყოველდღიური საქმის განუყოფელი ნაწილი გახდეს.',
+    iconKey: 'workflow',
+  },
+];
+
+const lessonHighlights = [
+  { n: '03', title: 'რა არის Prompting?', detail: 'როგორ ვაქცევთ ბუნდოვან მოთხოვნას ზუსტ ამოცანად' },
+  { n: '07', title: 'კონტექსტი', detail: 'რატომ არის კონტექსტი პასუხის ხარისხის მთავარი მმართველი' },
+  { n: '14', title: 'T.C.R.E.I. მოდელი', detail: 'BitCamp-ის პრაქტიკული ჩარჩო ძლიერი პრომპტებისთვის' },
+  { n: '20', title: 'Prompt Chaining', detail: 'როგორ დავყოთ რთული პროცესი მართვად ნაბიჯებად' },
+  { n: '22', title: 'ცხრილური მონაცემები', detail: 'CSV ფაილების დამუშავება და ანალიზი AI-სთან ერთად' },
+  { n: '25', title: 'JSON', detail: 'სტრუქტურირებული პასუხები ავტომატიზაციისთვის' },
+];
+
+const included = [
+  '25 ვიდეო გაკვეთილი, მოკლე და პრაქტიკაზე ორიენტირებული',
+  'სამუდამო წვდომა ყველა გაკვეთილსა და მომავალ განახლებაზე',
+  'Python-ის სრული კურსი ბონუსად',
+  'SQL-ის სრული კურსი ბონუსად',
+  '50+ მზა პრომპტის ბიბლიოთეკა',
+];
+
+const fitSignals = [
+  'ChatGPT-ს იყენებ, მაგრამ პასუხები ხან ზედაპირულია და ხან გამოსადეგი',
+  'გინდა AI საქმეში გამოიყენო: ტექსტში, კვლევაში, ანალიზში ან კომუნიკაციაში',
+  'არ ხარ პროგრამისტი და გჭირდება მარტივი, განმეორებადი ჩარჩო',
+  'გინდა მზა პრომპტები და მაგალითები, რომ ყოველი მოთხოვნა თავიდან არ ააწყო',
+];
+
+const instructorCredentials = [
+  'BitCamp-ის დამფუძნებელი',
+  'Python, SQL, კომპ. მეცნიერების, Full-Stack Web Development და AI კურსების ავტორი',
+  '16 წლიანი გამოცდილება ტექნოლოგიურ ინდუსტრიაში',
+  'სენიორ პროგრამულ ინჟინრად მუშაობის ისტორია ამერიკაში, კანადაში და ევროპის 12 ქვეყანაში',
+];
+
+const heroPreviewDays = [
+  { day: 'დღე 01', title: 'სწორი მოთხოვნის აწყობა', items: ['რა არის Prompting', 'კონტექსტის მიცემა', 'T.C.R.E.I. ფორმულა'] },
+  { day: 'დღე 02', title: 'AI რეალურ საქმეში', items: ['Prompt Chaining', 'CSV / JSON პასუხები', '50+ მზა პრომპტი'] },
+];
+
+const promptFormula = [
+  { letter: 'T', label: 'ამოცანა' },
+  { letter: 'C', label: 'კონტექსტი' },
+  { letter: 'R', label: 'როლი' },
+  { letter: 'E', label: 'მაგალითი' },
+  { letter: 'I', label: 'გაუმჯობესება' },
+];
+
+const testimonials = [
+  {
+    quote:
+      'დიდი მადლობა, ძალიან სასარგებლო კურსია.. მოვრჩით frameworks და ძალიან საინტერესო დასკვნა გამოვიტანე... ამის მერე სისტემურად და გააზრებულად ბევრად ეფექტურ შედეგს მივიღებ.',
+    name: 'მიხეილ ჯერიაშვილი',
+    note: 'აქტიური მონაწილე · სისტემური მიდგომა',
+  },
+  {
+    quote:
+      'ვიდეო გაკვეთილები ჩანაწერის სახით ჩემთვის როგორც ემიგრანტისთვის, რომელსაც ძალიან დატვირთული გრაფიკი აქვს, ძალიან მოსახერხებელია.',
+    name: 'Ia Kiknadze',
+    note: 'აქტიური მონაწილე · მოქნილი ფორმატი',
+  },
+  {
+    quote:
+      'ნამდვილად კარგი ფორმატია მოკლე ვიდეოების... ვინც ახლა იწყებს ახალი პროფესიის ათვისებას მოკლე ვიდეოებით დაწყება სჯობს.',
+    name: 'George Gegelia',
+    note: 'აქტიური მონაწილე · მოკლე ვიდეოები',
+  },
+];
+
+const faqs = [
+  {
+    q: 'ვისთვის არის ეს Bootcamp?',
+    a: 'მათთვის, ვინც უკვე იყენებს ChatGPT-ს ან სხვა AI ხელსაწყოს, მაგრამ შედეგები ჯერ არ არის სტაბილური. პროგრამირება საჭირო არ არის; საჭიროა მხოლოდ სურვილი, რომ AI-სთან მუშაობა გახდეს უფრო სისტემური.',
+  },
+  {
+    q: 'რა მოხდება 26 მაისის შემდეგ?',
+    a: '26 მაისს 23:59 საათზე ₾99-იანი დამოუკიდებლობის შეთავაზება იხურება. შემდეგ თვითსწავლის ვერსია აღარ იქნება ამ ფასად ხელმისაწვდომი.',
+  },
+  {
+    q: 'რა ხდება შეძენის შემდეგ?',
+    a: 'შეძენისთანავე ელფოსტაზე მიიღებთ კურსზე წვდომის დეტალურ ინსტრუქციას. გადახდა უსაფრთხოდ მუშავდება Flitt-ით — ბარათით, Apple Pay-ით ან Google Pay-ით.',
+  },
+  {
+    q: 'შესაძლებელია თანხის დაბრუნება?',
+    aHtml: 'დიახ, 14 დღის განმავლობაში, თუ კურსის გავლა ჯერ არ დაგიწყია. სრული პირობებისთვის იხილე <a href="/terms" class="campaign-text-link">მომსახურების პირობები</a>.',
+  },
+];
+
+const paymentLogos = ['visa', 'mastercard', 'apple-pay', 'google-pay'] as const;
+---
+
+<BaseLayout
+  title="AI Prompt Engineering Bootcamp - ₾99 | BitCamp"
+  description="AI Prompt Engineering Bootcamp თვითსწავლისთვის: 25 გაკვეთილი, T.C.R.E.I. ჩარჩო, 50+ პრომპტი და Python/SQL ბონუსები ₾99-ად."
+  ogImage="https://www.bitcamp.ge/ai-meta.png"
+  noindex
+  bodyClass="campaign-page campaign-page--bootcamp"
+>
+  <main>
+    {/* HERO */}
+    <section class="campaign-hero">
+      <div class="campaign-shell campaign-hero__grid">
+        <div class="campaign-hero__copy">
+          <p class="campaign-eyebrow">
+            საქართველოს დამოუკიდებლობის დღისადმი მიძღვნილი შეთავაზება · სრულდება 26 მაისს
+          </p>
+          <h1>
+            დაიწყე AI-ს სწორად გამოყენება <span class="campaign-nowrap">2 დღეში</span>
+          </h1>
+          <p class="campaign-lead">
+            ისწავლე ChatGPT, Gemini და Claude ისე, რომ T.C.R.E.I.-ით დაზოგო დრო პირველივე
+            დღიდან.
+          </p>
+
+          <div class="campaign-hero__facts" aria-label="კურსის ძირითადი ინფორმაცია">
+            <span>🎬 25 გაკვეთილი</span>
+            <span>✓ 0-დან დამწყებთათვის</span>
+            <span>📚 Python + SQL ბონუსად</span>
+            <span>👥 2 000+ კმაყოფილი სტუდენტი</span>
+          </div>
+
+          {/* Instructor trust card */}
+          <div class="campaign-author-card">
+            <div class="campaign-author-card__top">
+              <img src="/media/external/images/otar-profile-photo.png" alt="" />
+              <div>
+                <span>კურსს უძღვება</span>
+                <strong>ოთარ ზაკალაშვილი</strong>
+                <small>BitCamp-ის დამფუძნებელი და ქართული ტექნოლოგიური კურსების ავტორი</small>
+              </div>
+            </div>
+            <div class="campaign-author-card__credentials">
+              {instructorCredentials.map((credential) => (
+                <div>✓ <span>{credential}</span></div>
+              ))}
+            </div>
+            <div class="campaign-author-card__stats" aria-label="ინსტრუქტორის გამოცდილება">
+              <div><strong>16 წელი</strong><span>ტექ გამოცდილება</span></div>
+              <div><strong>12 ქვეყანა</strong><span>საერთაშორისო პროექტები</span></div>
+              <div><strong>2 000+</strong><span>სტუდენტი</span></div>
+            </div>
+          </div>
+
+          {/* Hero offer (inline, shown on mobile) */}
+          <div class="campaign-hero__offer campaign-hero__offer--inline">
+            <div class="campaign-offer-heading">
+              <span>შეთავაზება იხურება</span>
+              <strong>26 მაისს, 23:59-ზე</strong>
+            </div>
+            <Countdown client:idle />
+            <div class="campaign-hero__buy">
+              <div class="campaign-price campaign-price--left">
+                <p class="campaign-price__label">დამოუკიდებლობის ფასი</p>
+                <div class="campaign-price__new">₾99</div>
+              </div>
+              <button type="button" class="campaign-cta" data-buy="bootcamp">
+                <span>დაიწყე სწავლა — ₾99</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+              </button>
+            </div>
+            <div class="campaign-offer-footer">
+              <div class="campaign-secure-line">🔒 <span>უსაფრთხო გადახდა ბარათით ან საბანკო გადარიცხვით</span></div>
+              <div class="campaign-secure-line">✓ <span>14 დღე დაბრუნებისთვის, თუ კურსის გავლა ჯერ არ დაგიწყია</span></div>
+              <div class="campaign-payment-logos campaign-payment-logos--compact">
+                {paymentLogos.map((name) => (
+                  <img src={`/assets/payment/${name}.svg`} alt={name} />
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="campaign-hero__visual">
+          {/* Desktop hero offer */}
+          <div class="campaign-hero__offer campaign-hero__offer--desktop">
+            <div class="campaign-offer-heading">
+              <span>შეთავაზება იხურება</span>
+              <strong>26 მაისს, 23:59-ზე</strong>
+            </div>
+            <Countdown client:idle />
+            <div class="campaign-hero__buy">
+              <div class="campaign-price campaign-price--left">
+                <p class="campaign-price__label">დამოუკიდებლობის ფასი</p>
+                <div class="campaign-price__new">₾99</div>
+              </div>
+              <button type="button" class="campaign-cta" data-buy="bootcamp">
+                <span>დაიწყე სწავლა — ₾99</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+              </button>
+            </div>
+            <div class="campaign-offer-footer">
+              <div class="campaign-secure-line">🔒 <span>უსაფრთხო გადახდა ბარათით ან საბანკო გადარიცხვით</span></div>
+              <div class="campaign-secure-line">✓ <span>14 დღე დაბრუნებისთვის, თუ კურსის გავლა ჯერ არ დაგიწყია</span></div>
+              <div class="campaign-payment-logos campaign-payment-logos--compact">
+                {paymentLogos.map((name) => (
+                  <img src={`/assets/payment/${name}.svg`} alt={name} />
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Course preview */}
+          <div class="campaign-hero-preview" aria-label="კურსის მოკლე სტრუქტურა">
+            <div class="campaign-hero-preview__header">
+              <span>რას იწყებ პირველივე დღეს</span>
+              <strong>2 დღიანი პრაქტიკული სტარტი</strong>
+              <p>
+                კურსი არ იწყება თეორიით. პირველივე გაკვეთილებიდან აწყობ მოთხოვნას, იღებ
+                უკეთეს პასუხს და ხედავ როგორ გამოიყენო AI ყოველდღიურ საქმეში.
+              </p>
+            </div>
+            <div class="campaign-hero-preview__days">
+              {heroPreviewDays.map((day) => (
+                <div class="campaign-hero-preview__day">
+                  <span>{day.day}</span>
+                  <strong>{day.title}</strong>
+                  <ul>{day.items.map((item) => <li>{item}</li>)}</ul>
+                </div>
+              ))}
+            </div>
+            <div class="campaign-formula-card">
+              <div>
+                <span>კურსის მთავარი ჩარჩო</span>
+                <strong>T.C.R.E.I.</strong>
+              </div>
+              <div class="campaign-formula-grid">
+                {promptFormula.map((item) => (
+                  <div><strong>{item.letter}</strong><span>{item.label}</span></div>
+                ))}
+              </div>
+            </div>
+            <div class="campaign-hero-preview__footer">
+              ✓ <span>შედეგი: იცი არა მხოლოდ "რა დაწერო", არამედ როგორ ააწყო მოთხოვნა თავიდან სწორად.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <CampaignStickyCta eyebrow="თვითსწავლა" price="₾99" label="დაიწყე სწავლა" product="bootcamp" />
+
+    {/* PROOF STRIP */}
+    <section class="campaign-proof-strip" aria-label="ნდობის მაჩვენებლები">
+      <div class="campaign-shell campaign-proof-strip__grid">
+        <div><strong>2 000+</strong><span>კმაყოფილი სტუდენტი BitCamp-ის AI კურსებში</span></div>
+        <div><strong>25</strong><span>დასრულებული ვიდეო გაკვეთილი ახლავე</span></div>
+        <div><strong>2</strong><span>ბონუს კურსი: Python და SQL</span></div>
+        <div><strong>50+</strong><span>მზა პრომპტი ყოველდღიური სამუშაოსთვის</span></div>
+      </div>
+    </section>
+
+    {/* DECISION SECTION */}
+    <section class="campaign-section campaign-section--decision">
+      <div class="campaign-shell campaign-decision-grid">
+        <div class="campaign-fit-copy">
+          <p class="campaign-kicker">ვისთვისაა</p>
+          <h2>ეს კურსი შენთვისაა, თუ გსურს დაზოგო დრო და მიიღო უკეთესი შედეგები.</h2>
+          <div class="campaign-fit-list">
+            {fitSignals.map((item) => (
+              <div>✓ <span>{item}</span></div>
+            ))}
+          </div>
+          <blockquote class="campaign-proof-quote">
+            <p>"{testimonials[0].quote}"</p>
+            <footer>
+              <strong>{testimonials[0].name}</strong>
+              <span>{testimonials[0].note}</span>
+            </footer>
+          </blockquote>
+        </div>
+
+        <div class="campaign-prompt-demo" aria-label="პრომპტის გაუმჯობესების მაგალითი">
+          <p class="campaign-kicker">რას ცვლის ჩარჩო</p>
+          <h3>ერთი ბუნდოვანი მოთხოვნა გადაიქცევა სამუშაო ინსტრუქციად.</h3>
+          <div class="campaign-prompt-card campaign-prompt-card--before">
+            <span>მანამდე</span>
+            <p>დამიწერე პოსტი ჩემი ბიზნესისთვის.</p>
+          </div>
+          <div class="campaign-prompt-card campaign-prompt-card--after">
+            <span>შემდეგ T.C.R.E.I.-ით</span>
+            <p>
+              დაწერე LinkedIn პოსტი მცირე ბიზნესის მფლობელისთვის. გამოიყენე პრაქტიკული ტონი,
+              ახსენი ერთი პრობლემა, აჩვენე 3 ნაბიჯი და ბოლოს დაამატე მოკლე CTA.
+            </p>
+          </div>
+          <div class="campaign-prompt-result">
+            ✓ <span>შედეგი: ნაკლები გადაკეთება, უფრო ზუსტი პასუხი და პრომპტი, რომელსაც შემდეგაც გამოიყენებ.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* WHY NOW */}
+    <section class="campaign-section campaign-section--surface">
+      <div class="campaign-shell campaign-two-column">
+        <div>
+          <p class="campaign-kicker">რატომ ახლა</p>
+          <h2>AI-ს ცოდნა უკვე აღარ ნიშნავს მხოლოდ კარგი ტექსტის დაწერას.</h2>
+        </div>
+        <div>
+          <p class="campaign-body">
+            ბევრმა უკვე სცადა ChatGPT, მაგრამ ყოველდღიურ საქმეში მაინც იღებს არათანაბარ
+            შედეგებს: ზოგჯერ კარგი პასუხი, ზოგჯერ ზედაპირული ტექსტი, ზოგჯერ დაკარგული
+            საათები. ეს Bootcamp გაძლევს მეთოდს, რომ AI-სთან მუშაობა გახდეს
+            სტრუქტურირებული და განმეორებადი.
+          </p>
+          <div class="campaign-insight-box">
+            <span>კურსის მთავარი იდეა</span>
+            <strong>AI არ არის ჯადოსნური პასუხების ყუთი. ის არის სამუშაო სისტემა, თუ სწორად აძლევ კონტექსტს.</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* OUTCOMES */}
+    <section class="campaign-section">
+      <div class="campaign-shell">
+        <div class="campaign-section-heading">
+          <p class="campaign-kicker">რას შეცვლის კურსი</p>
+          <h2>სამი პრაქტიკული უნარი, რომელიც დაუყოვნებლივ გაზრდის შენს პროდუქტიულობას.</h2>
+        </div>
+        <div class="campaign-outcome-grid">
+          {outcomes.map((outcome) => (
+            <div class="campaign-outcome-card">
+              <div class="campaign-card-icon" aria-hidden="true">
+                {outcome.iconKey === 'message' && '💬'}
+                {outcome.iconKey === 'database' && '🗄'}
+                {outcome.iconKey === 'workflow' && '⚙'}
+              </div>
+              <p>{outcome.label}</p>
+              <h3>{outcome.title}</h3>
+              <span>{outcome.body}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    {/* INSTRUCTOR */}
+    <section class="campaign-section campaign-section--surface">
+      <div class="campaign-shell campaign-instructor-section">
+        <div class="campaign-instructor-photo">
+          <img src="/media/external/images/otar-spotlight-clean.png" alt="ოთარ ზაკალაშვილი" />
+        </div>
+        <div class="campaign-instructor-copy">
+          <p class="campaign-kicker">ვისგან სწავლობ</p>
+          <h2>პრაქტიკოსისგან, რომელმაც ქართული ტექნოლოგიური კურსების სტანდარტი შექმნა.</h2>
+          <p class="campaign-body">
+            ოთარი BitCamp-ის დამფუძნებელია და წლებია ქმნის კურსებს პროგრამირებაში,
+            მონაცემთა ანალიზსა და AI-ში. ამ Bootcamp-ში აქცენტი კეთდება არა რთულ
+            ტერმინებზე, არამედ იმაზე, თუ როგორ გამოიყენოს არატექნიკურმა ადამიანმა AI თავისი
+            სამუშაოს გასამარტივებლად.
+          </p>
+          <div class="campaign-credential-list">
+            <div>✓ <span>ქართული ვიდეო გაკვეთილები დამწყებისთვის გასაგები ენით</span></div>
+            <div>✓ <span>Python, SQL, Web და AI სასწავლო მიმართულებების ავტორი BitCamp-ში</span></div>
+            <div>✓ <span>2 000+ კმაყოფილ სტუდენტთან გამოცდილი ფორმატი: მოკლე გაკვეთილი, ჩარჩო და პრაქტიკა</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* CURRICULUM */}
+    <section class="campaign-section">
+      <div class="campaign-shell campaign-curriculum">
+        <div class="campaign-section-heading">
+          <p class="campaign-kicker">სილაბუსი</p>
+          <h2>25 გაკვეთილი, რომელიც გეხმარება AI-სთან საუბარი აქციო სამუშაო სისტემად.</h2>
+        </div>
+        <div class="campaign-lesson-list">
+          {lessonHighlights.map((lesson) => (
+            <div class="campaign-lesson-row">
+              <span>{lesson.n}</span>
+              <div>
+                <strong>{lesson.title}</strong>
+                <p>{lesson.detail}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div class="campaign-muted-note">
+          სრული პროგრამა შეიცავს კიდევ 19 გაკვეთილს, პრაქტიკულ დავალებებს და მზა პრომპტების
+          ბიბლიოთეკას.
+        </div>
+      </div>
+    </section>
+
+    {/* INCLUDED */}
+    <section class="campaign-section campaign-section--surface">
+      <div class="campaign-shell campaign-included-grid">
+        <div>
+          <p class="campaign-kicker">რას მიიღებ</p>
+          <h2>Bootcamp არ არის მხოლოდ ვიდეოების ნაკრები.</h2>
+          <p class="campaign-body">
+            მთავარი ღირებულება არის თვითსწავლებისთვის აწყობილი სისტემა: გაკვეთილები,
+            T.C.R.E.I. ჩარჩო, ბონუს კურსები და მზა პრომპტები, რომ AI-სთან მუშაობა სწრაფად
+            დაალაგო.
+          </p>
+        </div>
+        <div class="campaign-included-list">
+          {included.map((item) => (
+            <div>✓ <span>{item}</span></div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    {/* CTA BAND */}
+    <section class="campaign-cta-band">
+      <div class="campaign-shell campaign-cta-band__inner">
+        <div class="campaign-cta-band__copy">
+          <p class="campaign-kicker">დამოუკიდებლობის ფასი</p>
+          <h2>დაიწყე Bootcamp ახლა და შეინარჩუნე ₾99 ფასი.</h2>
+          <p>26 მაისის 23:59-ის შემდეგ შეთავაზება იხურება და კურსი უბრუნდება ჩვეულ ფასს.</p>
+          <div class="campaign-cta-band__meta">
+            <span>📅 26 მაისი · 23:59</span>
+            <span>🔒 უსაფრთხო გადახდა</span>
+          </div>
+        </div>
+        <div class="campaign-cta-band__action">
+          <div class="campaign-cta-price-line">
+            <div><span>დღევანდელი ფასი</span><strong>₾99</strong></div>
+            <span class="campaign-price__save">26 მაისამდე</span>
+          </div>
+          <button type="button" class="campaign-cta" data-buy="bootcamp">
+            <span>დაიწყე სწავლა — ₾99</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+          </button>
+          <div class="campaign-payment-logos campaign-payment-logos--compact">
+            {paymentLogos.map((name) => (
+              <img src={`/assets/payment/${name}.svg`} alt={name} />
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* TESTIMONIALS */}
+    <section class="campaign-section">
+      <div class="campaign-shell">
+        <div class="campaign-section-heading">
+          <p class="campaign-kicker">სტუდენტების ხმა</p>
+          <h2>სანდოობა მოდის არა ხმამაღალი დაპირებიდან, არამედ სწავლის გამოცდილებიდან.</h2>
+        </div>
+        <div class="campaign-testimonial-grid">
+          {testimonials.map((t) => (
+            <div class="campaign-testimonial">
+              <blockquote>"{t.quote}"</blockquote>
+              <strong>{t.name}</strong>
+              <span>{t.note}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    {/* FAQ */}
+    <section class="campaign-section campaign-section--surface">
+      <div class="campaign-shell campaign-faq-grid">
+        <div>
+          <p class="campaign-kicker">კითხვები</p>
+          <h2>მოკლე პასუხები გადაწყვეტილების წინ.</h2>
+        </div>
+        <div class="campaign-faq">
+          {faqs.map((item, i) => (
+            <details class="campaign-faq__item" open={i === 0}>
+              <summary>
+                <span>{item.q}</span>
+                <span class="campaign-faq__icon" aria-hidden="true">+</span>
+              </summary>
+              <div class="campaign-faq__answer">
+                {item.aHtml ? <Fragment set:html={item.aHtml} /> : item.a}
+              </div>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    {/* FINAL CTA */}
+    <section class="campaign-final">
+      <div class="campaign-shell campaign-final__inner">
+        <div class="campaign-final__copy">
+          <p class="campaign-kicker">ბოლო ნაბიჯი</p>
+          <h2>თუ AI-ს უკვე იყენებ, ახლა დროა ის სწორ სისტემად აქციო.</h2>
+          <p>
+            მიიღებ 25 მოკლე გაკვეთილს, პრაქტიკულ ჩარჩოს, ბონუს Python და SQL კურსებს და
+            პრომპტების ბიბლიოთეკას, რომ სწავლა საკუთარ ტემპში დაიწყო.
+          </p>
+        </div>
+        <div class="campaign-final__panel">
+          <div class="campaign-final__deadline">
+            <span>შეთავაზება იხურება</span>
+            <strong>26 მაისს, 23:59-ზე</strong>
+          </div>
+          <Countdown client:idle />
+          <div class="campaign-final__price-row">
+            <div><span>დღევანდელი ფასი</span><strong>₾99</strong></div>
+            <span class="campaign-price__save">26 მაისამდე</span>
+          </div>
+          <button type="button" class="campaign-cta" data-buy="bootcamp">
+            <span>დაიწყე სწავლა — ₾99</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+          </button>
+          <p>
+            გჭირდება მენტორშიფი, Discord მხარდაჭერა და უკუკავშირი?
+            <a href="/ai" class="campaign-text-link">იხილე ₾249-იანი მენტორული ვერსია</a>
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <CampaignFooter />
+
+  {/* Flitt checkout modal — listens for `flitt:open` CustomEvent dispatched by handleBuy */}
+  <FlittCheckoutModal client:load />
+</BaseLayout>
+
+<script>
+  import { handleBuy } from '@/lib/checkout';
+
+  // Wire all [data-buy] buttons on this page to handleBuy. handleBuy fires GA/Meta
+  // tracking + dispatches the `flitt:open` CustomEvent the modal listens for.
+  document.querySelectorAll<HTMLElement>('[data-buy]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const product = btn.getAttribute('data-buy');
+      if (product === 'bootcamp' || product === 'pro') {
+        handleBuy(product);
+      }
+    });
+  });
+</script>

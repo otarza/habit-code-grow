@@ -1,0 +1,78 @@
+---
+// Minimal campaign-page footer: payment logos, legal block, Terms/Privacy links.
+// Used on /ai-bootcamp, /ai, /terms, /privacy, /thank-you.
+
+const paymentLogos = ['visa', 'mastercard', 'apple-pay', 'google-pay'] as const;
+---
+
+<footer class="campaign-footer">
+  <div class="campaign-footer__inner">
+    <div class="campaign-footer__logos">
+      {paymentLogos.map((name) => (
+        <img src={`/assets/payment/${name}.svg`} alt={name} loading="lazy" />
+      ))}
+    </div>
+
+    <div class="campaign-footer__legal">
+      <p>ო. ზაკალაშვილი (ი/მ) · ს/კ: 01001071740</p>
+      <p>მისამართი: მირიან მეფის ქუჩა, 11გ, ბინა #39</p>
+      <p>ტელ: +995 557 15 12 90 · ელ-ფოსტა: hello@bitcamp.ge</p>
+    </div>
+
+    <div class="campaign-footer__links">
+      <a href="/terms">მომსახურების პირობები</a>
+      <span aria-hidden="true">·</span>
+      <a href="/privacy">კონფიდენციალურობა</a>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .campaign-footer {
+    border-top: 1px solid var(--cp-border);
+    padding: 48px 0;
+  }
+  .campaign-footer__inner {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+  .campaign-footer__logos {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+  }
+  .campaign-footer__logos img {
+    height: 24px;
+    filter: grayscale(1) brightness(1.8);
+    opacity: 0.6;
+  }
+  .campaign-footer__legal {
+    color: var(--cp-text-muted);
+    font-size: 13px;
+    line-height: 1.7;
+    margin-bottom: 20px;
+  }
+  .campaign-footer__legal p {
+    margin: 0;
+  }
+  .campaign-footer__links {
+    display: flex;
+    gap: 16px;
+    font-size: 13px;
+    align-items: center;
+  }
+  .campaign-footer__links a {
+    color: var(--cp-text-muted);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+  .campaign-footer__links a:hover {
+    color: var(--cp-text-secondary);
+  }
+  .campaign-footer__links span {
+    color: var(--cp-border-strong);
+  }
+</style>
