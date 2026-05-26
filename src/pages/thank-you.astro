@@ -1,0 +1,254 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { Image } from 'astro:assets';
+import bitcampLogo from '@/assets/bitcamp-logo.png';
+import CampaignFooter from '@/components/campaign/CampaignFooter.astro';
+---
+
+<BaseLayout
+  title="მადლობა — BitCamp"
+  description="გადახდის დადასტურება"
+  noindex
+  bodyClass="campaign-page"
+>
+  <div class="thank-you-shell">
+    <header class="thank-you-header">
+      <div class="thank-you-header__inner">
+        <a href="/" aria-label="BitCamp — მთავარი">
+          <Image src={bitcampLogo} alt="BitCamp" height={28} class="thank-you-logo" />
+        </a>
+      </div>
+    </header>
+
+    <main class="thank-you-main">
+      <div class="thank-you-card">
+        {/* Success variant */}
+        <div data-variant="success" hidden>
+          <div class="thank-you-icon">🎉</div>
+          <h1>გადახდა წარმატებით დასრულდა!</h1>
+          <p class="thank-you-body">
+            <strong data-product-label>თქვენი კურსი</strong>-ის წვდომა გააქტიურდა.
+          </p>
+          <p class="thank-you-body">
+            შეამოწმე შენი ელ-ფოსტა — გამოვაგზავნე
+            <strong>Magic Link</strong>
+            კურსზე წვდომისთვის.
+          </p>
+          <p class="thank-you-note">
+            ვერ ხედავ ელფოსტას? შეამოწმე Spam ფოლდერი ან მოგვწერე
+            <a href="mailto:hello@bitcamp.ge">hello@bitcamp.ge</a>
+          </p>
+          <p class="thank-you-note thank-you-order" data-order hidden>
+            შეკვეთა #<span data-order-id></span>
+          </p>
+        </div>
+
+        {/* Declined variant */}
+        <div data-variant="declined" hidden>
+          <div class="thank-you-icon">⚠️</div>
+          <h1>გადახდა ვერ დასრულდა</h1>
+          <p class="thank-you-body">
+            შენი გადახდა არ გავიდა. სცადე თავიდან ან გამოიყენე სხვა ბარათი ან გადახდის
+            მეთოდი.
+          </p>
+          <a href="/ai-bootcamp" class="thank-you-cta">სცადე თავიდან →</a>
+          <p class="thank-you-note">
+            პრობლემა გრძელდება? მოგვწერე
+            <a href="mailto:hello@bitcamp.ge">hello@bitcamp.ge</a>
+          </p>
+        </div>
+
+        {/* Default variant */}
+        <div data-variant="default">
+          <div class="thank-you-icon">✅</div>
+          <h1>მადლობა!</h1>
+          <p class="thank-you-body">
+            შემდეგი ნაბიჯი: შეამოწმე შენი ელ-ფოსტა — გამოგიგზავნე კურსზე წვდომის
+            ინსტრუქცია.
+          </p>
+          <p class="thank-you-note">
+            კითხვები?
+            <a href="mailto:hello@bitcamp.ge">hello@bitcamp.ge</a>
+          </p>
+        </div>
+      </div>
+    </main>
+
+    <CampaignFooter />
+  </div>
+</BaseLayout>
+
+<script>
+  /**
+   * On `?status=success` — fire Meta Purchase + GA4 purchase events with
+   * sessionStorage dedup. On declined / default — just show the right block.
+   * Flitt passes `amount` in tetri (smallest unit); convert >999 to GEL.
+   */
+  const PRODUCT_LABELS: Record<string, string> = {
+    bootcamp: 'AI Prompt Engineering Bootcamp',
+    pro: 'AI Bootcamp მენტორობით',
+  };
+  const PRODUCT_DEFAULTS: Record<string, { value: number; currency: string }> = {
+    bootcamp: { value: 99, currency: 'GEL' },
+    pro: { value: 249, currency: 'GEL' },
+  };
+
+  function resolveVariant(status: string | null): 'success' | 'declined' | 'default' {
+    const s = (status || '').toLowerCase();
+    if (s === 'success' || s === 'approved') return 'success';
+    if (s === 'declined' || s === 'failed' || s === 'fail') return 'declined';
+    return 'default';
+  }
+
+  const params = new URLSearchParams(window.location.search);
+  const variant = resolveVariant(params.get('status') || params.get('order_status'));
+  const product = params.get('product') ?? 'bootcamp';
+  const productLabel = PRODUCT_LABELS[product] ?? PRODUCT_LABELS.bootcamp;
+  const orderId = params.get('order_id');
+
+  // Toggle the visible variant block
+  document.querySelectorAll<HTMLElement>('[data-variant]').forEach((el) => {
+    el.hidden = el.dataset.variant !== variant;
+  });
+
+  // Fill product label / order ID
+  document.querySelectorAll<HTMLElement>('[data-product-label]').forEach((el) => {
+    el.textContent = productLabel;
+  });
+  if (orderId) {
+    const orderEl = document.querySelector<HTMLElement>('[data-order]');
+    if (orderEl) {
+      orderEl.hidden = false;
+      const span = orderEl.querySelector('[data-order-id]');
+      if (span) span.textContent = orderId;
+    }
+  }
+
+  // Fire purchase tracking only on success, only once per order_id
+  if (variant === 'success' && orderId) {
+    const key = `bitcamp_purchase_fired_${orderId}`;
+    if (!sessionStorage.getItem(key)) {
+      sessionStorage.setItem(key, '1');
+
+      const rawAmount = params.get('amount');
+      const parsed = rawAmount ? Number(rawAmount) : NaN;
+      const defaults = PRODUCT_DEFAULTS[product] ?? PRODUCT_DEFAULTS.bootcamp;
+      // Flitt amount > 999 is almost certainly tetri (e.g. 9900 = ₾99.00).
+      const value =
+        Number.isFinite(parsed) && parsed > 0
+          ? parsed > 999
+            ? parsed / 100
+            : parsed
+          : defaults.value;
+      const currency = params.get('currency') || defaults.currency;
+
+      const win = window as any;
+      win.fbq?.(
+        'track',
+        'Purchase',
+        {
+          value,
+          currency,
+          content_ids: [product],
+          content_name: productLabel,
+          content_type: 'product',
+          num_items: 1,
+        },
+        { eventID: orderId },
+      );
+      win.gtag?.('event', 'purchase', {
+        transaction_id: orderId,
+        value,
+        currency,
+        items: [
+          {
+            item_id: product,
+            item_name: productLabel,
+            price: value,
+            quantity: 1,
+          },
+        ],
+      });
+    }
+  }
+</script>
+
+<style>
+  .thank-you-shell {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  .thank-you-header {
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--cp-border);
+  }
+  .thank-you-header__inner {
+    max-width: 920px;
+    margin: 0 auto;
+  }
+  .thank-you-logo {
+    width: auto;
+    filter: invert(1);
+    opacity: 0.85;
+  }
+  .thank-you-main {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 96px 24px;
+  }
+  .thank-you-card {
+    max-width: 560px;
+    text-align: center;
+  }
+  .thank-you-icon {
+    font-size: 48px;
+    margin-bottom: 24px;
+  }
+  .thank-you-card h1 {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--cp-text-primary);
+    letter-spacing: -0.02em;
+    margin-bottom: 16px;
+    line-height: 1.15;
+  }
+  .thank-you-body {
+    font-size: 17px;
+    color: var(--cp-text-secondary);
+    line-height: 1.7;
+    margin-bottom: 20px;
+  }
+  .thank-you-body strong {
+    color: var(--cp-text-primary);
+  }
+  .thank-you-note {
+    font-size: 15px;
+    color: var(--cp-text-muted);
+    margin-top: 8px;
+  }
+  .thank-you-note a {
+    color: var(--cp-accent-text);
+    text-decoration: none;
+  }
+  .thank-you-note a:hover {
+    text-decoration: underline;
+  }
+  .thank-you-order {
+    margin-top: 24px;
+    font-size: 13px;
+  }
+  .thank-you-cta {
+    display: inline-block;
+    margin: 16px 0 32px;
+    background: var(--cp-cta-bg);
+    color: var(--cp-cta-text);
+    text-decoration: none;
+    padding: 14px 28px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+  }
+</style>

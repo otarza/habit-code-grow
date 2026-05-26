@@ -1,0 +1,225 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { Image } from 'astro:assets';
+import bitcampLogo from '@/assets/bitcamp-logo.png';
+import CampaignFooter from '@/components/campaign/CampaignFooter.astro';
+
+const LAST_UPDATED = '2026 წლის 17 მაისი';
+---
+
+<BaseLayout
+  title="კონფიდენციალურობის პოლიტიკა — BitCamp"
+  description="BitCamp-ის კონფიდენციალურობის პოლიტიკა: რა მონაცემებს ვაგროვებთ, რატომ, ვის გადავცემთ, თქვენი უფლებები."
+  canonical="https://www.bitcamp.ge/privacy"
+  bodyClass="campaign-page"
+>
+  <div class="legal-shell">
+    <header class="legal-header">
+      <div class="legal-header__inner">
+        <a href="/" aria-label="BitCamp — მთავარი">
+          <Image src={bitcampLogo} alt="BitCamp" height={32} class="legal-logo" />
+        </a>
+      </div>
+    </header>
+
+    <main class="legal-main">
+      <h1 class="legal-h1">კონფიდენციალურობის პოლიტიკა</h1>
+      <p class="legal-meta">ბოლო განახლება: {LAST_UPDATED}</p>
+
+      <section class="legal-section">
+        <h2 class="legal-h2">1. ვინ ვართ</h2>
+        <div class="legal-body">
+          <p>
+            ო. ზაკალაშვილი (ი/მ) (ს/კ: 01001071740, მისამართი: მირიან მეფის ქუჩა, 11გ, ბინა #39)
+            არის ვებგვერდის bitcamp.ge მფლობელი და თქვენი პერსონალური მონაცემების
+            ადმინისტრატორი.
+          </p>
+        </div>
+      </section>
+
+      <section class="legal-section">
+        <h2 class="legal-h2">2. რა მონაცემებს ვაგროვებთ</h2>
+        <div class="legal-body">
+          <ul>
+            <li>სახელი და გვარი</li>
+            <li>ელ-ფოსტის მისამართი</li>
+            <li>ტელეფონის ნომერი (არასავალდებულო)</li>
+            <li>
+              ინფორმაცია გადახდის შესახებ (გადახდის ოპერატორ Flitt-ის მეშვეობით — ჩვენ ბარათის
+              სრულ მონაცემებს არ ვინახავთ)
+            </li>
+            <li>ინფორმაცია კურსზე აქტივობის შესახებ</li>
+            <li>IP მისამართი და ბრაუზერის ინფორმაცია (ანალიტიკისთვის)</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="legal-section">
+        <h2 class="legal-h2">3. რატომ ვაგროვებთ</h2>
+        <div class="legal-body">
+          <ul>
+            <li>მომსახურების მისაწოდებლად (კურსზე წვდომის უზრუნველყოფა)</li>
+            <li>გადახდის დასამუშავებლად</li>
+            <li>მომხმარებლის მხარდასაჭერად</li>
+            <li>მომსახურების გასაუმჯობესებლად</li>
+            <li>მარკეტინგული შეტყობინებებისთვის (მხოლოდ თქვენი თანხმობით)</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="legal-section">
+        <h2 class="legal-h2">4. ვის გადავცემთ თქვენს მონაცემებს</h2>
+        <div class="legal-body">
+          <ul>
+            <li>გადახდის ოპერატორი: Flitt</li>
+            <li>ელფოსტის სერვისი: Postmark</li>
+            <li>ანალიტიკა: Google Analytics, Meta Pixel</li>
+            <li>ვებჰოსტინგი: GitHub Pages / Cloudflare</li>
+          </ul>
+          <p>
+            არ ვყიდით თქვენს ინფორმაციას მესამე მხარეებზე მარკეტინგული მიზნებისთვის.
+          </p>
+        </div>
+      </section>
+
+      <section class="legal-section">
+        <h2 class="legal-h2">5. რამდენ ხანს ვინახავთ</h2>
+        <div class="legal-body">
+          <p>
+            თქვენი მონაცემები ინახება მანამ, სანამ თქვენ გაქვთ ანგარიში ჩვენთან, ან გადახდის
+            შემდეგ 7 წლის განმავლობაში — საქართველოს კანონმდებლობით საგადასახადო
+            ვალდებულებების შესაბამისად.
+          </p>
+        </div>
+      </section>
+
+      <section class="legal-section">
+        <h2 class="legal-h2">6. თქვენი უფლებები</h2>
+        <div class="legal-body">
+          <p>თქვენ გაქვთ უფლება:</p>
+          <ul>
+            <li>მოითხოვოთ თქვენი მონაცემების ასლი</li>
+            <li>მოითხოვოთ შესწორება</li>
+            <li>მოითხოვოთ წაშლა (გარდა კანონით სავალდებულო შემთხვევებისა)</li>
+            <li>გააუქმოთ თანხმობა მარკეტინგულ შეტყობინებებზე</li>
+            <li>
+              შემოგვტანოთ პრეტენზია საქართველოს პერსონალურ მონაცემთა დაცვის ინსპექტორთან
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="legal-section">
+        <h2 class="legal-h2">7. Cookies</h2>
+        <div class="legal-body">
+          <p>
+            ვებგვერდი იყენებს cookies-ებს მომსახურების გასაუმჯობესებლად. ბრაუზერის
+            პარამეტრებში შეგიძლიათ მათი გათიშვა.
+          </p>
+        </div>
+      </section>
+
+      <section class="legal-section">
+        <h2 class="legal-h2">8. უსაფრთხოება</h2>
+        <div class="legal-body">
+          <p>
+            თქვენი მონაცემები ინახება დაცული სერვერებზე SSL დაშიფვრით. გადახდის ბარათის
+            მონაცემები არასოდეს ხვდება ჩვენს სერვერებზე — ისინი მუშავდება უშუალოდ Flitt-ის
+            მიერ.
+          </p>
+        </div>
+      </section>
+
+      <section class="legal-section">
+        <h2 class="legal-h2">9. ცვლილებები</h2>
+        <div class="legal-body">
+          <p>პოლიტიკის ცვლილების შემთხვევაში, ვაცნობებთ ვებგვერდზე ან ელფოსტით.</p>
+        </div>
+      </section>
+
+      <section class="legal-section legal-section--last">
+        <h2 class="legal-h2">10. კონტაქტი</h2>
+        <div class="legal-body">
+          <p>
+            კონფიდენციალურობასთან დაკავშირებული ნებისმიერი კითხვისთვის:
+            <a href="mailto:hello@bitcamp.ge">hello@bitcamp.ge</a>
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <CampaignFooter />
+  </div>
+</BaseLayout>
+
+<style>
+  .legal-shell {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  .legal-header {
+    padding: 24px;
+    border-bottom: 1px solid var(--cp-border);
+  }
+  .legal-header__inner {
+    max-width: 920px;
+    margin: 0 auto;
+  }
+  .legal-logo {
+    filter: invert(1);
+    opacity: 0.9;
+    width: auto;
+  }
+  .legal-main {
+    flex: 1;
+    width: 100%;
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 64px 24px;
+  }
+  .legal-h1 {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--cp-text-primary);
+    margin-bottom: 8px;
+    line-height: 1.15;
+  }
+  .legal-meta {
+    color: var(--cp-text-muted);
+    font-size: 15px;
+    margin-bottom: 48px;
+  }
+  .legal-section {
+    margin-bottom: 40px;
+  }
+  .legal-section--last {
+    margin-bottom: 0;
+  }
+  .legal-h2 {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--cp-text-primary);
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--cp-border);
+  }
+  .legal-body {
+    color: var(--cp-text-secondary);
+    font-size: 15px;
+    line-height: 1.8;
+  }
+  .legal-body p + p,
+  .legal-body p + ul,
+  .legal-body ul + p {
+    margin-top: 12px;
+  }
+  .legal-body ul {
+    padding-left: 20px;
+    line-height: 2;
+    margin: 0;
+  }
+  .legal-body a {
+    color: var(--cp-accent-text);
+  }
+</style>
