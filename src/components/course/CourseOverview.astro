@@ -1,0 +1,233 @@
+---
+import { getEntry, render } from 'astro:content';
+import { loadManifest, type Collection } from '@/lib/course-manifest';
+
+interface Props {
+  collection: Collection;
+  courseSlug: string;
+  routeBasePath: string;
+}
+
+const { collection, courseSlug, routeBasePath } = Astro.props;
+const manifest = loadManifest(collection, courseSlug);
+
+// Optional course intro from {course}/index.md (rendered as Markdown)
+let IntroContent: any = null;
+try {
+  const indexEntry = await getEntry(collection, `${courseSlug}/index`);
+  if (indexEntry) {
+    const r = await render(indexEntry);
+    IntroContent = r.Content;
+  }
+} catch {
+  // No index.md — no intro section. Fine.
+}
+
+const lessonCount = manifest
+  ? manifest.topics.reduce((acc, t) => acc + t.lessons.length, 0)
+  : 0;
+const videoCount = manifest
+  ? manifest.topics.reduce(
+      (acc, t) => acc + t.lessons.filter((l) => l.videoUrl).length,
+      0,
+    )
+  : 0;
+const firstLesson = manifest?.topics[0]?.lessons[0];
+const firstLessonHref =
+  manifest && firstLesson
+    ? `${routeBasePath}/${manifest.topics[0].slug}/${firstLesson.slug}`
+    : null;
+---
+
+<article class="course-overview">
+  <header class="course-overview__header">
+    <h1 class="course-overview__title">{manifest?.title ?? courseSlug}</h1>
+    {manifest?.description && (
+      <p class="course-overview__description">{manifest.description}</p>
+    )}
+    <div class="course-overview__stats">
+      <span>📚 {manifest?.topics.length ?? 0} თავი</span>
+      <span>📝 {lessonCount} გაკვეთილი</span>
+      {videoCount > 0 && <span>▶ {videoCount} ვიდეო</span>}
+    </div>
+    {firstLessonHref && (
+      <a href={firstLessonHref} class="course-overview__cta">
+        დაიწყე სწავლა →
+      </a>
+    )}
+  </header>
+
+  {IntroContent && (
+    <section class="course-overview__intro">
+      <IntroContent />
+    </section>
+  )}
+
+  <section class="course-overview__curriculum">
+    <h2>კურსის შინაარსი</h2>
+    <div class="course-overview__topics">
+      {manifest?.topics.map((topic, topicIndex) => (
+        <article class="course-overview__topic">
+          <header>
+            <span class="course-overview__topic-num">
+              {String(topicIndex + 1).padStart(2, '0')}
+            </span>
+            <h3>{topic.title}</h3>
+            <p class="course-overview__topic-count">{topic.lessons.length} გაკვეთილი</p>
+          </header>
+          <ul>
+            {topic.lessons.map((lesson, lessonIndex) => (
+              <li>
+                <a href={`${routeBasePath}/${topic.slug}/${lesson.slug}`}>
+                  <span class="course-overview__lesson-num">
+                    {topicIndex + 1}.{lessonIndex + 1}
+                  </span>
+                  <span class="course-overview__lesson-icon" aria-hidden="true">
+                    {lesson.videoUrl ? '▶' : '📖'}
+                  </span>
+                  <span class="course-overview__lesson-title">{lesson.title}</span>
+                  {lesson.videoDuration && (
+                    <span class="course-overview__lesson-duration">{lesson.videoDuration}</span>
+                  )}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </article>
+      ))}
+    </div>
+  </section>
+</article>
+
+<style>
+  .course-overview {
+    max-width: 56rem;
+    margin: 0 auto;
+    padding: 2rem 1rem 4rem;
+  }
+  .course-overview__header {
+    margin-bottom: 2rem;
+  }
+  .course-overview__title {
+    font-size: 2.25rem;
+    font-weight: 700;
+    line-height: 1.15;
+    color: var(--cp-text-primary, hsl(220 47% 15%));
+    margin: 0 0 1rem;
+  }
+  .course-overview__description {
+    font-size: 1.125rem;
+    line-height: 1.6;
+    color: var(--cp-text-secondary, hsl(220 15% 35%));
+    margin: 0 0 1.5rem;
+  }
+  .course-overview__stats {
+    display: flex;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+    color: var(--cp-text-muted, hsl(220 9% 46%));
+    font-size: 0.875rem;
+    margin-bottom: 1.5rem;
+  }
+  .course-overview__cta {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background: var(--cp-cta-bg, hsl(220 47% 15%));
+    color: var(--cp-cta-text, white);
+    border-radius: 0.5rem;
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .course-overview__intro {
+    margin-bottom: 3rem;
+    color: var(--cp-text-secondary, hsl(220 15% 35%));
+    line-height: 1.7;
+  }
+  .course-overview__intro :global(p) {
+    margin: 0.75rem 0;
+  }
+  .course-overview__curriculum h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--cp-text-primary, hsl(220 47% 15%));
+    margin: 0 0 1.5rem;
+  }
+  .course-overview__topics {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .course-overview__topic {
+    border: 1px solid var(--cp-border, hsl(220 13% 91%));
+    border-radius: 0.75rem;
+    background: var(--cp-bg, hsl(0 0% 100%));
+    overflow: hidden;
+  }
+  .course-overview__topic > header {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 1.25rem;
+    background: hsl(220 13% 98%);
+    border-bottom: 1px solid var(--cp-border, hsl(220 13% 91%));
+  }
+  .course-overview__topic-num {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.875rem;
+    color: var(--cp-text-muted, hsl(220 9% 46%));
+  }
+  .course-overview__topic > header h3 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--cp-text-primary, hsl(220 47% 15%));
+    margin: 0;
+  }
+  .course-overview__topic-count {
+    font-size: 0.75rem;
+    color: var(--cp-text-muted, hsl(220 9% 46%));
+    margin: 0;
+  }
+  .course-overview__topic ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .course-overview__topic li {
+    border-bottom: 1px solid var(--cp-border, hsl(220 13% 91%));
+  }
+  .course-overview__topic li:last-child {
+    border-bottom: 0;
+  }
+  .course-overview__topic li a {
+    display: grid;
+    grid-template-columns: 3rem auto 1fr auto;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.625rem 1.25rem;
+    text-decoration: none;
+    color: var(--cp-text-secondary, hsl(220 15% 35%));
+    font-size: 0.875rem;
+  }
+  .course-overview__topic li a:hover {
+    background: hsl(220 13% 97%);
+    color: var(--cp-text-primary, hsl(220 47% 15%));
+  }
+  .course-overview__lesson-num {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.75rem;
+    color: var(--cp-text-muted, hsl(220 9% 46%));
+  }
+  .course-overview__lesson-icon {
+    font-size: 0.75rem;
+  }
+  .course-overview__lesson-title {
+    min-width: 0;
+    word-break: break-word;
+  }
+  .course-overview__lesson-duration {
+    font-size: 0.75rem;
+    color: var(--cp-text-muted, hsl(220 9% 46%));
+    white-space: nowrap;
+  }
+</style>

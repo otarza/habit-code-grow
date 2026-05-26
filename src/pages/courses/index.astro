@@ -1,0 +1,158 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Navbar from '../../components/Navbar.astro';
+import Footer from '../../components/Footer.astro';
+import { listCourses } from '@/lib/course-manifest';
+
+const courses = listCourses('courses');
+
+// Sort by exportedAt (newest first); fall back to slug A→Z.
+courses.sort((a, b) => {
+  if (a.exportedAt && b.exportedAt) {
+    return new Date(b.exportedAt).getTime() - new Date(a.exportedAt).getTime();
+  }
+  return a.slug.localeCompare(b.slug);
+});
+---
+
+<BaseLayout
+  title="უფასო კურსები | BitCamp"
+  description="BitCamp-ის უფასო პროგრამირების კურსები: Python, Java, HTML/CSS, SQL, Angular."
+>
+  <Navbar />
+
+  <main class="courses-index">
+    <header class="courses-index__header">
+      <p class="courses-index__eyebrow">100% უფასო</p>
+      <h1 class="courses-index__title">უფასო კურსები</h1>
+      <p class="courses-index__lede">
+        BitCamp-ის სრული პროგრამები პროგრამირებაში — ვიდეო გაკვეთილები, პრაქტიკული
+        დავალებები, სრულიად უფასოდ. გადატანილია ძველი {' '}
+        გვერდიდან.
+      </p>
+    </header>
+
+    <ul class="courses-grid">
+      {courses.map((course) => {
+        const totalLessons = course.topics.reduce((n, t) => n + t.lessons.length, 0);
+        return (
+          <li>
+            <a href={`/courses/${course.slug}`} class="course-card">
+              {course.thumbnail && (
+                <div class="course-card__thumb">
+                  <img src={course.thumbnail} alt="" loading="lazy" />
+                </div>
+              )}
+              <div class="course-card__body">
+                <h2 class="course-card__title">{course.title}</h2>
+                <p class="course-card__meta">
+                  {course.topics.length} თავი · {totalLessons} გაკვეთილი
+                </p>
+                {course.description && (
+                  <p class="course-card__description">{course.description}</p>
+                )}
+              </div>
+            </a>
+          </li>
+        );
+      })}
+    </ul>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  .courses-index {
+    max-width: 80rem;
+    margin: 0 auto;
+    padding: 3rem 1rem 5rem;
+  }
+  .courses-index__header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  .courses-index__eyebrow {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    color: var(--cp-accent-text, hsl(258 90% 56%));
+    margin: 0 0 0.75rem;
+  }
+  .courses-index__title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--cp-text-primary, hsl(220 47% 15%));
+    margin: 0 0 1rem;
+  }
+  .courses-index__lede {
+    max-width: 36rem;
+    margin: 0 auto;
+    color: var(--cp-text-secondary, hsl(220 15% 35%));
+    line-height: 1.6;
+  }
+  .courses-grid {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr));
+    gap: 1.5rem;
+  }
+  .course-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    text-decoration: none;
+    color: inherit;
+    border: 1px solid var(--cp-border, hsl(220 13% 91%));
+    border-radius: 0.75rem;
+    overflow: hidden;
+    background: var(--cp-bg, hsl(0 0% 100%));
+    transition: border-color 0.15s, transform 0.15s, box-shadow 0.15s;
+  }
+  .course-card:hover {
+    border-color: var(--cp-accent-text, hsl(258 90% 56%));
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px hsl(220 47% 15% / 0.08);
+  }
+  .course-card__thumb {
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    background: hsl(220 13% 95%);
+  }
+  .course-card__thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .course-card__body {
+    padding: 1.25rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .course-card__title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--cp-text-primary, hsl(220 47% 15%));
+    margin: 0;
+    line-height: 1.3;
+  }
+  .course-card__meta {
+    font-size: 0.75rem;
+    color: var(--cp-text-muted, hsl(220 9% 46%));
+    margin: 0;
+  }
+  .course-card__description {
+    color: var(--cp-text-secondary, hsl(220 15% 35%));
+    font-size: 0.875rem;
+    line-height: 1.5;
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+</style>

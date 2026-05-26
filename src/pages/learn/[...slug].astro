@@ -2,32 +2,108 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import LessonView from '../../components/course/LessonView.astro';
+import CourseOverview from '../../components/course/CourseOverview.astro';
+import CourseSidebar from '../../components/course/CourseSidebar.astro';
+import { loadManifest, findAdjacent } from '@/lib/course-manifest';
 
 /**
- * Phase 3 turn 2: minimal route that renders any gated lesson by id.
- * Subsequent turns add CourseOverview, CourseSidebar, prev/next nav,
- * LessonComments island, and a stub AccessGate (Phase 6 makes it real).
+ * Gated course routes: noindex applied via BaseLayout. AccessGate stub
+ * comes in Phase 6 — for now lessons render directly so we can validate
+ * content rendering end to end.
  *
- * NOTE: noindex applied via BaseLayout — gated pages should not be in search.
+ * Generates:
+ *  • /learn/{slug}                              → course overview
+ *  • /learn/{slug}/{topic}/{lesson}             → lesson page
  */
 export async function getStaticPaths() {
   const entries = await getCollection('learn');
-  return entries
-    .filter((entry) => !entry.id.endsWith('/index'))
-    .map((entry) => ({
+  const courseSlugs = new Set<string>();
+  for (const e of entries) courseSlugs.add(e.id.split('/')[0]);
+
+  const paths: any[] = [];
+
+  for (const courseSlug of courseSlugs) {
+    paths.push({
+      params: { slug: courseSlug },
+      props: { mode: 'overview', courseSlug },
+    });
+  }
+
+  for (const entry of entries) {
+    if (entry.id.endsWith('/index')) continue;
+    const parts = entry.id.split('/');
+    if (parts.length < 3) continue;
+    paths.push({
       params: { slug: entry.id },
-      props: { entry },
-    }));
+      props: {
+        mode: 'lesson',
+        entry,
+        courseSlug: parts[0],
+        topicSlug: parts[1],
+        lessonSlug: parts.slice(2).join('/'),
+      },
+    });
+  }
+
+  return paths;
 }
 
-const { entry } = Astro.props;
-const title = ((entry.data.title as string | undefined) ?? entry.id) + ' | BitCamp';
+const props = Astro.props as any;
+const manifest = loadManifest('learn', props.courseSlug);
+const routeBasePath = `/learn/${props.courseSlug}`;
+
+const title =
+  props.mode === 'overview'
+    ? `${manifest?.title ?? props.courseSlug} | BitCamp`
+    : `${(props.entry.data.title as string | undefined) ?? props.lessonSlug} | BitCamp`;
+const description =
+  props.mode === 'overview'
+    ? manifest?.description ?? `BitCamp კურსი: ${props.courseSlug}`
+    : `BitCamp გაკვეთილი: ${props.entry.data.title ?? props.lessonSlug}`;
+
+const adjacent =
+  props.mode === 'lesson' && manifest
+    ? findAdjacent(manifest, props.topicSlug, props.lessonSlug)
+    : null;
 ---
 
-<BaseLayout
-  title={title}
-  description={`BitCamp გაკვეთილი: ${entry.data.title ?? entry.id}`}
-  noindex
->
-  <LessonView entry={entry} />
+<BaseLayout title={title} description={description} noindex>
+  <div class="course-layout">
+    {manifest && (
+      <CourseSidebar
+        collection="learn"
+        courseSlug={props.courseSlug}
+        currentTopicSlug={props.mode === 'lesson' ? props.topicSlug : undefined}
+        currentLessonSlug={props.mode === 'lesson' ? props.lessonSlug : undefined}
+        routeBasePath={routeBasePath}
+      />
+    )}
+    <main class="course-main">
+      {props.mode === 'overview' ? (
+        <CourseOverview
+          collection="learn"
+          courseSlug={props.courseSlug}
+          routeBasePath={routeBasePath}
+        />
+      ) : (
+        <LessonView entry={props.entry} adjacent={adjacent} routeBasePath={routeBasePath} />
+      )}
+    </main>
+  </div>
 </BaseLayout>
+
+<style>
+  .course-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    min-height: 100vh;
+  }
+  @media (min-width: 1024px) {
+    .course-layout {
+      grid-template-columns: 280px 1fr;
+    }
+  }
+  .course-main {
+    min-width: 0;
+  }
+</style>

@@ -1,11 +1,19 @@
 ---
 import { render, type CollectionEntry } from 'astro:content';
 
-interface Props {
-  entry: CollectionEntry<'learn'> | CollectionEntry<'courses'>;
+interface AdjacentLesson {
+  topicSlug: string;
+  lessonSlug: string;
+  title: string;
 }
 
-const { entry } = Astro.props;
+interface Props {
+  entry: CollectionEntry<'learn'> | CollectionEntry<'courses'>;
+  adjacent?: { prev: AdjacentLesson | null; next: AdjacentLesson | null } | null;
+  routeBasePath?: string;
+}
+
+const { entry, adjacent, routeBasePath } = Astro.props;
 const { Content } = await render(entry);
 const { title, videoUrl, videoDuration } = entry.data;
 const displayTitle = (title as string | undefined) ?? entry.id.split('/').pop() ?? entry.id;
@@ -55,6 +63,29 @@ const embed = resolveEmbed(videoUrl as string | undefined);
   <div class="lesson__body prose">
     <Content />
   </div>
+
+  {adjacent && routeBasePath && (adjacent.prev || adjacent.next) && (
+    <nav class="lesson__nav" aria-label="გაკვეთილების ნავიგაცია">
+      {adjacent.prev ? (
+        <a
+          href={`${routeBasePath}/${adjacent.prev.topicSlug}/${adjacent.prev.lessonSlug}`}
+          class="lesson__nav-link lesson__nav-link--prev"
+        >
+          <span class="lesson__nav-direction">← წინა</span>
+          <span class="lesson__nav-title">{adjacent.prev.title}</span>
+        </a>
+      ) : <span class="lesson__nav-link lesson__nav-link--placeholder"></span>}
+      {adjacent.next ? (
+        <a
+          href={`${routeBasePath}/${adjacent.next.topicSlug}/${adjacent.next.lessonSlug}`}
+          class="lesson__nav-link lesson__nav-link--next"
+        >
+          <span class="lesson__nav-direction">შემდეგი →</span>
+          <span class="lesson__nav-title">{adjacent.next.title}</span>
+        </a>
+      ) : <span class="lesson__nav-link lesson__nav-link--placeholder"></span>}
+    </nav>
+  )}
 </article>
 
 <style is:global>
@@ -153,7 +184,6 @@ const embed = resolveEmbed(videoUrl as string | undefined);
     text-underline-offset: 2px;
   }
   .lesson__body :global(pre) {
-    /* Shiki injects its own background; we just provide rounded corners + scroll */
     border-radius: 0.5rem;
     padding: 1rem;
     margin: 1rem 0;
@@ -178,5 +208,48 @@ const embed = resolveEmbed(videoUrl as string | undefined);
     padding-left: 1rem;
     margin: 1rem 0;
     color: var(--cp-text-muted, hsl(220 9% 46%));
+  }
+
+  .lesson__nav {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--cp-border, hsl(220 13% 91%));
+  }
+  .lesson__nav-link {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 1rem;
+    text-decoration: none;
+    border: 1px solid var(--cp-border, hsl(220 13% 91%));
+    border-radius: 0.5rem;
+    color: var(--cp-text-secondary, hsl(220 15% 35%));
+    font-size: 0.875rem;
+    transition: border-color 0.15s, background-color 0.15s;
+  }
+  .lesson__nav-link:hover {
+    border-color: var(--cp-accent-text, hsl(258 90% 56%));
+    color: var(--cp-text-primary, hsl(220 47% 15%));
+    background: hsl(220 13% 98%);
+  }
+  .lesson__nav-link--placeholder {
+    visibility: hidden;
+  }
+  .lesson__nav-link--next {
+    text-align: right;
+  }
+  .lesson__nav-direction {
+    font-size: 0.75rem;
+    color: var(--cp-text-muted, hsl(220 9% 46%));
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .lesson__nav-title {
+    font-weight: 600;
+    color: var(--cp-text-primary, hsl(220 47% 15%));
+    line-height: 1.3;
   }
 </style>
