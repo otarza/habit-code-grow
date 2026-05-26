@@ -1,0 +1,124 @@
+---
+// Fixed bottom bar: appears after 800px scroll, dismissable, shows current
+// Georgian month + animated progress bar (synthesized from day-of-month).
+// All client behavior in vanilla <script>.
+---
+
+<div
+  id="sticky-cta-bar"
+  class="fixed bottom-0 left-0 right-0 z-50 bg-gradient-to-r from-red-600 to-red-700 text-white shadow-2xl border-t-4 border-red-500 transition-transform duration-300 translate-y-full"
+  data-sticky-cta
+  aria-hidden="true"
+>
+  <div class="max-w-7xl mx-auto px-4 py-3">
+    <div class="flex items-center justify-between gap-4">
+      {/* Left: enrollment status */}
+      <div class="flex items-center gap-3 flex-1 min-w-0">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0 animate-pulse" aria-hidden="true">
+          <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline>
+          <polyline points="16 7 22 7 22 13"></polyline>
+        </svg>
+        <div class="min-w-0">
+          <div class="font-bold text-sm sm:text-base" data-month>—</div>
+          <div class="text-xs text-red-100 hidden sm:block">
+            ჩელენჯების და ინდივიდუალურ მენტორის სერვისებზე
+          </div>
+        </div>
+      </div>
+
+      {/* Middle: progress */}
+      <div class="hidden md:flex flex-col items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-3 rounded-lg min-w-0">
+        <div class="flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-yellow-400" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" x2="12" y1="8" y2="12"></line>
+            <line x1="12" x2="12.01" y1="16" y2="16"></line>
+          </svg>
+          <span class="text-sm font-semibold">ადგილები შეზღუდულია</span>
+        </div>
+        <div class="w-40 bg-white/20 rounded-full h-2 overflow-hidden">
+          <div class="bg-gradient-to-r from-yellow-400 to-orange-400 h-full rounded-full animate-pulse shadow-lg" style="width: 0%" data-progress-fill></div>
+        </div>
+        <span class="text-xs text-yellow-200 font-bold"><span data-progress-pct>0</span>% შევსებული</span>
+      </div>
+
+      {/* Right: CTAs */}
+      <div class="flex items-center gap-2 flex-shrink-0">
+        <a
+          href="#free-courses"
+          class="hidden sm:inline-flex items-center gap-1 bg-white/10 border border-white/30 text-white hover:bg-white hover:text-red-700 font-bold whitespace-nowrap px-3 py-1.5 rounded-md text-sm transition-colors"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" x2="12" y1="15" y2="3"></line>
+          </svg>
+          უფასო კურსი
+        </a>
+        <a
+          href="#pricing"
+          class="inline-flex items-center bg-white text-red-700 hover:bg-gray-100 font-bold whitespace-nowrap px-3 py-1.5 rounded-md text-sm transition-colors"
+        >
+          📚 დაჯავშნე ადგილი
+        </a>
+        <button
+          type="button"
+          class="w-6 h-6 flex items-center justify-center hover:bg-white/10 rounded-full transition-colors"
+          aria-label="დახურვა"
+          data-dismiss
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M18 6 6 18"></path><path d="m6 6 12 12"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  {/* Bottom progress sliver */}
+  <div class="absolute bottom-0 left-0 right-0 h-2 bg-red-800/80">
+    <div class="h-full bg-gradient-to-r from-yellow-400 to-orange-400 animate-pulse shadow-lg" style="width: 0%" data-progress-fill></div>
+  </div>
+</div>
+
+<script>
+  const GEORGIAN_MONTHS = [
+    'იანვარი', 'თებერვალი', 'მარტი', 'აპრილი', 'მაისი', 'ივნისი',
+    'ივლისი', 'აგვისტო', 'სექტემბერი', 'ოქტომბერი', 'ნოემბერი', 'დეკემბერი',
+  ];
+  const SCROLL_THRESHOLD = 800;
+
+  const bar = document.querySelector<HTMLElement>('#sticky-cta-bar');
+  if (bar) {
+    const monthEl = bar.querySelector<HTMLElement>('[data-month]');
+    const pctEl = bar.querySelector<HTMLElement>('[data-progress-pct]');
+    const fills = bar.querySelectorAll<HTMLElement>('[data-progress-fill]');
+    const dismissBtn = bar.querySelector<HTMLButtonElement>('[data-dismiss]');
+
+    const now = new Date();
+    const monthIndex = now.getMonth();
+    const startOfMonth = new Date(now.getFullYear(), monthIndex, 1).getTime();
+    const endOfMonth = new Date(now.getFullYear(), monthIndex + 1, 0).getTime();
+    const totalDays = (endOfMonth - startOfMonth) / 86_400_000;
+    const daysPassed = (now.getTime() - startOfMonth) / 86_400_000;
+    const through = Math.min(daysPassed / totalDays, 1);
+    const pct = Math.round(60 + 35 * through);
+
+    if (monthEl) monthEl.textContent = GEORGIAN_MONTHS[monthIndex] ?? '';
+    if (pctEl) pctEl.textContent = String(pct);
+    fills.forEach((el) => { el.style.width = `${pct}%`; });
+
+    let dismissed = false;
+    const update = () => {
+      const show = window.scrollY > SCROLL_THRESHOLD && !dismissed;
+      bar.classList.toggle('translate-y-full', !show);
+      bar.setAttribute('aria-hidden', show ? 'false' : 'true');
+    };
+    window.addEventListener('scroll', update, { passive: true });
+
+    dismissBtn?.addEventListener('click', () => {
+      dismissed = true;
+      update();
+    });
+  }
+</script>

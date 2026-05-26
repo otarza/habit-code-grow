@@ -1,0 +1,179 @@
+---
+// 3 challenge stage cards (21/30/100 days) + progression flow + final CTA.
+
+const stages = [
+  {
+    days: 21,
+    title: 'შექმენი ფუნდამენტი',
+    subtitle: 'ჩვევის ჩამოყალიბება',
+    iconKey: 'calendar',
+    color: 'secondary',
+    description:
+      '21 დღის განმავლობაში, ყოველდღიური 30-60 წუთიანი სესიებით ჩამოყალიბდება ის ჩვევა, რაც აუცილებელია წარმატებისთვის',
+    habits: [
+      'ყოველდღიური კოდირება',
+      'პრობლემების სისტემატური გადაწყვეტა',
+      'სწავლის რუტინის ჩამოყალიბება',
+    ],
+    outcome: 'კოდირება გახდება შენი ყოველდღიური რუტინის ნაწილი',
+  },
+  {
+    days: 30,
+    title: 'ჩაუჯექი',
+    subtitle: 'ჩვევის გამყარება',
+    iconKey: 'target',
+    color: 'primary',
+    description:
+      '30 დღიან ჩელენჯში უკვე გამომუშავებული ჩვევის გამყარება ხდება ისე რომ კოდის წერა ბუნებრივი პროცესი ხდება',
+    habits: [
+      'რთული პრობლემების დაძლევა',
+      'AI ხელსაწყოების ეფექტური გამოყენება',
+      'კონსისტენტური შრომისმოყვარეობა',
+    ],
+    outcome: 'კოდირება ისეთივე ბუნებრივი ხდება როგორც სუნთქვა',
+  },
+  {
+    days: 100,
+    title: 'ჩააჭირე',
+    subtitle: 'ჩვევის ინტეგრაცია',
+    iconKey: 'trophy',
+    color: 'accent',
+    description:
+      '100 დღიან ჩელენჯში შენი სამყარო იცვლება და ახალი უნარები შენი ყოველდღიურობის განუყოფელი ნაწილი ხდება',
+    habits: [
+      'მუდმივი განვითარება და ახალი ტექნოლოგიების სწავლა',
+      'რეალური პროექტების შექმნა',
+      'სხვების დახმარება და ცოდნის გაზიარება',
+    ],
+    outcome: 'ხდები დამოუკიდებელი დეველოპერი სიცოცხლის ბოლომდე',
+  },
+];
+
+const colorClasses = {
+  secondary: { numBg: 'bg-secondary', soft: 'bg-secondary/10', text: 'text-secondary', dot: 'bg-secondary' },
+  primary: { numBg: 'bg-primary', soft: 'bg-primary/10', text: 'text-primary', dot: 'bg-primary' },
+  accent: { numBg: 'bg-accent', soft: 'bg-accent/10', text: 'text-accent', dot: 'bg-accent' },
+};
+---
+
+<section id="21-day" class="relative py-20 bg-background">
+  <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+    <div class="text-center mb-16">
+      <h2 class="text-4xl md:text-5xl font-bold text-text-primary mb-6">ჩელენჯების პროგრამა</h2>
+      <p class="text-xl text-text-secondary max-w-4xl mx-auto leading-relaxed">
+        ჩელენჯების სისტემა ჩამოგიყალიბებს ჩვევებს რათა გახდე შეუჩერებელი დეველოპერი.
+        ყოველი მომდევნო ჩელენჯი ამყარებს ჩვევებს და გაქცევს საკუთარი თავის უკეთეს
+        ვერსიად.
+      </p>
+    </div>
+
+    {/* Challenge stage cards */}
+    <div class="grid md:grid-cols-3 gap-8 lg:gap-12 mb-16">
+      {stages.map((stage) => {
+        const c = colorClasses[stage.color as keyof typeof colorClasses];
+        return (
+          <article class="relative p-8 md:p-10 bg-card text-card-foreground border border-border rounded-lg shadow-soft hover:shadow-medium text-center overflow-hidden transition-all">
+            <div class="mb-8">
+              <div class:list={[c.numBg, 'w-20 h-20 mx-auto rounded-md flex items-center justify-center mb-4']}>
+                <span class="text-3xl font-black text-white">{stage.days}</span>
+              </div>
+              <div class="text-sm font-semibold text-text-muted tracking-wider mb-2">{stage.subtitle}</div>
+              <h3 class="text-2xl font-bold text-text-primary mb-4 normal-case" style="font-feature-settings: normal;">{stage.title}</h3>
+            </div>
+
+            <p class="text-text-secondary leading-relaxed mb-8 text-base">{stage.description}</p>
+
+            <div class="mb-8">
+              <h4 class="font-bold text-text-primary mb-4 text-left normal-case" style="font-feature-settings: normal;">რას მიიღებ:</h4>
+              <ul class="space-y-3 text-left list-none p-0">
+                {stage.habits.map((habit) => (
+                  <li class="text-sm text-text-secondary flex items-start gap-3">
+                    <div class:list={[c.dot, 'w-2 h-2 mt-2 flex-shrink-0']}></div>
+                    <span>{habit}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div class:list={[c.soft, 'rounded-md p-4 border border-border']}>
+              {stage.iconKey === 'calendar' && (
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class:list={[c.text, 'mx-auto mb-2']} aria-hidden="true">
+                  <rect width="18" height="18" x="3" y="4" rx="2"></rect>
+                  <path d="M16 2v4"></path><path d="M8 2v4"></path><path d="M3 10h18"></path>
+                </svg>
+              )}
+              {stage.iconKey === 'target' && (
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class:list={[c.text, 'mx-auto mb-2']} aria-hidden="true">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <circle cx="12" cy="12" r="6"></circle>
+                  <circle cx="12" cy="12" r="2"></circle>
+                </svg>
+              )}
+              {stage.iconKey === 'trophy' && (
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class:list={[c.text, 'mx-auto mb-2']} aria-hidden="true">
+                  <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
+                  <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path>
+                  <path d="M4 22h16"></path>
+                  <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path>
+                  <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path>
+                  <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path>
+                </svg>
+              )}
+              <p class="font-bold text-text-primary text-sm leading-tight">{stage.outcome}</p>
+            </div>
+          </article>
+        );
+      })}
+    </div>
+
+    {/* Progression flow: 21 → 30 → 100 */}
+    <div class="flex items-center justify-center gap-4 mb-16 flex-wrap">
+      <div class="text-4xl font-black text-secondary">21</div>
+      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-text-muted" aria-hidden="true">
+        <path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path>
+      </svg>
+      <div class="text-4xl font-black text-primary">30</div>
+      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-text-muted" aria-hidden="true">
+        <path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path>
+      </svg>
+      <div class="text-4xl font-black text-accent">100</div>
+    </div>
+
+    {/* Final CTA */}
+    <div class="text-center">
+      <div class="p-8 md:p-12 bg-card text-card-foreground border border-border rounded-lg shadow-soft max-w-3xl mx-auto">
+        <div class="w-20 h-20 bg-primary rounded-md flex items-center justify-center mx-auto mb-8">
+          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary-foreground" aria-hidden="true">
+            <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
+            <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path>
+            <path d="M4 22h16"></path>
+            <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path>
+            <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path>
+            <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path>
+          </svg>
+        </div>
+        <h3 class="text-3xl font-bold text-text-primary mb-6 normal-case" style="font-feature-settings: normal;">
+          მზად ხარ დაიწყო შენი ტრანსფორმაცია?
+        </h3>
+        <p class="text-xl text-text-secondary mb-4 leading-relaxed">
+          გახდი BitCamp - ის შეუპოვარი მებრძოლების საზოგადოების წევრი.
+        </p>
+        <div class="mb-8 p-4 bg-gradient-to-r from-primary/20 to-secondary/20 rounded-md">
+          <p class="text-2xl font-black text-text-primary tracking-wide">
+            სწავლა და ბრძოლა <span aria-hidden="true">🔥✊</span>
+          </p>
+        </div>
+        <div class="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-12">
+          <div class="flex items-center gap-3">
+            <div class="w-4 h-4 bg-green-500 rounded-sm"></div>
+            <span class="font-bold text-text-secondary">95% წარმატების ალბათობა</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <div class="w-4 h-4 bg-accent rounded-sm"></div>
+            <span class="font-bold text-text-secondary">50K+ სტუდენტი 5 წლის განმავლობაში</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

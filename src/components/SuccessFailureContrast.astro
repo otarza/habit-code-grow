@@ -1,0 +1,119 @@
+---
+// Two-column comparison: success (green) vs failure (red) + footer CTA.
+
+const successPoints = [
+  'ყოველდღიურად წერ კოდს ბუნებრივად',
+  'დამოუკიდებლად სწავლობ ნებისმიერ ტექნოლოგიას',
+  'AI იარაღებს იყენებ ეფექტურად',
+  'გაქვს დისციპლინა და თვითკონტროლი',
+  'ხარ BitCamp საზოგადოების აქტიური წევრი',
+  'მუდმივად იზრდები და ვითარდები',
+];
+
+const failurePoints = [
+  'კიდევ ერთი წელი გავა შედეგის გარეშე',
+  'იგივე პრობლემები - მოტივაციის დაკარგვა',
+  'სხვები გაგისწრებენ კარიერაში',
+  'დარჩები იმავე ადგილზე სადაც ახლა ხარ',
+  'განმეორებით დაიწყებ და შეწყვეტ სწავლას',
+  'ვერ გადალახავ პირველ სირთულეებს',
+];
+---
+
+<section class="py-20 bg-gradient-to-b from-background to-surface">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16">
+      <h2 class="text-4xl md:text-5xl font-bold text-text-primary mb-6">
+        შენი არჩევანი - შენი მომავალი
+      </h2>
+      <p class="text-xl text-text-secondary max-w-3xl mx-auto leading-relaxed">
+        რა გელოდება თუ დაიწყებ ახლა vs თუ გადადებ კიდევ ერთხელ
+      </p>
+    </div>
+
+    <div class="grid lg:grid-cols-2 gap-8 mb-12">
+      {/* Success */}
+      <article class="p-8 bg-gradient-to-br from-green-50 to-white border-2 border-green-200 rounded-lg hover:shadow-xl transition-all duration-300">
+        <div class="flex items-center gap-3 mb-8">
+          <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-600" aria-hidden="true">
+              <path d="M21.801 10A10 10 0 1 1 17 3.335"></path>
+              <path d="m9 11 3 3L22 4"></path>
+            </svg>
+          </div>
+          <h3 class="text-2xl font-bold text-green-800 normal-case" style="font-feature-settings: normal;">
+            თუ დაიწყებ ჩელენჯს ახლა
+          </h3>
+        </div>
+
+        <ul class="space-y-4 mb-8 list-none p-0">
+          {successPoints.map((point) => (
+            <li class="flex items-start gap-3">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-500 mt-0.5 flex-shrink-0" aria-hidden="true">
+                <path d="M21.801 10A10 10 0 1 1 17 3.335"></path>
+                <path d="m9 11 3 3L22 4"></path>
+              </svg>
+              <p class="text-text-secondary leading-relaxed">{point}</p>
+            </li>
+          ))}
+        </ul>
+
+        <div class="p-4 bg-green-100 rounded-lg">
+          <p class="text-green-800 font-semibold text-center">21 დღეში უკვე შეცვლილი იქნები</p>
+        </div>
+      </article>
+
+      {/* Failure */}
+      <article class="p-8 bg-gradient-to-br from-red-50 to-white border-2 border-red-200 rounded-lg hover:shadow-xl transition-all duration-300">
+        <div class="flex items-center gap-3 mb-8">
+          <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-red-600" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"></circle>
+              <path d="m15 9-6 6"></path><path d="m9 9 6 6"></path>
+            </svg>
+          </div>
+          <h3 class="text-2xl font-bold text-red-800 normal-case" style="font-feature-settings: normal;">
+            თუ გადადებ კიდევ ერთხელ
+          </h3>
+        </div>
+
+        <ul class="space-y-4 mb-8 list-none p-0">
+          {failurePoints.map((point) => (
+            <li class="flex items-start gap-3">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-red-500 mt-0.5 flex-shrink-0" aria-hidden="true">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="m15 9-6 6"></path><path d="m9 9 6 6"></path>
+              </svg>
+              <p class="text-text-secondary leading-relaxed">{point}</p>
+            </li>
+          ))}
+        </ul>
+
+        <div class="p-4 bg-red-100 rounded-lg">
+          <p class="text-red-800 font-semibold text-center">კიდევ ერთი დაკარგული წელი</p>
+        </div>
+      </article>
+    </div>
+
+    {/* Footer CTA */}
+    <div class="text-center px-4">
+      <div class="inline-block p-6 md:p-10 bg-gradient-to-r from-primary to-secondary rounded-lg shadow-2xl max-w-full">
+        <h3 class="text-xl md:text-2xl font-bold text-white mb-4 break-words normal-case" style="font-feature-settings: normal;">
+          არ დაკარგო კიდევ ერთი დღე!
+        </h3>
+        <p class="text-white/90 mb-8 text-base md:text-lg break-words">
+          რაც უფრო მალე გადადგამ ამ ნაბიჯს, მით უფრო ადრე დაიწყებ საკუთარი თავის ტრანსფორმაციას
+        </p>
+        <a
+          href="#pricing"
+          class="group inline-flex items-center justify-center gap-2 bg-white text-primary hover:bg-gray-100 w-full sm:w-auto px-6 py-3 rounded-md font-bold text-sm sm:text-base transition-colors"
+        >
+          <span>არ დაკარგო დრო - დაიწყე ახლა</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-hover:translate-x-1 transition-transform" aria-hidden="true">
+            <path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

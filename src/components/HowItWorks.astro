@@ -1,0 +1,156 @@
+---
+// 6-step vertical timeline (alternating left/right on desktop, all-left
+// on mobile) + "why this works" 3-card grid at bottom.
+
+const steps = [
+  { iconKey: 'calendar', title: 'ყოველდღიურობა', description: '30-60 წუთიანი ფოკუსირებული, ყოველდღიური მუშაობა საკუთარ თავზე უფრო მეტს გაძლევს ვიდრე შაბათ-კვირას ღამეების თენება. მუდმივად ფორმაში ყოფნა და საკუთარი პროგრესის შეგრძნება გაძლევს თავდაჯერებას.', color: 'secondary' },
+  { iconKey: 'users', title: 'სამეცადინო სესიები', description: 'ინდივიდუალურად შენთვის შედგენილი მინი გაკვეთილები მხოლოდ იმ თემებზე რაც შენთვისაა მნიშვნელოვანი და არა ზოგადად ჯგუფისთვის.', color: 'primary' },
+  { iconKey: 'message', title: 'მუდმივი მხარდაჭერა', description: 'სასწავლო სერვერი, მეგობრულობა, ერთმანეთზე ზრუნვის კულტურა და შემართება ქმნის წარმატებისთვის საჭირო უალტერნატივო გარემოს', color: 'accent' },
+  { iconKey: 'target', title: 'ინდივიდუალური სასწავლო პროცესი', description: 'ყველა სტუდენტს თავისი გზა აქვს. შენ ვერ ჩამორჩები და ვერ გაასწრებ ვერავის რადგან შენი ტემპი გაქვს და მხოლოდ შენს გუშინდელ თავს ედრები. ჩვენი საგანმანათლებლო სისტემა უზრუნველყოფს იმას რომ შენი ბილიკი მხოლოდ შენია და სხვებზე არ ხარ დამოკიდებული', color: 'secondary' },
+  { iconKey: 'brain', title: 'მეცნიერულად დადასტურებული', description: 'ნეირო-ტექნიკები ინსპირირებულია ისეთი წყაროებიდან როგორიცაა \'A Mind for Numbers\' - რაც საშუალებას იძლევა ისწავლო ყველაზე კომპლექსური საკითხები, მაშნაც კი თუ ფიქრობ რომ არ გაქვს "ტექნიკური ან მათემატიკური" ტვინი', color: 'primary' },
+  { iconKey: 'trophy', title: 'მიზანი - დამოუკიდებლობა', description: 'წარმატება ნიშნავს იმას რომ შენ აღწევ იმ მომენტს როცა აღარ გჭირდება მენტორის დახმარება - შენი ჩვევები ცხოვრების ბოლომდე შენთან რჩება, შეუპოვრობა კი შენი უსასრულო განვითარების უმძლავრეს იარაღად იქცევა. დამოუკიდებელ პროფესიონალად ჩამოყალიბება შენი მთავარი მიზანია.', color: 'accent' },
+];
+
+const colorMap = {
+  secondary: { bg: 'bg-secondary', bgSoft: 'bg-secondary/10', text: 'text-secondary' },
+  primary: { bg: 'bg-primary', bgSoft: 'bg-primary/10', text: 'text-primary' },
+  accent: { bg: 'bg-accent', bgSoft: 'bg-accent/10', text: 'text-accent' },
+};
+---
+
+<section id="how-it-works" class="py-20 bg-surface">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16">
+      <h2 class="text-4xl md:text-5xl font-bold text-text-primary mb-6">როგორ მუშაობს</h2>
+      <p class="text-xl text-text-secondary max-w-3xl mx-auto leading-relaxed">
+        ყოველდღიური პროგრესი, სტრუქტურა, მეგობრული საზოგადოება, მხარდაჭერისა და ზრუნვის
+        კულტურა, მეცნიერულად დადასტურებული სწავლის ტექნიკები, მსოფლიო დონის მენტორობა
+      </p>
+    </div>
+
+    {/* Timeline */}
+    <div class="relative max-w-4xl mx-auto mb-16">
+      <div class="hidden md:block absolute left-1/2 -translate-x-1/2 w-1 h-full bg-gradient-to-b from-secondary via-primary to-accent rounded-full"></div>
+      <div class="md:hidden absolute left-6 w-1 h-full bg-gradient-to-b from-secondary via-primary to-accent rounded-full"></div>
+
+      <div class="space-y-8 md:space-y-16">
+        {steps.map((step, index) => {
+          const c = colorMap[step.color as keyof typeof colorMap];
+          const leftSide = index % 2 === 0;
+          return (
+            <div class:list={['flex items-center', leftSide ? 'md:flex-row flex-row' : 'md:flex-row-reverse flex-row']}>
+              <div class:list={[
+                leftSide
+                  ? 'md:w-1/2 md:pr-8 md:text-right w-full pl-16 text-left'
+                  : 'md:w-1/2 md:pl-8 md:text-left w-full pl-16 text-left',
+              ]}>
+                <article class="p-4 md:p-6 bg-card text-card-foreground border border-border rounded-lg shadow-soft hover:shadow-medium transition-all">
+                  <div class:list={['flex items-center gap-3 md:gap-4 mb-3 md:mb-4', leftSide ? 'md:flex-row-reverse flex-row' : 'md:flex-row flex-row']}>
+                    <div class:list={[c.bgSoft, 'w-10 h-10 md:w-12 md:h-12 rounded-xl flex items-center justify-center flex-shrink-0']}>
+                      {step.iconKey === 'calendar' && (
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class={c.text} aria-hidden="true">
+                          <rect width="18" height="18" x="3" y="4" rx="2"></rect>
+                          <path d="M16 2v4"></path><path d="M8 2v4"></path><path d="M3 10h18"></path>
+                        </svg>
+                      )}
+                      {step.iconKey === 'users' && (
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class={c.text} aria-hidden="true">
+                          <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                          <circle cx="9" cy="7" r="4"></circle>
+                          <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                          <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        </svg>
+                      )}
+                      {step.iconKey === 'message' && (
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class={c.text} aria-hidden="true">
+                          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                        </svg>
+                      )}
+                      {step.iconKey === 'target' && (
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class={c.text} aria-hidden="true">
+                          <circle cx="12" cy="12" r="10"></circle>
+                          <circle cx="12" cy="12" r="6"></circle>
+                          <circle cx="12" cy="12" r="2"></circle>
+                        </svg>
+                      )}
+                      {step.iconKey === 'brain' && (
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class={c.text} aria-hidden="true">
+                          <path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"></path>
+                          <path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"></path>
+                        </svg>
+                      )}
+                      {step.iconKey === 'trophy' && (
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class={c.text} aria-hidden="true">
+                          <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
+                          <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path>
+                          <path d="M4 22h16"></path>
+                          <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path>
+                          <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path>
+                          <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path>
+                        </svg>
+                      )}
+                    </div>
+                    <h3 class="text-lg md:text-xl font-bold text-text-primary normal-case" style="font-feature-settings: normal;">{step.title}</h3>
+                  </div>
+                  <p class="text-sm md:text-base text-text-secondary leading-relaxed">{step.description}</p>
+                </article>
+              </div>
+
+              {/* Center dot — desktop centered, mobile pinned left */}
+              <div class="md:static absolute left-0 top-1/2 md:transform-none transform -translate-y-1/2 relative z-10">
+                <div class:list={[c.bg, 'w-4 h-4 md:w-6 md:h-6 rounded-full border-2 md:border-4 border-surface']}></div>
+              </div>
+              <div class="hidden md:block w-1/2"></div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+
+    {/* Why this works */}
+    <div class="bg-gradient-to-br from-primary-light to-primary/5 rounded-2xl p-8 border border-primary/20">
+      <h3 class="text-2xl font-bold text-text-primary mb-6 text-center normal-case" style="font-feature-settings: normal;">
+        რა ღირებულებები ამუშავებს ამ სისტემას?
+      </h3>
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="text-center">
+          <div class="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
+            <span class="text-2xl font-bold text-primary">5+</span>
+          </div>
+          <h4 class="font-semibold text-text-primary mb-2 normal-case" style="font-feature-settings: normal;">
+            წლები დავხარჯეთ მის შექმნასა და დახვეწაში
+          </h4>
+          <p class="text-text-secondary text-sm">მუდმივად ვავითარებთ სტუდენტებისგან მიღებული გამოცდილებების კვალდაკვალ</p>
+        </div>
+        <div class="text-center">
+          <div class="w-16 h-16 bg-secondary/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-secondary" aria-hidden="true">
+              <rect width="18" height="18" x="3" y="4" rx="2"></rect>
+              <path d="M16 2v4"></path><path d="M8 2v4"></path><path d="M3 10h18"></path>
+            </svg>
+          </div>
+          <h4 class="font-semibold text-text-primary mb-2 normal-case" style="font-feature-settings: normal;">
+            ჩვევა უპირველეს ყოვლისა
+          </h4>
+          <p class="text-text-secondary text-sm">ჩვევის ჩამოყალიბებაზე ზრუნვა გაცილებით მნიშვნელოვანია ვიდრე ნებისმიერი კურსი</p>
+        </div>
+        <div class="text-center">
+          <div class="w-16 h-16 bg-accent/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-accent" aria-hidden="true">
+              <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
+              <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path>
+              <path d="M4 22h16"></path>
+              <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path>
+              <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path>
+              <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path>
+            </svg>
+          </div>
+          <h4 class="font-semibold text-text-primary mb-2 normal-case" style="font-feature-settings: normal;">
+            დამოუკიდებლობა
+          </h4>
+          <p class="text-text-secondary text-sm">მხოლოდ დამოუკიდებელ ადამიანებს შეუძლიათ საკუთარი სამყაროს შეცვლა უკეთესობისკენ</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

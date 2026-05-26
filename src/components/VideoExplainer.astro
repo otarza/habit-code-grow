@@ -1,0 +1,65 @@
+---
+// Short pitch video + 3 stat cards + scroll-to-#pricing CTA.
+// YouTube embed via standard iframe (lazy-loaded).
+---
+
+<section class="py-20 bg-gradient-to-b from-surface to-background">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-10">
+      <div class="inline-flex items-center gap-2 px-4 py-2 bg-secondary/10 rounded-full mb-6">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-secondary" aria-hidden="true">
+          <circle cx="12" cy="12" r="10"></circle>
+          <polyline points="12 6 12 12 16 14"></polyline>
+        </svg>
+        <span class="text-sm font-medium text-secondary">3 წუთი რომელიც შეცვლის შენს კარიერას</span>
+      </div>
+      <h2 class="text-4xl font-bold text-text-primary mb-4">
+        ჩელენჯები უფრო ეფექტურია ვიდრე კურსები
+      </h2>
+      <p class="text-xl text-text-secondary max-w-3xl mx-auto">
+        მოისმინე პირადად ჩემგან, როგორ მუშაობს ჩვენი სისტემა და რატომ არის ეს ერთადერთი
+        გზა რეალური ტრანსფორმაციისთვის
+      </p>
+    </div>
+
+    <div class="relative overflow-hidden rounded-lg shadow-2xl border border-secondary/20 bg-surface">
+      <div class="relative aspect-video">
+        <iframe
+          class="absolute inset-0 w-full h-full"
+          src="https://www.youtube.com/embed/LPgRR9TwGIA"
+          title="BitCamp Challenges Program"
+          loading="lazy"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen
+        ></iframe>
+      </div>
+    </div>
+
+    <div class="mt-8 grid md:grid-cols-3 gap-6">
+      <div class="p-6 text-center bg-gradient-to-br from-secondary/5 to-transparent border border-secondary/20 rounded-lg">
+        <div class="text-3xl font-bold text-secondary mb-2">97%</div>
+        <p class="text-text-secondary">ამთავრებს პირველ ჩელენჯს</p>
+      </div>
+      <div class="p-6 text-center bg-gradient-to-br from-primary/5 to-transparent border border-primary/20 rounded-lg">
+        <div class="text-3xl font-bold text-primary mb-2">21-100</div>
+        <p class="text-text-secondary">დღე ტრანსფორმაციისთვის</p>
+      </div>
+      <div class="p-6 text-center bg-gradient-to-br from-accent/5 to-transparent border border-accent/20 rounded-lg">
+        <div class="text-3xl font-bold text-accent mb-2">ყოველდღიური</div>
+        <p class="text-text-secondary">მენტორის მხარდაჭერა</p>
+      </div>
+    </div>
+
+    <div class="mt-10 text-center px-4">
+      <a
+        href="#pricing"
+        class="inline-flex items-center justify-center bg-secondary hover:bg-secondary-hover text-secondary-foreground font-bold text-base sm:text-lg px-4 sm:px-8 py-4 sm:py-6 rounded-md shadow-xl w-full sm:w-auto max-w-md transition-colors"
+      >
+        დაიწყე შენი ტრანსფორმაცია ახლავე
+      </a>
+      <p class="mt-4 text-sm text-text-secondary">
+        ⚡ ადგილები შეზღუდულია • მიმდინარე ნაკადზე მიღება მალე დასრულდება
+      </p>
+    </div>
+  </div>
+</section>
