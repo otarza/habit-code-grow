@@ -87,3 +87,27 @@ const canonicalUrl = canonical ?? new URL(Astro.url.pathname, SITE_ORIGIN).toStr
     <slot />
   </body>
 </html>
+
+<style is:global>
+  /*
+   * Dark theme — applied via bodyClass="dark" on /learn lesson pages.
+   * Overrides the same `--cp-*` CSS variables that light-theme components
+   * use as fallbacks, so existing components automatically pick up the
+   * dark palette without per-component refactoring.
+   */
+  body.dark {
+    --cp-bg: hsl(220 35% 8%);
+    --cp-bg-elevated: hsl(220 30% 11%);
+    --cp-text-primary: hsl(0 0% 96%);
+    --cp-text-secondary: hsl(220 15% 80%);
+    --cp-text-muted: hsl(220 12% 60%);
+    --cp-border: hsl(220 20% 20%);
+    --cp-border-strong: hsl(220 20% 30%);
+    --cp-accent-text: hsl(258 90% 75%);
+    --cp-cta-bg: hsl(0 0% 96%);
+    --cp-cta-text: hsl(220 47% 10%);
+
+    background: var(--cp-bg);
+    color: var(--cp-text-secondary);
+  }
+</style>

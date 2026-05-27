@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import { FlittCheckoutModal } from '@/components/campaign/FlittCheckoutModal';
 import CampaignFooter from '@/components/campaign/CampaignFooter.astro';
 import CampaignStickyCta from '@/components/campaign/CampaignStickyCta.astro';
+import Icon from '@/components/Icon.astro';
 
 const proIncludes = [
   'სრული 6-მოდულიანი პროგრამა: პრომპტინგიდან n8n ავტომატიზაციამდე',
@@ -33,19 +34,19 @@ const proOutcomes = [
     label: 'შედეგი 01',
     title: 'AI შენი ყოველდღიური ინსტრუმენტი ხდება',
     body: 'T.C.R.E.I. ჩარჩოს დახმარებით ბუნდოვან მოთხოვნებს ზუსტ ინსტრუქციებად აქცევ და პირველივე ცდაზე იღებ სასურველ შედეგს.',
-    icon: '💬',
+    iconKey: 'message-square-text',
   },
   {
     label: 'შედეგი 02',
     title: 'მრავალფეროვანი ამოცანების გადაჭრა',
     body: 'ისწავლი დოკუმენტების და მონაცემების დამუშავებას, ბიზნეს ამოცანების მოგვარებას და არა მხოლოდ ChatGPT-სთან მარტივ მიმოწერას.',
-    icon: '💼',
+    iconKey: 'briefcase',
   },
   {
     label: 'შედეგი 03',
     title: 'ქმნი აგენტებსა და ავტომატიზაციებს',
     body: 'Custom GPTs და n8n დაგეხმარება შექმნა სისტემები, რომლებიც რუტინულ საქმეს შენს ნაცვლად, ავტომატურად გააკეთებენ.',
-    icon: '⚙',
+    iconKey: 'workflow',
   },
 ];
 
@@ -55,7 +56,7 @@ const fullProgramModules = [
     title: 'ფუნდამენტური პრომპტინგი',
     subtitle: 'AI-სთან ეფექტური კომუნიკაცია',
     goal: 'ისწავლი, როგორ მიიღო AI-სგან ზუსტად ის, რაც გინდა — პირველივე ცდაზე.',
-    icon: '💬',
+    iconKey: 'message-square-text',
     topics: ['LLM-ების მუშაობის პრინციპი', 'T.C.R.E.I. ფორმულა', 'კონტექსტის მართვა', 'Few-Shot Prompting'],
   },
   {
@@ -63,7 +64,7 @@ const fullProgramModules = [
     title: 'Advanced Prompting',
     subtitle: 'რთული ამოცანების ლოგიკა',
     goal: 'გადააქცევ AI-ს უბრალო ჩატბოტიდან ლოგიკურად მოაზროვნე სამუშაო პარტნიორად.',
-    icon: '🧠',
+    iconKey: 'brain',
     topics: ['Chain of Thought', 'Prompt Chaining', 'სტრუქტურირებული პასუხები', 'ქართული ენის თავისებურებები'],
   },
   {
@@ -71,7 +72,7 @@ const fullProgramModules = [
     title: 'პროდუქტიულობა და ბიზნესი',
     subtitle: 'მაქსიმალური შედეგი ნაკლებ დროში',
     goal: 'ისწავლი კონკრეტული ბიზნეს-ამოცანების გადაჭრას წუთებში, საათების ნაცვლად.',
-    icon: '💼',
+    iconKey: 'briefcase',
     topics: ['კონტენტის შექმნა', 'დოკუმენტების ანალიზი', 'კორპორატიული მიმოწერა'],
   },
   {
@@ -79,7 +80,7 @@ const fullProgramModules = [
     title: 'ვიზუალური AI',
     subtitle: 'DALL-E, Midjourney და Vision',
     goal: 'შეძლებ სურათების გენერაციას, ვიზუალური ინფორმაციის დამუშავებას და მონაცემების ვიზუალიზაციას.',
-    icon: '🖼',
+    iconKey: 'image',
     topics: ['სურათების გენერაცია', 'Vision მოდელები', 'მონაცემთა ვიზუალიზაცია'],
   },
   {
@@ -87,7 +88,7 @@ const fullProgramModules = [
     title: 'პერსონალური აგენტები',
     subtitle: 'Custom GPTs',
     goal: 'ააწყობ პირად AI დამხმარეებს, რომლებსაც ესმით შენი კონტექსტი, ფაილები და სამუშაო სტილი.',
-    icon: '🤖',
+    iconKey: 'bot',
     topics: ['Custom Instructions', 'საკუთარი GPT-ის შექმნა', 'Knowledge Base', 'აგენტის გაზიარება'],
   },
   {
@@ -95,7 +96,7 @@ const fullProgramModules = [
     title: 'ავტომატიზაცია',
     subtitle: 'n8n და რეალური პროცესები',
     goal: 'შექმნი სისტემებს, რომლებიც აკავშირებს სხვადასხვა პროგრამებს და დამოუკიდებლად ასრულებს ამოცანებს.',
-    icon: '⚙',
+    iconKey: 'workflow',
     topics: ['n8n-ის საფუძვლები', 'Webhooks და API', 'AI ავტომატიზაციები', 'Human-in-the-Loop'],
   },
 ];
@@ -151,10 +152,10 @@ const paymentLogos = ['visa', 'mastercard', 'apple-pay', 'google-pay'] as const;
           </p>
 
           <div class="campaign-hero__facts" aria-label="პროგრამის ძირითადი ინფორმაცია">
-            <span>📚 6 მოდული</span>
-            <span>👥 4 კვირის მენტორშიფი</span>
-            <span>💬 Discord მხარდაჭერა</span>
-            <span>✓ უკუკავშირი პრაქტიკაზე</span>
+            <span><Icon name="book-open" size={16} /> 6 მოდული</span>
+            <span><Icon name="users" size={16} /> 4 კვირის მენტორშიფი</span>
+            <span><Icon name="message-square-text" size={16} /> Discord მხარდაჭერა</span>
+            <span><Icon name="check-circle" size={16} /> უკუკავშირი პრაქტიკაზე</span>
           </div>
 
           <div class="campaign-author-chip">
@@ -185,8 +186,8 @@ const paymentLogos = ['visa', 'mastercard', 'apple-pay', 'google-pay'] as const;
               <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
             </button>
             <div class="campaign-offer-footer">
-              <div class="campaign-secure-line">🔒 <span>უსაფრთხო გადახდა ბარათით ან საბანკო გადარიცხვით</span></div>
-              <div class="campaign-secure-line">✓ <span>14 დღე დაბრუნებისთვის, თუ კურსის გავლა ჯერ არ დაგიწყია</span></div>
+              <div class="campaign-secure-line"><Icon name="shield-check" size={16} /> <span>უსაფრთხო გადახდა ბარათით ან საბანკო გადარიცხვით</span></div>
+              <div class="campaign-secure-line"><Icon name="check-circle" size={16} /> <span>14 დღე დაბრუნებისთვის, თუ კურსის გავლა ჯერ არ დაგიწყია</span></div>
               <div class="campaign-payment-logos campaign-payment-logos--compact">
                 {paymentLogos.map((name) => (
                   <img src={`/assets/payment/${name}.svg`} alt={name} />
@@ -212,8 +213,8 @@ const paymentLogos = ['visa', 'mastercard', 'apple-pay', 'google-pay'] as const;
               <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
             </button>
             <div class="campaign-offer-footer">
-              <div class="campaign-secure-line">🔒 <span>უსაფრთხო გადახდა ბარათით ან საბანკო გადარიცხვით</span></div>
-              <div class="campaign-secure-line">✓ <span>14 დღე დაბრუნებისთვის, თუ კურსის გავლა ჯერ არ დაგიწყია</span></div>
+              <div class="campaign-secure-line"><Icon name="shield-check" size={16} /> <span>უსაფრთხო გადახდა ბარათით ან საბანკო გადარიცხვით</span></div>
+              <div class="campaign-secure-line"><Icon name="check-circle" size={16} /> <span>14 დღე დაბრუნებისთვის, თუ კურსის გავლა ჯერ არ დაგიწყია</span></div>
               <div class="campaign-payment-logos campaign-payment-logos--compact">
                 {paymentLogos.map((name) => (
                   <img src={`/assets/payment/${name}.svg`} alt={name} />
@@ -254,7 +255,7 @@ const paymentLogos = ['visa', 'mastercard', 'apple-pay', 'google-pay'] as const;
           <h2>თუ გსურს AI ყოველდღიურ სამუშაო ინსტრუმენტად აქციო, მხოლოდ პრომპტების სია არ არის საკმარისი.</h2>
           <div class="campaign-fit-list">
             {mentorSteps.map((step) => (
-              <div>✓ <span><strong>{step.title}</strong> — {step.body}</span></div>
+              <div><Icon name="check-circle" size={18} /> <span><strong>{step.title}</strong> — {step.body}</span></div>
             ))}
           </div>
           <blockquote class="campaign-proof-quote">
@@ -271,7 +272,7 @@ const paymentLogos = ['visa', 'mastercard', 'apple-pay', 'google-pay'] as const;
           <h3>პროგრამა აერთიანებს თეორიას, პრაქტიკას და მენტორულ მხარდაჭერას.</h3>
           <div class="campaign-included-list campaign-included-list--panel">
             {proIncludes.map((item) => (
-              <div>✓ <span>{item}</span></div>
+              <div><Icon name="check-circle" size={18} /> <span>{item}</span></div>
             ))}
           </div>
         </div>
@@ -290,9 +291,9 @@ const paymentLogos = ['visa', 'mastercard', 'apple-pay', 'google-pay'] as const;
             ავტომატიზაცია და მენტორული უკუკავშირი პრაქტიკაზე.
           </p>
           <div class="campaign-cta-band__meta">
-            <span>📚 6 მოდული</span>
-            <span>📅 4 კვირის მხარდაჭერა</span>
-            <span>🔒 უსაფრთხო გადახდა</span>
+            <span><Icon name="book-open" size={16} /> 6 მოდული</span>
+            <span><Icon name="calendar-days" size={16} /> 4 კვირის მხარდაჭერა</span>
+            <span><Icon name="shield-check" size={16} /> უსაფრთხო გადახდა</span>
           </div>
         </div>
         <div class="campaign-cta-band__action">
@@ -327,7 +328,11 @@ const paymentLogos = ['visa', 'mastercard', 'apple-pay', 'google-pay'] as const;
         <div class="campaign-outcome-grid">
           {proOutcomes.map((outcome) => (
             <div class="campaign-outcome-card">
-              <div class="campaign-card-icon" aria-hidden="true">{outcome.icon}</div>
+              <div class="campaign-card-icon" aria-hidden="true">
+                {outcome.iconKey === 'message-square-text' && <Icon name="message-square-text" size={24} />}
+                {outcome.iconKey === 'briefcase' && <Icon name="briefcase" size={24} />}
+                {outcome.iconKey === 'workflow' && <Icon name="workflow" size={24} />}
+              </div>
               <p>{outcome.label}</p>
               <h3>{outcome.title}</h3>
               <span>{outcome.body}</span>
@@ -348,7 +353,14 @@ const paymentLogos = ['visa', 'mastercard', 'apple-pay', 'google-pay'] as const;
           {fullProgramModules.map((m) => (
             <article class="campaign-module-card">
               <div class="campaign-module-card__top">
-                <div class="campaign-card-icon" aria-hidden="true">{m.icon}</div>
+                <div class="campaign-card-icon" aria-hidden="true">
+                  {m.iconKey === 'message-square-text' && <Icon name="message-square-text" size={24} />}
+                  {m.iconKey === 'brain' && <Icon name="brain" size={24} />}
+                  {m.iconKey === 'briefcase' && <Icon name="briefcase" size={24} />}
+                  {m.iconKey === 'image' && <Icon name="image" size={24} />}
+                  {m.iconKey === 'bot' && <Icon name="bot" size={24} />}
+                  {m.iconKey === 'workflow' && <Icon name="workflow" size={24} />}
+                </div>
                 <div>
                   <span>მოდული {m.n}</span>
                   <h3>{m.title}</h3>
@@ -379,9 +391,9 @@ const paymentLogos = ['visa', 'mastercard', 'apple-pay', 'google-pay'] as const;
             როგორ ვაქციოთ შედეგი განმეორებად ავტომატიზაციად.
           </p>
           <div class="campaign-credential-list">
-            <div>✓ <span>Python, SQL, Web და AI კურსების ავტორი BitCamp-ში</span></div>
-            <div>✓ <span>2 000+ კმაყოფილ სტუდენტზე გამოცდილი ფორმატი: თეორია, ჩარჩო და პრაქტიკა</span></div>
-            <div>✓ <span>მენტორული მხარდაჭერა მათთვის, ვისაც ცოდნის პრაქტიკაში გამოყენება სურს</span></div>
+            <div><Icon name="check-circle" size={18} /> <span>Python, SQL, Web და AI კურსების ავტორი BitCamp-ში</span></div>
+            <div><Icon name="check-circle" size={18} /> <span>2 000+ კმაყოფილ სტუდენტზე გამოცდილი ფორმატი: თეორია, ჩარჩო და პრაქტიკა</span></div>
+            <div><Icon name="check-circle" size={18} /> <span>მენტორული მხარდაჭერა მათთვის, ვისაც ცოდნის პრაქტიკაში გამოყენება სურს</span></div>
           </div>
         </div>
       </div>

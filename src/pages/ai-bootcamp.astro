@@ -4,6 +4,7 @@ import { Countdown } from '@/components/campaign/Countdown';
 import { FlittCheckoutModal } from '@/components/campaign/FlittCheckoutModal';
 import CampaignFooter from '@/components/campaign/CampaignFooter.astro';
 import CampaignStickyCta from '@/components/campaign/CampaignStickyCta.astro';
+import Icon from '@/components/Icon.astro';
 
 const outcomes = [
   {
@@ -137,10 +138,10 @@ const paymentLogos = ['visa', 'mastercard', 'apple-pay', 'google-pay'] as const;
           </p>
 
           <div class="campaign-hero__facts" aria-label="კურსის ძირითადი ინფორმაცია">
-            <span>🎬 25 გაკვეთილი</span>
-            <span>✓ 0-დან დამწყებთათვის</span>
-            <span>📚 Python + SQL ბონუსად</span>
-            <span>👥 2 000+ კმაყოფილი სტუდენტი</span>
+            <span><Icon name="video" size={16} /> 25 გაკვეთილი</span>
+            <span><Icon name="check-circle" size={16} /> 0-დან დამწყებთათვის</span>
+            <span><Icon name="book-open" size={16} /> Python + SQL ბონუსად</span>
+            <span><Icon name="users" size={16} /> 2 000+ კმაყოფილი სტუდენტი</span>
           </div>
 
           {/* Instructor trust card */}
@@ -155,7 +156,7 @@ const paymentLogos = ['visa', 'mastercard', 'apple-pay', 'google-pay'] as const;
             </div>
             <div class="campaign-author-card__credentials">
               {instructorCredentials.map((credential) => (
-                <div>✓ <span>{credential}</span></div>
+                <div><Icon name="check-circle" size={18} /> <span>{credential}</span></div>
               ))}
             </div>
             <div class="campaign-author-card__stats" aria-label="ინსტრუქტორის გამოცდილება">
@@ -183,8 +184,8 @@ const paymentLogos = ['visa', 'mastercard', 'apple-pay', 'google-pay'] as const;
               </button>
             </div>
             <div class="campaign-offer-footer">
-              <div class="campaign-secure-line">🔒 <span>უსაფრთხო გადახდა ბარათით ან საბანკო გადარიცხვით</span></div>
-              <div class="campaign-secure-line">✓ <span>14 დღე დაბრუნებისთვის, თუ კურსის გავლა ჯერ არ დაგიწყია</span></div>
+              <div class="campaign-secure-line"><Icon name="shield-check" size={16} /> <span>უსაფრთხო გადახდა ბარათით ან საბანკო გადარიცხვით</span></div>
+              <div class="campaign-secure-line"><Icon name="check-circle" size={16} /> <span>14 დღე დაბრუნებისთვის, თუ კურსის გავლა ჯერ არ დაგიწყია</span></div>
               <div class="campaign-payment-logos campaign-payment-logos--compact">
                 {paymentLogos.map((name) => (
                   <img src={`/assets/payment/${name}.svg`} alt={name} />
@@ -213,8 +214,8 @@ const paymentLogos = ['visa', 'mastercard', 'apple-pay', 'google-pay'] as const;
               </button>
             </div>
             <div class="campaign-offer-footer">
-              <div class="campaign-secure-line">🔒 <span>უსაფრთხო გადახდა ბარათით ან საბანკო გადარიცხვით</span></div>
-              <div class="campaign-secure-line">✓ <span>14 დღე დაბრუნებისთვის, თუ კურსის გავლა ჯერ არ დაგიწყია</span></div>
+              <div class="campaign-secure-line"><Icon name="shield-check" size={16} /> <span>უსაფრთხო გადახდა ბარათით ან საბანკო გადარიცხვით</span></div>
+              <div class="campaign-secure-line"><Icon name="check-circle" size={16} /> <span>14 დღე დაბრუნებისთვის, თუ კურსის გავლა ჯერ არ დაგიწყია</span></div>
               <div class="campaign-payment-logos campaign-payment-logos--compact">
                 {paymentLogos.map((name) => (
                   <img src={`/assets/payment/${name}.svg`} alt={name} />
@@ -254,7 +255,7 @@ const paymentLogos = ['visa', 'mastercard', 'apple-pay', 'google-pay'] as const;
               </div>
             </div>
             <div class="campaign-hero-preview__footer">
-              ✓ <span>შედეგი: იცი არა მხოლოდ "რა დაწერო", არამედ როგორ ააწყო მოთხოვნა თავიდან სწორად.</span>
+              <Icon name="check-circle" size={18} /> <span>შედეგი: იცი არა მხოლოდ "რა დაწერო", არამედ როგორ ააწყო მოთხოვნა თავიდან სწორად.</span>
             </div>
           </div>
         </div>
@@ -281,7 +282,7 @@ const paymentLogos = ['visa', 'mastercard', 'apple-pay', 'google-pay'] as const;
           <h2>ეს კურსი შენთვისაა, თუ გსურს დაზოგო დრო და მიიღო უკეთესი შედეგები.</h2>
           <div class="campaign-fit-list">
             {fitSignals.map((item) => (
-              <div>✓ <span>{item}</span></div>
+              <div><Icon name="check-circle" size={18} /> <span>{item}</span></div>
             ))}
           </div>
           <blockquote class="campaign-proof-quote">
@@ -308,7 +309,7 @@ const paymentLogos = ['visa', 'mastercard', 'apple-pay', 'google-pay'] as const;
             </p>
           </div>
           <div class="campaign-prompt-result">
-            ✓ <span>შედეგი: ნაკლები გადაკეთება, უფრო ზუსტი პასუხი და პრომპტი, რომელსაც შემდეგაც გამოიყენებ.</span>
+            <Icon name="check-circle" size={18} /> <span>შედეგი: ნაკლები გადაკეთება, უფრო ზუსტი პასუხი და პრომპტი, რომელსაც შემდეგაც გამოიყენებ.</span>
           </div>
         </div>
       </div>
@@ -347,9 +348,9 @@ const paymentLogos = ['visa', 'mastercard', 'apple-pay', 'google-pay'] as const;
           {outcomes.map((outcome) => (
             <div class="campaign-outcome-card">
               <div class="campaign-card-icon" aria-hidden="true">
-                {outcome.iconKey === 'message' && '💬'}
-                {outcome.iconKey === 'database' && '🗄'}
-                {outcome.iconKey === 'workflow' && '⚙'}
+                {outcome.iconKey === 'message' && <Icon name="message-square-text" size={24} />}
+                {outcome.iconKey === 'database' && <Icon name="database" size={24} />}
+                {outcome.iconKey === 'workflow' && <Icon name="workflow" size={24} />}
               </div>
               <p>{outcome.label}</p>
               <h3>{outcome.title}</h3>
@@ -376,9 +377,9 @@ const paymentLogos = ['visa', 'mastercard', 'apple-pay', 'google-pay'] as const;
             სამუშაოს გასამარტივებლად.
           </p>
           <div class="campaign-credential-list">
-            <div>✓ <span>ქართული ვიდეო გაკვეთილები დამწყებისთვის გასაგები ენით</span></div>
-            <div>✓ <span>Python, SQL, Web და AI სასწავლო მიმართულებების ავტორი BitCamp-ში</span></div>
-            <div>✓ <span>2 000+ კმაყოფილ სტუდენტთან გამოცდილი ფორმატი: მოკლე გაკვეთილი, ჩარჩო და პრაქტიკა</span></div>
+            <div><Icon name="check-circle" size={18} /> <span>ქართული ვიდეო გაკვეთილები დამწყებისთვის გასაგები ენით</span></div>
+            <div><Icon name="check-circle" size={18} /> <span>Python, SQL, Web და AI სასწავლო მიმართულებების ავტორი BitCamp-ში</span></div>
+            <div><Icon name="check-circle" size={18} /> <span>2 000+ კმაყოფილ სტუდენტთან გამოცდილი ფორმატი: მოკლე გაკვეთილი, ჩარჩო და პრაქტიკა</span></div>
           </div>
         </div>
       </div>
@@ -423,7 +424,7 @@ const paymentLogos = ['visa', 'mastercard', 'apple-pay', 'google-pay'] as const;
         </div>
         <div class="campaign-included-list">
           {included.map((item) => (
-            <div>✓ <span>{item}</span></div>
+            <div><Icon name="check-circle" size={18} /> <span>{item}</span></div>
           ))}
         </div>
       </div>
@@ -437,8 +438,8 @@ const paymentLogos = ['visa', 'mastercard', 'apple-pay', 'google-pay'] as const;
           <h2>დაიწყე Bootcamp ახლა და შეინარჩუნე ₾99 ფასი.</h2>
           <p>26 მაისის 23:59-ის შემდეგ შეთავაზება იხურება და კურსი უბრუნდება ჩვეულ ფასს.</p>
           <div class="campaign-cta-band__meta">
-            <span>📅 26 მაისი · 23:59</span>
-            <span>🔒 უსაფრთხო გადახდა</span>
+            <span><Icon name="calendar-days" size={16} /> 26 მაისი · 23:59</span>
+            <span><Icon name="shield-check" size={16} /> უსაფრთხო გადახდა</span>
           </div>
         </div>
         <div class="campaign-cta-band__action">
