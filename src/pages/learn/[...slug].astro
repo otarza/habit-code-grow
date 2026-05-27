@@ -4,7 +4,10 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import LessonView from '../../components/course/LessonView.astro';
 import CourseOverview from '../../components/course/CourseOverview.astro';
 import CourseSidebar from '../../components/course/CourseSidebar.astro';
+import { AccessGate } from '@/components/learn/AccessGate';
+import { FlittCheckoutModal } from '@/components/campaign/FlittCheckoutModal';
 import { loadManifest, findAdjacent } from '@/lib/course-manifest';
+import { PRODUCTS } from '@/lib/checkout';
 
 /**
  * Gated course routes: noindex applied via BaseLayout. AccessGate stub
@@ -65,9 +68,28 @@ const adjacent =
   props.mode === 'lesson' && manifest
     ? findAdjacent(manifest, props.topicSlug, props.lessonSlug)
     : null;
+
+// Map courseSlug → Flitt product key
+const COURSE_PRODUCT: Record<string, 'bootcamp' | 'pro'> = {
+  'ai-bootcamp': 'bootcamp',
+  'ai-pro': 'pro',
+};
+const gateProduct = COURSE_PRODUCT[props.courseSlug] ?? 'bootcamp';
+const gateProductConfig = PRODUCTS[gateProduct];
+const gateBuyLabel = gateProductConfig.name;
+const gateBuyPrice = `₾${gateProductConfig.value}`;
 ---
 
 <BaseLayout title={title} description={description} noindex bodyClass="dark">
+  <AccessGate
+    client:load
+    courseSlug={props.courseSlug}
+    product={gateProduct}
+    courseName={manifest?.title ?? props.courseSlug}
+    buyLabel={gateBuyLabel}
+    buyPrice={gateBuyPrice}
+  />
+  <FlittCheckoutModal client:load />
   <div class="course-layout">
     {manifest && (
       <CourseSidebar
