@@ -20,13 +20,16 @@ export function AccessGate({ courseSlug, product, courseName, buyLabel, buyPrice
 
   useEffect(() => {
     try {
-      // Magic link: ?email=user@example.com sets access immediately
+      // Magic link: ?access=<base64url-encoded email> sets access immediately
       const params = new URLSearchParams(window.location.search);
-      const urlEmail = params.get("email");
-      if (urlEmail) {
-        localStorage.setItem(storageKey(courseSlug), urlEmail.toLowerCase().trim());
-        params.delete("email");
-        params.delete("token");
+      const accessParam = params.get("access");
+      if (accessParam) {
+        // base64url → base64 → utf8 string
+        const b64 = accessParam.replace(/-/g, "+").replace(/_/g, "/");
+        const decoded = decodeURIComponent(escape(atob(b64)));
+        const email = decoded.toLowerCase().trim();
+        localStorage.setItem(storageKey(courseSlug), email);
+        params.delete("access");
         const clean =
           window.location.pathname +
           (params.toString() ? "?" + params.toString() : "");
