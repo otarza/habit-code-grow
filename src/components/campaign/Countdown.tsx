@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 const CAMPAIGN_DEADLINE = new Date("2026-05-26T23:59:59+04:00").getTime();
-const OVERTIME_DEADLINE = new Date("2026-05-27T14:59:59+04:00").getTime();
+const OVERTIME_DEADLINE = new Date("2026-05-28T02:59:59+04:00").getTime();
 
 export type CampaignCountdownPhase = "standard" | "overtime" | "ended";
 
