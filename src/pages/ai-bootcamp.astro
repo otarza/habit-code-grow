@@ -1,10 +1,13 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { Image } from 'astro:assets';
 import { Countdown } from '@/components/campaign/Countdown';
 import { FlittCheckoutModal } from '@/components/campaign/FlittCheckoutModal';
 import CampaignFooter from '@/components/campaign/CampaignFooter.astro';
 import CampaignStickyCta from '@/components/campaign/CampaignStickyCta.astro';
 import Icon from '@/components/Icon.astro';
+import otarProfile from '@/assets/images/otar-profile-photo.png';
+import otarSpotlight from '@/assets/images/otar-spotlight-clean.png';
 
 const outcomes = [
   {
@@ -147,7 +150,7 @@ const paymentLogos = ['visa', 'mastercard', 'apple-pay', 'google-pay'] as const;
           {/* Instructor trust card */}
           <div class="campaign-author-card">
             <div class="campaign-author-card__top">
-              <img src="/media/external/images/otar-profile-photo.png" alt="" />
+              <Image src={otarProfile} alt="" width={128} height={128} />
               <div>
                 <span>კურსს უძღვება</span>
                 <strong>ოთარ ზაკალაშვილი</strong>
@@ -188,7 +191,7 @@ const paymentLogos = ['visa', 'mastercard', 'apple-pay', 'google-pay'] as const;
               <div class="campaign-secure-line"><Icon name="check-circle" size={16} /> <span>14 დღე დაბრუნებისთვის, თუ კურსის გავლა ჯერ არ დაგიწყია</span></div>
               <div class="campaign-payment-logos campaign-payment-logos--compact">
                 {paymentLogos.map((name) => (
-                  <img src={`/assets/payment/${name}.svg`} alt={name} />
+                  <img src={`/assets/payment/${name}.svg`} alt={name} width={86} height={26} />
                 ))}
               </div>
             </div>
@@ -218,7 +221,7 @@ const paymentLogos = ['visa', 'mastercard', 'apple-pay', 'google-pay'] as const;
               <div class="campaign-secure-line"><Icon name="check-circle" size={16} /> <span>14 დღე დაბრუნებისთვის, თუ კურსის გავლა ჯერ არ დაგიწყია</span></div>
               <div class="campaign-payment-logos campaign-payment-logos--compact">
                 {paymentLogos.map((name) => (
-                  <img src={`/assets/payment/${name}.svg`} alt={name} />
+                  <img src={`/assets/payment/${name}.svg`} alt={name} width={86} height={26} />
                 ))}
               </div>
             </div>
@@ -365,7 +368,7 @@ const paymentLogos = ['visa', 'mastercard', 'apple-pay', 'google-pay'] as const;
     <section class="campaign-section campaign-section--surface">
       <div class="campaign-shell campaign-instructor-section">
         <div class="campaign-instructor-photo">
-          <img src="/media/external/images/otar-spotlight-clean.png" alt="ოთარ ზაკალაშვილი" />
+          <Image src={otarSpotlight} alt="ოთარ ზაკალაშვილი" width={600} height={600} />
         </div>
         <div class="campaign-instructor-copy">
           <p class="campaign-kicker">ვისგან სწავლობ</p>
@@ -453,7 +456,7 @@ const paymentLogos = ['visa', 'mastercard', 'apple-pay', 'google-pay'] as const;
           </button>
           <div class="campaign-payment-logos campaign-payment-logos--compact">
             {paymentLogos.map((name) => (
-              <img src={`/assets/payment/${name}.svg`} alt={name} />
+              <img src={`/assets/payment/${name}.svg`} alt={name} width={86} height={24} />
             ))}
           </div>
         </div>

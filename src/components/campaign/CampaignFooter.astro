@@ -9,7 +9,7 @@ const paymentLogos = ['visa', 'mastercard', 'apple-pay', 'google-pay'] as const;
   <div class="campaign-footer__inner">
     <div class="campaign-footer__logos">
       {paymentLogos.map((name) => (
-        <img src={`/assets/payment/${name}.svg`} alt={name} loading="lazy" />
+        <img src={`/assets/payment/${name}.svg`} alt={name} loading="lazy" width={86} height={26} />
       ))}
     </div>
 

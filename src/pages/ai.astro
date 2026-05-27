@@ -1,9 +1,12 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { Image } from 'astro:assets';
 import { FlittCheckoutModal } from '@/components/campaign/FlittCheckoutModal';
 import CampaignFooter from '@/components/campaign/CampaignFooter.astro';
 import CampaignStickyCta from '@/components/campaign/CampaignStickyCta.astro';
 import Icon from '@/components/Icon.astro';
+import otarProfile from '@/assets/images/otar-profile-photo.png';
+import otarSpotlight from '@/assets/images/otar-spotlight-clean.png';
 
 const proIncludes = [
   'სრული 6-მოდულიანი პროგრამა: პრომპტინგიდან n8n ავტომატიზაციამდე',
@@ -159,7 +162,7 @@ const paymentLogos = ['visa', 'mastercard', 'apple-pay', 'google-pay'] as const;
           </div>
 
           <div class="campaign-author-chip">
-            <img src="/media/external/images/otar-profile-photo.png" alt="" />
+            <Image src={otarProfile} alt="" width={96} height={96} />
             <div>
               <span>მენტორი: ოთარ ზაკალაშვილი</span>
               <strong>
@@ -190,7 +193,7 @@ const paymentLogos = ['visa', 'mastercard', 'apple-pay', 'google-pay'] as const;
               <div class="campaign-secure-line"><Icon name="check-circle" size={16} /> <span>14 დღე დაბრუნებისთვის, თუ კურსის გავლა ჯერ არ დაგიწყია</span></div>
               <div class="campaign-payment-logos campaign-payment-logos--compact">
                 {paymentLogos.map((name) => (
-                  <img src={`/assets/payment/${name}.svg`} alt={name} />
+                  <img src={`/assets/payment/${name}.svg`} alt={name} width={86} height={26} />
                 ))}
               </div>
             </div>
@@ -217,14 +220,14 @@ const paymentLogos = ['visa', 'mastercard', 'apple-pay', 'google-pay'] as const;
               <div class="campaign-secure-line"><Icon name="check-circle" size={16} /> <span>14 დღე დაბრუნებისთვის, თუ კურსის გავლა ჯერ არ დაგიწყია</span></div>
               <div class="campaign-payment-logos campaign-payment-logos--compact">
                 {paymentLogos.map((name) => (
-                  <img src={`/assets/payment/${name}.svg`} alt={name} />
+                  <img src={`/assets/payment/${name}.svg`} alt={name} width={86} height={26} />
                 ))}
               </div>
             </div>
           </div>
 
           <figure class="campaign-instructor-card">
-            <img src="/media/external/images/otar-spotlight-clean.png" alt="ოთარ ზაკალაშვილი" />
+            <Image src={otarSpotlight} alt="ოთარ ზაკალაშვილი" width={600} height={450} />
             <figcaption>
               <span>კურსს უძღვება</span>
               <strong>ოთარ ზაკალაშვილი</strong>
@@ -307,7 +310,7 @@ const paymentLogos = ['visa', 'mastercard', 'apple-pay', 'google-pay'] as const;
           </button>
           <div class="campaign-payment-logos campaign-payment-logos--compact">
             {paymentLogos.map((name) => (
-              <img src={`/assets/payment/${name}.svg`} alt={name} />
+              <img src={`/assets/payment/${name}.svg`} alt={name} width={86} height={24} />
             ))}
           </div>
           <p class="campaign-muted-note campaign-muted-note--tight">
@@ -379,7 +382,7 @@ const paymentLogos = ['visa', 'mastercard', 'apple-pay', 'google-pay'] as const;
     <section class="campaign-section">
       <div class="campaign-shell campaign-instructor-section">
         <div class="campaign-instructor-photo">
-          <img src="/media/external/images/otar-spotlight-clean.png" alt="ოთარ ზაკალაშვილი" />
+          <Image src={otarSpotlight} alt="ოთარ ზაკალაშვილი" width={600} height={600} />
         </div>
         <div class="campaign-instructor-copy">
           <p class="campaign-kicker">ვისგან სწავლობ</p>
@@ -469,7 +472,7 @@ const paymentLogos = ['visa', 'mastercard', 'apple-pay', 'google-pay'] as const;
           </p>
           <div class="campaign-payment-logos campaign-payment-logos--compact">
             {paymentLogos.map((name) => (
-              <img src={`/assets/payment/${name}.svg`} alt={name} />
+              <img src={`/assets/payment/${name}.svg`} alt={name} width={86} height={24} />
             ))}
           </div>
         </div>
