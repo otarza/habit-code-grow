@@ -13,13 +13,26 @@ import {
   Video,
   Workflow,
 } from "lucide-react";
-import { CountdownDisplay, type CampaignCountdownState, useCampaignCountdownState } from "@/components/campaign/Countdown";
 import { CampaignFooter } from "@/components/campaign/CampaignFooter";
 import { CampaignStickyCta } from "@/components/campaign/CampaignStickyCta";
 import { FlittCheckoutModal } from "@/components/campaign/FlittCheckoutModal";
-import { handleBuy } from "@/lib/checkout";
+import { handleBuy, PRODUCTS } from "@/lib/checkout";
 
 const paymentLogos = ["visa", "mastercard", "apple-pay", "google-pay"] as const;
+const BOOTCAMP_START_PRICE = 99;
+// Current price is owned by checkout config so UI, analytics, and Flitt button updates stay in sync.
+const BOOTCAMP_CURRENT_PRICE = PRODUCTS.bootcamp.value;
+const BOOTCAMP_FULL_PRICE = 199;
+const BOOTCAMP_PRICE_STEPS = [99, 109, 119, 129, 139, 149, 159, 169, 179, 189, 199];
+
+const formatGel = (value: number) => `₾${value}`;
+const BOOTCAMP_CURRENT_PRICE_LABEL = formatGel(BOOTCAMP_CURRENT_PRICE);
+const BOOTCAMP_FULL_PRICE_LABEL = formatGel(BOOTCAMP_FULL_PRICE);
+const BOOTCAMP_SAVINGS = BOOTCAMP_FULL_PRICE - BOOTCAMP_CURRENT_PRICE;
+const BOOTCAMP_NEXT_PRICE = BOOTCAMP_PRICE_STEPS.find((price) => price > BOOTCAMP_CURRENT_PRICE) ?? null;
+const BOOTCAMP_PRICE_PROGRESS = Math.round(
+  ((BOOTCAMP_CURRENT_PRICE - BOOTCAMP_START_PRICE) / (BOOTCAMP_FULL_PRICE - BOOTCAMP_START_PRICE)) * 100
+);
 
 const outcomes = [
   {
@@ -122,7 +135,7 @@ const faqs = [
   },
   {
     q: "რა მოხდება 26 მაისის შემდეგ?",
-    a: "26 მაისს 23:59 საათზე მთავარი დამოუკიდებლობის ტაიმერი ჩერდება. საბანკო გადახდების შეფერხების გამო, ₾99 ფასი გახანგრძლივდა ოვერტაიმით 28 მაისის 02:59-მდე.",
+    a: `დამოუკიდებლობის კამპანიის შემდეგ ფასი ეტაპობრივად ბრუნდება სრულ ფასზე: ${formatGel(BOOTCAMP_START_PRICE)}-დან ${BOOTCAMP_FULL_PRICE_LABEL}-მდე. გადახდისას მოქმედებს ის ფასი, რომელიც ღილაკზე ჩანს.`,
   },
   {
     q: "რა ხდება შეძენის შემდეგ?",
@@ -199,12 +212,52 @@ function PaymentLogos({ compact = false }: { compact?: boolean }) {
 function PriceBlock({ align = "left" }: { align?: "left" | "center" }) {
   return (
     <div className={`campaign-price campaign-price--${align}`}>
-      <p className="campaign-price__label">დამოუკიდებლობის ფასი</p>
+      <p className="campaign-price__label">მიმდინარე ფასი</p>
       <div className="campaign-price__row">
-        <span className="campaign-price__old">₾199</span>
-        <span className="campaign-price__save">დაზოგე ₾100</span>
+        <span className="campaign-price__old">{BOOTCAMP_FULL_PRICE_LABEL}</span>
+        <span className="campaign-price__save">დაზოგე {formatGel(BOOTCAMP_SAVINGS)}</span>
       </div>
-      <div className="campaign-price__new">₾99</div>
+      <div className="campaign-price__new">{BOOTCAMP_CURRENT_PRICE_LABEL}</div>
+    </div>
+  );
+}
+
+function PriceReturnProgress() {
+  return (
+    <div
+      className="campaign-price-return"
+      style={{ "--campaign-price-progress": `${BOOTCAMP_PRICE_PROGRESS}%` } as React.CSSProperties}
+      aria-label={`მიმდინარე ფასი ${BOOTCAMP_CURRENT_PRICE_LABEL}; სრული ფასი ${BOOTCAMP_FULL_PRICE_LABEL}`}
+    >
+      <div className="campaign-price-return__top">
+        <span>ფასი ეტაპობრივად ბრუნდება სრულ ფასზე</span>
+        <strong>
+          {BOOTCAMP_CURRENT_PRICE_LABEL} / {BOOTCAMP_FULL_PRICE_LABEL}
+        </strong>
+      </div>
+      <div
+        className="campaign-price-return__track"
+        role="progressbar"
+        aria-valuemin={BOOTCAMP_START_PRICE}
+        aria-valuemax={BOOTCAMP_FULL_PRICE}
+        aria-valuenow={BOOTCAMP_CURRENT_PRICE}
+      >
+        <span className="campaign-price-return__fill" />
+      </div>
+      <div className="campaign-price-return__ticks" aria-hidden="true">
+        {BOOTCAMP_PRICE_STEPS.map((price) => (
+          <span
+            key={price}
+            className={price <= BOOTCAMP_CURRENT_PRICE ? "is-active" : undefined}
+          />
+        ))}
+      </div>
+      <div className="campaign-price-return__meta">
+        <span>სტარტი {formatGel(BOOTCAMP_START_PRICE)}</span>
+        <span>{BOOTCAMP_NEXT_PRICE ? `შემდეგი ${formatGel(BOOTCAMP_NEXT_PRICE)}` : "სრული ფასი"}</span>
+        <span>სრული {BOOTCAMP_FULL_PRICE_LABEL}</span>
+      </div>
+      <p>გადახდისას მოქმედებს ის ფასი, რომელიც ღილაკზე ჩანს.</p>
     </div>
   );
 }
@@ -221,53 +274,24 @@ function GeorgianFlagMark() {
   );
 }
 
-function getTimingCopy(timing: CampaignCountdownState) {
-  if (timing.phase === "overtime") {
-    return {
-      label: "დამოუკიდებლობის ტაიმერი დასრულდა",
-      value: "ოვერტაიმი 02:59-მდე",
-      note: "საბანკო შეფერხება მოგვარდა — ₾99 ფასი კიდევ 12 საათით დარჩა აქტიური.",
-    };
-  }
-
-  if (timing.phase === "ended") {
-    return {
-      label: "ოვერტაიმი დასრულდა",
-      value: "₾99 ფასი დახურულია",
-      note: "შემდეგი ფასი ეტაპობრივად დაბრუნდება სრულ ფასთან.",
-    };
-  }
-
-  return {
-    label: "შეთავაზება იხურება",
-    value: "26 მაისს, 23:59-ზე",
-    note: "",
-  };
-}
-
 function HeroOffer({
   className = "",
   onBuy,
-  timing,
 }: {
   className?: string;
   onBuy: () => void;
-  timing: CampaignCountdownState;
 }) {
-  const timingCopy = getTimingCopy(timing);
-
   return (
-    <div className={`campaign-hero__offer campaign-hero__offer--${timing.phase} ${className}`}>
+    <div className={`campaign-hero__offer campaign-hero__offer--price-return ${className}`}>
       <GeorgianFlagMark />
       <div className="campaign-offer-heading">
-        <span>{timingCopy.label}</span>
-        <strong>{timingCopy.value}</strong>
+        <span>დამოუკიდებლობის ფასი გრძელდება</span>
+        <strong>ეტაპობრივი დაბრუნება {BOOTCAMP_FULL_PRICE_LABEL}-ზე</strong>
       </div>
-      <CountdownDisplay state={timing} />
-      {timingCopy.note && <p className="campaign-overtime-note">{timingCopy.note}</p>}
+      <PriceReturnProgress />
       <div className="campaign-hero__buy">
         <PriceBlock />
-        <CtaButton label="დაიწყე სწავლა — ₾99" onClick={onBuy} />
+        <CtaButton label={`დაიწყე სწავლა — ${BOOTCAMP_CURRENT_PRICE_LABEL}`} onClick={onBuy} />
       </div>
       <div className="campaign-offer-footer">
         <div className="campaign-secure-line">
@@ -392,19 +416,17 @@ function FAQAccordion({ items }: { items: typeof faqs }) {
 
 export default function AIBootcamp() {
   const buy = () => handleBuy("bootcamp");
-  const campaignTiming = useCampaignCountdownState();
-  const timingCopy = getTimingCopy(campaignTiming);
 
   return (
     <div className="campaign-page campaign-page--bootcamp">
       <Helmet>
         <meta name="robots" content="noindex" />
-        <title>AI Prompt Engineering Bootcamp - ₾99 | BitCamp</title>
+        <title>{`AI Prompt Engineering Bootcamp - ${BOOTCAMP_CURRENT_PRICE_LABEL} | BitCamp`}</title>
         <meta
           name="description"
-          content="AI Prompt Engineering Bootcamp თვითსწავლისთვის: 25 გაკვეთილი, T.C.R.E.I. ჩარჩო, 50+ პრომპტი და Python/SQL ბონუსები ₾99-ად."
+          content={`AI Prompt Engineering Bootcamp თვითსწავლისთვის: 25 გაკვეთილი, T.C.R.E.I. ჩარჩო, 50+ პრომპტი და Python/SQL ბონუსები ${BOOTCAMP_CURRENT_PRICE_LABEL}-ად.`}
         />
-        <meta property="og:title" content="AI Prompt Engineering Bootcamp - ₾99 | BitCamp" />
+        <meta property="og:title" content={`AI Prompt Engineering Bootcamp - ${BOOTCAMP_CURRENT_PRICE_LABEL} | BitCamp`} />
         <meta
           property="og:description"
           content="ისწავლე AI-სთან მუშაობა საკუთარ ტემპში: 25 გაკვეთილი, T.C.R.E.I. ჩარჩო, პრომპტების ბიბლიოთეკა და Python/SQL ბონუსები."
@@ -418,7 +440,7 @@ export default function AIBootcamp() {
         <section className="campaign-hero">
           <div className="campaign-shell campaign-hero__grid">
             <div className="campaign-hero__copy">
-              <p className="campaign-eyebrow">საქართველოს დამოუკიდებლობის დღის შეთავაზება · ოვერტაიმი 28 მაისის 02:59-მდე</p>
+              <p className="campaign-eyebrow">დამოუკიდებლობის დღის ფასი · ეტაპობრივად ბრუნდება სრულ ფასზე</p>
               <h1>
                 დაიწყე AI-ს სწორად გამოყენება <span className="campaign-nowrap">2 დღეში</span>
               </h1>
@@ -447,11 +469,11 @@ export default function AIBootcamp() {
 
               <InstructorTrustCard />
 
-              <HeroOffer className="campaign-hero__offer--inline" onBuy={buy} timing={campaignTiming} />
+              <HeroOffer className="campaign-hero__offer--inline" onBuy={buy} />
             </div>
 
             <div className="campaign-hero__visual">
-              <HeroOffer className="campaign-hero__offer--desktop" onBuy={buy} timing={campaignTiming} />
+              <HeroOffer className="campaign-hero__offer--desktop" onBuy={buy} />
               <HeroCoursePreview />
             </div>
           </div>
@@ -459,7 +481,7 @@ export default function AIBootcamp() {
 
         <CampaignStickyCta
           eyebrow="თვითსწავლა"
-          price="₾99"
+          price={BOOTCAMP_CURRENT_PRICE_LABEL}
           label="დაიწყე სწავლა"
           onClick={buy}
         />
@@ -657,16 +679,16 @@ export default function AIBootcamp() {
         <section className="campaign-cta-band">
           <div className="campaign-shell campaign-cta-band__inner">
             <FadeIn className="campaign-cta-band__copy">
-              <p className="campaign-kicker">დამოუკიდებლობის ფასი</p>
-              <h2>დაიწყე Bootcamp ახლა და შეინარჩუნე ₾99 ფასი.</h2>
+              <p className="campaign-kicker">ფასი ბრუნდება</p>
+              <h2>დაიწყე Bootcamp ახლა და დაიჭირე მიმდინარე {BOOTCAMP_CURRENT_PRICE_LABEL} ფასი.</h2>
               <p>
-                26 მაისის 23:59-ზე მთავარი ტაიმერი გაჩერდა. საბანკო შეფერხების გამო ოვერტაიმი
-                გახანგრძლივდა 28 მაისის 02:59-მდე, შემდეგ კი ფასი ეტაპობრივად ბრუნდება სრულ ფასთან.
+                დამოუკიდებლობის დღის სპეციალური ფასი ეტაპობრივად ბრუნდება სრულ {BOOTCAMP_FULL_PRICE_LABEL}
+                ფასზე. ყოველი ზრდის შემდეგ იცვლება როგორც გვერდზე ნაჩვენები ფასი, ისე Flitt-ის გადახდის ფასი.
               </p>
               <div className="campaign-cta-band__meta">
                 <span>
                   <CalendarDays aria-hidden="true" size={16} />
-                  ოვერტაიმი • 28 მაისი, 02:59
+                  მიმდინარე ეტაპი • {BOOTCAMP_CURRENT_PRICE_LABEL}
                 </span>
                 <span>
                   <ShieldCheck aria-hidden="true" size={16} />
@@ -677,13 +699,14 @@ export default function AIBootcamp() {
             <FadeIn className="campaign-cta-band__action">
               <div className="campaign-cta-price-line">
                 <div>
-                  <span>დღევანდელი ფასი</span>
-                  <span className="campaign-price__old">₾199</span>
-                  <strong>₾99</strong>
+                  <span>მიმდინარე ფასი</span>
+                  <span className="campaign-price__old">{BOOTCAMP_FULL_PRICE_LABEL}</span>
+                  <strong>{BOOTCAMP_CURRENT_PRICE_LABEL}</strong>
                 </div>
-                <span className="campaign-price__save">დაზოგე ₾100</span>
+                <span className="campaign-price__save">დაზოგე {formatGel(BOOTCAMP_SAVINGS)}</span>
               </div>
-              <CtaButton label="დაიწყე სწავლა — ₾99" onClick={buy} />
+              <PriceReturnProgress />
+              <CtaButton label={`დაიწყე სწავლა — ${BOOTCAMP_CURRENT_PRICE_LABEL}`} onClick={buy} />
               <PaymentLogos compact />
             </FadeIn>
           </div>
@@ -730,23 +753,24 @@ export default function AIBootcamp() {
                 პრომპტების ბიბლიოთეკას, რომ სწავლა საკუთარ ტემპში დაიწყო.
               </p>
             </FadeIn>
-            <FadeIn className={`campaign-final__panel campaign-final__panel--${campaignTiming.phase}`}>
+            <FadeIn className="campaign-final__panel campaign-final__panel--price-return">
               <GeorgianFlagMark />
               <div className="campaign-final__deadline">
-                <span>{timingCopy.label}</span>
-                <strong>{timingCopy.value}</strong>
+                <span>ფასი ბრუნდება სრულ ნიშნულზე</span>
+                <strong>
+                  {BOOTCAMP_CURRENT_PRICE_LABEL} ახლა · სრული {BOOTCAMP_FULL_PRICE_LABEL}
+                </strong>
               </div>
-              <CountdownDisplay state={campaignTiming} />
-              {timingCopy.note && <p className="campaign-overtime-note">{timingCopy.note}</p>}
+              <PriceReturnProgress />
               <div className="campaign-final__price-row">
                 <div>
-                  <span>დღევანდელი ფასი</span>
-                  <span className="campaign-price__old">₾199</span>
-                  <strong>₾99</strong>
+                  <span>მიმდინარე ფასი</span>
+                  <span className="campaign-price__old">{BOOTCAMP_FULL_PRICE_LABEL}</span>
+                  <strong>{BOOTCAMP_CURRENT_PRICE_LABEL}</strong>
                 </div>
-                <span className="campaign-price__save">დაზოგე ₾100</span>
+                <span className="campaign-price__save">დაზოგე {formatGel(BOOTCAMP_SAVINGS)}</span>
               </div>
-              <CtaButton label="დაიწყე სწავლა — ₾99" onClick={buy} />
+              <CtaButton label={`დაიწყე სწავლა — ${BOOTCAMP_CURRENT_PRICE_LABEL}`} onClick={buy} />
               <p>
                 გჭირდება მენტორშიფი, Discord მხარდაჭერა და უკუკავშირი?{" "}
                 <Link to="/ai" className="campaign-text-link">
