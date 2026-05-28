@@ -135,7 +135,7 @@ const faqs = [
   },
   {
     q: "რა მოხდება 26 მაისის შემდეგ?",
-    a: `დამოუკიდებლობის კამპანიის შემდეგ ფასი ეტაპობრივად ბრუნდება სრულ ფასზე: ${formatGel(BOOTCAMP_START_PRICE)}-დან ${BOOTCAMP_FULL_PRICE_LABEL}-მდე. გადახდისას მოქმედებს ის ფასი, რომელიც ღილაკზე ჩანს.`,
+    a: `დამოუკიდებლობის კამპანიის შემდეგ ფასი იზრდება ეტაპობრივად: ${formatGel(BOOTCAMP_START_PRICE)}-დან ${BOOTCAMP_FULL_PRICE_LABEL}-მდე. გადახდისას მოქმედებს ის ფასი, რომელიც ღილაკზე ჩანს.`,
   },
   {
     q: "რა ხდება შეძენის შემდეგ?",
@@ -230,7 +230,7 @@ function PriceReturnProgress() {
       aria-label={`მიმდინარე ფასი ${BOOTCAMP_CURRENT_PRICE_LABEL}; სრული ფასი ${BOOTCAMP_FULL_PRICE_LABEL}`}
     >
       <div className="campaign-price-return__top">
-        <span>ფასი ეტაპობრივად ბრუნდება სრულ ფასზე</span>
+        <span>ფასი იზრდება ეტაპობრივად</span>
         <strong>
           {BOOTCAMP_CURRENT_PRICE_LABEL} / {BOOTCAMP_FULL_PRICE_LABEL}
         </strong>
@@ -253,9 +253,9 @@ function PriceReturnProgress() {
         ))}
       </div>
       <div className="campaign-price-return__meta">
-        <span>სტარტი {formatGel(BOOTCAMP_START_PRICE)}</span>
+        <span>საწყისი იყო {formatGel(BOOTCAMP_START_PRICE)}</span>
         <span>{BOOTCAMP_NEXT_PRICE ? `შემდეგი ${formatGel(BOOTCAMP_NEXT_PRICE)}` : "სრული ფასი"}</span>
-        <span>სრული {BOOTCAMP_FULL_PRICE_LABEL}</span>
+        <span>საბოლოოდ გახდება {BOOTCAMP_FULL_PRICE_LABEL}</span>
       </div>
       <p>გადახდისას მოქმედებს ის ფასი, რომელიც ღილაკზე ჩანს.</p>
     </div>
@@ -285,8 +285,8 @@ function HeroOffer({
     <div className={`campaign-hero__offer campaign-hero__offer--price-return ${className}`}>
       <GeorgianFlagMark />
       <div className="campaign-offer-heading">
-        <span>დამოუკიდებლობის ფასი გრძელდება</span>
-        <strong>ეტაპობრივი დაბრუნება {BOOTCAMP_FULL_PRICE_LABEL}-ზე</strong>
+        <span>მოასწარი სანამ გაიზრდება</span>
+        <strong>ფასი იზრდება ეტაპობრივად</strong>
       </div>
       <PriceReturnProgress />
       <div className="campaign-hero__buy">
@@ -758,7 +758,7 @@ export default function AIBootcamp() {
               <div className="campaign-final__deadline">
                 <span>ფასი ბრუნდება სრულ ნიშნულზე</span>
                 <strong>
-                  {BOOTCAMP_CURRENT_PRICE_LABEL} ახლა · სრული {BOOTCAMP_FULL_PRICE_LABEL}
+                  {BOOTCAMP_CURRENT_PRICE_LABEL} ახლა · საბოლოოდ გახდება {BOOTCAMP_FULL_PRICE_LABEL}
                 </strong>
               </div>
               <PriceReturnProgress />

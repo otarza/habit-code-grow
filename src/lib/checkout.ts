@@ -24,7 +24,7 @@ export const PRODUCTS: Record<CheckoutProduct, ProductConfig> = {
     mode: "embed",
     buttonId: "74de94a0a998fdf3f37f433e90448cd5dd11ee97",
     name: "AI Bootcamp Self-Paced",
-    value: 99,
+    value: 109,
   },
   pro: {
     mode: "embed",
