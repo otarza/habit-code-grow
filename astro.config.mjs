@@ -15,6 +15,10 @@ const __dirname = path.dirname(__filename);
 export default defineConfig({
   site: 'https://www.bitcamp.ge',
   trailingSlash: 'never',
+  redirects: {
+    '/python-sql': '/courses',
+    '/fullstack-ai': '/courses',
+  },
   integrations: [
     react(),
     sitemap(),
