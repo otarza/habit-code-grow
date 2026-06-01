@@ -13,10 +13,17 @@ const MASTERCLASS_CONFIRM_PATH =
   process.env.MASTERCLASS_CONFIRM_PATH || "/teachers-ai-masterclass/confirmed";
 const MASTERCLASS_TITLE = "AI მასტერკლასი მასწავლებლებისთვის";
 const MASTERCLASS_DATE_LABEL = "შაბათი, 6 ივნისი, 2026";
-const MASTERCLASS_TIME_LABEL = "13:00 - 14:30 (საქართველოს დრო)";
-const MASTERCLASS_PLATFORM_LABEL = "ონლაინ შეხვედრა";
+const MASTERCLASS_TIME_LABEL = "13:00 - 14:00 (საქართველოს დრო)";
+const MASTERCLASS_PLATFORM_LABEL = "Google Meet";
+const MASTERCLASS_MEET_URL = "https://meet.google.com/cjg-qjwi-cmm";
 const MASTERCLASS_START_UTC = "20260606T090000Z";
-const MASTERCLASS_END_UTC = "20260606T103000Z";
+const MASTERCLASS_END_UTC = "20260606T100000Z";
+const MASTERCLASS_JOIN_INSTRUCTIONS = [
+  "როგორ შემოუერთდეთ:",
+  `1. შეხვედრის დაწყებამდე გახსენით Google Meet-ის ბმული: ${MASTERCLASS_MEET_URL}`,
+  "2. თუ ბრაუზერი ნებართვას მოგთხოვთ, დაუშვით მიკროფონის/კამერის გამოყენება.",
+  "3. შემოდით იმავე ელფოსტით, რომლითაც მასტერკლასზე დარეგისტრირდით.",
+].join("\n");
 const ALLOWED_ORIGINS = (process.env.ALLOWED_ORIGINS ||
   "https://www.bitcamp.ge,https://bitcamp.ge,http://localhost:5173,http://127.0.0.1:5173,http://localhost:8080,http://127.0.0.1:8080")
   .split(",")
@@ -658,6 +665,8 @@ function getMasterclassEventModel() {
     date: MASTERCLASS_DATE_LABEL,
     time: MASTERCLASS_TIME_LABEL,
     platform: MASTERCLASS_PLATFORM_LABEL,
+    meetUrl: MASTERCLASS_MEET_URL,
+    joinInstructions: MASTERCLASS_JOIN_INSTRUCTIONS,
     startUtc: MASTERCLASS_START_UTC,
     endUtc: MASTERCLASS_END_UTC,
   };
@@ -707,7 +716,22 @@ function buildMasterclassConfirmationHtml({ email, calendarUrl, confirmationUrl 
                   <td style="padding:18px;color:#c7d3df;font-size:15px;">
                     <p style="margin:0 0 6px 0;"><strong style="color:#fff4e8;">თარიღი:</strong> ${event.date}</p>
                     <p style="margin:0 0 6px 0;"><strong style="color:#fff4e8;">დრო:</strong> ${event.time}</p>
-                    <p style="margin:0;"><strong style="color:#fff4e8;">ფორმატი:</strong> ${event.platform}</p>
+                    <p style="margin:0 0 6px 0;"><strong style="color:#fff4e8;">ფორმატი:</strong> ${event.platform}</p>
+                    <p style="margin:0;"><strong style="color:#fff4e8;">შეხვედრის ბმული:</strong> <a href="${event.meetUrl}" style="color:#ffb3ad;">${event.meetUrl}</a></p>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:0 28px 18px 28px;">
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="border-left:4px solid #df3342;background:#05091d;">
+                <tr>
+                  <td style="padding:16px 18px;color:#c7d3df;font-size:15px;">
+                    <p style="margin:0 0 8px 0;color:#fff4e8;font-weight:900;">როგორ შემოუერთდეთ</p>
+                    <p style="margin:0 0 6px 0;">შეხვედრის დაწყებამდე გახსენით Google Meet-ის ბმული:</p>
+                    <p style="margin:0 0 10px 0;"><a href="${event.meetUrl}" style="color:#ffb3ad;font-weight:700;">${event.meetUrl}</a></p>
+                    <p style="margin:0;">თუ ბრაუზერი ნებართვას მოგთხოვთ, დაუშვით მიკროფონის/კამერის გამოყენება და შემოდით იმავე ელფოსტით, რომლითაც დარეგისტრირდით.</p>
                   </td>
                 </tr>
               </table>
@@ -717,7 +741,7 @@ function buildMasterclassConfirmationHtml({ email, calendarUrl, confirmationUrl 
             <td style="padding:4px 28px 28px 28px;">
               <a href="${calendarUrl}" style="display:inline-block;background:#df3342;color:#fff4e8;text-decoration:none;font-size:15px;font-weight:900;padding:12px 18px;margin:0 8px 10px 0;">Add to calendar</a>
               <a href="${confirmationUrl}" style="display:inline-block;background:#fff4e8;color:#05091d;text-decoration:none;font-size:15px;font-weight:900;padding:12px 18px;margin:0 0 10px 0;">დეტალების დამატება</a>
-              <p style="margin:14px 0 0 0;color:#9fb0c3;font-size:14px;">დასწრების ბმულს ცალკე ელფოსტით მიიღებთ მასტერკლასამდე.</p>
+              <p style="margin:14px 0 0 0;color:#9fb0c3;font-size:14px;">Google Meet-ის ბმული მითითებულია ამ წერილშიც და კალენდრის ჩანაწერშიც.</p>
             </td>
           </tr>
         </table>
@@ -737,6 +761,9 @@ function buildMasterclassConfirmationText({ email, calendarUrl, confirmationUrl 
 თარიღი: ${event.date}
 დრო: ${event.time}
 ფორმატი: ${event.platform}
+შეხვედრის ბმული: ${event.meetUrl}
+
+${event.joinInstructions}
 
 Add to calendar:
 ${calendarUrl}
@@ -747,7 +774,14 @@ ${confirmationUrl}`;
 
 function buildCalendarIcs(email) {
   const uid = `teacher-ai-masterclass-20260606-${hash(email || "guest").slice(0, 12)}@bitcamp.ge`;
-  const description = "BitCamp-ის უფასო AI მასტერკლასი მასწავლებლებისთვის.";
+  const event = getMasterclassEventModel();
+  const description = [
+    event.title,
+    `${event.date} · ${event.time}`,
+    `Video call link: ${event.meetUrl}`,
+    "",
+    event.joinInstructions,
+  ].join("\n");
   return [
     "BEGIN:VCALENDAR",
     "VERSION:2.0",
@@ -761,7 +795,8 @@ function buildCalendarIcs(email) {
     `DTEND:${MASTERCLASS_END_UTC}`,
     `SUMMARY:${escapeIcsText(MASTERCLASS_TITLE)}`,
     `DESCRIPTION:${escapeIcsText(description)}`,
-    `LOCATION:${escapeIcsText(MASTERCLASS_PLATFORM_LABEL)}`,
+    `LOCATION:${escapeIcsText(MASTERCLASS_MEET_URL)}`,
+    `URL:${MASTERCLASS_MEET_URL}`,
     "END:VEVENT",
     "END:VCALENDAR",
     "",

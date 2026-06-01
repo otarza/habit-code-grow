@@ -10,8 +10,9 @@ const TEACHER_GUIDE_API_URL =
 const masterclassDetails = {
   title: "AI მასტერკლასი მასწავლებლებისთვის",
   date: "შაბათი, 6 ივნისი, 2026",
-  time: "13:00 - 14:30 (საქართველოს დრო)",
-  platform: "ონლაინ შეხვედრა",
+  time: "13:00 - 14:00 (საქართველოს დრო)",
+  platform: "Google Meet",
+  meetUrl: "https://meet.google.com/cjg-qjwi-cmm",
 };
 
 type SubmitState = "idle" | "submitting" | "success" | "error";
@@ -92,25 +93,25 @@ export default function TeacherMasterclassConfirmed() {
   };
 
   return (
-    <main className="min-h-screen bg-[#05091d] px-4 py-8 text-[#fff4e8] sm:px-6 lg:px-8">
+    <main className="w-full overflow-x-hidden bg-[#05091d] px-4 py-8 text-[#fff4e8] sm:px-6 lg:min-h-screen lg:px-8">
       <Helmet>
         <title>მასტერკლასზე რეგისტრაცია დადასტურდა | BitCamp</title>
         <meta name="robots" content="noindex" />
       </Helmet>
 
-      <div className="mx-auto mb-6 max-w-6xl lg:hidden">
+      <div className="mx-auto mb-6 w-full max-w-6xl lg:hidden">
         <div className="inline-block bg-[#fff4e8] p-2 shadow-[3px_3px_0_#df3342]">
           <img src={bitcampLogo} alt="BitCamp" className="h-auto w-28" />
         </div>
       </div>
 
-      <div className="mx-auto grid min-h-[calc(100vh-4rem)] max-w-6xl items-center gap-8 lg:grid-cols-[0.9fr_1.1fr]">
-        <div className="order-2 lg:order-1">
+      <div className="mx-auto grid w-full max-w-6xl items-center gap-8 lg:min-h-[calc(100vh-4rem)] lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
+        <div className="order-2 min-w-0 lg:order-1">
           <div className="mb-10 hidden self-start bg-[#fff4e8] p-3 shadow-[4px_4px_0_#df3342] lg:inline-block">
             <img src={bitcampLogo} alt="BitCamp" className="h-auto w-40 sm:w-48" />
           </div>
 
-          <section className="border border-[#293a52] bg-[#071025] p-6 shadow-[8px_8px_0_#df3342] sm:p-10">
+          <section className="min-w-0 border border-[#293a52] bg-[#071025] p-6 shadow-[4px_4px_0_#df3342] sm:p-10 sm:shadow-[8px_8px_0_#df3342]">
             <div className="mb-6 flex h-16 w-16 items-center justify-center bg-[#1f8f56] text-white">
               <CheckCircle2 size={34} aria-hidden="true" />
             </div>
@@ -122,7 +123,7 @@ export default function TeacherMasterclassConfirmed() {
                   ? "რეგისტრაცია დადასტურდა"
                   : "მასტერკლასზე რეგისტრაცია"}
             </p>
-            <h1 className="text-3xl font-black leading-tight sm:text-4xl">{masterclassDetails.title}</h1>
+            <h1 className="break-words text-3xl font-black leading-tight sm:text-4xl">{masterclassDetails.title}</h1>
             <div className="mt-5 border border-[#df3342] bg-[#df3342]/10 p-4">
               <p className="flex items-start gap-3 text-base font-black leading-7 text-[#fff4e8]">
                 <CalendarDays className="mt-1 h-5 w-5 flex-none text-[#ffb3ad]" aria-hidden="true" />
@@ -154,12 +155,12 @@ export default function TeacherMasterclassConfirmed() {
 
             <p className="mt-8 flex items-start gap-3 border border-[#293a52] bg-[#05091d] p-4 text-sm leading-6 text-[#c7d3df]">
               <Mail className="mt-0.5 h-5 w-5 flex-none text-[#df3342]" aria-hidden="true" />
-              დასწრების ბმულს და საბოლოო დროს ელფოსტით მიიღებ.
+              Google Meet-ის ბმულს ელფოსტითაც მიიღებ და კალენდრის ჩანაწერშიც დაემატება: {masterclassDetails.meetUrl}
             </p>
           </section>
         </div>
 
-        <section className="teacher-guide-panel order-1 lg:order-2">
+        <section className="teacher-guide-panel order-1 min-w-0 max-w-full lg:order-2">
           <div className="teacher-guide-panel__cap" aria-hidden="true">
             <span />
             <span />
@@ -175,7 +176,7 @@ export default function TeacherMasterclassConfirmed() {
                 უფასო
               </span>
             </div>
-            <h2 className="text-2xl font-black leading-tight text-[#fff4e8]">
+            <h2 className="break-words text-2xl font-black leading-tight text-[#fff4e8]">
               რეგისტრაცია მასწავლებლების AI მასტერკლასზე
             </h2>
             <p className="mt-3 text-sm leading-6 text-[#c7d3df]">

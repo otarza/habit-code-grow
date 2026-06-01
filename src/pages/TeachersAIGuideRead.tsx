@@ -571,7 +571,7 @@ function NextStepSection({ masterclassHref }: { masterclassHref: string }) {
         <InfoTile
           icon={<GraduationCap size={18} />}
           label="💻 ფორმატი"
-          value="პირდაპირი ეთერი (Zoom/Google Meet), სადაც ეკრანის გაზიარებით, თქვენს თვალწინ შევქმნი რეალურ გაკვეთილებსა და ტესტებს."
+          value="პირდაპირი ეთერი Google Meet-ზე, სადაც ეკრანის გაზიარებით, თქვენს თვალწინ შევქმნი რეალურ გაკვეთილებსა და ტესტებს."
         />
       </div>
       <p className="mt-5 text-base leading-7 text-[#d6e0eb]">
