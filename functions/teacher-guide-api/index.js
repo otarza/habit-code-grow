@@ -194,13 +194,14 @@ async function handleLead(req, res) {
 async function handleMasterclassDetails(req, res) {
   const body = req.body || {};
   const token = cleanString(body.token);
-  if (!token) {
-    return res.status(400).json({ ok: false, error: "Missing token" });
-  }
+  const email = normalizeEmail(body.email);
 
-  const leadRecord = await findLeadByToken(token);
+  const leadRecord = token ? await findLeadByToken(token) : await createOrGetDirectMasterclassLead(email);
   if (!leadRecord) {
-    return res.status(404).json({ ok: false, error: "Registration not found" });
+    return res.status(token ? 404 : 400).json({
+      ok: false,
+      error: token ? "Registration not found" : "Invalid email",
+    });
   }
 
   const name = cleanString(body.name).slice(0, 120);
@@ -212,14 +213,20 @@ async function handleMasterclassDetails(req, res) {
   }
 
   const doc = leadRecord.doc;
-  const lead = doc.data() || {};
+  const lead = leadRecord.data || doc.data() || {};
   const emailHash = lead.emailHash || doc.id;
+  const effectiveToken = leadRecord.token || token;
+  const calendarUrl = buildFunctionUrl("calendar", effectiveToken);
+  const confirmationUrl = new URL(MASTERCLASS_CONFIRM_PATH, SITE_ORIGIN);
+  confirmationUrl.searchParams.set("token", effectiveToken);
 
   await doc.ref.set(
     {
       name,
       teachingSubject,
       phone,
+      masterclassStatus: "registered",
+      masterclassRegisteredAt: lead.masterclassRegisteredAt || FieldValue.serverTimestamp(),
       masterclassDetailsSubmittedAt: FieldValue.serverTimestamp(),
       updatedAt: FieldValue.serverTimestamp(),
     },
@@ -236,7 +243,30 @@ async function handleMasterclassDetails(req, res) {
     },
   });
 
-  return res.status(200).json({ ok: true });
+  if (!lead.emailSentAt && lead.email && postmarkClient) {
+    await sendGuideEmail({
+      docRef: doc.ref,
+      email: lead.email,
+      emailHash,
+      token: effectiveToken,
+      sourceEventType: "direct_masterclass_pdf_email_sent",
+    });
+  }
+
+  await sendMasterclassConfirmationIfNeeded({
+    docRef: doc.ref,
+    lead,
+    emailHash,
+    token: effectiveToken,
+  });
+
+  return res.status(200).json({
+    ok: true,
+    token: effectiveToken,
+    email: lead.email || "",
+    calendarUrl,
+    confirmationUrl: confirmationUrl.toString(),
+  });
 }
 
 async function handleRegistrationLookup(req, res) {
@@ -311,50 +341,7 @@ async function handleMasterclassRegistration(req, res) {
     },
   });
 
-  if (!lead.masterclassConfirmationEmailSentAt && postmarkClient && lead.email) {
-    try {
-      const result = await postmarkClient.sendEmail({
-        From: FROM_EMAIL,
-        To: lead.email,
-        Subject: "მასტერკლასზე რეგისტრაცია დადასტურდა | BitCamp",
-        HtmlBody: buildMasterclassConfirmationHtml({
-          email: lead.email,
-          calendarUrl,
-          confirmationUrl: confirmationUrl.toString(),
-        }),
-        TextBody: buildMasterclassConfirmationText({
-          email: lead.email,
-          calendarUrl,
-          confirmationUrl: confirmationUrl.toString(),
-        }),
-        MessageStream: MESSAGE_STREAM,
-        TrackOpens: true,
-        TrackLinks: "HtmlAndText",
-      });
-
-      await doc.ref.set(
-        {
-          masterclassConfirmationEmailSentAt: FieldValue.serverTimestamp(),
-          masterclassConfirmationMessageId: result.MessageID || "",
-          updatedAt: FieldValue.serverTimestamp(),
-        },
-        { merge: true }
-      );
-
-      await recordEvent({
-        emailHash,
-        type: "masterclass_confirmation_email_sent",
-        metadata: { messageId: result.MessageID || "" },
-      });
-    } catch (err) {
-      console.error("MASTERCLASS_CONFIRMATION_EMAIL_FAIL", JSON.stringify({ emailHash, message: err.message }));
-      await recordEvent({
-        emailHash,
-        type: "masterclass_confirmation_email_failed",
-        metadata: { message: err.message, code: err.code || "", statusCode: err.statusCode || "" },
-      });
-    }
-  }
+  await sendMasterclassConfirmationIfNeeded({ docRef: doc.ref, lead, emailHash, token });
 
   return res.redirect(302, confirmationUrl.toString());
 }
@@ -477,6 +464,177 @@ async function findLeadByToken(token) {
 
   const doc = snapshot.docs[0];
   return { doc, data: doc.data() || {} };
+}
+
+async function createOrGetDirectMasterclassLead(email) {
+  if (!EMAIL_RE.test(email)) return null;
+
+  const emailHash = hash(email);
+  const docRef = firestore.collection(LEADS_COLLECTION).doc(emailHash);
+  const token = createToken();
+  const tokenHash = hash(token);
+
+  let leadData;
+  await firestore.runTransaction(async (tx) => {
+    const existing = await tx.get(docRef);
+    const existingData = existing.exists ? existing.data() || {} : {};
+    const effectiveTokenHash = existingData.tokenHash || tokenHash;
+
+    leadData = {
+      ...existingData,
+      email,
+      emailNormalized: email,
+      emailHash,
+      tokenHash: effectiveTokenHash,
+      source: existingData.source || "direct-masterclass-page",
+      status: existingData.status || "lead",
+      masterclassStatus: "registered",
+    };
+
+    const payload = {
+      email,
+      emailNormalized: email,
+      emailHash,
+      tokenHash: effectiveTokenHash,
+      source: leadData.source,
+      status: leadData.status,
+      masterclassStatus: "registered",
+      masterclassRegisteredAt: existingData.masterclassRegisteredAt || FieldValue.serverTimestamp(),
+      updatedAt: FieldValue.serverTimestamp(),
+      lastSubmittedAt: FieldValue.serverTimestamp(),
+      submitCount: FieldValue.increment(1),
+    };
+
+    if (!existing.exists) {
+      payload.firstSubmittedAt = FieldValue.serverTimestamp();
+    }
+
+    tx.set(docRef, payload, { merge: true });
+  });
+
+  const effectiveToken = leadData.tokenHash === tokenHash ? token : "";
+  if (!effectiveToken) {
+    // Existing records only store the token hash; require a fresh token so the
+    // direct registration can still produce calendar and confirmation links.
+    leadData.tokenHash = tokenHash;
+    await docRef.set(
+      {
+        tokenHash,
+        updatedAt: FieldValue.serverTimestamp(),
+      },
+      { merge: true }
+    );
+  }
+
+  await recordEvent({
+    emailHash,
+    type: "direct_masterclass_registered",
+    metadata: {
+      isExistingLead: Boolean(leadData.emailSentAt),
+    },
+  });
+
+  return {
+    doc: { ref: docRef, id: emailHash, data: () => leadData },
+    data: leadData,
+    token,
+  };
+}
+
+async function sendGuideEmail({ docRef, email, emailHash, token, sourceEventType = "email_sent" }) {
+  const downloadUrl = buildFunctionUrl("download", token);
+  const masterclassUrl = buildFunctionUrl("masterclass", token);
+
+  try {
+    const result = await postmarkClient.sendEmail({
+      From: FROM_EMAIL,
+      To: email,
+      Subject: "შენი უფასო AI გზამკვლევი მასწავლებლებისთვის | BitCamp",
+      HtmlBody: buildEmailHtml({ downloadUrl, masterclassUrl }),
+      TextBody: buildEmailText({ downloadUrl, masterclassUrl }),
+      MessageStream: MESSAGE_STREAM,
+      TrackOpens: true,
+      TrackLinks: "HtmlAndText",
+    });
+
+    await docRef.set(
+      {
+        emailSentAt: FieldValue.serverTimestamp(),
+        postmarkMessageId: result.MessageID || "",
+        updatedAt: FieldValue.serverTimestamp(),
+      },
+      { merge: true }
+    );
+
+    await recordEvent({
+      emailHash,
+      type: sourceEventType,
+      metadata: { messageId: result.MessageID || "" },
+    });
+
+    return result;
+  } catch (err) {
+    await recordEvent({
+      emailHash,
+      type: "email_failed",
+      metadata: { message: err.message, code: err.code || "", statusCode: err.statusCode || "" },
+    });
+    throw err;
+  }
+}
+
+async function sendMasterclassConfirmationIfNeeded({ docRef, lead, emailHash, token }) {
+  if (lead.masterclassConfirmationEmailSentAt || !postmarkClient || !lead.email) return null;
+
+  const calendarUrl = buildFunctionUrl("calendar", token);
+  const confirmationUrl = new URL(MASTERCLASS_CONFIRM_PATH, SITE_ORIGIN);
+  confirmationUrl.searchParams.set("token", token);
+
+  try {
+    const result = await postmarkClient.sendEmail({
+      From: FROM_EMAIL,
+      To: lead.email,
+      Subject: "მასტერკლასზე რეგისტრაცია დადასტურდა | BitCamp",
+      HtmlBody: buildMasterclassConfirmationHtml({
+        email: lead.email,
+        calendarUrl,
+        confirmationUrl: confirmationUrl.toString(),
+      }),
+      TextBody: buildMasterclassConfirmationText({
+        email: lead.email,
+        calendarUrl,
+        confirmationUrl: confirmationUrl.toString(),
+      }),
+      MessageStream: MESSAGE_STREAM,
+      TrackOpens: true,
+      TrackLinks: "HtmlAndText",
+    });
+
+    await docRef.set(
+      {
+        masterclassConfirmationEmailSentAt: FieldValue.serverTimestamp(),
+        masterclassConfirmationMessageId: result.MessageID || "",
+        updatedAt: FieldValue.serverTimestamp(),
+      },
+      { merge: true }
+    );
+
+    await recordEvent({
+      emailHash,
+      type: "masterclass_confirmation_email_sent",
+      metadata: { messageId: result.MessageID || "" },
+    });
+
+    return result;
+  } catch (err) {
+    console.error("MASTERCLASS_CONFIRMATION_EMAIL_FAIL", JSON.stringify({ emailHash, message: err.message }));
+    await recordEvent({
+      emailHash,
+      type: "masterclass_confirmation_email_failed",
+      metadata: { message: err.message, code: err.code || "", statusCode: err.statusCode || "" },
+    });
+    return null;
+  }
 }
 
 function getMasterclassEventModel() {

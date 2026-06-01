@@ -22,28 +22,31 @@ function getRegistrationToken() {
 }
 
 export default function TeacherMasterclassConfirmed() {
-  const token = useMemo(getRegistrationToken, []);
+  const initialToken = useMemo(getRegistrationToken, []);
+  const [activeToken, setActiveToken] = useState(initialToken);
+  const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [subject, setSubject] = useState("");
   const [registeredEmail, setRegisteredEmail] = useState("");
   const [submitState, setSubmitState] = useState<SubmitState>("idle");
   const [error, setError] = useState("");
-  const calendarUrl = token
-    ? `${TEACHER_GUIDE_API_URL}/calendar?token=${encodeURIComponent(token)}`
+  const calendarUrl = activeToken
+    ? `${TEACHER_GUIDE_API_URL}/calendar?token=${encodeURIComponent(activeToken)}`
     : "";
 
   useEffect(() => {
-    if (!token) return;
+    if (!activeToken) return;
 
     let isCancelled = false;
 
     async function loadRegistration() {
       try {
-        const response = await fetch(`${TEACHER_GUIDE_API_URL}/registration?token=${encodeURIComponent(token)}`);
+        const response = await fetch(`${TEACHER_GUIDE_API_URL}/registration?token=${encodeURIComponent(activeToken)}`);
         const result = await response.json().catch(() => ({}));
         if (!isCancelled && response.ok && result.ok && result.email) {
           setRegisteredEmail(result.email);
+          setEmail(result.email);
         }
       } catch {
         // The page remains useful even if the reassurance email lookup fails.
@@ -55,7 +58,7 @@ export default function TeacherMasterclassConfirmed() {
     return () => {
       isCancelled = true;
     };
-  }, [token]);
+  }, [activeToken]);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -66,7 +69,7 @@ export default function TeacherMasterclassConfirmed() {
       const response = await fetch(`${TEACHER_GUIDE_API_URL}/masterclass-details`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ token, name, phone, subject }),
+        body: JSON.stringify({ token: activeToken, email, name, phone, subject }),
       });
 
       const result = await response.json().catch(() => ({}));
@@ -74,10 +77,17 @@ export default function TeacherMasterclassConfirmed() {
         throw new Error(result.error || "Details submission failed");
       }
 
+      if (result.token) {
+        setActiveToken(result.token);
+      }
+      if (result.email) {
+        setRegisteredEmail(result.email);
+        setEmail(result.email);
+      }
       setSubmitState("success");
     } catch {
       setSubmitState("error");
-      setError("დეტალები ვერ შეინახა. სცადე თავიდან.");
+      setError(activeToken ? "დეტალები ვერ შეინახა. სცადე თავიდან." : "რეგისტრაცია ვერ დასრულდა. გადაამოწმე ელფოსტა და სცადე თავიდან.");
     }
   };
 
@@ -102,7 +112,9 @@ export default function TeacherMasterclassConfirmed() {
             <p className="mb-3 font-mono text-xs font-bold uppercase tracking-normal text-[#ffb3ad]">
               {registeredEmail
                 ? `რეგისტრაცია დადასტურდა თქვენს მისამართზე: ${registeredEmail}`
-                : "რეგისტრაცია დადასტურდა"}
+                : activeToken
+                  ? "რეგისტრაცია დადასტურდა"
+                  : "მასტერკლასზე რეგისტრაცია"}
             </p>
             <h1 className="text-3xl font-black leading-tight sm:text-4xl">{masterclassDetails.title}</h1>
             <div className="mt-5 border border-[#df3342] bg-[#df3342]/10 p-4">
@@ -114,8 +126,9 @@ export default function TeacherMasterclassConfirmed() {
               </p>
             </div>
             <p className="mt-4 text-base leading-7 text-[#c7d3df]">
-              შენი ადგილი უფასო მასტერკლასზე უკვე შენახულია. ქვემოთ შეგიძლია დაამატო დეტალები, რომ
-              მასტერკლასი შენს რეალურ საჭიროებებს უკეთ მოვარგოთ.
+              {activeToken
+                ? "შენი ადგილი უფასო მასტერკლასზე უკვე შენახულია. ქვემოთ შეგიძლია დაამატო დეტალები, რომ მასტერკლასი შენს რეალურ საჭიროებებს უკეთ მოვარგოთ."
+                : "შეიყვანე ელფოსტა და დაგარეგისტრირებთ მასტერკლასზე. თუ PDF გზამკვლევი ჯერ არ მიგიღია, მასაც გამოგიგზავნით."}
             </p>
 
             <div className="mt-8 grid gap-3 sm:grid-cols-3">
@@ -171,8 +184,26 @@ export default function TeacherMasterclassConfirmed() {
                 </a>
               )}
             </div>
-          ) : token ? (
+          ) : (
             <form onSubmit={handleSubmit} className="relative z-10 mt-6 space-y-4">
+              {!activeToken && (
+                <label className="block">
+                  <span className="mb-2 flex items-center gap-2 text-sm font-bold text-[#fff4e8]">
+                    <Mail size={16} aria-hidden="true" />
+                    ელფოსტა
+                  </span>
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(event) => setEmail(event.target.value)}
+                    required
+                    autoComplete="email"
+                    placeholder="name@example.com"
+                    className="teacher-guide-input"
+                  />
+                </label>
+              )}
+
               <label className="block">
                 <span className="mb-2 flex items-center gap-2 text-sm font-bold text-[#fff4e8]">
                   <User size={16} aria-hidden="true" />
@@ -224,13 +255,13 @@ export default function TeacherMasterclassConfirmed() {
               )}
 
               <button type="submit" disabled={submitState === "submitting"} className="teacher-guide-submit">
-                {submitState === "submitting" ? "ინახება..." : "დეტალების შენახვა"}
+                {submitState === "submitting"
+                  ? "ინახება..."
+                  : activeToken
+                    ? "დეტალების შენახვა"
+                    : "რეგისტრაცია და დეტალების შენახვა"}
               </button>
             </form>
-          ) : (
-            <p className="relative z-10 mt-6 border border-[#df3342] bg-[#df3342]/10 p-4 text-sm leading-6 text-[#ffb3ad]">
-              დეტალების დასამატებლად გამოიყენე ის პერსონალური ბმული, რომელიც ელფოსტაში მიიღე.
-            </p>
           )}
         </section>
       </div>
