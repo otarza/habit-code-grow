@@ -161,6 +161,107 @@ Red pyramid, dark navy, with vibrant pixel art accents and animations
 }
 
 @layer components {
+  .teacher-guide-grid {
+    background-image:
+      linear-gradient(rgba(255, 244, 232, 0.055) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 244, 232, 0.055) 1px, transparent 1px);
+    background-size: 32px 32px;
+    mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.95), transparent 82%);
+  }
+
+  .teacher-guide-panel {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid #293a52;
+    background: #071025;
+    padding: 1.5rem;
+    box-shadow: 8px 8px 0 #df3342;
+  }
+
+  @media (min-width: 640px) {
+    .teacher-guide-panel {
+      padding: 2rem;
+    }
+  }
+
+  .teacher-guide-panel::before,
+  .teacher-guide-panel::after {
+    content: "";
+    position: absolute;
+    background: #df3342;
+    opacity: 0.9;
+  }
+
+  .teacher-guide-panel::before {
+    top: 0;
+    right: 0;
+    width: 86px;
+    height: 12px;
+  }
+
+  .teacher-guide-panel::after {
+    top: 0;
+    right: 0;
+    width: 12px;
+    height: 86px;
+  }
+
+  .teacher-guide-panel__cap {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    display: grid;
+    grid-template-columns: repeat(3, 10px);
+    gap: 4px;
+  }
+
+  .teacher-guide-panel__cap span {
+    width: 10px;
+    height: 10px;
+    background: #df3342;
+  }
+
+  .teacher-guide-input {
+    width: 100%;
+    border: 1px solid #293a52;
+    background: #05091d;
+    padding: 0.875rem 1rem;
+    color: #fff4e8;
+    outline: none;
+    transition: border-color 160ms ease, box-shadow 160ms ease;
+  }
+
+  .teacher-guide-input::placeholder {
+    color: #64758a;
+  }
+
+  .teacher-guide-input:focus {
+    border-color: #df3342;
+    box-shadow: 0 0 0 3px rgba(223, 51, 66, 0.18);
+  }
+
+  .teacher-guide-submit {
+    display: inline-flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    gap: 0.625rem;
+    background: #df3342;
+    color: #fff4e8;
+    padding: 1rem 1.25rem;
+    font-weight: 900;
+    transition: transform 160ms ease, background-color 160ms ease;
+  }
+
+  .teacher-guide-submit:hover:not(:disabled) {
+    background: #c62a39;
+    transform: translateY(-1px);
+  }
+
+  .teacher-guide-submit:disabled {
+    cursor: wait;
+    opacity: 0.72;
+  }
 
   /* Pixel Art Animations */
   @keyframes pixel-float {

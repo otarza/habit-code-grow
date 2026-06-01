@@ -1,0 +1,239 @@
+import { FormEvent, useEffect, useMemo, useState } from "react";
+import { Helmet } from "react-helmet-async";
+import { CalendarDays, CalendarPlus, CheckCircle2, Clock3, Mail, Phone, User, Video } from "lucide-react";
+import bitcampLogo from "@/assets/bitcamp-logo-main.png";
+
+const TEACHER_GUIDE_API_URL =
+  import.meta.env.VITE_TEACHER_GUIDE_API_URL ||
+  "https://us-central1-bitcamp-flitt.cloudfunctions.net/teacher-guide-api";
+
+const masterclassDetails = {
+  title: "AI მასტერკლასი მასწავლებლებისთვის",
+  date: "შაბათი, 6 ივნისი, 2026",
+  time: "13:00 - 14:30 (საქართველოს დრო)",
+  platform: "ონლაინ შეხვედრა",
+};
+
+type SubmitState = "idle" | "submitting" | "success" | "error";
+
+function getRegistrationToken() {
+  if (typeof window === "undefined") return "";
+  return new URLSearchParams(window.location.search).get("token") || "";
+}
+
+export default function TeacherMasterclassConfirmed() {
+  const token = useMemo(getRegistrationToken, []);
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [subject, setSubject] = useState("");
+  const [registeredEmail, setRegisteredEmail] = useState("");
+  const [submitState, setSubmitState] = useState<SubmitState>("idle");
+  const [error, setError] = useState("");
+  const calendarUrl = token
+    ? `${TEACHER_GUIDE_API_URL}/calendar?token=${encodeURIComponent(token)}`
+    : "";
+
+  useEffect(() => {
+    if (!token) return;
+
+    let isCancelled = false;
+
+    async function loadRegistration() {
+      try {
+        const response = await fetch(`${TEACHER_GUIDE_API_URL}/registration?token=${encodeURIComponent(token)}`);
+        const result = await response.json().catch(() => ({}));
+        if (!isCancelled && response.ok && result.ok && result.email) {
+          setRegisteredEmail(result.email);
+        }
+      } catch {
+        // The page remains useful even if the reassurance email lookup fails.
+      }
+    }
+
+    loadRegistration();
+
+    return () => {
+      isCancelled = true;
+    };
+  }, [token]);
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setSubmitState("submitting");
+    setError("");
+
+    try {
+      const response = await fetch(`${TEACHER_GUIDE_API_URL}/masterclass-details`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ token, name, phone, subject }),
+      });
+
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok || !result.ok) {
+        throw new Error(result.error || "Details submission failed");
+      }
+
+      setSubmitState("success");
+    } catch {
+      setSubmitState("error");
+      setError("დეტალები ვერ შეინახა. სცადე თავიდან.");
+    }
+  };
+
+  return (
+    <main className="min-h-screen bg-[#05091d] px-4 py-8 text-[#fff4e8] sm:px-6 lg:px-8">
+      <Helmet>
+        <title>მასტერკლასზე რეგისტრაცია დადასტურდა | BitCamp</title>
+        <meta name="robots" content="noindex" />
+      </Helmet>
+
+      <div className="mx-auto grid min-h-[calc(100vh-4rem)] max-w-6xl items-center gap-8 lg:grid-cols-[0.9fr_1.1fr]">
+        <div>
+          <div className="mb-10 inline-block self-start bg-[#fff4e8] p-3 shadow-[4px_4px_0_#df3342]">
+            <img src={bitcampLogo} alt="BitCamp" className="h-auto w-40 sm:w-48" />
+          </div>
+
+          <section className="border border-[#293a52] bg-[#071025] p-6 shadow-[8px_8px_0_#df3342] sm:p-10">
+            <div className="mb-6 flex h-16 w-16 items-center justify-center bg-[#1f8f56] text-white">
+              <CheckCircle2 size={34} aria-hidden="true" />
+            </div>
+
+            <p className="mb-3 font-mono text-xs font-bold uppercase tracking-normal text-[#ffb3ad]">
+              {registeredEmail
+                ? `რეგისტრაცია დადასტურდა თქვენს მისამართზე: ${registeredEmail}`
+                : "რეგისტრაცია დადასტურდა"}
+            </p>
+            <h1 className="text-3xl font-black leading-tight sm:text-4xl">{masterclassDetails.title}</h1>
+            <div className="mt-5 border border-[#df3342] bg-[#df3342]/10 p-4">
+              <p className="flex items-start gap-3 text-base font-black leading-7 text-[#fff4e8]">
+                <CalendarDays className="mt-1 h-5 w-5 flex-none text-[#ffb3ad]" aria-hidden="true" />
+                <span>
+                  {masterclassDetails.date} · {masterclassDetails.time}
+                </span>
+              </p>
+            </div>
+            <p className="mt-4 text-base leading-7 text-[#c7d3df]">
+              შენი ადგილი უფასო მასტერკლასზე უკვე შენახულია. ქვემოთ შეგიძლია დაამატო დეტალები, რომ
+              მასტერკლასი შენს რეალურ საჭიროებებს უკეთ მოვარგოთ.
+            </p>
+
+            <div className="mt-8 grid gap-3 sm:grid-cols-3">
+              <div className="border border-[#293a52] p-4">
+                <CalendarDays className="mb-3 h-5 w-5 text-[#df3342]" aria-hidden="true" />
+                <strong className="block text-sm text-[#fff4e8]">{masterclassDetails.date}</strong>
+              </div>
+              <div className="border border-[#293a52] p-4">
+                <Clock3 className="mb-3 h-5 w-5 text-[#df3342]" aria-hidden="true" />
+                <strong className="block text-sm text-[#fff4e8]">{masterclassDetails.time}</strong>
+              </div>
+              <div className="border border-[#293a52] p-4">
+                <Video className="mb-3 h-5 w-5 text-[#df3342]" aria-hidden="true" />
+                <strong className="block text-sm text-[#fff4e8]">{masterclassDetails.platform}</strong>
+              </div>
+            </div>
+
+            <p className="mt-8 flex items-start gap-3 border border-[#293a52] bg-[#05091d] p-4 text-sm leading-6 text-[#c7d3df]">
+              <Mail className="mt-0.5 h-5 w-5 flex-none text-[#df3342]" aria-hidden="true" />
+              დასწრების ბმულს და საბოლოო დროს ელფოსტით მიიღებ.
+            </p>
+          </section>
+        </div>
+
+        <section className="teacher-guide-panel">
+          <div className="teacher-guide-panel__cap" aria-hidden="true">
+            <span />
+            <span />
+            <span />
+          </div>
+
+          <div className="relative z-10">
+            <p className="mb-3 font-mono text-xs font-bold uppercase tracking-normal text-[#ffb3ad]">
+              სურვილისამებრ
+            </p>
+            <h2 className="text-2xl font-black text-[#fff4e8]">დაამატე დეტალები შენზე</h2>
+            <p className="mt-3 text-sm leading-6 text-[#c7d3df]">
+              მოგვაწოდე დამატებითი დეტალები შენზე - რათა უკეთ გავიგოთ რას ასწავლი და რა მაგალითები იქნება
+              შენთვის ყველაზე სასარგებლო მასტერკლასზე დასწრებისას.
+            </p>
+          </div>
+
+          {submitState === "success" ? (
+            <div className="relative z-10 mt-6 border border-[#1f8f56] bg-[#1f8f56]/10 p-4">
+              <h3 className="font-black text-[#fff4e8]">დეტალები შენახულია</h3>
+              <p className="mt-2 text-sm leading-6 text-[#c7d3df]">
+                მადლობა. ახლა უკვე უფრო ზუსტად შევძლებთ მასტერკლასის მაგალითების მორგებას.
+              </p>
+              {calendarUrl && (
+                <a href={calendarUrl} className="mt-5 inline-flex items-center gap-2 bg-[#df3342] px-5 py-3 font-black text-[#fff4e8] transition-colors hover:bg-[#c62a39]">
+                  <CalendarPlus size={18} aria-hidden="true" />
+                  Add to calendar
+                </a>
+              )}
+            </div>
+          ) : token ? (
+            <form onSubmit={handleSubmit} className="relative z-10 mt-6 space-y-4">
+              <label className="block">
+                <span className="mb-2 flex items-center gap-2 text-sm font-bold text-[#fff4e8]">
+                  <User size={16} aria-hidden="true" />
+                  სახელი
+                </span>
+                <input
+                  type="text"
+                  value={name}
+                  onChange={(event) => setName(event.target.value)}
+                  autoComplete="name"
+                  placeholder="შენი სახელი"
+                  className="teacher-guide-input"
+                />
+              </label>
+
+              <label className="block">
+                <span className="mb-2 flex items-center gap-2 text-sm font-bold text-[#fff4e8]">
+                  <Phone size={16} aria-hidden="true" />
+                  ტელეფონის ნომერი
+                </span>
+                <input
+                  type="tel"
+                  value={phone}
+                  onChange={(event) => setPhone(event.target.value)}
+                  autoComplete="tel"
+                  placeholder="+995 5XX XX XX XX"
+                  className="teacher-guide-input"
+                />
+              </label>
+
+              <label className="block">
+                <span className="mb-2 flex items-center gap-2 text-sm font-bold text-[#fff4e8]">
+                  <Mail size={16} aria-hidden="true" />
+                  საგანი / მიმართულება
+                </span>
+                <input
+                  type="text"
+                  value={subject}
+                  onChange={(event) => setSubject(event.target.value)}
+                  placeholder="მაგ. მათემატიკა, ინგლისური, დაწყებითი კლასები"
+                  className="teacher-guide-input"
+                />
+              </label>
+
+              {submitState === "error" && (
+                <p className="border border-[#df3342] bg-[#df3342]/10 p-3 text-sm font-semibold text-[#ffb3ad]">
+                  {error}
+                </p>
+              )}
+
+              <button type="submit" disabled={submitState === "submitting"} className="teacher-guide-submit">
+                {submitState === "submitting" ? "ინახება..." : "დეტალების შენახვა"}
+              </button>
+            </form>
+          ) : (
+            <p className="relative z-10 mt-6 border border-[#df3342] bg-[#df3342]/10 p-4 text-sm leading-6 text-[#ffb3ad]">
+              დეტალების დასამატებლად გამოიყენე ის პერსონალური ბმული, რომელიც ელფოსტაში მიიღე.
+            </p>
+          )}
+        </section>
+      </div>
+    </main>
+  );
+}
