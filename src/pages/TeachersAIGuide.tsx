@@ -5,7 +5,6 @@ import {
   BookOpenCheck,
   CheckCircle2,
   Clock3,
-  Download,
   GraduationCap,
   Mail,
   ShieldCheck,
@@ -109,7 +108,7 @@ export default function TeachersAIGuide() {
 
             <p className="mb-4 inline-flex items-center gap-2 border border-[#df3342]/60 bg-[#df3342]/10 px-3 py-2 font-mono text-xs font-bold uppercase tracking-normal text-[#ffb3ad]">
               <Sparkles size={15} aria-hidden="true" />
-              უფასო PDF გზამკვლევი მასწავლებლებისთვის
+              უფასო ვებ-გზამკვლევი მასწავლებლებისთვის
             </p>
 
             <h1 className="max-w-4xl text-3xl font-black leading-tight text-[#fff4e8] sm:text-5xl lg:text-6xl">
@@ -161,7 +160,7 @@ export default function TeachersAIGuide() {
                   </div>
                   <h2 className="text-2xl font-black text-[#fff4e8]">გზამკვლევი გამოგზავნილია</h2>
                   <p className="mt-4 text-base leading-7 text-[#c7d3df]">
-                    შეამოწმე ელფოსტა. წერილში დაგხვდება PDF-ის ჩამოსატვირთი ბმული და უფასო
+                    შეამოწმე ელფოსტა. წერილში დაგხვდება გზამკვლევის პერსონალური ბმული და უფასო
                     მასტერკლასზე ერთი კლიკით რეგისტრაციის ღილაკი.
                   </p>
                   <p className="mt-4 border border-[#293a52] bg-[#071025] p-3 text-sm text-[#9fb0c3]">
@@ -172,7 +171,7 @@ export default function TeachersAIGuide() {
                 <>
                   <div className="relative z-10">
                     <p className="mb-3 font-mono text-xs font-bold uppercase tracking-normal text-[#ffb3ad]">
-                      ჩამოტვირთე ახლავე
+                      გახსენი ახლავე
                     </p>
                     <h2 className="text-2xl font-black text-[#fff4e8]">მიიღე უფასო გზამკვლევი ელფოსტაზე</h2>
                     <p className="mt-3 text-sm leading-6 text-[#c7d3df]">
@@ -244,11 +243,11 @@ export default function TeachersAIGuide() {
               </div>
             </div>
             <div className="flex items-start gap-3">
-              <Download className="mt-1 h-6 w-6 flex-none text-[#df3342]" aria-hidden="true" />
+              <BookOpenCheck className="mt-1 h-6 w-6 flex-none text-[#df3342]" aria-hidden="true" />
               <div>
-                <h2 className="text-lg font-black text-[#fff4e8]">ბმული გაზომვადია</h2>
+                <h2 className="text-lg font-black text-[#fff4e8]">ბმული პერსონალურია</h2>
                 <p className="mt-2 text-sm leading-6 text-[#c7d3df]">
-                  ჩამოტვირთვები ითვლება, რომ დავინახოთ რამდენმა ადამიანმა მიიღო რეალური სარგებელი.
+                  გზამკვლევის გახსნები ითვლება, რომ დავინახოთ რამდენმა ადამიანმა მიიღო რეალური სარგებელი.
                 </p>
               </div>
             </div>

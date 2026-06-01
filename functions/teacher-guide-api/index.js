@@ -7,7 +7,8 @@ const POSTMARK_TOKEN = process.env.POSTMARK_SERVER_TOKEN;
 const FROM_EMAIL = process.env.FROM_EMAIL || "BitCamp <hello@bitcamp.ge>";
 const MESSAGE_STREAM = process.env.POSTMARK_STREAM || "outbound";
 const SITE_ORIGIN = process.env.SITE_ORIGIN || "https://www.bitcamp.ge";
-const PDF_PUBLIC_PATH = process.env.PDF_PUBLIC_PATH || "/resources/teacher-ai-guide-placeholder.pdf";
+const GUIDE_PUBLIC_PATH = process.env.GUIDE_PUBLIC_PATH || "/teachers-ai-guide/read";
+const PDF_PUBLIC_PATH = process.env.PDF_PUBLIC_PATH || GUIDE_PUBLIC_PATH;
 const MASTERCLASS_CONFIRM_PATH =
   process.env.MASTERCLASS_CONFIRM_PATH || "/teachers-ai-masterclass/confirmed";
 const MASTERCLASS_TITLE = "AI მასტერკლასი მასწავლებლებისთვის";
@@ -57,14 +58,28 @@ functions.http("teacherGuideApi", async (req, res) => {
       return handleCalendarDownload(req, res);
     }
 
+    if (req.method === "GET" && action === "guide") {
+      return handleTrackedRedirect(req, res, {
+        eventType: "guide_opened",
+        update: {
+          guideOpenCount: FieldValue.increment(1),
+          lastGuideOpenedAt: FieldValue.serverTimestamp(),
+        },
+        redirectPath: GUIDE_PUBLIC_PATH,
+        includeTokenInRedirect: true,
+      });
+    }
+
     if (req.method === "GET" && action === "download") {
       return handleTrackedRedirect(req, res, {
-        eventType: "pdf_clicked",
+        eventType: "guide_opened_from_legacy_download",
         update: {
-          pdfClickCount: FieldValue.increment(1),
-          lastPdfClickedAt: FieldValue.serverTimestamp(),
+          guideOpenCount: FieldValue.increment(1),
+          lastGuideOpenedAt: FieldValue.serverTimestamp(),
+          legacyDownloadClickCount: FieldValue.increment(1),
         },
         redirectPath: PDF_PUBLIC_PATH,
+        includeTokenInRedirect: PDF_PUBLIC_PATH === GUIDE_PUBLIC_PATH,
       });
     }
 
@@ -143,7 +158,7 @@ async function handleLead(req, res) {
     },
   });
 
-  const downloadUrl = buildFunctionUrl("download", token);
+  const guideUrl = buildFunctionUrl("guide", token);
   const masterclassUrl = buildFunctionUrl("masterclass", token);
 
   try {
@@ -151,8 +166,8 @@ async function handleLead(req, res) {
       From: FROM_EMAIL,
       To: email,
       Subject: "შენი უფასო AI გზამკვლევი მასწავლებლებისთვის | BitCamp",
-      HtmlBody: buildEmailHtml({ downloadUrl, masterclassUrl }),
-      TextBody: buildEmailText({ downloadUrl, masterclassUrl }),
+      HtmlBody: buildEmailHtml({ guideUrl, masterclassUrl }),
+      TextBody: buildEmailText({ guideUrl, masterclassUrl }),
       MessageStream: MESSAGE_STREAM,
       TrackOpens: true,
       TrackLinks: "HtmlAndText",
@@ -249,7 +264,7 @@ async function handleMasterclassDetails(req, res) {
       email: lead.email,
       emailHash,
       token: effectiveToken,
-      sourceEventType: "direct_masterclass_pdf_email_sent",
+      sourceEventType: "direct_masterclass_guide_email_sent",
     });
   }
 
@@ -399,7 +414,7 @@ function getAction(req) {
 
   return (
     pathParts.find((part) =>
-      ["lead", "download", "masterclass", "masterclass-details", "registration", "calendar"].includes(part)
+      ["lead", "guide", "download", "masterclass", "masterclass-details", "registration", "calendar"].includes(part)
     ) || ""
   );
 }
@@ -542,7 +557,7 @@ async function createOrGetDirectMasterclassLead(email) {
 }
 
 async function sendGuideEmail({ docRef, email, emailHash, token, sourceEventType = "email_sent" }) {
-  const downloadUrl = buildFunctionUrl("download", token);
+  const guideUrl = buildFunctionUrl("guide", token);
   const masterclassUrl = buildFunctionUrl("masterclass", token);
 
   try {
@@ -550,8 +565,8 @@ async function sendGuideEmail({ docRef, email, emailHash, token, sourceEventType
       From: FROM_EMAIL,
       To: email,
       Subject: "შენი უფასო AI გზამკვლევი მასწავლებლებისთვის | BitCamp",
-      HtmlBody: buildEmailHtml({ downloadUrl, masterclassUrl }),
-      TextBody: buildEmailText({ downloadUrl, masterclassUrl }),
+      HtmlBody: buildEmailHtml({ guideUrl, masterclassUrl }),
+      TextBody: buildEmailText({ guideUrl, masterclassUrl }),
       MessageStream: MESSAGE_STREAM,
       TrackOpens: true,
       TrackLinks: "HtmlAndText",
@@ -773,7 +788,7 @@ function escapeHtml(value) {
     .replace(/"/g, "&quot;");
 }
 
-function buildEmailHtml({ downloadUrl, masterclassUrl }) {
+function buildEmailHtml({ guideUrl, masterclassUrl }) {
   return `<!DOCTYPE html>
 <html lang="ka">
 <head>
@@ -795,12 +810,12 @@ function buildEmailHtml({ downloadUrl, masterclassUrl }) {
           <tr>
             <td style="padding:16px 28px 8px 28px;">
               <h1 style="margin:0 0 14px 0;color:#fff4e8;font-size:27px;line-height:1.25;font-weight:900;">გადატვირთული მასწავლებლიდან AI-ით აღჭურვილ პროფესიონალამდე</h1>
-              <p style="margin:0;color:#c7d3df;font-size:16px;">მადლობა ინტერესისთვის. ქვემოთ არის შენი პერსონალური ჩამოსატვირთი ბმული. PDF არ არის მიმაგრებული ფაილად, რომ ჩამოტვირთვები სწორად დავითვალოთ.</p>
+              <p style="margin:0;color:#c7d3df;font-size:16px;">მადლობა ინტერესისთვის. ქვემოთ არის შენი პერსონალური ბმული, სადაც გზამკვლევი ვებ-გვერდად დაგხვდება და მარტივად გამოიყენებ ტელეფონიდანაც.</p>
             </td>
           </tr>
           <tr>
             <td style="padding:22px 28px;">
-              <a href="${downloadUrl}" style="display:block;background:#df3342;color:#fff4e8;text-decoration:none;text-align:center;font-size:16px;font-weight:900;padding:15px 18px;">ჩამოტვირთე PDF გზამკვლევი</a>
+              <a href="${guideUrl}" style="display:block;background:#df3342;color:#fff4e8;text-decoration:none;text-align:center;font-size:16px;font-weight:900;padding:15px 18px;">გახსენი გზამკვლევი</a>
             </td>
           </tr>
           <tr>
@@ -833,11 +848,11 @@ function buildEmailHtml({ downloadUrl, masterclassUrl }) {
 </html>`;
 }
 
-function buildEmailText({ downloadUrl, masterclassUrl }) {
+function buildEmailText({ guideUrl, masterclassUrl }) {
   return `BitCamp
 
 შენი უფასო AI გზამკვლევი მასწავლებლებისთვის:
-${downloadUrl}
+${guideUrl}
 
 უფასო AI მასტერკლასზე ერთი კლიკით რეგისტრაცია:
 ${masterclassUrl}

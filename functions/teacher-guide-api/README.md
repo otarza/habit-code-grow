@@ -1,6 +1,6 @@
 # Teacher Guide API
 
-Cloud Function for the teacher AI guide funnel. It stores email-only leads in Firestore, sends the PDF link through Postmark, tracks download/masterclass clicks through redirect URLs, and lets the confirmation page enrich masterclass registrations with name, phone, and teaching subject.
+Cloud Function for the teacher AI guide funnel. It stores email-only leads in Firestore, sends the tracked guide page link through Postmark, tracks guide/masterclass clicks through redirect URLs, and lets the confirmation page enrich masterclass registrations with name, phone, and teaching subject.
 
 ## Local Dev
 
@@ -20,7 +20,8 @@ Local endpoints:
 - `POST http://localhost:8084/masterclass-details`
 - `GET http://localhost:8084/registration?token=...`
 - `GET http://localhost:8084/calendar?token=...`
-- `GET http://localhost:8084/download?token=...`
+- `GET http://localhost:8084/guide?token=...`
+- `GET http://localhost:8084/download?token=...` (legacy compatibility redirect)
 - `GET http://localhost:8084/masterclass?token=...`
 
 ## Deploy
@@ -40,7 +41,7 @@ gcloud functions deploy teacher-guide-api \
   --timeout=30s \
   --min-instances=0 \
   --max-instances=5 \
-  --set-env-vars='^|^SITE_ORIGIN=https://www.bitcamp.ge|FUNCTION_PUBLIC_URL=https://us-central1-bitcamp-flitt.cloudfunctions.net/teacher-guide-api|PDF_PUBLIC_PATH=/resources/teacher-ai-guide-placeholder.pdf|MASTERCLASS_CONFIRM_PATH=/teachers-ai-masterclass/confirmed|FROM_EMAIL=BitCamp <oto@bitcamp.ge>|POSTMARK_STREAM=flitt-payments-transactional|ALLOWED_ORIGINS=https://www.bitcamp.ge,https://bitcamp.ge'
+  --set-env-vars='^|^SITE_ORIGIN=https://www.bitcamp.ge|FUNCTION_PUBLIC_URL=https://us-central1-bitcamp-flitt.cloudfunctions.net/teacher-guide-api|GUIDE_PUBLIC_PATH=/teachers-ai-guide/read|MASTERCLASS_CONFIRM_PATH=/teachers-ai-masterclass/confirmed|FROM_EMAIL=BitCamp <oto@bitcamp.ge>|POSTMARK_STREAM=flitt-payments-transactional|ALLOWED_ORIGINS=https://www.bitcamp.ge,https://bitcamp.ge'
 ```
 
 Set `POSTMARK_SERVER_TOKEN` from Secret Manager or with a protected env var in your deployment workflow.
@@ -48,6 +49,6 @@ Set `POSTMARK_SERVER_TOKEN` from Secret Manager or with a protected env var in y
 ## Firestore
 
 - `teacher_guide_leads`: one document per normalized email hash.
-- `teacher_guide_events`: append-only event records for lead creation, email delivery, PDF clicks, masterclass registration, and enrichment details.
+- `teacher_guide_events`: append-only event records for lead creation, email delivery, guide opens, masterclass registration, and enrichment details.
 
 The function does no polling or scheduled work. Reads and writes happen only on form submit and tracked link clicks.

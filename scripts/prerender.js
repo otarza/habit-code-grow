@@ -34,6 +34,7 @@ const routes = explicitRoutes
     '/thank-you',
     '/resources/ai-prompts-library',
     '/teachers-ai-guide',
+    '/teachers-ai-guide/read',
     '/teachers-ai-masterclass/confirmed'
 ];
 

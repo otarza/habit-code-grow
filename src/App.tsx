@@ -17,6 +17,7 @@ import ThankYou from "./pages/ThankYou";
 import LearnCoursePage from "./pages/LearnCoursePage";
 import AIPromptsLibrary from "./pages/AIPromptsLibrary";
 import TeachersAIGuide from "./pages/TeachersAIGuide";
+import TeachersAIGuideRead from "./pages/TeachersAIGuideRead";
 import TeacherMasterclassConfirmed from "./pages/TeacherMasterclassConfirmed";
 
 const queryClient = new QueryClient();
@@ -47,6 +48,7 @@ const App = () => (
           {/* Resources */}
           <Route path="/resources/ai-prompts-library" element={<AIPromptsLibrary />} />
           <Route path="/teachers-ai-guide" element={<TeachersAIGuide />} />
+          <Route path="/teachers-ai-guide/read" element={<TeachersAIGuideRead />} />
           <Route path="/teachers-ai-masterclass/confirmed" element={<TeacherMasterclassConfirmed />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
