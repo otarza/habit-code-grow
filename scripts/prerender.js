@@ -35,6 +35,12 @@ const routes = explicitRoutes
     '/resources/ai-prompts-library',
     '/teachers-ai-guide',
     '/teachers-ai-guide/read',
+    '/teachers-ai-guide/read/lesson-plan',
+    '/teachers-ai-guide/read/slides',
+    '/teachers-ai-guide/read/quizzes',
+    '/teachers-ai-guide/read/inclusive',
+    '/teachers-ai-guide/read/worksheets',
+    '/teachers-ai-guide/read/feedback',
     '/teachers-ai-masterclass/confirmed'
 ];
 

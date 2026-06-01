@@ -49,6 +49,7 @@ const App = () => (
           <Route path="/resources/ai-prompts-library" element={<AIPromptsLibrary />} />
           <Route path="/teachers-ai-guide" element={<TeachersAIGuide />} />
           <Route path="/teachers-ai-guide/read" element={<TeachersAIGuideRead />} />
+          <Route path="/teachers-ai-guide/read/:sectionId" element={<TeachersAIGuideRead />} />
           <Route path="/teachers-ai-masterclass/confirmed" element={<TeacherMasterclassConfirmed />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />

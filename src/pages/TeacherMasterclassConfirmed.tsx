@@ -98,9 +98,15 @@ export default function TeacherMasterclassConfirmed() {
         <meta name="robots" content="noindex" />
       </Helmet>
 
+      <div className="mx-auto mb-6 max-w-6xl lg:hidden">
+        <div className="inline-block bg-[#fff4e8] p-2 shadow-[3px_3px_0_#df3342]">
+          <img src={bitcampLogo} alt="BitCamp" className="h-auto w-28" />
+        </div>
+      </div>
+
       <div className="mx-auto grid min-h-[calc(100vh-4rem)] max-w-6xl items-center gap-8 lg:grid-cols-[0.9fr_1.1fr]">
-        <div>
-          <div className="mb-10 inline-block self-start bg-[#fff4e8] p-3 shadow-[4px_4px_0_#df3342]">
+        <div className="order-2 lg:order-1">
+          <div className="mb-10 hidden self-start bg-[#fff4e8] p-3 shadow-[4px_4px_0_#df3342] lg:inline-block">
             <img src={bitcampLogo} alt="BitCamp" className="h-auto w-40 sm:w-48" />
           </div>
 
@@ -153,7 +159,7 @@ export default function TeacherMasterclassConfirmed() {
           </section>
         </div>
 
-        <section className="teacher-guide-panel">
+        <section className="teacher-guide-panel order-1 lg:order-2">
           <div className="teacher-guide-panel__cap" aria-hidden="true">
             <span />
             <span />
@@ -161,10 +167,17 @@ export default function TeacherMasterclassConfirmed() {
           </div>
 
           <div className="relative z-10">
-            <p className="mb-3 font-mono text-xs font-bold uppercase tracking-normal text-[#ffb3ad]">
-              სურვილისამებრ
-            </p>
-            <h2 className="text-2xl font-black text-[#fff4e8]">დაამატე დეტალები შენზე</h2>
+            <div className="mb-4 flex flex-wrap items-center gap-3">
+              <p className="font-mono text-xs font-bold uppercase tracking-normal text-[#ffb3ad]">
+                ვეპატიჟებით მასწავლებლებს
+              </p>
+              <span className="inline-flex items-center border border-[#df3342] bg-[#fff4e8] px-3 py-1 font-mono text-xs font-black uppercase tracking-normal text-[#df3342] shadow-[3px_3px_0_rgba(223,51,66,0.55)]">
+                უფასო
+              </span>
+            </div>
+            <h2 className="text-2xl font-black leading-tight text-[#fff4e8]">
+              რეგისტრაცია მასწავლებლების AI მასტერკლასზე
+            </h2>
             <p className="mt-3 text-sm leading-6 text-[#c7d3df]">
               მოგვაწოდე დამატებითი დეტალები შენზე - რათა უკეთ გავიგოთ რას ასწავლი და რა მაგალითები იქნება
               შენთვის ყველაზე სასარგებლო მასტერკლასზე დასწრებისას.
