@@ -30,7 +30,7 @@ Use Gen2 with zero warm instances to avoid always-on cost:
 ```bash
 gcloud functions deploy teacher-guide-api \
   --gen2 \
-  --runtime=nodejs20 \
+  --runtime=nodejs22 \
   --region=us-central1 \
   --source=functions/teacher-guide-api \
   --entry-point=teacherGuideApi \
@@ -40,7 +40,7 @@ gcloud functions deploy teacher-guide-api \
   --timeout=30s \
   --min-instances=0 \
   --max-instances=5 \
-  --set-env-vars='^|^SITE_ORIGIN=https://www.bitcamp.ge|FUNCTION_PUBLIC_URL=https://us-central1-bitcamp-flitt.cloudfunctions.net/teacher-guide-api|PDF_PUBLIC_PATH=/resources/teacher-ai-guide-placeholder.pdf|MASTERCLASS_CONFIRM_PATH=/teachers-ai-masterclass/confirmed|FROM_EMAIL=BitCamp <hello@bitcamp.ge>|POSTMARK_STREAM=outbound|ALLOWED_ORIGINS=https://www.bitcamp.ge,https://bitcamp.ge'
+  --set-env-vars='^|^SITE_ORIGIN=https://www.bitcamp.ge|FUNCTION_PUBLIC_URL=https://us-central1-bitcamp-flitt.cloudfunctions.net/teacher-guide-api|PDF_PUBLIC_PATH=/resources/teacher-ai-guide-placeholder.pdf|MASTERCLASS_CONFIRM_PATH=/teachers-ai-masterclass/confirmed|FROM_EMAIL=BitCamp <oto@bitcamp.ge>|POSTMARK_STREAM=flitt-payments-transactional|ALLOWED_ORIGINS=https://www.bitcamp.ge,https://bitcamp.ge'
 ```
 
 Set `POSTMARK_SERVER_TOKEN` from Secret Manager or with a protected env var in your deployment workflow.
