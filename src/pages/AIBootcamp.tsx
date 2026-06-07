@@ -18,6 +18,8 @@ import { FlittCheckoutModal } from "@/components/campaign/FlittCheckoutModal";
 import { handleBuy, PRODUCTS } from "@/lib/checkout";
 
 const paymentLogos = ["visa", "mastercard", "apple-pay", "google-pay"] as const;
+const BOOTCAMP_VIDEO_URL =
+  "https://player.mediadelivery.net/embed/678241/c43a908b-a472-46ae-a08f-1d84afa125a3?autoplay=true&loop=false&muted=true&preload=true&responsive=true";
 const BOOTCAMP_START_PRICE = 99;
 const BOOTCAMP_NEXT_PRICE = 119;
 const BOOTCAMP_FUTURE_PRICE_STEPS = [189, 229, 319];
@@ -362,6 +364,35 @@ function InstructorTrustCard() {
   );
 }
 
+function HeroTestimonial() {
+  const testimonial = testimonials[0];
+
+  return (
+    <blockquote className="campaign-hero-testimonial">
+      <span>სტუდენტის გამოცდილება</span>
+      <p>"{testimonial.quote}"</p>
+      <footer>
+        <strong>{testimonial.name}</strong>
+        <small>{testimonial.note}</small>
+      </footer>
+    </blockquote>
+  );
+}
+
+function BootcampHeroVideo({ className = "" }: { className?: string }) {
+  return (
+    <div className={`campaign-hero-video ${className}`} aria-label="AI Bootcamp ვიდეო">
+      <iframe
+        src={BOOTCAMP_VIDEO_URL}
+        title="AI Bootcamp ვიდეო"
+        loading="lazy"
+        allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture; fullscreen"
+        allowFullScreen
+      />
+    </div>
+  );
+}
+
 function HeroCoursePreview() {
   return (
     <div className="campaign-hero-preview" aria-label="კურსის მოკლე სტრუქტურა">
@@ -463,6 +494,8 @@ export default function AIBootcamp() {
                 ისწავლე ChatGPT, Gemini და Claude ისე, რომ T.C.R.E.I.-ით დაზოგო დრო პირველივე დღიდან.
               </p>
 
+              <BootcampHeroVideo className="campaign-hero-video--inline" />
+
               <div className="campaign-hero__facts" aria-label="კურსის ძირითადი ინფორმაცია">
                 <span>
                   <Video aria-hidden="true" size={16} />
@@ -482,12 +515,15 @@ export default function AIBootcamp() {
                 </span>
               </div>
 
+              <HeroTestimonial />
+
               <InstructorTrustCard />
 
               <HeroOffer className="campaign-hero__offer--inline" onBuy={buy} />
             </div>
 
             <div className="campaign-hero__visual">
+              <BootcampHeroVideo className="campaign-hero-video--desktop" />
               <HeroOffer className="campaign-hero__offer--desktop" onBuy={buy} />
               <HeroCoursePreview />
             </div>
@@ -750,12 +786,6 @@ export default function AIBootcamp() {
                 <span className="campaign-price__save">დაზოგე {formatGel(BOOTCAMP_SAVINGS)}</span>
               </div>
               <CtaButton label={`დაიწყე სწავლა — ${BOOTCAMP_CURRENT_PRICE_LABEL}`} onClick={buy} />
-              <p>
-                გჭირდება მენტორშიფი, Discord მხარდაჭერა და უკუკავშირი?{" "}
-                <Link to="/ai" className="campaign-text-link">
-                  იხილე ₾249-იანი მენტორული ვერსია
-                </Link>
-              </p>
             </FadeIn>
           </div>
         </section>
