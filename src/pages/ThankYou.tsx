@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { CampaignFooter } from "@/components/campaign/CampaignFooter";
+import { getAttributionRef } from "@/lib/attribution";
 import bitcampLogo from "@/assets/bitcamp-logo.png";
 
 const PRODUCT_LABELS: Record<string, string> = {
@@ -44,6 +45,10 @@ function trackPurchase(args: {
   const win = window as WindowWithAnalytics;
   const meta = PRODUCT_LABELS[args.product] ?? PRODUCT_LABELS.bootcamp;
 
+  // Funnel attribution (e.g. ref=free-lesson), persisted from the landing page.
+  const ref = getAttributionRef();
+  const attribution = ref ? { ref } : {};
+
   // Meta Pixel
   win.fbq?.(
     "track",
@@ -55,6 +60,7 @@ function trackPurchase(args: {
       content_name: meta,
       content_type: "product",
       num_items: 1,
+      ...attribution,
     },
     { eventID: args.orderId } // dedup key for Meta (works with server-side Conversions API too)
   );
@@ -64,6 +70,7 @@ function trackPurchase(args: {
     transaction_id: args.orderId,
     value: args.value,
     currency: args.currency,
+    ...attribution,
     items: [
       {
         item_id: args.product,

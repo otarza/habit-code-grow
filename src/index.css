@@ -3403,3 +3403,124 @@ Red pyramid, dark navy, with vibrant pixel art accents and animations
     transition: none;
   }
 }
+
+/* ============================================================
+   Free lesson funnel page (/ai-bootcamp/free-lesson)
+   Reuses .campaign-page tokens, .campaign-cta, .campaign-hero-video,
+   .campaign-hero-video__sound and .campaign-hero-testimonial.
+   ============================================================ */
+.free-lesson-shell {
+  width: min(100% - 40px, 760px);
+  margin: 0 auto;
+}
+
+.free-lesson__top {
+  position: relative;
+  overflow: hidden;
+  padding: 40px 0 48px;
+  border-bottom: 1px solid var(--cp-border);
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(218, 41, 28, 0.12), transparent 38%);
+  background-size: 48px 48px, 48px 48px, 100% 100%;
+}
+
+.free-lesson__title {
+  margin-top: 14px;
+  color: var(--cp-text-primary);
+  font-size: 38px;
+  font-weight: 750;
+  line-height: 1.12;
+}
+
+.free-lesson__sub {
+  margin-top: 16px;
+  max-width: 640px;
+  color: var(--cp-text-secondary);
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+.free-lesson__video {
+  margin-top: 24px;
+}
+
+.free-lesson__hint {
+  margin-top: 12px;
+  text-align: center;
+  color: var(--cp-text-secondary);
+  font-size: 15px;
+  font-weight: 600;
+}
+
+/* CTA block sits tight under the video — no dead space before the offer */
+.free-lesson__cta-card {
+  margin-top: 16px;
+  padding: 24px;
+  border: 1px solid var(--cp-accent-line);
+  border-radius: 12px;
+  background:
+    linear-gradient(180deg, var(--cp-accent-soft), transparent 60%),
+    var(--cp-surface);
+}
+
+.free-lesson__bridge {
+  margin: 0 0 18px;
+  color: var(--cp-text-secondary);
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.free-lesson__bullets {
+  list-style: none;
+  margin: 18px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.free-lesson__bullets li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--cp-text-secondary);
+  font-size: 15px;
+}
+
+.free-lesson__bullets svg {
+  flex-shrink: 0;
+  color: var(--cp-accent-text);
+}
+
+.free-lesson__proof {
+  padding: 44px 0 12px;
+}
+
+.free-lesson__final-cta {
+  margin-top: 28px;
+}
+
+@media (min-width: 700px) {
+  .free-lesson__top {
+    padding: 52px 0 56px;
+  }
+
+  .free-lesson__title {
+    font-size: 44px;
+  }
+}
+
+@media (max-width: 520px) {
+  .free-lesson__title {
+    font-size: 29px;
+  }
+
+  .free-lesson__sub {
+    font-size: 16px;
+  }
+
+  .free-lesson__cta-card {
+    padding: 18px;
+  }
+}

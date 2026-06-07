@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import {
   ArrowRight,
@@ -17,6 +17,7 @@ import { CampaignFooter } from "@/components/campaign/CampaignFooter";
 import { CampaignStickyCta } from "@/components/campaign/CampaignStickyCta";
 import { FlittCheckoutModal } from "@/components/campaign/FlittCheckoutModal";
 import { handleBuy, PRODUCTS } from "@/lib/checkout";
+import { rememberAttributionRef } from "@/lib/attribution";
 
 const paymentLogos = ["visa", "mastercard", "apple-pay", "google-pay"] as const;
 const BOOTCAMP_VIDEO_BASE_URL =
@@ -296,13 +297,18 @@ function GeorgianFlagMark() {
 
 function HeroOffer({
   className = "",
+  id,
   onBuy,
 }: {
   className?: string;
+  id?: string;
   onBuy: () => void;
 }) {
   return (
-    <div className={`campaign-hero__offer campaign-hero__offer--price-return ${className}`}>
+    <div
+      id={id}
+      className={`campaign-hero__offer campaign-hero__offer--price-return campaign-buy-anchor ${className}`}
+    >
       <GeorgianFlagMark />
       <div className="campaign-offer-heading">
         <span>მოასწარი სანამ გაიზრდება</span>
@@ -476,7 +482,25 @@ function FAQAccordion({ items }: { items: typeof faqs }) {
 }
 
 export default function AIBootcamp() {
+  const location = useLocation();
   const buy = () => handleBuy("bootcamp");
+
+  // Persist `?ref=` (e.g. free-lesson) so it can be attached to checkout/purchase events.
+  useEffect(() => {
+    rememberAttributionRef();
+  }, []);
+
+  // Warm viewers arrive at /ai-bootcamp?ref=free-lesson#purchase — scroll them
+  // straight to the visible buy card instead of the top of the page.
+  useEffect(() => {
+    if (location.hash !== "#purchase") return;
+    const timer = window.setTimeout(() => {
+      const anchors = Array.from(document.querySelectorAll<HTMLElement>(".campaign-buy-anchor"));
+      const target = anchors.find((el) => el.offsetParent !== null) ?? anchors[0];
+      target?.scrollIntoView({ behavior: "smooth", block: "center" });
+    }, 320);
+    return () => window.clearTimeout(timer);
+  }, [location.hash]);
 
   return (
     <div className="campaign-page campaign-page--bootcamp">
@@ -539,7 +563,7 @@ export default function AIBootcamp() {
 
             <div className="campaign-hero__visual">
               <BootcampHeroVideo className="campaign-hero-video--desktop" />
-              <HeroOffer className="campaign-hero__offer--desktop" onBuy={buy} />
+              <HeroOffer id="purchase" className="campaign-hero__offer--desktop" onBuy={buy} />
               <HeroCoursePreview />
             </div>
           </div>

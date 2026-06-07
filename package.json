@@ -6,8 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build && node scripts/prerender.js",
-    "build:campaign": "vite build && node scripts/prerender.js --routes=/ai,/ai-bootcamp,/learn/ai-bootcamp,/learn/ai-pro,/terms,/privacy,/thank-you,/resources/ai-prompts-library,/teachers-ai-guide,/teachers-ai-guide/read,/teachers-ai-guide/read/lesson-plan,/teachers-ai-guide/read/slides,/teachers-ai-guide/read/quizzes,/teachers-ai-guide/read/inclusive,/teachers-ai-guide/read/worksheets,/teachers-ai-guide/read/feedback,/teachers-ai-masterclass/confirmed",
-    "build:bootcamp": "vite build && node scripts/prerender.js --routes=/ai-bootcamp,/learn/ai-bootcamp",
+    "build:campaign": "vite build && node scripts/prerender.js --routes=/ai,/ai-bootcamp,/ai-bootcamp/free-lesson,/learn/ai-bootcamp,/learn/ai-pro,/terms,/privacy,/thank-you,/resources/ai-prompts-library,/teachers-ai-guide,/teachers-ai-guide/read,/teachers-ai-guide/read/lesson-plan,/teachers-ai-guide/read/slides,/teachers-ai-guide/read/quizzes,/teachers-ai-guide/read/inclusive,/teachers-ai-guide/read/worksheets,/teachers-ai-guide/read/feedback,/teachers-ai-masterclass/confirmed",
+    "build:bootcamp": "vite build && node scripts/prerender.js --routes=/ai-bootcamp,/ai-bootcamp/free-lesson,/learn/ai-bootcamp",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
     "preview": "vite preview"

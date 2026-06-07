@@ -1,3 +1,5 @@
+import { getAttributionRef } from "./attribution";
+
 type CheckoutProduct = "bootcamp" | "pro";
 
 type ProductConfig = {
@@ -75,9 +77,14 @@ function trackInitiateCheckout(product: CheckoutProduct) {
     gtag?: (event: string, name: string, params?: Record<string, unknown>) => void;
   };
 
+  // Funnel attribution (e.g. ref=free-lesson) — only attached when present.
+  const ref = getAttributionRef();
+  const attribution = ref ? { ref } : {};
+
   win.gtag?.("event", "begin_checkout", {
     currency: "GEL",
     value: config.value,
+    ...attribution,
     items: [
       {
         item_id: product,
@@ -94,6 +101,7 @@ function trackInitiateCheckout(product: CheckoutProduct) {
     content_type: "product",
     currency: "GEL",
     value: config.value,
+    ...attribution,
   });
 }
 
