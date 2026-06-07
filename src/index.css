@@ -1819,7 +1819,7 @@ Red pyramid, dark navy, with vibrant pixel art accents and animations
 .campaign-hero-video__sound {
   position: absolute;
   left: 14px;
-  bottom: 14px;
+  top: 14px;
   z-index: 2;
   display: inline-flex;
   align-items: center;
