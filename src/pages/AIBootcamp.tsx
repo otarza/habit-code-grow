@@ -10,6 +10,7 @@ import {
   ShieldCheck,
   Users,
   Video,
+  Volume2,
   Workflow,
 } from "lucide-react";
 import { CampaignFooter } from "@/components/campaign/CampaignFooter";
@@ -18,8 +19,8 @@ import { FlittCheckoutModal } from "@/components/campaign/FlittCheckoutModal";
 import { handleBuy, PRODUCTS } from "@/lib/checkout";
 
 const paymentLogos = ["visa", "mastercard", "apple-pay", "google-pay"] as const;
-const BOOTCAMP_VIDEO_URL =
-  "https://player.mediadelivery.net/embed/678241/c43a908b-a472-46ae-a08f-1d84afa125a3?autoplay=true&loop=false&muted=true&preload=true&responsive=true";
+const BOOTCAMP_VIDEO_BASE_URL =
+  "https://player.mediadelivery.net/embed/678241/5c33a6d3-33fc-41a5-83ca-1a9c8ee702ff?autoplay=true&loop=false&muted=true&preload=true&responsive=true";
 const BOOTCAMP_START_PRICE = 99;
 const BOOTCAMP_NEXT_PRICE = 119;
 const BOOTCAMP_FUTURE_PRICE_STEPS = [189, 229, 319];
@@ -35,6 +36,8 @@ const BOOTCAMP_PRICE_STEPS = [
 ];
 
 const formatGel = (value: number) => `₾${value}`;
+const getBootcampVideoUrl = (soundEnabled: boolean) =>
+  BOOTCAMP_VIDEO_BASE_URL.replace("muted=true", `muted=${soundEnabled ? "false" : "true"}`);
 const BOOTCAMP_CURRENT_PRICE_LABEL = formatGel(BOOTCAMP_CURRENT_PRICE);
 const BOOTCAMP_FULL_PRICE_LABEL = formatGel(BOOTCAMP_FULL_PRICE);
 const BOOTCAMP_SAVINGS = BOOTCAMP_FULL_PRICE - BOOTCAMP_CURRENT_PRICE;
@@ -380,15 +383,27 @@ function HeroTestimonial() {
 }
 
 function BootcampHeroVideo({ className = "" }: { className?: string }) {
+  const [soundEnabled, setSoundEnabled] = useState(false);
+
   return (
     <div className={`campaign-hero-video ${className}`} aria-label="AI Bootcamp ვიდეო">
       <iframe
-        src={BOOTCAMP_VIDEO_URL}
+        key={soundEnabled ? "sound-on" : "muted"}
+        src={getBootcampVideoUrl(soundEnabled)}
         title="AI Bootcamp ვიდეო"
         loading="lazy"
         allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture; fullscreen"
         allowFullScreen
       />
+      <button
+        type="button"
+        className={`campaign-hero-video__sound${soundEnabled ? " is-on" : ""}`}
+        onClick={() => setSoundEnabled(true)}
+        disabled={soundEnabled}
+      >
+        <Volume2 aria-hidden="true" size={16} />
+        <span>{soundEnabled ? "ხმა ჩართულია" : "ჩართე ხმა"}</span>
+      </button>
     </div>
   );
 }
