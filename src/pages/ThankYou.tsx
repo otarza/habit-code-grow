@@ -11,7 +11,7 @@ const PRODUCT_LABELS: Record<string, string> = {
 
 // Default values per product slug — used when Flitt's redirect doesn't carry amount/currency
 const PRODUCT_DEFAULTS: Record<string, { value: number; currency: string }> = {
-  bootcamp: { value: 99, currency: "GEL" },
+  bootcamp: { value: 149, currency: "GEL" },
   pro: { value: 249, currency: "GEL" },
 };
 
@@ -121,7 +121,7 @@ export default function ThankYou() {
   const orderId = params.get("order_id");
 
   // Fire Purchase tracking on successful redirect.
-  // Flitt sometimes appends `amount` in tetri (e.g. "9900" = ₾99.00); fall back to product default.
+  // Flitt sometimes appends `amount` in tetri (e.g. "14900" = ₾149.00); fall back to product default.
   useEffect(() => {
     if (variant !== "success" || !orderId) return;
     const rawAmount = params.get("amount");

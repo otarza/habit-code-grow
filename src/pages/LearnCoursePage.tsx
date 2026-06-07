@@ -19,7 +19,7 @@ const courseAccess = {
     emailStorageKey: 'bitcamp_soft_access_ai_bootcamp_email',
     title: 'AI Prompt Engineering Bootcamp',
     buyPath: '/ai-bootcamp',
-    buyLabel: 'შეიძინე AI Bootcamp — ₾99',
+    buyLabel: 'შეიძინე AI Bootcamp — ₾149',
   },
   'ai-pro': {
     storageKey: 'bitcamp_soft_access_ai_pro',

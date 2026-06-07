@@ -20,18 +20,26 @@ import { handleBuy, PRODUCTS } from "@/lib/checkout";
 
 const paymentLogos = ["visa", "mastercard", "apple-pay", "google-pay"] as const;
 const BOOTCAMP_START_PRICE = 99;
+const BOOTCAMP_NEXT_PRICE = 119;
+const BOOTCAMP_FUTURE_PRICE_STEPS = [189, 229, 319];
 // Current price is owned by checkout config so UI, analytics, and Flitt button updates stay in sync.
 const BOOTCAMP_CURRENT_PRICE = PRODUCTS.bootcamp.value;
-const BOOTCAMP_FULL_PRICE = 199;
-const BOOTCAMP_PRICE_STEPS = [99, 109, 119, 129, 139, 149, 159, 169, 179, 189, 199];
+const BOOTCAMP_FULL_PRICE = 449;
+const BOOTCAMP_PRICE_STEPS = [
+  BOOTCAMP_START_PRICE,
+  BOOTCAMP_NEXT_PRICE,
+  BOOTCAMP_CURRENT_PRICE,
+  ...BOOTCAMP_FUTURE_PRICE_STEPS,
+  BOOTCAMP_FULL_PRICE,
+];
 
 const formatGel = (value: number) => `₾${value}`;
 const BOOTCAMP_CURRENT_PRICE_LABEL = formatGel(BOOTCAMP_CURRENT_PRICE);
 const BOOTCAMP_FULL_PRICE_LABEL = formatGel(BOOTCAMP_FULL_PRICE);
 const BOOTCAMP_SAVINGS = BOOTCAMP_FULL_PRICE - BOOTCAMP_CURRENT_PRICE;
-const BOOTCAMP_NEXT_PRICE = BOOTCAMP_PRICE_STEPS.find((price) => price > BOOTCAMP_CURRENT_PRICE) ?? null;
+const BOOTCAMP_CURRENT_PRICE_STEP_INDEX = Math.max(0, BOOTCAMP_PRICE_STEPS.indexOf(BOOTCAMP_CURRENT_PRICE));
 const BOOTCAMP_PRICE_PROGRESS = Math.round(
-  ((BOOTCAMP_CURRENT_PRICE - BOOTCAMP_START_PRICE) / (BOOTCAMP_FULL_PRICE - BOOTCAMP_START_PRICE)) * 100
+  (BOOTCAMP_CURRENT_PRICE_STEP_INDEX / (BOOTCAMP_PRICE_STEPS.length - 1)) * 100
 );
 
 const outcomes = [
@@ -135,7 +143,7 @@ const faqs = [
   },
   {
     q: "რა მოხდება 26 მაისის შემდეგ?",
-    a: `დამოუკიდებლობის კამპანიის შემდეგ ფასი იზრდება ეტაპობრივად: ${formatGel(BOOTCAMP_START_PRICE)}-დან ${BOOTCAMP_FULL_PRICE_LABEL}-მდე. გადახდისას მოქმედებს ის ფასი, რომელიც ღილაკზე ჩანს.`,
+    a: `ფასი იზრდება ეტაპობრივად: ${formatGel(BOOTCAMP_START_PRICE)}-დან ${BOOTCAMP_FULL_PRICE_LABEL}-მდე. გადახდისას მოქმედებს ის ფასი, რომელიც ღილაკზე ჩანს.`,
   },
   {
     q: "რა ხდება შეძენის შემდეგ?",
@@ -226,7 +234,12 @@ function PriceReturnProgress() {
   return (
     <div
       className="campaign-price-return"
-      style={{ "--campaign-price-progress": `${BOOTCAMP_PRICE_PROGRESS}%` } as React.CSSProperties}
+      style={
+        {
+          "--campaign-price-progress": `${BOOTCAMP_PRICE_PROGRESS}%`,
+          "--campaign-price-step-count": BOOTCAMP_PRICE_STEPS.length,
+        } as React.CSSProperties
+      }
       aria-label={`მიმდინარე ფასი ${BOOTCAMP_CURRENT_PRICE_LABEL}; სრული ფასი ${BOOTCAMP_FULL_PRICE_LABEL}`}
     >
       <div className="campaign-price-return__top">
@@ -254,8 +267,11 @@ function PriceReturnProgress() {
       </div>
       <div className="campaign-price-return__meta">
         <span>საწყისი იყო {formatGel(BOOTCAMP_START_PRICE)}</span>
-        <span>{BOOTCAMP_NEXT_PRICE ? `შემდეგი ${formatGel(BOOTCAMP_NEXT_PRICE)}` : "სრული ფასი"}</span>
-        <span>საბოლოოდ გახდება {BOOTCAMP_FULL_PRICE_LABEL}</span>
+        <span>წინა {formatGel(BOOTCAMP_NEXT_PRICE)}</span>
+        <span className="is-current">ახლა {BOOTCAMP_CURRENT_PRICE_LABEL}</span>
+        <span>
+          შემდეგ {BOOTCAMP_FUTURE_PRICE_STEPS.map(formatGel).join(", ")} · ბოლოს {BOOTCAMP_FULL_PRICE_LABEL}
+        </span>
       </div>
       <p>გადახდისას მოქმედებს ის ფასი, რომელიც ღილაკზე ჩანს.</p>
     </div>
@@ -440,7 +456,7 @@ export default function AIBootcamp() {
         <section className="campaign-hero">
           <div className="campaign-shell campaign-hero__grid">
             <div className="campaign-hero__copy">
-              <p className="campaign-eyebrow">დამოუკიდებლობის დღის ფასი · ეტაპობრივად ბრუნდება სრულ ფასზე</p>
+              <p className="campaign-eyebrow">კურსის ფასი იზრდება ეტაპობრივად</p>
               <h1>
                 დაიწყე AI-ს სწორად გამოყენება <span className="campaign-nowrap">2 დღეში</span>
               </h1>
@@ -682,8 +698,8 @@ export default function AIBootcamp() {
               <p className="campaign-kicker">ფასი ბრუნდება</p>
               <h2>დაიწყე Bootcamp ახლა და დაიჭირე მიმდინარე {BOOTCAMP_CURRENT_PRICE_LABEL} ფასი.</h2>
               <p>
-                დამოუკიდებლობის დღის სპეციალური ფასი ეტაპობრივად ბრუნდება სრულ {BOOTCAMP_FULL_PRICE_LABEL}
-                ფასზე. ყოველი ზრდის შემდეგ იცვლება როგორც გვერდზე ნაჩვენები ფასი, ისე Flitt-ის გადახდის ფასი.
+                ფასი ეტაპობრივად ბრუნდება სრულ {BOOTCAMP_FULL_PRICE_LABEL} ფასზე. ყოველი ზრდის შემდეგ
+                იცვლება როგორც გვერდზე ნაჩვენები ფასი, ისე Flitt-ის გადახდის ფასი.
               </p>
               <div className="campaign-cta-band__meta">
                 <span>
