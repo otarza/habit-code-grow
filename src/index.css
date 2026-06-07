@@ -1790,6 +1790,10 @@ Red pyramid, dark navy, with vibrant pixel art accents and animations
   .campaign-hero-video__sound {
     animation: none;
   }
+
+  .campaign-hero-video__sound.is-on {
+    animation: campaign-video-sound-hide 1ms linear 2s forwards;
+  }
 }
 
 .campaign-hero__visual {
@@ -1860,7 +1864,9 @@ Red pyramid, dark navy, with vibrant pixel art accents and animations
   color: var(--cp-accent-text);
   border-color: rgba(255, 118, 106, 0.38);
   background: rgba(10, 10, 11, 0.78);
-  animation: none;
+  pointer-events: none;
+  transform-origin: left center;
+  animation: campaign-video-sound-collapse-left 420ms ease 2s forwards;
 }
 
 .campaign-hero-video__sound.is-on:hover {
@@ -1885,6 +1891,25 @@ Red pyramid, dark navy, with vibrant pixel art accents and animations
     box-shadow:
       0 10px 26px rgba(0, 0, 0, 0.32),
       0 0 0 0 rgba(255, 118, 106, 0);
+  }
+}
+
+@keyframes campaign-video-sound-hide {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes campaign-video-sound-collapse-left {
+  0% {
+    opacity: 1;
+    transform: translateX(0) scaleX(1);
+    clip-path: inset(0 0 0 0 round 999px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-10px) scaleX(0.2);
+    clip-path: inset(0 100% 0 0 round 999px);
   }
 }
 
