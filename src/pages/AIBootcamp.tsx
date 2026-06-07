@@ -4,7 +4,6 @@ import { Helmet } from "react-helmet-async";
 import {
   ArrowRight,
   BookOpen,
-  CalendarDays,
   CheckCircle2,
   Database,
   MessageSquareText,
@@ -688,42 +687,6 @@ export default function AIBootcamp() {
                   <span>{item}</span>
                 </div>
               ))}
-            </FadeIn>
-          </div>
-        </section>
-
-        <section className="campaign-cta-band">
-          <div className="campaign-shell campaign-cta-band__inner">
-            <FadeIn className="campaign-cta-band__copy">
-              <p className="campaign-kicker">ფასი ბრუნდება</p>
-              <h2>დაიწყე Bootcamp ახლა და დაიჭირე მიმდინარე {BOOTCAMP_CURRENT_PRICE_LABEL} ფასი.</h2>
-              <p>
-                ფასი ეტაპობრივად ბრუნდება სრულ {BOOTCAMP_FULL_PRICE_LABEL} ფასზე. ყოველი ზრდის შემდეგ
-                იცვლება როგორც გვერდზე ნაჩვენები ფასი, ისე Flitt-ის გადახდის ფასი.
-              </p>
-              <div className="campaign-cta-band__meta">
-                <span>
-                  <CalendarDays aria-hidden="true" size={16} />
-                  მიმდინარე ეტაპი • {BOOTCAMP_CURRENT_PRICE_LABEL}
-                </span>
-                <span>
-                  <ShieldCheck aria-hidden="true" size={16} />
-                  უსაფრთხო გადახდა
-                </span>
-              </div>
-            </FadeIn>
-            <FadeIn className="campaign-cta-band__action">
-              <div className="campaign-cta-price-line">
-                <div>
-                  <span>მიმდინარე ფასი</span>
-                  <span className="campaign-price__old">{BOOTCAMP_FULL_PRICE_LABEL}</span>
-                  <strong>{BOOTCAMP_CURRENT_PRICE_LABEL}</strong>
-                </div>
-                <span className="campaign-price__save">დაზოგე {formatGel(BOOTCAMP_SAVINGS)}</span>
-              </div>
-              <PriceReturnProgress />
-              <CtaButton label={`დაიწყე სწავლა — ${BOOTCAMP_CURRENT_PRICE_LABEL}`} onClick={buy} />
-              <PaymentLogos compact />
             </FadeIn>
           </div>
         </section>
