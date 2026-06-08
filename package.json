@@ -9,6 +9,7 @@
     "build:campaign": "vite build && node scripts/prerender.js --routes=/ai,/ai-bootcamp,/ai-bootcamp/free-lesson,/learn/ai-bootcamp,/learn/ai-pro,/terms,/privacy,/thank-you,/resources/ai-prompts-library,/teachers-ai-guide,/teachers-ai-guide/read,/teachers-ai-guide/read/lesson-plan,/teachers-ai-guide/read/slides,/teachers-ai-guide/read/quizzes,/teachers-ai-guide/read/inclusive,/teachers-ai-guide/read/worksheets,/teachers-ai-guide/read/feedback,/teachers-ai-masterclass/confirmed",
     "build:bootcamp": "vite build && node scripts/prerender.js --routes=/ai-bootcamp,/ai-bootcamp/free-lesson,/learn/ai-bootcamp",
     "build:dev": "vite build --mode development",
+    "dashboard": "node scripts/campaign-dashboard.js",
     "lint": "eslint .",
     "preview": "vite preview"
   },
@@ -49,6 +50,7 @@
     "cmdk": "^1.1.1",
     "date-fns": "^3.6.0",
     "embla-carousel-react": "^8.6.0",
+    "google-auth-library": "^10.6.2",
     "input-otp": "^1.4.2",
     "lucide-react": "^0.462.0",
     "next-themes": "^0.3.0",
