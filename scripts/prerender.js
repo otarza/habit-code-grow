@@ -26,6 +26,7 @@ const routes = explicitRoutes
     '/',
     '/ai',
     '/ai-bootcamp',
+    '/ai-bootcamp/free-lesson',
     '/fullstack-ai',
     '/python-sql',
     '/courses',
