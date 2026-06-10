@@ -13,6 +13,7 @@ import {
   MessageSquareText,
   ShieldCheck,
   Users,
+  Volume2,
   Workflow,
 } from "lucide-react";
 import { CampaignFooter } from "@/components/campaign/CampaignFooter";
@@ -23,6 +24,10 @@ import { rememberAttributionRef } from "@/lib/attribution";
 import { handleBuy } from "@/lib/checkout";
 
 const paymentLogos = ["visa", "mastercard", "apple-pay", "google-pay"] as const;
+const BOOTCAMP_VIDEO_BASE_URL =
+  "https://player.mediadelivery.net/embed/678241/5c33a6d3-33fc-41a5-83ca-1a9c8ee702ff?autoplay=true&loop=false&muted=true&preload=true&responsive=true";
+const getBootcampVideoUrl = (soundEnabled: boolean) =>
+  BOOTCAMP_VIDEO_BASE_URL.replace("muted=true", `muted=${soundEnabled ? "false" : "true"}`);
 
 const proIncludes = [
   "სრული 6-მოდულიანი პროგრამა: პრომპტინგიდან n8n ავტომატიზაციამდე",
@@ -223,6 +228,32 @@ function ProOffer({ className = "", id, onBuy }: { className?: string; id?: stri
   );
 }
 
+function BootcampHeroVideo({ className = "" }: { className?: string }) {
+  const [soundEnabled, setSoundEnabled] = useState(false);
+
+  return (
+    <div className={`campaign-hero-video ${className}`} aria-label="AI Bootcamp ვიდეო">
+      <iframe
+        key={soundEnabled ? "sound-on" : "muted"}
+        src={getBootcampVideoUrl(soundEnabled)}
+        title="AI Bootcamp ვიდეო"
+        loading="lazy"
+        allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture; fullscreen"
+        allowFullScreen
+      />
+      <button
+        type="button"
+        className={`campaign-hero-video__sound${soundEnabled ? " is-on" : ""}`}
+        onClick={() => setSoundEnabled(true)}
+        disabled={soundEnabled}
+      >
+        <Volume2 aria-hidden="true" size={16} />
+        <span>{soundEnabled ? "ხმა ჩართულია" : "ჩართე ხმა"}</span>
+      </button>
+    </div>
+  );
+}
+
 function FAQAccordion({ items }: { items: typeof proFaqs }) {
   const [open, setOpen] = useState<number | null>(0);
 
@@ -281,6 +312,8 @@ export default function AIPromptEngineering() {
                 6-მოდულიანი პრაქტიკული პროგრამა მათთვის, ვისაც AI-ს გამოყენება რეალური სამუშაო პროცესების დასაჩქარებლად და გასამარტივებლად სურს. კურსს ახლავს 4-კვირიანი მენტორშიფი და ინდივიდუალური უკუკავშირი.
               </p>
 
+              <BootcampHeroVideo className="campaign-hero-video--inline" />
+
               <div className="campaign-hero__facts" aria-label="პროგრამის ძირითადი ინფორმაცია">
                 <span>
                   <BookOpen aria-hidden="true" size={16} />
@@ -312,6 +345,7 @@ export default function AIPromptEngineering() {
             </div>
 
             <div className="campaign-hero__visual">
+              <BootcampHeroVideo className="campaign-hero-video--desktop" />
               <ProOffer id="purchase" className="campaign-hero__offer--desktop" onBuy={buy} />
 
               <figure className="campaign-instructor-card">
