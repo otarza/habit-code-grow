@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import {
   ArrowRight,
@@ -19,6 +19,7 @@ import { CampaignFooter } from "@/components/campaign/CampaignFooter";
 import { CampaignStickyCta } from "@/components/campaign/CampaignStickyCta";
 import { FlittCheckoutModal } from "@/components/campaign/FlittCheckoutModal";
 import { SEO } from "@/components/SEO";
+import { rememberAttributionRef } from "@/lib/attribution";
 import { handleBuy } from "@/lib/checkout";
 
 const paymentLogos = ["visa", "mastercard", "apple-pay", "google-pay"] as const;
@@ -192,9 +193,9 @@ function PaymentLogos({ compact = false }: { compact?: boolean }) {
   );
 }
 
-function ProOffer({ className = "", onBuy }: { className?: string; onBuy: () => void }) {
+function ProOffer({ className = "", id, onBuy }: { className?: string; id?: string; onBuy: () => void }) {
   return (
-    <div className={`campaign-hero__offer campaign-hero__offer--pro ${className}`}>
+    <div id={id} className={`campaign-hero__offer campaign-hero__offer--pro campaign-buy-anchor ${className}`}>
       <div className="campaign-offer-heading">
         <span>სრული AI პროგრამა</span>
         <strong>6 მოდული + მენტორშიფი</strong>
@@ -241,7 +242,22 @@ function FAQAccordion({ items }: { items: typeof proFaqs }) {
 }
 
 export default function AIPromptEngineering() {
+  const location = useLocation();
   const buy = () => handleBuy("pro");
+
+  useEffect(() => {
+    rememberAttributionRef();
+  }, []);
+
+  useEffect(() => {
+    if (location.hash !== "#purchase") return;
+    const timer = window.setTimeout(() => {
+      const anchors = Array.from(document.querySelectorAll<HTMLElement>(".campaign-buy-anchor"));
+      const target = anchors.find((el) => el.offsetParent !== null) ?? anchors[0];
+      target?.scrollIntoView({ behavior: "smooth", block: "center" });
+    }, 320);
+    return () => window.clearTimeout(timer);
+  }, [location.hash]);
 
   return (
     <div className="campaign-page campaign-page--pro">
@@ -272,7 +288,7 @@ export default function AIPromptEngineering() {
                 </span>
                 <span>
                   <Users aria-hidden="true" size={16} />
-                  4 კვირის მენტორშიფი
+                  4 კვირიანი მენტორშიფი
                 </span>
                 <span>
                   <MessageSquareText aria-hidden="true" size={16} />
@@ -296,7 +312,7 @@ export default function AIPromptEngineering() {
             </div>
 
             <div className="campaign-hero__visual">
-              <ProOffer className="campaign-hero__offer--desktop" onBuy={buy} />
+              <ProOffer id="purchase" className="campaign-hero__offer--desktop" onBuy={buy} />
 
               <figure className="campaign-instructor-card">
                 <img
@@ -561,7 +577,7 @@ export default function AIPromptEngineering() {
             <div className="campaign-final__panel">
               <div className="campaign-final__deadline">
                 <span>სრული პროგრამა</span>
-                <strong>6 მოდული + 4 კვირის მენტორშიფი</strong>
+                <strong>6 მოდული + 4 კვირიანი მენტორშიფი</strong>
               </div>
               <div className="campaign-final__price-row">
                 <div>

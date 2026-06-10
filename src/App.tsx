@@ -14,6 +14,7 @@ import Terms from "./pages/Terms";
 import Privacy from "./pages/Privacy";
 import AIBootcamp from "./pages/AIBootcamp";
 import AIBootcampFreeLesson from "./pages/AIBootcampFreeLesson";
+import AIFreeLesson from "./pages/AIFreeLesson";
 import ThankYou from "./pages/ThankYou";
 import LearnCoursePage from "./pages/LearnCoursePage";
 import AIPromptsLibrary from "./pages/AIPromptsLibrary";
@@ -38,6 +39,7 @@ const App = () => (
           <Route path="/terms" element={<Terms />} />
           <Route path="/privacy" element={<Privacy />} />
           {/* Independence Day campaign */}
+          <Route path="/ai/free-lesson" element={<AIFreeLesson />} />
           <Route path="/ai-bootcamp" element={<AIBootcamp />} />
           {/* Public, ungated free-lesson retargeting funnel page */}
           <Route path="/ai-bootcamp/free-lesson" element={<AIBootcampFreeLesson />} />
