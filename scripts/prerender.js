@@ -25,6 +25,7 @@ const routes = explicitRoutes
     : [
     '/',
     '/ai',
+    '/ai/free-lesson',
     '/ai-bootcamp',
     '/ai-bootcamp/free-lesson',
     '/fullstack-ai',
