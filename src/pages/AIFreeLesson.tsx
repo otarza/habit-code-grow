@@ -1,6 +1,7 @@
 import { Helmet } from "react-helmet-async";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { CampaignFooter } from "@/components/campaign/CampaignFooter";
+import { FreeLessonEmailGate } from "@/components/FreeLessonEmailGate";
 import { PRODUCTS } from "@/lib/checkout";
 import bitcampLogo from "@/assets/bitcamp-logo.png";
 
@@ -176,6 +177,7 @@ export default function AIFreeLesson() {
       </main>
 
       <CampaignFooter />
+      <FreeLessonEmailGate listKey="ai-pro" listId={4} productLabel="AI Pro" source="ai-free-lesson" />
     </div>
   );
 }

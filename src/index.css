@@ -1661,7 +1661,7 @@ Red pyramid, dark navy, with vibrant pixel art accents and animations
   justify-content: center;
   background: transparent;
   border: 1px solid var(--cp-border);
-  border-radius: 10px;
+  border-radius: 8px;
   color: var(--cp-text-secondary);
   cursor: pointer;
   transition: background 150ms ease, color 150ms ease, border-color 150ms ease;
@@ -3597,5 +3597,185 @@ Red pyramid, dark navy, with vibrant pixel art accents and animations
 
   .free-lesson__cta-card {
     padding: 18px;
+  }
+}
+
+.free-lesson-gate {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+}
+
+.free-lesson-gate__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(3, 8, 18, 0.78);
+  backdrop-filter: blur(8px);
+}
+
+.free-lesson-gate__panel {
+  position: relative;
+  width: min(100%, 460px);
+  padding: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 10px;
+  background:
+    linear-gradient(180deg, rgba(218, 41, 28, 0.16), transparent 58%),
+    #111827;
+  box-shadow: 0 28px 90px rgba(0, 0, 0, 0.45);
+  color: #fff7ed;
+}
+
+.free-lesson-gate__icon {
+  display: grid;
+  width: 48px;
+  height: 48px;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 999px;
+  background: rgba(218, 41, 28, 0.18);
+  color: #ffb4a8;
+}
+
+.free-lesson-gate__eyebrow {
+  margin: 18px 0 8px;
+  color: #ffb4a8;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.free-lesson-gate__panel h2 {
+  margin: 0;
+  color: #fff7ed;
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1.18;
+}
+
+.free-lesson-gate__copy {
+  margin: 12px 0 0;
+  color: #cbd5e1;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.free-lesson-gate__form {
+  display: grid;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.free-lesson-gate__form label {
+  color: #f8fafc;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.free-lesson-gate__input-row {
+  display: grid;
+  grid-template-columns: 18px 1fr;
+  align-items: center;
+  gap: 10px;
+  min-height: 52px;
+  padding: 0 14px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 8px;
+  background: rgba(15, 23, 42, 0.86);
+  color: #94a3b8;
+}
+
+.free-lesson-gate__input-row:focus-within {
+  border-color: rgba(255, 180, 168, 0.82);
+  box-shadow: 0 0 0 3px rgba(218, 41, 28, 0.2);
+}
+
+.free-lesson-gate__input-row input {
+  width: 100%;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #fff7ed;
+  font: inherit;
+}
+
+.free-lesson-gate__input-row input::placeholder {
+  color: #64748b;
+}
+
+.free-lesson-gate__submit {
+  display: inline-flex;
+  min-height: 52px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 0;
+  border-radius: 8px;
+  background: #da291c;
+  color: #fff7ed;
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+  transition:
+    transform 0.18s ease,
+    background-color 0.18s ease;
+}
+
+.free-lesson-gate__submit:hover:not(:disabled) {
+  background: #f04438;
+  transform: translateY(-1px);
+}
+
+.free-lesson-gate__submit:disabled {
+  cursor: default;
+  opacity: 0.78;
+}
+
+.free-lesson-gate__secondary {
+  display: block;
+  margin: 14px auto 0;
+  border: 0;
+  background: transparent;
+  color: #cbd5e1;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.free-lesson-gate__secondary:hover {
+  color: #fff7ed;
+}
+
+.free-lesson-gate__error,
+.free-lesson-gate__success {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.free-lesson-gate__error {
+  color: #fca5a5;
+}
+
+.free-lesson-gate__success {
+  color: #86efac;
+}
+
+@media (max-width: 520px) {
+  .free-lesson-gate {
+    align-items: end;
+    padding: 12px;
+  }
+
+  .free-lesson-gate__panel {
+    padding: 22px;
+  }
+
+  .free-lesson-gate__panel h2 {
+    font-size: 23px;
   }
 }

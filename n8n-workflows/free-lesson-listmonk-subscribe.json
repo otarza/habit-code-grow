@@ -1,0 +1,274 @@
+{
+  "name": "Free Lesson Listmonk Subscribe",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "free-lesson-subscribe",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "free-lesson-webhook",
+      "name": "Free Lesson Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [220, 300],
+      "webhookId": "free-lesson-subscribe"
+    },
+    {
+      "parameters": {
+        "jsCode": "const body = $json.body || $json;\nconst email = String(body.email || '').trim().toLowerCase();\nconst listId = Number(body.listId);\nconst allowedLists = new Set([4, 5]);\n\nif (!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email) || !allowedLists.has(listId)) {\n  throw new Error('Invalid free lesson subscription payload');\n}\n\nconst attribs = {\n  source: String(body.source || ''),\n  path: String(body.path || ''),\n  utm_source: String(body.utmSource || ''),\n  utm_medium: String(body.utmMedium || ''),\n  utm_campaign: String(body.utmCampaign || ''),\n  fbclid: String(body.fbclid || ''),\n  subscribed_from: 'free_lesson_modal'\n};\n\nreturn [{ json: { email, listId, listKey: String(body.listKey || ''), attribs } }];"
+      },
+      "id": "validate-payload",
+      "name": "Validate Payload",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "url": "https://news.bitcamp.ge/api/subscribers",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "query",
+              "value": "={{ \"subscribers.email = '\" + $json.email.replaceAll(\"'\", \"''\") + \"'\" }}"
+            },
+            {
+              "name": "page",
+              "value": "1"
+            },
+            {
+              "name": "per_page",
+              "value": "1"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "find-subscriber",
+      "name": "Find Existing Subscriber",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [700, 300],
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "YOUR_LISTMONK_BASIC_AUTH_CREDENTIAL_ID",
+          "name": "Listmonk Basic Auth"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const original = $('Validate Payload').item.json;\nconst existing = $json.data?.results?.[0] || null;\nconst existingListIds = Array.isArray(existing?.lists)\n  ? existing.lists.map((list) => Number(list.id || list)).filter(Boolean)\n  : [];\nconst mergedListIds = Array.from(new Set([...existingListIds, original.listId]));\n\nreturn [{\n  json: {\n    ...original,\n    subscriberId: existing?.id || null,\n    createPayload: {\n      email: original.email,\n      name: existing?.name || '',\n      status: 'enabled',\n      lists: [original.listId],\n      preconfirm_subscriptions: true,\n      attribs: original.attribs\n    },\n    patchPayload: {\n      status: 'enabled',\n      lists: mergedListIds,\n      preconfirm_subscriptions: true,\n      attribs: original.attribs\n    }\n  }\n}];"
+      },
+      "id": "build-listmonk-request",
+      "name": "Build Listmonk Request",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [940, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "has-existing-subscriber",
+              "leftValue": "={{ $json.subscriberId }}",
+              "rightValue": "",
+              "operator": {
+                "type": "number",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "subscriber-exists",
+      "name": "Subscriber Exists?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [1180, 300]
+    },
+    {
+      "parameters": {
+        "method": "PATCH",
+        "url": "=https://news.bitcamp.ge/api/subscribers/{{ $json.subscriberId }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.patchPayload) }}",
+        "options": {}
+      },
+      "id": "update-subscriber",
+      "name": "Update Subscriber Lists",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1420, 200],
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "YOUR_LISTMONK_BASIC_AUTH_CREDENTIAL_ID",
+          "name": "Listmonk Basic Auth"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://news.bitcamp.ge/api/subscribers",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.createPayload) }}",
+        "options": {}
+      },
+      "id": "create-subscriber",
+      "name": "Create Subscriber",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1420, 400],
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "YOUR_LISTMONK_BASIC_AUTH_CREDENTIAL_ID",
+          "name": "Listmonk Basic Auth"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { ok: true } }}",
+        "options": {
+          "responseCode": 200,
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Access-Control-Allow-Origin",
+                "value": "*"
+              },
+              {
+                "name": "Vary",
+                "value": "Origin"
+              }
+            ]
+          }
+        }
+      },
+      "id": "respond-success",
+      "name": "Respond Success",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [1660, 300]
+    }
+  ],
+  "connections": {
+    "Free Lesson Webhook": {
+      "main": [
+        [
+          {
+            "node": "Validate Payload",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate Payload": {
+      "main": [
+        [
+          {
+            "node": "Find Existing Subscriber",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Find Existing Subscriber": {
+      "main": [
+        [
+          {
+            "node": "Build Listmonk Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Listmonk Request": {
+      "main": [
+        [
+          {
+            "node": "Subscriber Exists?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Subscriber Exists?": {
+      "main": [
+        [
+          {
+            "node": "Update Subscriber Lists",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Create Subscriber",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Subscriber Lists": {
+      "main": [
+        [
+          {
+            "node": "Respond Success",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Subscriber": {
+      "main": [
+        [
+          {
+            "node": "Respond Success",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-06-12T00:00:00.000Z",
+  "versionId": "free-lesson-listmonk-subscribe"
+}

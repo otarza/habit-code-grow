@@ -2,10 +2,11 @@
 
 ## Overview
 
-Two workflows to handle AI course registration and payment confirmation:
+Workflows to handle AI course registration, payment confirmation, and free-lesson subscribers:
 
 1. **ai-course-registration.json** - Handles new registrations
 2. **ai-course-payment-confirmation.json** - Handles payment confirmations
+3. **free-lesson-listmonk-subscribe.json** - Adds `/ai/free-lesson` and `/ai-bootcamp/free-lesson` modal emails to Listmonk
 
 ---
 
@@ -163,3 +164,29 @@ Duplicate the reminder section to add 24h and 48h follow-ups.
 ## Support
 
 Questions? Contact hello@bitcamp.ge
+
+---
+
+## Free Lesson Listmonk Subscribe
+
+Import `free-lesson-listmonk-subscribe.json` into n8n and create an HTTP Basic Auth credential for Listmonk:
+
+- Base URL used by workflow: `https://news.bitcamp.ge`
+- `/ai/free-lesson` sends `listId=4`
+- `/ai-bootcamp/free-lesson` sends `listId=5`
+- Production webhook URL expected by the site: `https://n8n.bitcamp.ge/webhook/free-lesson-subscribe`
+
+The workflow response node includes `Access-Control-Allow-Origin: *` because this public webhook does not use cookies or browser credentials. If your n8n instance overrides CORS globally, allow `https://www.bitcamp.ge` and `https://bitcamp.ge`.
+
+### Create via n8n API
+
+The repo includes a helper script that creates the workflow through the n8n public API:
+
+```bash
+N8N_API_TOKEN_FILE=/tmp/n8n_api_token \
+N8N_LISTMONK_CREDENTIAL_ID="your-n8n-http-basic-auth-credential-id" \
+N8N_ACTIVATE_WORKFLOW=true \
+node scripts/create-n8n-free-lesson-workflow.js
+```
+
+If you omit `N8N_LISTMONK_CREDENTIAL_ID`, the script still creates the workflow, but leaves it inactive so you can bind the Listmonk credential in the n8n UI before activating.

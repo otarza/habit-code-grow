@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { ArrowRight, CheckCircle2, Volume2 } from "lucide-react";
 import { CampaignFooter } from "@/components/campaign/CampaignFooter";
+import { FreeLessonEmailGate } from "@/components/FreeLessonEmailGate";
 import { PRODUCTS } from "@/lib/checkout";
 import bitcampLogo from "@/assets/bitcamp-logo.png";
 
@@ -262,6 +263,12 @@ export default function AIBootcampFreeLesson() {
       </main>
 
       <CampaignFooter />
+      <FreeLessonEmailGate
+        listKey="ai-bootcamp"
+        listId={5}
+        productLabel="AI Bootcamp"
+        source="ai-bootcamp-free-lesson"
+      />
     </div>
   );
 }
