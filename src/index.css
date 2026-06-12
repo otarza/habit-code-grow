@@ -3735,21 +3735,6 @@ Red pyramid, dark navy, with vibrant pixel art accents and animations
   opacity: 0.78;
 }
 
-.free-lesson-gate__secondary {
-  display: block;
-  margin: 14px auto 0;
-  border: 0;
-  background: transparent;
-  color: #cbd5e1;
-  font-size: 14px;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.free-lesson-gate__secondary:hover {
-  color: #fff7ed;
-}
-
 .free-lesson-gate__error,
 .free-lesson-gate__success {
   margin: 0;

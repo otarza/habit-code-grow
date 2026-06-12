@@ -55,10 +55,6 @@ export function FreeLessonEmailGate({ listKey, listId, productLabel, source }: F
     };
   }, [isOpen]);
 
-  const closeGate = () => {
-    setIsOpen(false);
-  };
-
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const normalizedEmail = email.trim().toLowerCase();
@@ -94,7 +90,7 @@ export function FreeLessonEmailGate({ listKey, listId, productLabel, source }: F
 
       window.localStorage.setItem(storageKey, "subscribed");
       setSubmitState("success");
-      window.setTimeout(closeGate, 900);
+      window.setTimeout(() => setIsOpen(false), 900);
     } catch {
       setSubmitState("error");
       setError("ვერ დაემატა. სცადე კიდევ ერთხელ.");
@@ -143,9 +139,6 @@ export function FreeLessonEmailGate({ listKey, listId, productLabel, source }: F
           </button>
         </form>
 
-        <button type="button" className="free-lesson-gate__secondary" onClick={closeGate}>
-          ახლა არა
-        </button>
       </div>
     </div>
   );
