@@ -168,10 +168,6 @@ const proTestimonials = [
 
 const proFaqs = [
   {
-    q: "რით განსხვავდება ეს ₾99-იანი Bootcamp-ისგან?",
-    a: "₾99-იანი Bootcamp არის თვითსწავლის კურსი პრომპტინგის საფუძვლებისთვის. ეს პროგრამა კი სრული 6-მოდულიანი გზაა: მოიცავს Advanced Prompting-ს, ბიზნეს ამოცანებს, ვიზუალურ AI-ს, Custom GPTs-სა და n8n ავტომატიზაციას, რასაც ემატება 4-კვირიანი მენტორშიფი და ინდივიდუალური უკუკავშირი.",
-  },
-  {
     q: "მჭირდება პროგრამირების ცოდნა?",
     a: "არა. კურსი იწყება AI-სთან სწორი კომუნიკაციით და არ მოითხოვს კოდის წერას. Python და SQL კურსები გადმოგეცემათ ბონუსად, ხოლო n8n მოდული ავტომატიზაციას ვიზუალურად, დამწყებისთვის გასაგები ენით ხსნის.",
   },
@@ -301,7 +297,7 @@ export default function AIPromptEngineering() {
     <div className="campaign-page campaign-page--pro">
       <SEO
         title={`AI სრული პროგრამა მენტორობით — ${PRO_CURRENT_PRICE_LABEL} | BitCamp`}
-        description="6-მოდულიანი AI პროგრამა მენტორობით: prompting, business AI, visual AI, Custom GPTs, n8n ავტომატიზაცია, Python/SQL ბონუსები და 4 კვირის მხარდაჭერა."
+        description="6-მოდულიანი AI პროგრამა მენტორობით: prompting, business AI, visual AI, Custom GPTs, n8n ავტომატიზაცია, Python/SQL ბონუსები და 4 კვირიანი სამენტორო მხარდაჭერა."
         image="https://www.bitcamp.ge/ai-meta.png"
         url="https://www.bitcamp.ge/ai"
       />
@@ -441,9 +437,9 @@ export default function AIPromptEngineering() {
           <div className="campaign-shell campaign-cta-band__inner">
             <div className="campaign-cta-band__copy">
               <p className="campaign-kicker">რეკომენდებული გზა</p>
-              <h2>აირჩიე ეს ვერსია, თუ გინდა სწავლა დასრულდეს რეალური ავტომატიზაციებით და არა მხოლოდ თეორიით.</h2>
+              <h2>აირჩიე ეს კურსი, თუ გინდა სწავლა დასრულდეს რეალური ავტომატიზაციებით და არა მხოლოდ თეორიით.</h2>
               <p>
-                ₾99-იანი Bootcamp არის კარგი დასაწყისი თვითსწავლისთვის. ეს პროგრამა კი გაძლევს სრულ გზას:
+                ეს პროგრამა კი გაძლევს სრულ ბილიკს:
                 Advanced Prompting, Business AI, Visual AI, Custom GPTs, n8n ავტომატიზაცია და მენტორული უკუკავშირი პრაქტიკაზე.
               </p>
               <div className="campaign-cta-band__meta">
@@ -453,7 +449,7 @@ export default function AIPromptEngineering() {
                 </span>
                 <span>
                   <CalendarDays aria-hidden="true" size={16} />
-                  4 კვირის მხარდაჭერა
+                  4 კვირიანი სამენტორო მხარდაჭერა
                 </span>
                 <span>
                   <ShieldCheck aria-hidden="true" size={16} />
@@ -473,13 +469,6 @@ export default function AIPromptEngineering() {
               </div>
               <CtaButton label={`შემოუერთდი პროგრამას — ${PRO_CURRENT_PRICE_LABEL}`} onClick={buy} />
               <PaymentLogos compact />
-              <p className="campaign-muted-note campaign-muted-note--tight">
-                ჯერ მხოლოდ პრომპტინგის საფუძვლები გინდა?{" "}
-                <Link to="/ai-bootcamp" className="campaign-text-link">
-                  ნახე ₾99 თვითსწავლის ვერსია
-                </Link>
-                .
-              </p>
             </div>
           </div>
         </section>
@@ -630,13 +619,6 @@ export default function AIPromptEngineering() {
                 <span className="campaign-price__save">{PRO_DISCOUNT_WINDOW_LABEL}</span>
               </div>
               <CtaButton label={`შემოუერთდი პროგრამას — ${PRO_CURRENT_PRICE_LABEL}`} onClick={buy} />
-              <p>
-                თუ გინდა უფრო მსუბუქი შესასვლელი, შეგიძლია დაიწყო{" "}
-                <Link to="/ai-bootcamp" className="campaign-text-link">
-                  ₾99 თვითსწავლის Bootcamp-ით
-                </Link>
-                .
-              </p>
               <PaymentLogos compact />
             </div>
           </div>
