@@ -13,6 +13,7 @@ import {
   MessageSquareText,
   ShieldCheck,
   Users,
+  Volume2,
   Workflow,
 } from "lucide-react";
 import { CampaignFooter } from "@/components/campaign/CampaignFooter";
@@ -23,6 +24,16 @@ import { rememberAttributionRef } from "@/lib/attribution";
 import { handleBuy } from "@/lib/checkout";
 
 const paymentLogos = ["visa", "mastercard", "apple-pay", "google-pay"] as const;
+const PRO_VIDEO_BASE_URL =
+  "https://player.mediadelivery.net/embed/678241/5c33a6d3-33fc-41a5-83ca-1a9c8ee702ff?autoplay=true&loop=false&muted=true&preload=true&responsive=true";
+const PRO_CURRENT_PRICE = 249;
+const PRO_FULL_PRICE = 790;
+const formatGel = (value: number) => `₾${value}`;
+const getProVideoUrl = (soundEnabled: boolean) =>
+  PRO_VIDEO_BASE_URL.replace("muted=true", `muted=${soundEnabled ? "false" : "true"}`);
+const PRO_CURRENT_PRICE_LABEL = formatGel(PRO_CURRENT_PRICE);
+const PRO_FULL_PRICE_LABEL = formatGel(PRO_FULL_PRICE);
+const PRO_DISCOUNT_WINDOW_LABEL = "ივნისის ბოლომდე";
 
 const proIncludes = [
   "სრული 6-მოდულიანი პროგრამა: პრომპტინგიდან n8n ავტომატიზაციამდე",
@@ -193,6 +204,32 @@ function PaymentLogos({ compact = false }: { compact?: boolean }) {
   );
 }
 
+function ProHeroVideo({ className = "" }: { className?: string }) {
+  const [soundEnabled, setSoundEnabled] = useState(false);
+
+  return (
+    <div className={`campaign-hero-video ${className}`} aria-label="AI სრული პროგრამის ვიდეო">
+      <iframe
+        key={soundEnabled ? "sound-on" : "muted"}
+        src={getProVideoUrl(soundEnabled)}
+        title="AI სრული პროგრამის ვიდეო"
+        loading="lazy"
+        allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture; fullscreen"
+        allowFullScreen
+      />
+      <button
+        type="button"
+        className={`campaign-hero-video__sound${soundEnabled ? " is-on" : ""}`}
+        onClick={() => setSoundEnabled(true)}
+        disabled={soundEnabled}
+      >
+        <Volume2 aria-hidden="true" size={16} />
+        <span>{soundEnabled ? "ხმა ჩართულია" : "ჩართე ხმა"}</span>
+      </button>
+    </div>
+  );
+}
+
 function ProOffer({ className = "", id, onBuy }: { className?: string; id?: string; onBuy: () => void }) {
   return (
     <div id={id} className={`campaign-hero__offer campaign-hero__offer--pro campaign-buy-anchor ${className}`}>
@@ -203,11 +240,12 @@ function ProOffer({ className = "", id, onBuy }: { className?: string; id?: stri
       <div className="campaign-final__price-row">
         <div>
           <span>ერთჯერადი ფასი</span>
-          <strong>₾249</strong>
+          <span className="campaign-price__old">{PRO_FULL_PRICE_LABEL}</span>
+          <strong>{PRO_CURRENT_PRICE_LABEL}</strong>
         </div>
-        <span className="campaign-price__save">რეკომენდებული</span>
+        <span className="campaign-price__save">{PRO_DISCOUNT_WINDOW_LABEL}</span>
       </div>
-      <CtaButton label="შემოუერთდი პროგრამას — ₾249" onClick={onBuy} />
+      <CtaButton label={`შემოუერთდი პროგრამას — ${PRO_CURRENT_PRICE_LABEL}`} onClick={onBuy} />
       <div className="campaign-offer-footer">
         <div className="campaign-secure-line">
           <ShieldCheck aria-hidden="true" size={16} />
@@ -262,7 +300,7 @@ export default function AIPromptEngineering() {
   return (
     <div className="campaign-page campaign-page--pro">
       <SEO
-        title="AI სრული პროგრამა მენტორობით — ₾249 | BitCamp"
+        title={`AI სრული პროგრამა მენტორობით — ${PRO_CURRENT_PRICE_LABEL} | BitCamp`}
         description="6-მოდულიანი AI პროგრამა მენტორობით: prompting, business AI, visual AI, Custom GPTs, n8n ავტომატიზაცია, Python/SQL ბონუსები და 4 კვირის მხარდაჭერა."
         image="https://www.bitcamp.ge/ai-meta.png"
         url="https://www.bitcamp.ge/ai"
@@ -280,6 +318,8 @@ export default function AIPromptEngineering() {
               <p className="campaign-lead">
                 6-მოდულიანი პრაქტიკული პროგრამა მათთვის, ვისაც AI-ს გამოყენება რეალური სამუშაო პროცესების დასაჩქარებლად და გასამარტივებლად სურს. კურსს ახლავს 4-კვირიანი მენტორშიფი და ინდივიდუალური უკუკავშირი.
               </p>
+
+              <ProHeroVideo className="campaign-hero-video--inline" />
 
               <div className="campaign-hero__facts" aria-label="პროგრამის ძირითადი ინფორმაცია">
                 <span>
@@ -312,6 +352,7 @@ export default function AIPromptEngineering() {
             </div>
 
             <div className="campaign-hero__visual">
+              <ProHeroVideo className="campaign-hero-video--desktop" />
               <ProOffer id="purchase" className="campaign-hero__offer--desktop" onBuy={buy} />
 
               <figure className="campaign-instructor-card">
@@ -331,7 +372,7 @@ export default function AIPromptEngineering() {
 
         <CampaignStickyCta
           eyebrow="სრული პროგრამა"
-          price="₾249"
+          price={PRO_CURRENT_PRICE_LABEL}
           label="შემოუერთდი"
           onClick={buy}
         />
@@ -425,11 +466,12 @@ export default function AIPromptEngineering() {
               <div className="campaign-cta-price-line">
                 <div>
                   <span>სრული პროგრამა</span>
-                  <strong>₾249</strong>
+                  <span className="campaign-price__old">{PRO_FULL_PRICE_LABEL}</span>
+                  <strong>{PRO_CURRENT_PRICE_LABEL}</strong>
                 </div>
-                <span className="campaign-price__save">მენტორული</span>
+                <span className="campaign-price__save">{PRO_DISCOUNT_WINDOW_LABEL}</span>
               </div>
-              <CtaButton label="შემოუერთდი პროგრამას — ₾249" onClick={buy} />
+              <CtaButton label={`შემოუერთდი პროგრამას — ${PRO_CURRENT_PRICE_LABEL}`} onClick={buy} />
               <PaymentLogos compact />
               <p className="campaign-muted-note campaign-muted-note--tight">
                 ჯერ მხოლოდ პრომპტინგის საფუძვლები გინდა?{" "}
@@ -582,11 +624,12 @@ export default function AIPromptEngineering() {
               <div className="campaign-final__price-row">
                 <div>
                   <span>ერთჯერადი ფასი</span>
-                  <strong>₾249</strong>
+                  <span className="campaign-price__old">{PRO_FULL_PRICE_LABEL}</span>
+                  <strong>{PRO_CURRENT_PRICE_LABEL}</strong>
                 </div>
-                <span className="campaign-price__save">მენტორული</span>
+                <span className="campaign-price__save">{PRO_DISCOUNT_WINDOW_LABEL}</span>
               </div>
-              <CtaButton label="შემოუერთდი პროგრამას — ₾249" onClick={buy} />
+              <CtaButton label={`შემოუერთდი პროგრამას — ${PRO_CURRENT_PRICE_LABEL}`} onClick={buy} />
               <p>
                 თუ გინდა უფრო მსუბუქი შესასვლელი, შეგიძლია დაიწყო{" "}
                 <Link to="/ai-bootcamp" className="campaign-text-link">

@@ -2861,6 +2861,18 @@ Red pyramid, dark navy, with vibrant pixel art accents and animations
   line-height: 0.95;
 }
 
+.campaign-cta-price-line .campaign-price__old,
+.campaign-final__price-row .campaign-price__old {
+  color: var(--cp-text-muted);
+  font-size: 24px;
+  font-weight: 650;
+  line-height: 1;
+  letter-spacing: 0;
+  text-decoration: line-through;
+  text-decoration-thickness: 2px;
+  text-transform: none;
+}
+
 .campaign-final__panel p {
   margin: 0;
   color: var(--cp-text-muted);
