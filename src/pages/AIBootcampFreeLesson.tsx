@@ -2,13 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { ArrowRight, CheckCircle2, Volume2 } from "lucide-react";
 import { CampaignFooter } from "@/components/campaign/CampaignFooter";
-import { Countdown } from "@/components/campaign/Countdown";
-import { FreeLessonEmailGate } from "@/components/FreeLessonEmailGate";
-import {
-  BOOTCAMP_CURRENT_PRICE_LABEL,
-  BOOTCAMP_FULL_PRICE_LABEL,
-  BOOTCAMP_SAVINGS_LABEL,
-} from "@/lib/bootcampPricing";
+import { FreeLessonResourceForm } from "@/components/FreeLessonEmailGate";
 import bitcampLogo from "@/assets/bitcamp-logo.png";
 
 // Same video as the gated lesson at /learn/ai-bootcamp/fundamentals/tcrei-model
@@ -86,34 +80,19 @@ function goToCheckout() {
   window.location.href = CHECKOUT_URL;
 }
 
-function CtaButton() {
+function CtaButton({ variant = "primary" }: { variant?: "primary" | "secondary" }) {
   return (
     <button
       type="button"
-      className="campaign-cta free-lesson__price-cta"
+      className={`campaign-cta free-lesson__course-cta${
+        variant === "secondary" ? " free-lesson__course-cta--secondary" : ""
+      }`}
       onClick={goToCheckout}
-      aria-label={`დაიწყე სწავლა ${BOOTCAMP_CURRENT_PRICE_LABEL}-ად, სრული ფასი ${BOOTCAMP_FULL_PRICE_LABEL}`}
+      aria-label="ნახე სრული AI Bootcamp კურსი"
     >
-      <span className="free-lesson__price-cta-copy">დაიწყე სწავლა</span>
-      <span className="free-lesson__price-cta-row" aria-hidden="true">
-        <span className="campaign-price__old">{BOOTCAMP_FULL_PRICE_LABEL}</span>
-        <strong>{BOOTCAMP_CURRENT_PRICE_LABEL}</strong>
-        <span className="campaign-price__save">დაზოგე {BOOTCAMP_SAVINGS_LABEL}</span>
-      </span>
+      <span>ნახე სრული კურსი</span>
       <ArrowRight aria-hidden="true" size={18} />
     </button>
-  );
-}
-
-function FreeLessonPriceCountdown() {
-  return (
-    <div className="campaign-price-deadline free-lesson__deadline" aria-label="ფასის ზრდამდე დარჩენილი დრო">
-      <div className="campaign-price-deadline__copy">
-        <span>ფასი გაიზრდება ივნისის ბოლოს</span>
-        <strong>{BOOTCAMP_CURRENT_PRICE_LABEL} - ფასდაკლება მოქმედებს 30 ივნისამდე</strong>
-      </div>
-      <Countdown />
-    </div>
   );
 }
 
@@ -246,14 +225,11 @@ export default function AIBootcampFreeLesson() {
             <FreeLessonVideo />
             <p className="free-lesson__hint">ხმა ჩართე და უყურე ბოლომდე 🔊</p>
 
-            {/* CTA section — directly below the video, no dead space */}
-            <div className="free-lesson__cta-card">
+            <div className="free-lesson__takeaways">
               <p className="free-lesson__bridge">
                 ეს იყო ერთი გაკვეთილი 25-დან. დანარჩენი 24 — ზუსტად ამ ფორმატით: T.C.R.E.I., Prompt
                 Chaining, CSV, JSON და სხვა.
               </p>
-              <FreeLessonPriceCountdown />
-              <CtaButton />
               <ul className="free-lesson__bullets">
                 {bullets.map((item) => (
                   <li key={item}>
@@ -262,6 +238,25 @@ export default function AIBootcampFreeLesson() {
                   </li>
                 ))}
               </ul>
+            </div>
+
+            <FreeLessonResourceForm
+              listKey="ai-bootcamp"
+              listId={5}
+              productLabel="AI Bootcamp"
+              source="ai-bootcamp-free-lesson"
+            />
+
+            <div className="free-lesson__cta-card">
+              <div>
+                <span>სრული კურსი</span>
+                <h2>მზად ხარ სრული პროცესის დასაწყებად?</h2>
+              </div>
+              <p className="free-lesson__bridge">
+                სრულ კურსში ეტაპობრივად ისწავლი როგორ გამოიყენო AI სამსახურში, ბიზნესში და კონტენტის
+                შექმნაში ისე, რომ თითოეული გაკვეთილი კონკრეტულ პრაქტიკულ შედეგამდე მიგიყვანს.
+              </p>
+              <CtaButton />
             </div>
           </div>
         </section>
@@ -282,20 +277,14 @@ export default function AIBootcampFreeLesson() {
             </blockquote>
 
             <div className="free-lesson__final-cta">
-              <FreeLessonPriceCountdown />
-              <CtaButton />
+              <p>თუ გაკვეთილი სასარგებლო იყო, სრული პროგრამა შემდეგ პრაქტიკულ ნაბიჯებს გაჩვენებს.</p>
+              <CtaButton variant="secondary" />
             </div>
           </div>
         </section>
       </main>
 
       <CampaignFooter />
-      <FreeLessonEmailGate
-        listKey="ai-bootcamp"
-        listId={5}
-        productLabel="AI Bootcamp"
-        source="ai-bootcamp-free-lesson"
-      />
     </div>
   );
 }

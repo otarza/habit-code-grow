@@ -3523,8 +3523,9 @@ Red pyramid, dark navy, with vibrant pixel art accents and animations
   font-weight: 600;
 }
 
-/* CTA block sits tight under the video — no dead space before the offer */
-.free-lesson__cta-card {
+.free-lesson__takeaways,
+.free-lesson__cta-card,
+.free-lesson-resource {
   margin-top: 16px;
   padding: 24px;
   border: 1px solid var(--cp-accent-line);
@@ -3532,6 +3533,28 @@ Red pyramid, dark navy, with vibrant pixel art accents and animations
   background:
     linear-gradient(180deg, var(--cp-accent-soft), transparent 60%),
     var(--cp-surface);
+}
+
+.free-lesson__cta-card > div:first-child {
+  display: grid;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.free-lesson__cta-card > div:first-child span {
+  color: var(--cp-accent-text);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.free-lesson__cta-card h2 {
+  margin: 0;
+  color: var(--cp-text-primary);
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 1.18;
 }
 
 .free-lesson__bridge {
@@ -3553,47 +3576,9 @@ Red pyramid, dark navy, with vibrant pixel art accents and animations
   margin-top: 8px;
 }
 
-.free-lesson__deadline {
-  margin-bottom: 14px;
-}
-
-.free-lesson__price-cta {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto;
-  min-height: 78px;
-  align-items: center;
-  text-align: left;
-}
-
-.free-lesson__price-cta-copy {
-  font-size: 15px;
-  line-height: 1.2;
-}
-
-.free-lesson__price-cta-row {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px;
-  justify-self: end;
-}
-
-.free-lesson__price-cta-row .campaign-price__old {
-  color: rgba(10, 10, 11, 0.58);
-  font-size: 18px;
-}
-
-.free-lesson__price-cta-row strong {
-  color: var(--cp-cta-text);
-  font-size: 28px;
-  font-weight: 850;
-  line-height: 1;
-}
-
-.free-lesson__price-cta-row .campaign-price__save {
-  background: rgba(218, 41, 28, 0.12);
-  color: #8f1d14;
-  white-space: nowrap;
+.free-lesson__course-cta--secondary {
+  width: auto;
+  margin-top: 14px;
 }
 
 .free-lesson__bullets li {
@@ -3676,6 +3661,154 @@ Red pyramid, dark navy, with vibrant pixel art accents and animations
 
 .free-lesson__final-cta {
   margin-top: 28px;
+  padding: 22px;
+  border: 1px solid var(--cp-border);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.42);
+}
+
+.free-lesson__final-cta p {
+  margin: 0;
+  color: var(--cp-text-secondary);
+  font-size: 16px;
+  line-height: 1.55;
+}
+
+.free-lesson-resource {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr);
+  gap: 16px;
+  border-color: rgba(255, 118, 106, 0.42);
+  background:
+    linear-gradient(180deg, rgba(218, 41, 28, 0.2), rgba(18, 18, 20, 0) 48%),
+    #141416;
+  box-shadow: 0 18px 54px rgba(0, 0, 0, 0.28);
+}
+
+.free-lesson-resource__icon {
+  display: grid;
+  width: 48px;
+  height: 48px;
+  place-items: center;
+  border: 1px solid var(--cp-accent-line);
+  border-radius: 999px;
+  background: rgba(218, 41, 28, 0.18);
+  color: #ff8a80;
+}
+
+.free-lesson-resource__content {
+  min-width: 0;
+}
+
+.free-lesson-resource__eyebrow {
+  margin: 0 0 6px;
+  color: #ff8a80;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.free-lesson-resource h2 {
+  margin: 0;
+  color: #ffffff;
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.free-lesson-resource__content p:not(.free-lesson-resource__eyebrow) {
+  margin: 10px 0 0;
+  color: #d5d5dc;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.free-lesson-resource__form {
+  grid-column: 1 / -1;
+  display: grid;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.free-lesson-resource__form label {
+  color: #f5f5f7;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.free-lesson-resource__input-row {
+  display: grid;
+  grid-template-columns: 18px 1fr;
+  align-items: center;
+  gap: 10px;
+  min-height: 52px;
+  padding: 0 14px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 8px;
+  background: rgba(6, 6, 8, 0.72);
+  color: #a7a7b3;
+}
+
+.free-lesson-resource__input-row:focus-within {
+  border-color: rgba(255, 118, 106, 0.82);
+  box-shadow: 0 0 0 3px rgba(218, 41, 28, 0.24);
+}
+
+.free-lesson-resource__input-row input {
+  width: 100%;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #ffffff;
+  font: inherit;
+}
+
+.free-lesson-resource__input-row input::placeholder {
+  color: #8f8f9c;
+}
+
+.free-lesson-resource__submit {
+  display: inline-flex;
+  min-height: 52px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 0;
+  border-radius: 8px;
+  background: #da291c;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+  transition:
+    transform 0.18s ease,
+    background-color 0.18s ease;
+}
+
+.free-lesson-resource__submit:hover:not(:disabled) {
+  background: #f04438;
+  transform: translateY(-1px);
+}
+
+.free-lesson-resource__submit:disabled {
+  cursor: default;
+  opacity: 0.76;
+}
+
+.free-lesson-resource__error,
+.free-lesson-resource__success {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.free-lesson-resource__error {
+  color: #fca5a5;
+}
+
+.free-lesson-resource__success {
+  color: #86efac;
 }
 
 @media (min-width: 700px) {
@@ -3697,205 +3830,23 @@ Red pyramid, dark navy, with vibrant pixel art accents and animations
     font-size: 16px;
   }
 
-  .free-lesson__cta-card {
+  .free-lesson__takeaways,
+  .free-lesson__cta-card,
+  .free-lesson-resource {
     padding: 18px;
   }
 
-  .free-lesson__price-cta {
-    grid-template-columns: 1fr auto;
-    gap: 8px;
-    min-height: 92px;
-    padding: 12px 14px;
+  .free-lesson-resource {
+    grid-template-columns: 1fr;
   }
 
-  .free-lesson__price-cta-row {
-    grid-column: 1 / -1;
-    justify-self: start;
+  .free-lesson-resource__icon {
+    width: 42px;
+    height: 42px;
   }
 
-  .free-lesson__price-cta > svg {
-    grid-column: 2;
-    grid-row: 1;
-  }
-
-  .campaign-price-deadline .campaign-countdown {
-    gap: 5px;
-  }
-
-  .campaign-price-deadline .campaign-countdown__cell {
-    min-width: 38px;
-  }
-
-  .campaign-price-deadline .campaign-countdown__number {
-    font-size: 28px;
-  }
-
-  .campaign-price-deadline .campaign-countdown__separator {
-    font-size: 20px;
-  }
-}
-
-.free-lesson-gate {
-  position: fixed;
-  inset: 0;
-  z-index: 1000;
-  display: grid;
-  place-items: center;
-  padding: 18px;
-}
-
-.free-lesson-gate__backdrop {
-  position: absolute;
-  inset: 0;
-  background: rgba(3, 8, 18, 0.78);
-  backdrop-filter: blur(8px);
-}
-
-.free-lesson-gate__panel {
-  position: relative;
-  width: min(100%, 460px);
-  padding: 28px;
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  border-radius: 10px;
-  background:
-    linear-gradient(180deg, rgba(218, 41, 28, 0.16), transparent 58%),
-    #111827;
-  box-shadow: 0 28px 90px rgba(0, 0, 0, 0.45);
-  color: #fff7ed;
-}
-
-.free-lesson-gate__icon {
-  display: grid;
-  width: 48px;
-  height: 48px;
-  place-items: center;
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  border-radius: 999px;
-  background: rgba(218, 41, 28, 0.18);
-  color: #ffb4a8;
-}
-
-.free-lesson-gate__eyebrow {
-  margin: 18px 0 8px;
-  color: #ffb4a8;
-  font-size: 12px;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.free-lesson-gate__panel h2 {
-  margin: 0;
-  color: #fff7ed;
-  font-size: 28px;
-  font-weight: 800;
-  line-height: 1.18;
-}
-
-.free-lesson-gate__copy {
-  margin: 12px 0 0;
-  color: #cbd5e1;
-  font-size: 16px;
-  line-height: 1.6;
-}
-
-.free-lesson-gate__form {
-  display: grid;
-  gap: 10px;
-  margin-top: 20px;
-}
-
-.free-lesson-gate__form label {
-  color: #f8fafc;
-  font-size: 13px;
-  font-weight: 800;
-}
-
-.free-lesson-gate__input-row {
-  display: grid;
-  grid-template-columns: 18px 1fr;
-  align-items: center;
-  gap: 10px;
-  min-height: 52px;
-  padding: 0 14px;
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  border-radius: 8px;
-  background: rgba(15, 23, 42, 0.86);
-  color: #94a3b8;
-}
-
-.free-lesson-gate__input-row:focus-within {
-  border-color: rgba(255, 180, 168, 0.82);
-  box-shadow: 0 0 0 3px rgba(218, 41, 28, 0.2);
-}
-
-.free-lesson-gate__input-row input {
-  width: 100%;
-  border: 0;
-  outline: 0;
-  background: transparent;
-  color: #fff7ed;
-  font: inherit;
-}
-
-.free-lesson-gate__input-row input::placeholder {
-  color: #64748b;
-}
-
-.free-lesson-gate__submit {
-  display: inline-flex;
-  min-height: 52px;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  border: 0;
-  border-radius: 8px;
-  background: #da291c;
-  color: #fff7ed;
-  font-size: 16px;
-  font-weight: 800;
-  cursor: pointer;
-  transition:
-    transform 0.18s ease,
-    background-color 0.18s ease;
-}
-
-.free-lesson-gate__submit:hover:not(:disabled) {
-  background: #f04438;
-  transform: translateY(-1px);
-}
-
-.free-lesson-gate__submit:disabled {
-  cursor: default;
-  opacity: 0.78;
-}
-
-.free-lesson-gate__error,
-.free-lesson-gate__success {
-  margin: 0;
-  font-size: 14px;
-  font-weight: 700;
-}
-
-.free-lesson-gate__error {
-  color: #fca5a5;
-}
-
-.free-lesson-gate__success {
-  color: #86efac;
-}
-
-@media (max-width: 520px) {
-  .free-lesson-gate {
-    align-items: end;
-    padding: 12px;
-  }
-
-  .free-lesson-gate__panel {
-    padding: 22px;
-  }
-
-  .free-lesson-gate__panel h2 {
-    font-size: 23px;
+  .free-lesson-resource h2,
+  .free-lesson__cta-card h2 {
+    font-size: 21px;
   }
 }

@@ -6,15 +6,19 @@ const FREE_LESSON_SUBSCRIBE_WEBHOOK_URL =
   "https://n8n.bitcamp.ge/webhook/free-lesson-subscribe";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const MODAL_DELAY_MS = 4500;
 
 type SubmitState = "idle" | "submitting" | "success" | "error";
 
-type FreeLessonEmailGateProps = {
+type FreeLessonResourceFormProps = {
   listKey: "ai-bootcamp" | "ai-pro";
   listId: 4 | 5;
   productLabel: string;
   source: string;
+};
+
+type AnalyticsWindow = Window & {
+  fbq?: (...args: unknown[]) => void;
+  gtag?: (...args: unknown[]) => void;
 };
 
 function getTrackingParams() {
@@ -29,31 +33,27 @@ function getTrackingParams() {
   };
 }
 
-export function FreeLessonEmailGate({ listKey, listId, productLabel, source }: FreeLessonEmailGateProps) {
-  const [isOpen, setIsOpen] = useState(false);
+function fireResourceSubmit(productLabel: string, listKey: string, listId: number) {
+  if (typeof window === "undefined") return;
+  const win = window as AnalyticsWindow;
+  const payload = { product: productLabel, list_key: listKey, list_id: listId };
+  win.fbq?.("trackCustom", "FreeLessonResourceSubmit", payload);
+  win.gtag?.("event", "FreeLessonResourceSubmit", payload);
+}
+
+export function FreeLessonResourceForm({ listKey, listId, productLabel, source }: FreeLessonResourceFormProps) {
   const [email, setEmail] = useState("");
   const [submitState, setSubmitState] = useState<SubmitState>("idle");
   const [error, setError] = useState("");
+  const [hasSubscribed, setHasSubscribed] = useState(false);
   const tracking = useMemo(getTrackingParams, []);
-  const storageKey = `bitcamp-free-lesson-email-gate:${listKey}`;
+  const storageKey = `bitcamp-free-lesson-resources:${listKey}`;
 
   useEffect(() => {
     if (typeof window === "undefined") return undefined;
-    if (window.localStorage.getItem(storageKey) === "subscribed") return undefined;
-
-    const timer = window.setTimeout(() => setIsOpen(true), MODAL_DELAY_MS);
-    return () => window.clearTimeout(timer);
+    setHasSubscribed(window.localStorage.getItem(storageKey) === "subscribed");
+    return undefined;
   }, [storageKey]);
-
-  useEffect(() => {
-    if (!isOpen || typeof document === "undefined") return undefined;
-
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = previousOverflow;
-    };
-  }, [isOpen]);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -89,57 +89,57 @@ export function FreeLessonEmailGate({ listKey, listId, productLabel, source }: F
       }
 
       window.localStorage.setItem(storageKey, "subscribed");
+      fireResourceSubmit(productLabel, listKey, listId);
       setSubmitState("success");
-      window.setTimeout(() => setIsOpen(false), 900);
+      setHasSubscribed(true);
     } catch {
       setSubmitState("error");
       setError("ვერ დაემატა. სცადე კიდევ ერთხელ.");
     }
   };
 
-  if (!isOpen) return null;
-
   const isSubmitting = submitState === "submitting";
   const isSuccess = submitState === "success";
+  const isDisabled = isSubmitting || isSuccess || hasSubscribed;
 
   return (
-    <div className="free-lesson-gate" role="dialog" aria-modal="true" aria-labelledby="free-lesson-gate-title">
-      <div className="free-lesson-gate__backdrop" aria-hidden="true" />
-      <div className="free-lesson-gate__panel">
-        <div className="free-lesson-gate__icon" aria-hidden="true">
-          <Gift size={24} />
-        </div>
-        <p className="free-lesson-gate__eyebrow">უფასო რესურსები გზაშია</p>
-        <h2 id="free-lesson-gate-title">ჩაწერე ელფოსტა და გააგრძელე ვიდეოს ყურება</h2>
-        <p className="free-lesson-gate__copy">
-          {productLabel}-ის მსგავს პრაქტიკულ მასალებს, პრომპტებსა და უფასო გაკვეთილებს მომავალშიც
-          გამოგიგზავნით.
-        </p>
-
-        <form className="free-lesson-gate__form" onSubmit={handleSubmit}>
-          <label htmlFor={`free-lesson-email-${listKey}`}>ელფოსტა</label>
-          <div className="free-lesson-gate__input-row">
-            <Mail size={18} aria-hidden="true" />
-            <input
-              id={`free-lesson-email-${listKey}`}
-              type="email"
-              value={email}
-              onChange={(event) => setEmail(event.target.value)}
-              placeholder="you@example.com"
-              autoComplete="email"
-              disabled={isSubmitting || isSuccess}
-              required
-            />
-          </div>
-          {error ? <p className="free-lesson-gate__error">{error}</p> : null}
-          {isSuccess ? <p className="free-lesson-gate__success">მადლობა! ვიდეო შეგიძლია გააგრძელო.</p> : null}
-          <button type="submit" className="free-lesson-gate__submit" disabled={isSubmitting || isSuccess}>
-            <span>{isSubmitting ? "იგზავნება..." : isSuccess ? "დამატებულია" : "გაგრძელება"}</span>
-            <ArrowRight size={17} aria-hidden="true" />
-          </button>
-        </form>
-
+    <section className="free-lesson-resource" aria-labelledby={`free-lesson-resource-title-${listKey}`}>
+      <div className="free-lesson-resource__icon" aria-hidden="true">
+        <Gift size={24} />
       </div>
-    </div>
+      <div className="free-lesson-resource__content">
+        <p className="free-lesson-resource__eyebrow">შემდეგი ნაბიჯი</p>
+        <h2 id={`free-lesson-resource-title-${listKey}`}>მიიღე დამატებითი AI რესურსები</h2>
+        <p>
+          გამოგიგზავნი {productLabel}-თან დაკავშირებულ პრომპტების შაბლონებს, პრაქტიკულ მაგალითებს და
+          მომდევნო უფასო გაკვეთილსაც.
+        </p>
+      </div>
+
+      <form className="free-lesson-resource__form" onSubmit={handleSubmit}>
+        <label htmlFor={`free-lesson-email-${listKey}`}>ელფოსტა</label>
+        <div className="free-lesson-resource__input-row">
+          <Mail size={18} aria-hidden="true" />
+          <input
+            id={`free-lesson-email-${listKey}`}
+            type="email"
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
+            placeholder="you@example.com"
+            autoComplete="email"
+            disabled={isDisabled}
+            required
+          />
+        </div>
+        {error ? <p className="free-lesson-resource__error">{error}</p> : null}
+        {hasSubscribed ? (
+          <p className="free-lesson-resource__success">მადლობა! რესურსებს ელფოსტაზე მიიღებ.</p>
+        ) : null}
+        <button type="submit" className="free-lesson-resource__submit" disabled={isDisabled}>
+          <span>{isSubmitting ? "იგზავნება..." : hasSubscribed ? "დამატებულია" : "გამომიგზავნე რესურსები"}</span>
+          <ArrowRight size={17} aria-hidden="true" />
+        </button>
+      </form>
+    </section>
   );
 }

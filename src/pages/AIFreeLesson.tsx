@@ -1,8 +1,8 @@
+import { useEffect, useRef, useState } from "react";
 import { Helmet } from "react-helmet-async";
-import { ArrowRight, CheckCircle2 } from "lucide-react";
+import { ArrowRight, CheckCircle2, Volume2 } from "lucide-react";
 import { CampaignFooter } from "@/components/campaign/CampaignFooter";
-import { FreeLessonEmailGate } from "@/components/FreeLessonEmailGate";
-import { PRODUCTS } from "@/lib/checkout";
+import { FreeLessonResourceForm } from "@/components/FreeLessonEmailGate";
 import bitcampLogo from "@/assets/bitcamp-logo.png";
 
 // Same video as the gated lesson at /learn/ai-pro/customer-profile/notebooklm-central-hub
@@ -12,13 +12,47 @@ const NOTEBOOK_URL =
   "https://notebooklm.google.com/notebook/a0564db3-4ed4-4708-9137-26003c68380c";
 
 const CHECKOUT_URL = "/ai?ref=free-lesson#purchase";
-const PRICE_LABEL = `₾${PRODUCTS.pro.value}`;
+
+type YouTubePlayer = {
+  mute: () => void;
+  unMute: () => void;
+  setVolume: (volume: number) => void;
+  playVideo: () => void;
+  destroy: () => void;
+};
+type YouTubeWindow = Window & {
+  YT?: { Player: new (el: Element, opts: unknown) => YouTubePlayer };
+  onYouTubeIframeAPIReady?: () => void;
+};
 
 const bullets = [
   "6-მოდულიანი AI პროგრამა მენტორშიფით",
   "NotebookLM, ბიზნეს ამოცანები, Custom GPTs და n8n ავტომატიზაცია",
   "Python და SQL სრული კურსები ბონუსად",
 ];
+
+let ytApiPromise: Promise<void> | null = null;
+function loadYouTubeIframeApi(): Promise<void> {
+  if (typeof window === "undefined") return Promise.resolve();
+  const win = window as YouTubeWindow;
+  if (win.YT?.Player) return Promise.resolve();
+  if (ytApiPromise) return ytApiPromise;
+  ytApiPromise = new Promise<void>((resolve) => {
+    const prev = win.onYouTubeIframeAPIReady;
+    win.onYouTubeIframeAPIReady = () => {
+      prev?.();
+      resolve();
+    };
+    if (!document.querySelector("script[data-yt-iframe-api]")) {
+      const tag = document.createElement("script");
+      tag.src = "https://www.youtube.com/iframe_api";
+      tag.async = true;
+      tag.setAttribute("data-yt-iframe-api", "");
+      document.head.appendChild(tag);
+    }
+  });
+  return ytApiPromise;
+}
 
 const testimonials = [
   {
@@ -65,17 +99,86 @@ function CtaButton({ label }: { label: string }) {
 }
 
 function FreeLessonVideo() {
+  const holderRef = useRef<HTMLDivElement>(null);
+  const playerRef = useRef<YouTubePlayer | null>(null);
+  const wantSoundRef = useRef(false);
+  const viewedRef = useRef(false);
+  const [soundOn, setSoundOn] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+    loadYouTubeIframeApi().then(() => {
+      const win = window as YouTubeWindow;
+      if (cancelled || !holderRef.current || !win.YT?.Player) return;
+      playerRef.current = new win.YT.Player(holderRef.current, {
+        videoId: LESSON_VIDEO_ID,
+        playerVars: {
+          autoplay: 1,
+          mute: 1,
+          playsinline: 1,
+          rel: 0,
+          modestbranding: 1,
+          controls: 1,
+          origin: window.location.origin,
+        },
+        events: {
+          onReady: (event: { target: YouTubePlayer }) => {
+            if (cancelled) return;
+            try {
+              event.target.mute();
+              event.target.playVideo();
+              if (wantSoundRef.current) {
+                event.target.unMute();
+                event.target.setVolume(100);
+              }
+            } catch {
+              /* player not ready yet - ignore */
+            }
+          },
+        },
+      });
+    });
+    return () => {
+      cancelled = true;
+      try {
+        playerRef.current?.destroy();
+      } catch {
+        /* ignore */
+      }
+      playerRef.current = null;
+    };
+  }, []);
+
+  const enableSound = () => {
+    if (!viewedRef.current) {
+      viewedRef.current = true;
+      fireFreeLessonEvent("FreeLessonView");
+    }
+    wantSoundRef.current = true;
+    try {
+      playerRef.current?.unMute();
+      playerRef.current?.setVolume(100);
+      playerRef.current?.playVideo();
+    } catch {
+      /* ignore */
+    }
+    setSoundOn(true);
+  };
+
   return (
     <div className="campaign-hero-video free-lesson__video" aria-label="უფასო გაკვეთილის ვიდეო">
       <div className="free-lesson__video-frame">
-        <iframe
-          src={`https://www.youtube.com/embed/${LESSON_VIDEO_ID}?rel=0&modestbranding=1&controls=1`}
-          title="NotebookLM - ის გამოყენება ცენტრალური ჰაბის შესაქმნელად"
-          loading="lazy"
-          allow="accelerometer; gyroscope; encrypted-media; picture-in-picture; fullscreen"
-          allowFullScreen
-        />
+        <div ref={holderRef} />
       </div>
+      <button
+        type="button"
+        className={`campaign-hero-video__sound${soundOn ? " is-on" : ""}`}
+        onClick={enableSound}
+        disabled={soundOn}
+      >
+        <Volume2 aria-hidden="true" size={16} />
+        <span>{soundOn ? "ხმა ჩართულია" : "ჩართე ხმა"}</span>
+      </button>
     </div>
   );
 }
@@ -118,7 +221,7 @@ export default function AIFreeLesson() {
 
             <FreeLessonVideo />
 
-            <div className="free-lesson__cta-card">
+            <div className="free-lesson__takeaways">
               <p className="free-lesson__bridge">
                 გაკვეთილში შექმნილი Notebook-ის მისამართი:{" "}
                 <a href={NOTEBOOK_URL} target="_blank" rel="noreferrer" className="campaign-text-link">
@@ -129,7 +232,6 @@ export default function AIFreeLesson() {
                 ეს არის ერთი გაკვეთილი სრული პროგრამიდან. დანარჩენ მოდულებში სწავლობ პრომპტინგს,
                 ბიზნეს ამოცანებს, ვიზუალურ AI-ს, Custom GPTs-სა და n8n ავტომატიზაციას.
               </p>
-              <CtaButton label={`შემოუერთდი პროგრამას — ${PRICE_LABEL}`} />
               <ul className="free-lesson__bullets">
                 {bullets.map((item) => (
                   <li key={item}>
@@ -138,6 +240,20 @@ export default function AIFreeLesson() {
                   </li>
                 ))}
               </ul>
+            </div>
+
+            <FreeLessonResourceForm listKey="ai-pro" listId={4} productLabel="AI Pro" source="ai-free-lesson" />
+
+            <div className="free-lesson__cta-card">
+              <div>
+                <span>სრული პროგრამა</span>
+                <h2>გინდა სრული AI გზამკვლევი?</h2>
+              </div>
+              <p className="free-lesson__bridge">
+                სრულ პროგრამაში ეტაპობრივად გაივლი პრომპტინგს, ბიზნეს ამოცანებს, ვიზუალურ AI-ს,
+                Custom GPTs-სა და n8n ავტომატიზაციას მენტორული მხარდაჭერით.
+              </p>
+              <CtaButton label="ნახე სრული პროგრამა" />
             </div>
           </div>
         </section>
@@ -167,17 +283,16 @@ export default function AIFreeLesson() {
                 პრომპტინგში, ბიზნეს ამოცანებში, Custom GPTs-სა და n8n ავტომატიზაციაში.
               </p>
               <div className="free-lesson__closing-meta">
-                <span>ერთჯერადი ფასი: {PRICE_LABEL}</span>
                 <span>Python და SQL ბონუსად</span>
+                <span>4 კვირიანი მენტორშიფი</span>
               </div>
-              <CtaButton label={`შემოუერთდი პროგრამას — ${PRICE_LABEL}`} />
+              <CtaButton label="ნახე სრული პროგრამა" />
             </div>
           </div>
         </section>
       </main>
 
       <CampaignFooter />
-      <FreeLessonEmailGate listKey="ai-pro" listId={4} productLabel="AI Pro" source="ai-free-lesson" />
     </div>
   );
 }
