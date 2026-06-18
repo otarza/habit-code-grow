@@ -2,13 +2,19 @@ import { useEffect, useRef, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { ArrowRight, CheckCircle2, Volume2 } from "lucide-react";
 import { CampaignFooter } from "@/components/campaign/CampaignFooter";
+import { Countdown } from "@/components/campaign/Countdown";
 import { FreeLessonEmailGate } from "@/components/FreeLessonEmailGate";
-import { PRODUCTS } from "@/lib/checkout";
+import {
+  BOOTCAMP_CURRENT_PRICE_LABEL,
+  BOOTCAMP_FULL_PRICE_LABEL,
+  BOOTCAMP_SAVINGS_LABEL,
+} from "@/lib/bootcampPricing";
 import bitcampLogo from "@/assets/bitcamp-logo.png";
 
 // Same video as the gated lesson at /learn/ai-bootcamp/fundamentals/tcrei-model
 // (public/learn-content/ai-bootcamp/fundamentals/tcrei-model.md → YouTube).
 const LESSON_VIDEO_ID = "meGlYoD5ndc";
+const FREE_LESSON_TITLE = "ნახე როგორ მიიღო უკეთესი პასუხები ChatGPT-სგან";
 
 type YouTubePlayer = {
   mute: () => void;
@@ -53,9 +59,6 @@ function loadYouTubeIframeApi(): Promise<void> {
 // `ref` = attribution, `#purchase` = scroll target added on the landing page.
 const CHECKOUT_URL = "/ai-bootcamp?ref=free-lesson#purchase";
 
-// Price is owned by the checkout config so this label stays in sync with /ai-bootcamp.
-const PRICE_LABEL = `₾${PRODUCTS.bootcamp.value}`;
-
 const bullets = [
   "25 ვიდეო გაკვეთილი, მოკლე და პრაქტიკული",
   "Python და SQL სრული კურსები ბონუსად",
@@ -83,12 +86,34 @@ function goToCheckout() {
   window.location.href = CHECKOUT_URL;
 }
 
-function CtaButton({ label }: { label: string }) {
+function CtaButton() {
   return (
-    <button type="button" className="campaign-cta" onClick={goToCheckout}>
-      <span>{label}</span>
+    <button
+      type="button"
+      className="campaign-cta free-lesson__price-cta"
+      onClick={goToCheckout}
+      aria-label={`დაიწყე სწავლა ${BOOTCAMP_CURRENT_PRICE_LABEL}-ად, სრული ფასი ${BOOTCAMP_FULL_PRICE_LABEL}`}
+    >
+      <span className="free-lesson__price-cta-copy">დაიწყე სწავლა</span>
+      <span className="free-lesson__price-cta-row" aria-hidden="true">
+        <span className="campaign-price__old">{BOOTCAMP_FULL_PRICE_LABEL}</span>
+        <strong>{BOOTCAMP_CURRENT_PRICE_LABEL}</strong>
+        <span className="campaign-price__save">დაზოგე {BOOTCAMP_SAVINGS_LABEL}</span>
+      </span>
       <ArrowRight aria-hidden="true" size={18} />
     </button>
+  );
+}
+
+function FreeLessonPriceCountdown() {
+  return (
+    <div className="campaign-price-deadline free-lesson__deadline" aria-label="ფასის ზრდამდე დარჩენილი დრო">
+      <div className="campaign-price-deadline__copy">
+        <span>ფასი გაიზრდება ივნისის ბოლოს</span>
+        <strong>{BOOTCAMP_CURRENT_PRICE_LABEL} - ფასდაკლება მოქმედებს 30 ივნისამდე</strong>
+      </div>
+      <Countdown />
+    </div>
   );
 }
 
@@ -186,12 +211,12 @@ export default function AIBootcampFreeLesson() {
     <div className="campaign-page free-lesson">
       <Helmet>
         <meta name="robots" content="noindex" />
-        <title>უფასო გაკვეთილი — T.C.R.E.I. პრაქტიკაში | BitCamp</title>
+        <title>{`${FREE_LESSON_TITLE} | BitCamp`}</title>
         <meta
           name="description"
           content="ნახე ერთი სრული გაკვეთილი BitCamp-ის AI Bootcamp-იდან: T.C.R.E.I. რეალურ მაგალითზე, ChatGPT-ით."
         />
-        <meta property="og:title" content="უფასო გაკვეთილი — T.C.R.E.I. პრაქტიკაში | BitCamp" />
+        <meta property="og:title" content={`${FREE_LESSON_TITLE} | BitCamp`} />
         <meta
           property="og:description"
           content="ერთი სრული გაკვეთილი ჩვენი AI Bootcamp-იდან. ნახე როგორ მუშაობს T.C.R.E.I. რეალურ მაგალითზე."
@@ -212,7 +237,7 @@ export default function AIBootcampFreeLesson() {
         <section className="free-lesson__top">
           <div className="free-lesson-shell">
             <p className="campaign-eyebrow">უფასო გაკვეთილი AI Bootcamp-იდან</p>
-            <h1 className="free-lesson__title">T.C.R.E.I. პრაქტიკაში — ნახე სანამ გადაწყვეტ</h1>
+            <h1 className="free-lesson__title">{FREE_LESSON_TITLE}</h1>
             <p className="free-lesson__sub">
               ერთი სრული გაკვეთილი ჩვენი AI Bootcamp-იდან. ნახე როგორ მუშაობს T.C.R.E.I. რეალურ
               მაგალითზე — ChatGPT-ით, ცოცხლად.
@@ -227,7 +252,8 @@ export default function AIBootcampFreeLesson() {
                 ეს იყო ერთი გაკვეთილი 25-დან. დანარჩენი 24 — ზუსტად ამ ფორმატით: T.C.R.E.I., Prompt
                 Chaining, CSV, JSON და სხვა.
               </p>
-              <CtaButton label={`დაიწყე სწავლა — ${PRICE_LABEL}`} />
+              <FreeLessonPriceCountdown />
+              <CtaButton />
               <ul className="free-lesson__bullets">
                 {bullets.map((item) => (
                   <li key={item}>
@@ -256,7 +282,8 @@ export default function AIBootcampFreeLesson() {
             </blockquote>
 
             <div className="free-lesson__final-cta">
-              <CtaButton label={`დაიწყე სწავლა — ${PRICE_LABEL}`} />
+              <FreeLessonPriceCountdown />
+              <CtaButton />
             </div>
           </div>
         </section>

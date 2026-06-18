@@ -1,27 +1,21 @@
 import { useEffect, useState } from "react";
+import { BOOTCAMP_PRICE_INCREASE_DEADLINE } from "@/lib/bootcampPricing";
 
-const CAMPAIGN_DEADLINE = new Date("2026-05-26T23:59:59+04:00").getTime();
-const OVERTIME_DEADLINE = new Date("2026-05-28T02:59:59+04:00").getTime();
-
-export type CampaignCountdownPhase = "standard" | "overtime" | "ended";
+export type CampaignCountdownPhase = "standard" | "ended";
 
 export type CampaignCountdownState = {
   phase: CampaignCountdownPhase;
   diff: number;
 };
 
-export function getCampaignCountdownState(now: number): CampaignCountdownState {
-  if (now <= CAMPAIGN_DEADLINE) {
+export function getCampaignCountdownState(
+  now: number,
+  deadline = BOOTCAMP_PRICE_INCREASE_DEADLINE
+): CampaignCountdownState {
+  if (now <= deadline) {
     return {
       phase: "standard",
-      diff: CAMPAIGN_DEADLINE - now,
-    };
-  }
-
-  if (now <= OVERTIME_DEADLINE) {
-    return {
-      phase: "overtime",
-      diff: OVERTIME_DEADLINE - now,
+      diff: deadline - now,
     };
   }
 
@@ -31,7 +25,7 @@ export function getCampaignCountdownState(now: number): CampaignCountdownState {
   };
 }
 
-export function useCampaignCountdownState() {
+export function useCampaignCountdownState(deadline = BOOTCAMP_PRICE_INCREASE_DEADLINE) {
   const [now, setNow] = useState(Date.now());
 
   useEffect(() => {
@@ -39,7 +33,7 @@ export function useCampaignCountdownState() {
     return () => clearInterval(id);
   }, []);
 
-  return getCampaignCountdownState(now);
+  return getCampaignCountdownState(now, deadline);
 }
 
 function Cell({ n, label }: { n: number; label: string }) {
@@ -51,11 +45,17 @@ function Cell({ n, label }: { n: number; label: string }) {
   );
 }
 
-export function CountdownDisplay({ state }: { state: CampaignCountdownState }) {
+export function CountdownDisplay({
+  state,
+  endedLabel = "ფასი უკვე გაიზარდა",
+}: {
+  state: CampaignCountdownState;
+  endedLabel?: string;
+}) {
   const diff = Math.max(0, state.diff);
 
   if (state.phase === "ended") {
-    return <div className="campaign-countdown campaign-countdown--ended">ოვერტაიმი დასრულდა</div>;
+    return <div className="campaign-countdown campaign-countdown--ended">{endedLabel}</div>;
   }
 
   const days = Math.floor(diff / 86_400_000);
@@ -82,7 +82,13 @@ export function CountdownDisplay({ state }: { state: CampaignCountdownState }) {
   );
 }
 
-export function Countdown() {
-  const state = useCampaignCountdownState();
-  return <CountdownDisplay state={state} />;
+export function Countdown({
+  deadline = BOOTCAMP_PRICE_INCREASE_DEADLINE,
+  endedLabel,
+}: {
+  deadline?: number;
+  endedLabel?: string;
+}) {
+  const state = useCampaignCountdownState(deadline);
+  return <CountdownDisplay state={state} endedLabel={endedLabel} />;
 }

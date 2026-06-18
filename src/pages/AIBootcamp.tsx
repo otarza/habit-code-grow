@@ -15,37 +15,29 @@ import {
 } from "lucide-react";
 import { CampaignFooter } from "@/components/campaign/CampaignFooter";
 import { CampaignStickyCta } from "@/components/campaign/CampaignStickyCta";
+import { Countdown } from "@/components/campaign/Countdown";
 import { FlittCheckoutModal } from "@/components/campaign/FlittCheckoutModal";
-import { handleBuy, PRODUCTS } from "@/lib/checkout";
+import { handleBuy } from "@/lib/checkout";
 import { rememberAttributionRef } from "@/lib/attribution";
+import {
+  BOOTCAMP_CURRENT_PRICE,
+  BOOTCAMP_CURRENT_PRICE_LABEL,
+  BOOTCAMP_FULL_PRICE,
+  BOOTCAMP_FULL_PRICE_LABEL,
+  BOOTCAMP_FUTURE_PRICE_STEPS,
+  BOOTCAMP_NEXT_PRICE,
+  BOOTCAMP_PRICE_PROGRESS,
+  BOOTCAMP_PRICE_STEPS,
+  BOOTCAMP_SAVINGS,
+  BOOTCAMP_START_PRICE,
+  formatGel,
+} from "@/lib/bootcampPricing";
 
 const paymentLogos = ["visa", "mastercard", "apple-pay", "google-pay"] as const;
 const BOOTCAMP_VIDEO_BASE_URL =
   "https://player.mediadelivery.net/embed/678241/5c33a6d3-33fc-41a5-83ca-1a9c8ee702ff?autoplay=true&loop=false&muted=true&preload=true&responsive=true";
-const BOOTCAMP_START_PRICE = 99;
-const BOOTCAMP_NEXT_PRICE = 119;
-const BOOTCAMP_FUTURE_PRICE_STEPS = [189, 229, 319];
-// Current price is owned by checkout config so UI, analytics, and Flitt button updates stay in sync.
-const BOOTCAMP_CURRENT_PRICE = PRODUCTS.bootcamp.value;
-const BOOTCAMP_FULL_PRICE = 449;
-const BOOTCAMP_PRICE_STEPS = [
-  BOOTCAMP_START_PRICE,
-  BOOTCAMP_NEXT_PRICE,
-  BOOTCAMP_CURRENT_PRICE,
-  ...BOOTCAMP_FUTURE_PRICE_STEPS,
-  BOOTCAMP_FULL_PRICE,
-];
-
-const formatGel = (value: number) => `₾${value}`;
 const getBootcampVideoUrl = (soundEnabled: boolean) =>
   BOOTCAMP_VIDEO_BASE_URL.replace("muted=true", `muted=${soundEnabled ? "false" : "true"}`);
-const BOOTCAMP_CURRENT_PRICE_LABEL = formatGel(BOOTCAMP_CURRENT_PRICE);
-const BOOTCAMP_FULL_PRICE_LABEL = formatGel(BOOTCAMP_FULL_PRICE);
-const BOOTCAMP_SAVINGS = BOOTCAMP_FULL_PRICE - BOOTCAMP_CURRENT_PRICE;
-const BOOTCAMP_CURRENT_PRICE_STEP_INDEX = Math.max(0, BOOTCAMP_PRICE_STEPS.indexOf(BOOTCAMP_CURRENT_PRICE));
-const BOOTCAMP_PRICE_PROGRESS = Math.round(
-  (BOOTCAMP_CURRENT_PRICE_STEP_INDEX / (BOOTCAMP_PRICE_STEPS.length - 1)) * 100
-);
 
 const outcomes = [
   {
@@ -147,7 +139,7 @@ const faqs = [
     a: "მათთვის, ვინც უკვე იყენებს ChatGPT-ს ან სხვა AI ხელსაწყოს, მაგრამ შედეგები ჯერ არ არის სტაბილური. პროგრამირება საჭირო არ არის; საჭიროა მხოლოდ სურვილი, რომ AI-სთან მუშაობა გახდეს უფრო სისტემური.",
   },
   {
-    q: "რა მოხდება 26 მაისის შემდეგ?",
+    q: "რა მოხდება ივნისის ბოლოს?",
     a: `ფასი იზრდება ეტაპობრივად: ${formatGel(BOOTCAMP_START_PRICE)}-დან ${BOOTCAMP_FULL_PRICE_LABEL}-მდე. გადახდისას მოქმედებს ის ფასი, რომელიც ღილაკზე ჩანს.`,
   },
   {
@@ -283,6 +275,18 @@ function PriceReturnProgress() {
   );
 }
 
+function BootcampPriceCountdown() {
+  return (
+    <div className="campaign-price-deadline" aria-label="ფასის ზრდამდე დარჩენილი დრო">
+      <div className="campaign-price-deadline__copy">
+        <span>ფასი გაიზრდება ივნისის ბოლოს</span>
+        <strong>{BOOTCAMP_CURRENT_PRICE_LABEL} - ფასდაკლება მოქმედებს 30 ივნისამდე</strong>
+      </div>
+      <Countdown />
+    </div>
+  );
+}
+
 function GeorgianFlagMark() {
   return (
     <div className="campaign-flag-mark" aria-hidden="true">
@@ -314,6 +318,7 @@ function HeroOffer({
         <span>მოასწარი სანამ გაიზრდება</span>
         <strong>ფასი იზრდება ეტაპობრივად</strong>
       </div>
+      <BootcampPriceCountdown />
       <PriceReturnProgress />
       <div className="campaign-hero__buy">
         <PriceBlock />
@@ -815,6 +820,7 @@ export default function AIBootcamp() {
                   {BOOTCAMP_CURRENT_PRICE_LABEL} ახლა · საბოლოოდ გახდება {BOOTCAMP_FULL_PRICE_LABEL}
                 </strong>
               </div>
+              <BootcampPriceCountdown />
               <PriceReturnProgress />
               <div className="campaign-final__price-row">
                 <div>

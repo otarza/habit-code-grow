@@ -1369,6 +1369,53 @@ Red pyramid, dark navy, with vibrant pixel art accents and animations
   line-height: 1.45;
 }
 
+.campaign-price-deadline {
+  display: grid;
+  gap: 14px;
+  border: 1px solid rgba(255, 118, 106, 0.28);
+  border-radius: 8px;
+  padding: 14px;
+  background:
+    linear-gradient(135deg, rgba(218, 41, 28, 0.14), rgba(255, 255, 255, 0.035)),
+    rgba(10, 10, 11, 0.32);
+}
+
+.campaign-price-deadline__copy {
+  display: grid;
+  gap: 4px;
+}
+
+.campaign-price-deadline__copy span {
+  color: var(--cp-accent-text);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.campaign-price-deadline__copy strong {
+  color: var(--cp-text-primary);
+  font-size: 16px;
+  line-height: 1.35;
+}
+
+.campaign-price-deadline .campaign-countdown {
+  justify-content: space-between;
+  width: 100%;
+}
+
+.campaign-price-deadline .campaign-countdown__cell {
+  min-width: 48px;
+}
+
+.campaign-price-deadline .campaign-countdown__number {
+  font-size: 34px;
+}
+
+.campaign-price-deadline .campaign-countdown__separator {
+  font-size: 25px;
+}
+
 .campaign-price-return {
   display: grid;
   gap: 10px;
@@ -3488,7 +3535,7 @@ Red pyramid, dark navy, with vibrant pixel art accents and animations
 }
 
 .free-lesson__bridge {
-  margin: 0 0 18px;
+  margin: 0 0 28px;
   color: var(--cp-text-secondary);
   font-size: 16px;
   line-height: 1.6;
@@ -3504,6 +3551,49 @@ Red pyramid, dark navy, with vibrant pixel art accents and animations
 
 .free-lesson__cta-card .campaign-cta {
   margin-top: 8px;
+}
+
+.free-lesson__deadline {
+  margin-bottom: 14px;
+}
+
+.free-lesson__price-cta {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  min-height: 78px;
+  align-items: center;
+  text-align: left;
+}
+
+.free-lesson__price-cta-copy {
+  font-size: 15px;
+  line-height: 1.2;
+}
+
+.free-lesson__price-cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  justify-self: end;
+}
+
+.free-lesson__price-cta-row .campaign-price__old {
+  color: rgba(10, 10, 11, 0.58);
+  font-size: 18px;
+}
+
+.free-lesson__price-cta-row strong {
+  color: var(--cp-cta-text);
+  font-size: 28px;
+  font-weight: 850;
+  line-height: 1;
+}
+
+.free-lesson__price-cta-row .campaign-price__save {
+  background: rgba(218, 41, 28, 0.12);
+  color: #8f1d14;
+  white-space: nowrap;
 }
 
 .free-lesson__bullets li {
@@ -3609,6 +3699,39 @@ Red pyramid, dark navy, with vibrant pixel art accents and animations
 
   .free-lesson__cta-card {
     padding: 18px;
+  }
+
+  .free-lesson__price-cta {
+    grid-template-columns: 1fr auto;
+    gap: 8px;
+    min-height: 92px;
+    padding: 12px 14px;
+  }
+
+  .free-lesson__price-cta-row {
+    grid-column: 1 / -1;
+    justify-self: start;
+  }
+
+  .free-lesson__price-cta > svg {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .campaign-price-deadline .campaign-countdown {
+    gap: 5px;
+  }
+
+  .campaign-price-deadline .campaign-countdown__cell {
+    min-width: 38px;
+  }
+
+  .campaign-price-deadline .campaign-countdown__number {
+    font-size: 28px;
+  }
+
+  .campaign-price-deadline .campaign-countdown__separator {
+    font-size: 20px;
   }
 }
 
