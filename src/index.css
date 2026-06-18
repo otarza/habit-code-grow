@@ -904,16 +904,19 @@ Red pyramid, dark navy, with vibrant pixel art accents and animations
 }
 
 @media (min-width: 981px) {
-  .campaign-page--bootcamp .campaign-shell {
+  .campaign-page--bootcamp .campaign-shell,
+  .campaign-page--pro .campaign-shell {
     width: min(100% - 64px, 1480px);
   }
 
-  .campaign-page--bootcamp .campaign-hero__grid {
+  .campaign-page--bootcamp .campaign-hero__grid,
+  .campaign-page--pro .campaign-hero__grid {
     grid-template-columns: minmax(0, 1fr) minmax(430px, 0.92fr);
     gap: 64px;
   }
 
-  .campaign-page--bootcamp .campaign-hero h1 {
+  .campaign-page--bootcamp .campaign-hero h1,
+  .campaign-page--pro .campaign-hero h1 {
     max-width: 760px;
   }
 
@@ -921,7 +924,13 @@ Red pyramid, dark navy, with vibrant pixel art accents and animations
   .campaign-page--bootcamp .campaign-hero__facts,
   .campaign-page--bootcamp .campaign-hero-testimonial,
   .campaign-page--bootcamp .campaign-author-card,
-  .campaign-page--bootcamp .campaign-hero__offer--inline {
+  .campaign-page--bootcamp .campaign-hero__offer--inline,
+  .campaign-page--pro .campaign-lead,
+  .campaign-page--pro .campaign-hero__facts,
+  .campaign-page--pro .campaign-hero-testimonial,
+  .campaign-page--pro .campaign-author-chip,
+  .campaign-page--pro .campaign-author-card,
+  .campaign-page--pro .campaign-hero__offer--inline {
     max-width: 680px;
   }
 }
@@ -1279,11 +1288,9 @@ Red pyramid, dark navy, with vibrant pixel art accents and animations
 }
 
 .campaign-offer-heading {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 16px;
-  padding-bottom: 14px;
+  display: grid;
+  gap: 6px;
+  padding-bottom: 12px;
   border-bottom: 1px solid var(--cp-border);
 }
 
@@ -1293,16 +1300,25 @@ Red pyramid, dark navy, with vibrant pixel art accents and animations
 }
 
 .campaign-offer-heading strong {
+  color: var(--cp-text-primary);
+  font-size: 22px;
+  font-weight: 800;
+  line-height: 1.18;
+}
+
+.campaign-offer-note {
+  margin: -4px 0 0;
   color: var(--cp-accent-text);
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 750;
+  line-height: 1.45;
 }
 
 .campaign-hero__buy {
   display: grid;
-  grid-template-columns: auto minmax(220px, 280px);
-  gap: 18px;
-  align-items: end;
+  grid-template-columns: 1fr;
+  gap: 14px;
+  align-items: start;
   max-width: 620px;
 }
 
@@ -1369,166 +1385,6 @@ Red pyramid, dark navy, with vibrant pixel art accents and animations
   line-height: 1.45;
 }
 
-.campaign-price-deadline {
-  display: grid;
-  gap: 14px;
-  border: 1px solid rgba(255, 118, 106, 0.28);
-  border-radius: 8px;
-  padding: 14px;
-  background:
-    linear-gradient(135deg, rgba(218, 41, 28, 0.14), rgba(255, 255, 255, 0.035)),
-    rgba(10, 10, 11, 0.32);
-}
-
-.campaign-price-deadline__copy {
-  display: grid;
-  gap: 4px;
-}
-
-.campaign-price-deadline__copy span {
-  color: var(--cp-accent-text);
-  font-size: 12px;
-  font-weight: 800;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-
-.campaign-price-deadline__copy strong {
-  color: var(--cp-text-primary);
-  font-size: 16px;
-  line-height: 1.35;
-}
-
-.campaign-price-deadline .campaign-countdown {
-  justify-content: space-between;
-  width: 100%;
-}
-
-.campaign-price-deadline .campaign-countdown__cell {
-  min-width: 48px;
-}
-
-.campaign-price-deadline .campaign-countdown__number {
-  font-size: 34px;
-}
-
-.campaign-price-deadline .campaign-countdown__separator {
-  font-size: 25px;
-}
-
-.campaign-price-return {
-  display: grid;
-  gap: 10px;
-  border: 1px solid rgba(255, 118, 106, 0.22);
-  border-radius: 8px;
-  padding: 12px;
-  background: rgba(255, 255, 255, 0.03);
-}
-
-.campaign-price-return__top,
-.campaign-price-return__meta {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-}
-
-.campaign-price-return__top span {
-  color: var(--cp-text-secondary);
-  font-size: 13px;
-  line-height: 1.35;
-}
-
-.campaign-price-return__top strong {
-  color: var(--cp-text-primary);
-  font-size: 14px;
-  font-weight: 800;
-  white-space: nowrap;
-}
-
-.campaign-price-return__track {
-  position: relative;
-  height: 9px;
-  overflow: hidden;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.08);
-}
-
-.campaign-price-return__fill {
-  display: block;
-  width: var(--campaign-price-progress);
-  min-width: 8px;
-  height: 100%;
-  border-radius: inherit;
-  background: linear-gradient(90deg, var(--cp-accent-text), #f5f5f7);
-}
-
-.campaign-price-return__ticks {
-  display: grid;
-  grid-template-columns: repeat(var(--campaign-price-step-count, 11), 1fr);
-  gap: 5px;
-}
-
-.campaign-price-return__ticks span {
-  height: 4px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.1);
-}
-
-.campaign-price-return__ticks span.is-active {
-  background: var(--cp-accent-text);
-}
-
-.campaign-price-return__meta span {
-  color: var(--cp-text-muted);
-  font-size: 11px;
-  font-weight: 700;
-  line-height: 1.25;
-}
-
-.campaign-price-return__meta span:nth-child(2),
-.campaign-price-return__meta span.is-current {
-  color: var(--cp-accent-text);
-}
-
-.campaign-price-return p {
-  margin: 0;
-  color: var(--cp-text-muted);
-  font-size: 12px;
-  line-height: 1.45;
-}
-
-.campaign-page--bootcamp .campaign-price-return {
-  gap: 12px;
-  padding: 16px;
-}
-
-.campaign-page--bootcamp .campaign-price-return__top span {
-  font-size: 15px;
-}
-
-.campaign-page--bootcamp .campaign-price-return__top strong {
-  font-size: 18px;
-}
-
-.campaign-page--bootcamp .campaign-price-return__track {
-  height: 11px;
-}
-
-.campaign-page--bootcamp .campaign-price-return__ticks span {
-  height: 5px;
-}
-
-.campaign-page--bootcamp .campaign-price-return__meta span {
-  font-size: 13px;
-  line-height: 1.35;
-}
-
-.campaign-page--bootcamp .campaign-price-return p {
-  font-size: 13px;
-  line-height: 1.5;
-}
-
 .campaign-price {
   display: grid;
   gap: 5px;
@@ -1537,12 +1393,6 @@ Red pyramid, dark navy, with vibrant pixel art accents and animations
 .campaign-price--center {
   justify-items: center;
   text-align: center;
-}
-
-.campaign-price__label {
-  color: var(--cp-accent-text);
-  font-size: 12px;
-  font-weight: 700;
 }
 
 .campaign-price__row {
@@ -2026,6 +1876,45 @@ Red pyramid, dark navy, with vibrant pixel art accents and animations
   background:
     linear-gradient(180deg, rgba(218, 41, 28, 0.07), transparent 42%),
     rgba(18, 18, 20, 0.86);
+}
+
+.campaign-start-preview {
+  padding: 34px 0 42px;
+  border-bottom: 1px solid var(--cp-border);
+  background:
+    linear-gradient(180deg, #0e0e10, rgba(10, 10, 11, 0.98)),
+    var(--cp-bg);
+}
+
+.campaign-hero-preview--wide {
+  min-height: 0;
+  grid-template-columns: minmax(260px, 0.78fr) minmax(0, 1.22fr);
+  grid-template-areas:
+    "header days"
+    "formula days"
+    "footer footer";
+  align-items: start;
+  gap: 22px;
+  padding: 26px;
+}
+
+.campaign-hero-preview--wide .campaign-hero-preview__header {
+  grid-area: header;
+}
+
+.campaign-hero-preview--wide .campaign-hero-preview__days {
+  grid-area: days;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-self: stretch;
+}
+
+.campaign-hero-preview--wide .campaign-formula-card {
+  grid-area: formula;
+  align-self: stretch;
+}
+
+.campaign-hero-preview--wide .campaign-hero-preview__footer {
+  grid-area: footer;
 }
 
 .campaign-hero-preview__header {
@@ -2854,39 +2743,22 @@ Red pyramid, dark navy, with vibrant pixel art accents and animations
 }
 
 .campaign-final__deadline {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 18px;
+  display: grid;
+  gap: 6px;
 }
 
 .campaign-final__deadline strong {
-  max-width: 190px;
   color: var(--cp-text-primary);
-  font-size: 18px;
-  line-height: 1.35;
-  text-align: right;
+  font-size: 22px;
+  font-weight: 800;
+  line-height: 1.18;
 }
 
-.campaign-final .campaign-countdown {
-  justify-content: space-between;
-  width: 100%;
-  margin-top: 0;
-  padding: 18px 0;
-  border-top: 1px solid var(--cp-border);
-  border-bottom: 1px solid var(--cp-border);
-}
-
-.campaign-final__panel .campaign-countdown__cell {
-  min-width: 46px;
-}
-
-.campaign-final__panel .campaign-countdown__number {
-  font-size: 38px;
-}
-
-.campaign-final__panel .campaign-countdown__separator {
-  font-size: 28px;
+.campaign-final__deadline span {
+  color: var(--cp-accent-text);
+  font-size: 14px;
+  font-weight: 750;
+  line-height: 1.45;
 }
 
 .campaign-final__price-row {
@@ -3008,6 +2880,19 @@ Red pyramid, dark navy, with vibrant pixel art accents and animations
   .campaign-outcome-grid,
   .campaign-module-grid,
   .campaign-testimonial-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .campaign-hero-preview--wide {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "header"
+      "days"
+      "formula"
+      "footer";
+  }
+
+  .campaign-hero-preview--wide .campaign-hero-preview__days {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -3261,66 +3146,6 @@ Red pyramid, dark navy, with vibrant pixel art accents and animations
     font-size: 38px;
   }
 
-  .campaign-price-return__top,
-  .campaign-price-return__meta {
-    align-items: flex-start;
-  }
-
-  .campaign-price-return__top {
-    flex-direction: column;
-    gap: 6px;
-  }
-
-  .campaign-price-return__top strong {
-    white-space: normal;
-  }
-
-  .campaign-price-return__meta {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 8px;
-    width: 100%;
-  }
-
-  .campaign-price-return__meta span:nth-child(2),
-  .campaign-price-return__meta span.is-current {
-    text-align: center;
-  }
-
-  .campaign-price-return__meta span:last-child {
-    text-align: right;
-  }
-
-  .campaign-page--bootcamp .campaign-price-return {
-    padding: 14px;
-  }
-
-  .campaign-page--bootcamp .campaign-price-return__top span {
-    font-size: 14px;
-  }
-
-  .campaign-page--bootcamp .campaign-price-return__top strong {
-    font-size: 16px;
-  }
-
-  .campaign-page--bootcamp .campaign-price-return__meta {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .campaign-page--bootcamp .campaign-price-return__meta span {
-    font-size: 12px;
-  }
-
-  .campaign-page--bootcamp .campaign-price-return__meta span:nth-child(2),
-  .campaign-page--bootcamp .campaign-price-return__meta span.is-current,
-  .campaign-page--bootcamp .campaign-price-return__meta span:last-child {
-    text-align: left;
-  }
-
-  .campaign-page--bootcamp .campaign-price-return p {
-    font-size: 12px;
-  }
-
   .campaign-section h2,
   .campaign-cta-band h2,
   .campaign-final h2 {
@@ -3360,23 +3185,22 @@ Red pyramid, dark navy, with vibrant pixel art accents and animations
     gap: 6px;
   }
 
-  .campaign-final__deadline strong {
-    max-width: none;
-    text-align: left;
-  }
-
-  .campaign-final__panel .campaign-countdown__number {
-    font-size: 32px;
-  }
-
-  .campaign-final__panel .campaign-countdown__cell {
-    min-width: 40px;
-  }
-
   .campaign-proof-strip__grid,
   .campaign-outcome-grid,
   .campaign-module-grid,
   .campaign-testimonial-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .campaign-start-preview {
+    padding: 24px 0 32px;
+  }
+
+  .campaign-hero-preview--wide {
+    padding: 18px;
+  }
+
+  .campaign-hero-preview--wide .campaign-hero-preview__days {
     grid-template-columns: 1fr;
   }
 
@@ -3439,21 +3263,6 @@ Red pyramid, dark navy, with vibrant pixel art accents and animations
     gap: 10px;
   }
 
-  .campaign-final .campaign-countdown {
-    gap: 4px;
-  }
-
-  .campaign-final__panel .campaign-countdown__cell {
-    min-width: 34px;
-  }
-
-  .campaign-final__panel .campaign-countdown__number {
-    font-size: 28px;
-  }
-
-  .campaign-final__panel .campaign-countdown__separator {
-    font-size: 20px;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -3524,7 +3333,6 @@ Red pyramid, dark navy, with vibrant pixel art accents and animations
 }
 
 .free-lesson__takeaways,
-.free-lesson__cta-card,
 .free-lesson-resource {
   margin-top: 16px;
   padding: 24px;
@@ -3535,10 +3343,24 @@ Red pyramid, dark navy, with vibrant pixel art accents and animations
     var(--cp-surface);
 }
 
+.free-lesson__cta-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 22px 28px;
+  align-items: end;
+  margin-top: 18px;
+  padding: 28px;
+  border: 1px solid rgba(255, 118, 106, 0.42);
+  border-radius: 12px;
+  background:
+    linear-gradient(135deg, rgba(218, 41, 28, 0.2), rgba(255, 255, 255, 0.035) 45%, rgba(12, 12, 14, 0.94)),
+    #141416;
+  box-shadow: 0 18px 54px rgba(0, 0, 0, 0.3);
+}
+
 .free-lesson__cta-card > div:first-child {
   display: grid;
   gap: 6px;
-  margin-bottom: 12px;
 }
 
 .free-lesson__cta-card > div:first-child span {
@@ -3551,10 +3373,18 @@ Red pyramid, dark navy, with vibrant pixel art accents and animations
 
 .free-lesson__cta-card h2 {
   margin: 0;
-  color: var(--cp-text-primary);
-  font-size: 24px;
+  color: #ffffff;
+  font-size: 28px;
   font-weight: 800;
   line-height: 1.18;
+}
+
+.free-lesson__cta-card .free-lesson__bridge {
+  grid-column: 1;
+  margin: 0;
+  color: #d5d5dc;
+  font-size: 16px;
+  line-height: 1.65;
 }
 
 .free-lesson__bridge {
@@ -3573,7 +3403,12 @@ Red pyramid, dark navy, with vibrant pixel art accents and animations
 }
 
 .free-lesson__cta-card .campaign-cta {
-  margin-top: 8px;
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  width: min(100%, 280px);
+  min-width: 230px;
+  min-height: 58px;
+  align-self: center;
 }
 
 .free-lesson__course-cta--secondary {
@@ -3657,21 +3492,6 @@ Red pyramid, dark navy, with vibrant pixel art accents and animations
   color: var(--cp-text-secondary);
   font-size: 13px;
   font-weight: 700;
-}
-
-.free-lesson__final-cta {
-  margin-top: 28px;
-  padding: 22px;
-  border: 1px solid var(--cp-border);
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.42);
-}
-
-.free-lesson__final-cta p {
-  margin: 0;
-  color: var(--cp-text-secondary);
-  font-size: 16px;
-  line-height: 1.55;
 }
 
 .free-lesson-resource {
@@ -3834,6 +3654,22 @@ Red pyramid, dark navy, with vibrant pixel art accents and animations
   .free-lesson__cta-card,
   .free-lesson-resource {
     padding: 18px;
+  }
+
+  .free-lesson__cta-card {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .free-lesson__cta-card .free-lesson__bridge,
+  .free-lesson__cta-card .campaign-cta {
+    grid-column: auto;
+    grid-row: auto;
+  }
+
+  .free-lesson__cta-card .campaign-cta {
+    width: 100%;
+    min-width: 0;
   }
 
   .free-lesson-resource {

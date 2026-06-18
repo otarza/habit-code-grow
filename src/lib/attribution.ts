@@ -1,7 +1,7 @@
 // Lightweight funnel attribution helper.
 //
-// The free-lesson funnel (/ai-bootcamp/free-lesson) sends warm viewers to
-// /ai-bootcamp?ref=free-lesson#purchase. We persist that `ref` so it can be
+// The free-lesson funnel sends warm viewers to the course landing pages with
+// ?ref=free-lesson. We persist that `ref` so it can be
 // attached to the InitiateCheckout (checkout.ts) and Purchase (ThankYou) pixel
 // events — even after Flitt's redirect drops the query param from the URL.
 

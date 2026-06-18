@@ -11,7 +11,7 @@ const LESSON_VIDEO_ID = "PqYK-h3eiPA";
 const NOTEBOOK_URL =
   "https://notebooklm.google.com/notebook/a0564db3-4ed4-4708-9137-26003c68380c";
 
-const CHECKOUT_URL = "/ai?ref=free-lesson#purchase";
+const CHECKOUT_URL = "/ai?ref=free-lesson";
 
 type YouTubePlayer = {
   mute: () => void;

@@ -15,19 +15,12 @@ import {
 } from "lucide-react";
 import { CampaignFooter } from "@/components/campaign/CampaignFooter";
 import { CampaignStickyCta } from "@/components/campaign/CampaignStickyCta";
-import { Countdown } from "@/components/campaign/Countdown";
 import { FlittCheckoutModal } from "@/components/campaign/FlittCheckoutModal";
 import { handleBuy } from "@/lib/checkout";
 import { rememberAttributionRef } from "@/lib/attribution";
 import {
-  BOOTCAMP_CURRENT_PRICE,
   BOOTCAMP_CURRENT_PRICE_LABEL,
-  BOOTCAMP_FULL_PRICE,
   BOOTCAMP_FULL_PRICE_LABEL,
-  BOOTCAMP_FUTURE_PRICE_STEPS,
-  BOOTCAMP_NEXT_PRICE,
-  BOOTCAMP_PRICE_PROGRESS,
-  BOOTCAMP_PRICE_STEPS,
   BOOTCAMP_SAVINGS,
   BOOTCAMP_START_PRICE,
   formatGel,
@@ -217,72 +210,11 @@ function PaymentLogos({ compact = false }: { compact?: boolean }) {
 function PriceBlock({ align = "left" }: { align?: "left" | "center" }) {
   return (
     <div className={`campaign-price campaign-price--${align}`}>
-      <p className="campaign-price__label">მიმდინარე ფასი</p>
       <div className="campaign-price__row">
         <span className="campaign-price__old">{BOOTCAMP_FULL_PRICE_LABEL}</span>
         <span className="campaign-price__save">დაზოგე {formatGel(BOOTCAMP_SAVINGS)}</span>
       </div>
       <div className="campaign-price__new">{BOOTCAMP_CURRENT_PRICE_LABEL}</div>
-    </div>
-  );
-}
-
-function PriceReturnProgress() {
-  return (
-    <div
-      className="campaign-price-return"
-      style={
-        {
-          "--campaign-price-progress": `${BOOTCAMP_PRICE_PROGRESS}%`,
-          "--campaign-price-step-count": BOOTCAMP_PRICE_STEPS.length,
-        } as React.CSSProperties
-      }
-      aria-label={`მიმდინარე ფასი ${BOOTCAMP_CURRENT_PRICE_LABEL}; სრული ფასი ${BOOTCAMP_FULL_PRICE_LABEL}`}
-    >
-      <div className="campaign-price-return__top">
-        <span>ფასი იზრდება ეტაპობრივად</span>
-        <strong>
-          {BOOTCAMP_CURRENT_PRICE_LABEL} / {BOOTCAMP_FULL_PRICE_LABEL}
-        </strong>
-      </div>
-      <div
-        className="campaign-price-return__track"
-        role="progressbar"
-        aria-valuemin={BOOTCAMP_START_PRICE}
-        aria-valuemax={BOOTCAMP_FULL_PRICE}
-        aria-valuenow={BOOTCAMP_CURRENT_PRICE}
-      >
-        <span className="campaign-price-return__fill" />
-      </div>
-      <div className="campaign-price-return__ticks" aria-hidden="true">
-        {BOOTCAMP_PRICE_STEPS.map((price) => (
-          <span
-            key={price}
-            className={price <= BOOTCAMP_CURRENT_PRICE ? "is-active" : undefined}
-          />
-        ))}
-      </div>
-      <div className="campaign-price-return__meta">
-        <span>საწყისი იყო {formatGel(BOOTCAMP_START_PRICE)}</span>
-        <span>წინა {formatGel(BOOTCAMP_NEXT_PRICE)}</span>
-        <span className="is-current">ახლა {BOOTCAMP_CURRENT_PRICE_LABEL}</span>
-        <span>
-          შემდეგ {BOOTCAMP_FUTURE_PRICE_STEPS.map(formatGel).join(", ")} · ბოლოს {BOOTCAMP_FULL_PRICE_LABEL}
-        </span>
-      </div>
-      <p>გადახდისას მოქმედებს ის ფასი, რომელიც ღილაკზე ჩანს.</p>
-    </div>
-  );
-}
-
-function BootcampPriceCountdown() {
-  return (
-    <div className="campaign-price-deadline" aria-label="ფასის ზრდამდე დარჩენილი დრო">
-      <div className="campaign-price-deadline__copy">
-        <span>ფასი გაიზრდება ივნისის ბოლოს</span>
-        <strong>{BOOTCAMP_CURRENT_PRICE_LABEL} - ფასდაკლება მოქმედებს 30 ივნისამდე</strong>
-      </div>
-      <Countdown />
     </div>
   );
 }
@@ -315,14 +247,12 @@ function HeroOffer({
     >
       <GeorgianFlagMark />
       <div className="campaign-offer-heading">
-        <span>მოასწარი სანამ გაიზრდება</span>
-        <strong>ფასი იზრდება ეტაპობრივად</strong>
+        <strong>დაიწყე AI Bootcamp</strong>
       </div>
-      <BootcampPriceCountdown />
-      <PriceReturnProgress />
+      <p className="campaign-offer-note">ფასი მოქმედებს 30 ივნისამდე</p>
       <div className="campaign-hero__buy">
         <PriceBlock />
-        <CtaButton label={`დაიწყე სწავლა — ${BOOTCAMP_CURRENT_PRICE_LABEL}`} onClick={onBuy} />
+        <CtaButton label="დაიწყე სწავლა" onClick={onBuy} />
       </div>
       <div className="campaign-offer-footer">
         <div className="campaign-secure-line">
@@ -419,9 +349,9 @@ function BootcampHeroVideo({ className = "" }: { className?: string }) {
   );
 }
 
-function HeroCoursePreview() {
+function HeroCoursePreview({ className = "" }: { className?: string }) {
   return (
-    <div className="campaign-hero-preview" aria-label="კურსის მოკლე სტრუქტურა">
+    <div className={`campaign-hero-preview ${className}`} aria-label="კურსის მოკლე სტრუქტურა">
       <div className="campaign-hero-preview__header">
         <span>რას იწყებ პირველივე დღეს</span>
         <strong>2 დღიანი პრაქტიკული სტარტი</strong>
@@ -559,9 +489,8 @@ export default function AIBootcamp() {
                 </span>
               </div>
 
-              <HeroTestimonial />
-
               <InstructorTrustCard />
+              <HeroTestimonial />
 
               <HeroOffer className="campaign-hero__offer--inline" onBuy={buy} />
             </div>
@@ -569,7 +498,6 @@ export default function AIBootcamp() {
             <div className="campaign-hero__visual">
               <BootcampHeroVideo className="campaign-hero-video--desktop" />
               <HeroOffer id="purchase" className="campaign-hero__offer--desktop" onBuy={buy} />
-              <HeroCoursePreview />
             </div>
           </div>
         </section>
@@ -599,6 +527,12 @@ export default function AIBootcamp() {
               <strong>50+</strong>
               <span>მზა პრომპტი ყოველდღიური სამუშაოსთვის</span>
             </div>
+          </div>
+        </section>
+
+        <section className="campaign-start-preview" aria-label="2 დღიანი პრაქტიკული სტარტი">
+          <div className="campaign-shell">
+            <HeroCoursePreview className="campaign-hero-preview--wide" />
           </div>
         </section>
 
@@ -815,22 +749,17 @@ export default function AIBootcamp() {
             <FadeIn className="campaign-final__panel campaign-final__panel--price-return">
               <GeorgianFlagMark />
               <div className="campaign-final__deadline">
-                <span>ფასი ბრუნდება სრულ ნიშნულზე</span>
-                <strong>
-                  {BOOTCAMP_CURRENT_PRICE_LABEL} ახლა · საბოლოოდ გახდება {BOOTCAMP_FULL_PRICE_LABEL}
-                </strong>
+                <strong>დაიწყე AI Bootcamp</strong>
+                <span>ფასი მოქმედებს 30 ივნისამდე</span>
               </div>
-              <BootcampPriceCountdown />
-              <PriceReturnProgress />
               <div className="campaign-final__price-row">
                 <div>
-                  <span>მიმდინარე ფასი</span>
                   <span className="campaign-price__old">{BOOTCAMP_FULL_PRICE_LABEL}</span>
                   <strong>{BOOTCAMP_CURRENT_PRICE_LABEL}</strong>
                 </div>
                 <span className="campaign-price__save">დაზოგე {formatGel(BOOTCAMP_SAVINGS)}</span>
               </div>
-              <CtaButton label={`დაიწყე სწავლა — ${BOOTCAMP_CURRENT_PRICE_LABEL}`} onClick={buy} />
+              <CtaButton label="დაიწყე სწავლა" onClick={buy} />
             </FadeIn>
           </div>
         </section>

@@ -49,14 +49,31 @@ function loadYouTubeIframeApi(): Promise<void> {
   return ytApiPromise;
 }
 
-// Warm viewers go straight to the existing /ai-bootcamp checkout (buy card).
-// `ref` = attribution, `#purchase` = scroll target added on the landing page.
-const CHECKOUT_URL = "/ai-bootcamp?ref=free-lesson#purchase";
+// Warm viewers go to the full /ai-bootcamp landing page with attribution.
+const CHECKOUT_URL = "/ai-bootcamp?ref=free-lesson";
 
 const bullets = [
   "25 ვიდეო გაკვეთილი, მოკლე და პრაქტიკული",
   "Python და SQL სრული კურსები ბონუსად",
   "50+ მზა პრომპტის ბიბლიოთეკა",
+];
+
+const testimonials = [
+  {
+    quote: "მადლობა ძალიან საინტერესოდ და გასაგებად ხსნით.",
+    name: "Lizi",
+    note: "აქტიური მონაწილე · გასაგები ახსნა",
+  },
+  {
+    quote: "დიდი მადლობა, ძალიან მომწონს კურსი, თანმიმდევრული და საინტერესოა და ასევე გადმოცემის ფორმა...",
+    name: "Maia Pavliashvili",
+    note: "აქტიური მონაწილე · თანმიმდევრული კურსი",
+  },
+  {
+    quote: "დიდი მადლობა ბატონო ოთარ, სასიამოვნო და მეტად საინტერესოა თქვენი ლექციების მოსმენა.",
+    name: "Aleqsandre Nucubidze",
+    note: "აქტიური მონაწილე · საინტერესო ლექციები",
+  },
 ];
 
 type AnalyticsWindow = Window & {
@@ -263,21 +280,38 @@ export default function AIBootcampFreeLesson() {
 
         <section className="free-lesson__proof">
           <div className="free-lesson-shell">
-            <blockquote className="campaign-hero-testimonial">
-              <span>სტუდენტის გამოცდილება</span>
-              <p>
-                „დიდი მადლობა, ძალიან სასარგებლო კურსია.. მოვრჩით frameworks და ძალიან საინტერესო
-                დასკვნა გამოვიტანე... ამის მერე სისტემურად და გააზრებულად ბევრად ეფექტურ შედეგს
-                მივიღებ."
-              </p>
-              <footer>
-                <strong>მიხეილ ჯერიაშვილი</strong>
-                <small>აქტიური მონაწილე</small>
-              </footer>
-            </blockquote>
+            <div className="campaign-section-heading free-lesson__proof-heading">
+              <p className="campaign-kicker">სტუდენტების გამოცდილება</p>
+              <h2>რას ამბობენ AI პროგრამის მონაწილეები.</h2>
+            </div>
 
-            <div className="free-lesson__final-cta">
-              <p>თუ გაკვეთილი სასარგებლო იყო, სრული პროგრამა შემდეგ პრაქტიკულ ნაბიჯებს გაჩვენებს.</p>
+            <div className="campaign-testimonial-grid free-lesson__testimonial-grid">
+              {testimonials.map((testimonial) => (
+                <blockquote className="campaign-testimonial" key={testimonial.name}>
+                  <p>"{testimonial.quote}"</p>
+                  <footer>
+                    <strong>{testimonial.name}</strong>
+                    <span>{testimonial.note}</span>
+                  </footer>
+                </blockquote>
+              ))}
+            </div>
+
+            <div className="free-lesson__closing-card">
+              <div>
+                <span>AI Bootcamp</span>
+                <strong>პრაქტიკული სტარტი - 25 გაკვეთილი</strong>
+              </div>
+              <p>
+                თუ ეს გაკვეთილი სასარგებლო იყო, სრული კურსი იგივე პროცესს აგრძელებს: ჯერ აწყობ
+                სწორ მოთხოვნას და T.C.R.E.I.-ით იწყებ უკეთესი პასუხების მიღებას, შემდეგ კი გადადიხარ
+                Prompt Chaining-ზე, CSV/JSON-ზე და მზა პრომპტების გამოყენებაზე.
+              </p>
+              <div className="free-lesson__closing-meta">
+                <span>დღე 1: T.C.R.E.I. ჩარჩო</span>
+                <span>დღე 2: Prompt Chaining</span>
+                <span>Python და SQL ბონუსად</span>
+              </div>
               <CtaButton variant="secondary" />
             </div>
           </div>

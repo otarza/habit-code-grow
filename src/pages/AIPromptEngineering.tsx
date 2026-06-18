@@ -44,6 +44,13 @@ const proIncludes = [
   "4-კვირიანი მენტორშიფი, დახურული Discord ჯგუფი და უკუკავშირი",
 ];
 
+const proInstructorCredentials = [
+  "BitCamp-ის დამფუძნებელი",
+  "Python, SQL, კომპ. მეცნიერების, Full-Stack Web Development და AI კურსების ავტორი",
+  "16 წლიანი გამოცდილება ტექნოლოგიურ ინდუსტრიაში",
+  "სენიორ პროგრამულ ინჟინრად მუშაობის ისტორია ამერიკაში, კანადაში და ევროპის 12 ქვეყანაში",
+];
+
 const mentorSteps = [
   {
     title: "სწავლობ ნულიდან პროფესიონალამდე",
@@ -257,6 +264,60 @@ function ProOffer({ className = "", id, onBuy }: { className?: string; id?: stri
   );
 }
 
+function ProHeroTestimonial() {
+  const testimonial = proTestimonials[1];
+
+  return (
+    <blockquote className="campaign-hero-testimonial">
+      <span>სტუდენტის გამოცდილება</span>
+      <p>"{testimonial.quote}"</p>
+      <footer>
+        <strong>{testimonial.name}</strong>
+        <small>{testimonial.note}</small>
+      </footer>
+    </blockquote>
+  );
+}
+
+function ProInstructorTrustCard() {
+  return (
+    <div className="campaign-author-card">
+      <div className="campaign-author-card__top">
+        <img src="/media/external/images/otar-profile-photo.png" alt="" />
+        <div>
+          <span>კურსს უძღვება</span>
+          <strong>ოთარ ზაკალაშვილი</strong>
+          <small>BitCamp-ის დამფუძნებელი და ქართული ტექნოლოგიური კურსების ავტორი</small>
+        </div>
+      </div>
+
+      <div className="campaign-author-card__credentials">
+        {proInstructorCredentials.map((credential) => (
+          <div key={credential}>
+            <CheckCircle2 aria-hidden="true" size={16} />
+            <span>{credential}</span>
+          </div>
+        ))}
+      </div>
+
+      <div className="campaign-author-card__stats" aria-label="ინსტრუქტორის გამოცდილება">
+        <div>
+          <strong>16 წელი</strong>
+          <span>ტექ გამოცდილება</span>
+        </div>
+        <div>
+          <strong>12 ქვეყანა</strong>
+          <span>საერთაშორისო პროექტები</span>
+        </div>
+        <div>
+          <strong>2 000+</strong>
+          <span>სტუდენტი</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function FAQAccordion({ items }: { items: typeof proFaqs }) {
   const [open, setOpen] = useState<number | null>(0);
 
@@ -310,9 +371,9 @@ export default function AIPromptEngineering() {
           <div className="campaign-shell campaign-hero__grid">
             <div className="campaign-hero__copy">
               <p className="campaign-eyebrow">AI-ს სრული პროგრამა მენტორშიფით</p>
-              <h1>ისწავლე AI-ს პროფესიონალურ დონეზე გამოყენება: პრომპტინგიდან ავტომატიზაციამდე.</h1>
+              <h1>0 - დან AI ავტომატიზაციამდე</h1>
               <p className="campaign-lead">
-                6-მოდულიანი პრაქტიკული პროგრამა მათთვის, ვისაც AI-ს გამოყენება რეალური სამუშაო პროცესების დასაჩქარებლად და გასამარტივებლად სურს. კურსს ახლავს 4-კვირიანი მენტორშიფი და ინდივიდუალური უკუკავშირი.
+                6-მოდულიანი პრაქტიკული პროგრამა მათთვის, ვისაც AI-ს გამოყენება რეალური სამუშაო პროცესების დასაჩქარებლად და გასამარტივებლად სურს.
               </p>
 
               <ProHeroVideo className="campaign-hero-video--inline" />
@@ -336,13 +397,8 @@ export default function AIPromptEngineering() {
                 </span>
               </div>
 
-              <div className="campaign-author-chip">
-                <img src="/media/external/images/otar-profile-photo.png" alt="" />
-                <div>
-                  <span>მენტორი: ოთარ ზაკალაშვილი</span>
-                  <strong>BitCamp-ის დამფუძნებელი · Python, SQL, კომპ.მეცნიერების, Full-Stack Web Development და AI კურსების ავტორი. 16 წლიანი გამოცდილებით ტექ ინდუსტრიაში · სენიორ პროგრამულ ინჟინერად მუშაობის ისტორიით ამერიკაში, კანადაში და ევროპის 12 ქვეყანაში.</strong>
-                </div>
-              </div>
+              <ProInstructorTrustCard />
+              <ProHeroTestimonial />
 
               <ProOffer className="campaign-hero__offer--inline" onBuy={buy} />
             </div>
@@ -351,17 +407,6 @@ export default function AIPromptEngineering() {
               <ProHeroVideo className="campaign-hero-video--desktop" />
               <ProOffer id="purchase" className="campaign-hero__offer--desktop" onBuy={buy} />
 
-              <figure className="campaign-instructor-card">
-                <img
-                  src="/media/external/images/otar-spotlight-clean.png"
-                  alt="ოთარ ზაკალაშვილი"
-                />
-                <figcaption>
-                  <span>კურსს უძღვება</span>
-                  <strong>ოთარ ზაკალაშვილი</strong>
-                  <small>პრაქტიკული AI, Python, SQL და Web კურსების ავტორი BitCamp-ში</small>
-                </figcaption>
-              </figure>
             </div>
           </div>
         </section>
@@ -571,7 +616,7 @@ export default function AIPromptEngineering() {
           <div className="campaign-shell">
             <div className="campaign-section-heading">
               <p className="campaign-kicker">სტუდენტების ხმა</p>
-              <h2>რეალური შეფასებები წინა სტუდენტებისგან.</h2>
+              <h2>შეფასებები და შთაბეჭდილებები</h2>
             </div>
 
             <div className="campaign-testimonial-grid">
