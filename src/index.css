@@ -776,8 +776,6 @@ Red pyramid, dark navy, with vibrant pixel art accents and animations
 .campaign-instructor-card strong,
 .campaign-lesson-preview__header strong,
 .campaign-insight-box strong,
-.campaign-hero-preview__header strong,
-.campaign-hero-preview__day > strong,
 .campaign-lesson-row strong,
 .campaign-final__deadline strong {
   font-family: var(--cp-heading-font);
@@ -1817,7 +1815,6 @@ Red pyramid, dark navy, with vibrant pixel art accents and animations
 }
 
 .campaign-instructor-card,
-.campaign-hero-preview,
 .campaign-lesson-preview,
 .campaign-insight-box,
 .campaign-outcome-card,
@@ -1866,206 +1863,6 @@ Red pyramid, dark navy, with vibrant pixel art accents and animations
   color: var(--cp-text-secondary);
   font-size: 14px;
   line-height: 1.55;
-}
-
-.campaign-hero-preview {
-  display: grid;
-  gap: 18px;
-  min-height: 470px;
-  padding: 22px;
-  background:
-    linear-gradient(180deg, rgba(218, 41, 28, 0.07), transparent 42%),
-    rgba(18, 18, 20, 0.86);
-}
-
-.campaign-start-preview {
-  padding: 34px 0 42px;
-  border-bottom: 1px solid var(--cp-border);
-  background:
-    linear-gradient(180deg, #0e0e10, rgba(10, 10, 11, 0.98)),
-    var(--cp-bg);
-}
-
-.campaign-hero-preview--wide {
-  min-height: 0;
-  grid-template-columns: minmax(260px, 0.78fr) minmax(0, 1.22fr);
-  grid-template-areas:
-    "header days"
-    "formula days"
-    "footer footer";
-  align-items: start;
-  gap: 22px;
-  padding: 26px;
-}
-
-.campaign-hero-preview--wide .campaign-hero-preview__header {
-  grid-area: header;
-}
-
-.campaign-hero-preview--wide .campaign-hero-preview__days {
-  grid-area: days;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  align-self: stretch;
-}
-
-.campaign-hero-preview--wide .campaign-formula-card {
-  grid-area: formula;
-  align-self: stretch;
-}
-
-.campaign-hero-preview--wide .campaign-hero-preview__footer {
-  grid-area: footer;
-}
-
-.campaign-hero-preview__header {
-  display: grid;
-  gap: 8px;
-}
-
-.campaign-hero-preview__header span,
-.campaign-formula-card > div:first-child span {
-  color: var(--cp-accent-text);
-  font-size: 12px;
-  font-weight: 750;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-}
-
-.campaign-hero-preview__header strong {
-  color: var(--cp-text-primary);
-  font-size: 24px;
-  font-weight: 800;
-  line-height: 1.18;
-}
-
-.campaign-hero-preview__header p {
-  color: var(--cp-text-secondary);
-  font-size: 14px;
-  line-height: 1.6;
-}
-
-.campaign-hero-preview__days {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
-}
-
-.campaign-hero-preview__day {
-  display: grid;
-  gap: 10px;
-  border: 1px solid var(--cp-border);
-  border-radius: 8px;
-  padding: 15px;
-  background: rgba(255, 255, 255, 0.035);
-}
-
-.campaign-hero-preview__day > span {
-  color: var(--cp-text-muted);
-  font-size: 12px;
-  font-weight: 750;
-}
-
-.campaign-hero-preview__day > strong {
-  color: var(--cp-text-primary);
-  font-size: 16px;
-  line-height: 1.35;
-}
-
-.campaign-hero-preview__day ul {
-  display: grid;
-  gap: 8px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.campaign-hero-preview__day li {
-  position: relative;
-  padding-left: 14px;
-  color: var(--cp-text-secondary);
-  font-size: 13px;
-  line-height: 1.45;
-}
-
-.campaign-hero-preview__day li::before {
-  content: "";
-  position: absolute;
-  top: 0.72em;
-  left: 0;
-  width: 5px;
-  height: 5px;
-  border-radius: 999px;
-  background: var(--cp-accent-text);
-}
-
-.campaign-formula-card {
-  display: grid;
-  gap: 14px;
-  border: 1px solid var(--cp-accent-line);
-  border-radius: 8px;
-  padding: 16px;
-  background: rgba(218, 41, 28, 0.075);
-}
-
-.campaign-formula-card > div:first-child {
-  display: flex;
-  justify-content: space-between;
-  gap: 14px;
-  align-items: baseline;
-}
-
-.campaign-formula-card > div:first-child strong {
-  color: var(--cp-text-primary);
-  font-size: 24px;
-  font-weight: 900;
-  letter-spacing: 0.02em;
-}
-
-.campaign-formula-grid {
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 8px;
-}
-
-.campaign-formula-grid div {
-  display: grid;
-  place-items: center;
-  gap: 5px;
-  min-height: 76px;
-  border: 1px solid var(--cp-border);
-  border-radius: 8px;
-  background: rgba(10, 10, 11, 0.55);
-  text-align: center;
-}
-
-.campaign-formula-grid strong {
-  color: var(--cp-accent-text);
-  font-size: 26px;
-  font-weight: 900;
-  line-height: 1;
-}
-
-.campaign-formula-grid span {
-  color: var(--cp-text-muted);
-  font-size: 11px;
-  line-height: 1.25;
-}
-
-.campaign-hero-preview__footer {
-  display: flex;
-  gap: 10px;
-  align-items: flex-start;
-  border-top: 1px solid var(--cp-border);
-  padding-top: 16px;
-  color: var(--cp-text-secondary);
-  font-size: 14px;
-  line-height: 1.55;
-}
-
-.campaign-hero-preview__footer svg {
-  flex: 0 0 auto;
-  margin-top: 2px;
-  color: var(--cp-accent-text);
 }
 
 .campaign-lesson-preview {
@@ -2883,19 +2680,6 @@ Red pyramid, dark navy, with vibrant pixel art accents and animations
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .campaign-hero-preview--wide {
-    grid-template-columns: 1fr;
-    grid-template-areas:
-      "header"
-      "days"
-      "formula"
-      "footer";
-  }
-
-  .campaign-hero-preview--wide .campaign-hero-preview__days {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
   .campaign-cta-band__action,
   .campaign-final__panel {
     margin-left: 0;
@@ -3088,20 +2872,6 @@ Red pyramid, dark navy, with vibrant pixel art accents and animations
     grid-template-columns: 1fr;
   }
 
-  .campaign-hero-preview {
-    min-height: auto;
-    padding: 18px;
-  }
-
-  .campaign-hero-preview__days,
-  .campaign-formula-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .campaign-formula-grid div {
-    min-height: 56px;
-  }
-
   .campaign-hero__offer {
     gap: 14px;
     margin-top: 28px;
@@ -3189,18 +2959,6 @@ Red pyramid, dark navy, with vibrant pixel art accents and animations
   .campaign-outcome-grid,
   .campaign-module-grid,
   .campaign-testimonial-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .campaign-start-preview {
-    padding: 24px 0 32px;
-  }
-
-  .campaign-hero-preview--wide {
-    padding: 18px;
-  }
-
-  .campaign-hero-preview--wide .campaign-hero-preview__days {
     grid-template-columns: 1fr;
   }
 

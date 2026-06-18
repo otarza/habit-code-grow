@@ -421,8 +421,8 @@ export default function AIPromptEngineering() {
         <section className="campaign-proof-strip" aria-label="ნდობის მაჩვენებლები">
           <div className="campaign-shell campaign-proof-strip__grid">
             <div>
-              <strong>6</strong>
-              <span>მოდული prompting-იდან n8n ავტომატიზაციამდე</span>
+              <strong>6 მოდული</strong>
+              <span>prompting-იდან n8n ავტომატიზაციამდე</span>
             </div>
             <div>
               <strong>4 კვირა</strong>

@@ -84,27 +84,6 @@ const instructorCredentials = [
   "სენიორ პროგრამულ ინჟინრად მუშაობის ისტორია ამერიკაში, კანადაში და ევროპის 12 ქვეყანაში",
 ];
 
-const heroPreviewDays = [
-  {
-    day: "დღე 01",
-    title: "სწორი მოთხოვნის აწყობა",
-    items: ["რა არის Prompting", "კონტექსტის მიცემა", "T.C.R.E.I. ფორმულა"],
-  },
-  {
-    day: "დღე 02",
-    title: "AI რეალურ საქმეში",
-    items: ["Prompt Chaining", "CSV / JSON პასუხები", "50+ მზა პრომპტი"],
-  },
-];
-
-const promptFormula = [
-  { letter: "T", label: "ამოცანა" },
-  { letter: "C", label: "კონტექსტი" },
-  { letter: "R", label: "როლი" },
-  { letter: "E", label: "მაგალითი" },
-  { letter: "I", label: "გაუმჯობესება" },
-];
-
 const testimonials = [
   {
     quote:
@@ -349,55 +328,6 @@ function BootcampHeroVideo({ className = "" }: { className?: string }) {
   );
 }
 
-function HeroCoursePreview({ className = "" }: { className?: string }) {
-  return (
-    <div className={`campaign-hero-preview ${className}`} aria-label="კურსის მოკლე სტრუქტურა">
-      <div className="campaign-hero-preview__header">
-        <span>რას იწყებ პირველივე დღეს</span>
-        <strong>2 დღიანი პრაქტიკული სტარტი</strong>
-        <p>
-          კურსი არ იწყება თეორიით. პირველივე გაკვეთილებიდან აწყობ მოთხოვნას, იღებ უკეთეს პასუხს და
-          ხედავ როგორ გამოიყენო AI ყოველდღიურ საქმეში.
-        </p>
-      </div>
-
-      <div className="campaign-hero-preview__days">
-        {heroPreviewDays.map((day) => (
-          <div className="campaign-hero-preview__day" key={day.day}>
-            <span>{day.day}</span>
-            <strong>{day.title}</strong>
-            <ul>
-              {day.items.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
-          </div>
-        ))}
-      </div>
-
-      <div className="campaign-formula-card">
-        <div>
-          <span>კურსის მთავარი ჩარჩო</span>
-          <strong>T.C.R.E.I.</strong>
-        </div>
-        <div className="campaign-formula-grid">
-          {promptFormula.map((item) => (
-            <div key={item.letter}>
-              <strong>{item.letter}</strong>
-              <span>{item.label}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <div className="campaign-hero-preview__footer">
-        <CheckCircle2 aria-hidden="true" size={18} />
-        <span>შედეგი: იცი არა მხოლოდ “რა დაწერო”, არამედ როგორ ააწყო მოთხოვნა თავიდან სწორად.</span>
-      </div>
-    </div>
-  );
-}
-
 function FAQAccordion({ items }: { items: typeof faqs }) {
   const [open, setOpen] = useState<number | null>(0);
 
@@ -516,7 +446,7 @@ export default function AIBootcamp() {
               <span>კმაყოფილი სტუდენტი BitCamp-ის AI კურსებში</span>
             </div>
             <div>
-              <strong>25</strong>
+              <strong>25 ვიდეო გაკვეთილი</strong>
               <span>დასრულებული ვიდეო გაკვეთილი ახლავე</span>
             </div>
             <div>
@@ -527,12 +457,6 @@ export default function AIBootcamp() {
               <strong>50+</strong>
               <span>მზა პრომპტი ყოველდღიური სამუშაოსთვის</span>
             </div>
-          </div>
-        </section>
-
-        <section className="campaign-start-preview" aria-label="2 დღიანი პრაქტიკული სტარტი">
-          <div className="campaign-shell">
-            <HeroCoursePreview className="campaign-hero-preview--wide" />
           </div>
         </section>
 
