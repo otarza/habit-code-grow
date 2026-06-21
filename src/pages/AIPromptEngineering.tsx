@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { type CSSProperties, useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import {
@@ -21,19 +21,55 @@ import { CampaignStickyCta } from "@/components/campaign/CampaignStickyCta";
 import { FlittCheckoutModal } from "@/components/campaign/FlittCheckoutModal";
 import { SEO } from "@/components/SEO";
 import { rememberAttributionRef } from "@/lib/attribution";
-import { handleBuy } from "@/lib/checkout";
+import { type CheckoutOverride, handleBuy } from "@/lib/checkout";
 
 const paymentLogos = ["visa", "mastercard", "apple-pay", "google-pay"] as const;
 const PRO_VIDEO_BASE_URL =
   "https://player.mediadelivery.net/embed/678241/5c33a6d3-33fc-41a5-83ca-1a9c8ee702ff?autoplay=true&loop=false&muted=true&preload=true&responsive=true";
 const PRO_CURRENT_PRICE = 249;
+const PRO_PROMO_CODE = "150";
+const PRO_PROMO_PRICE = 99;
+const PRO_PROMO_BUTTON_ID = "6e5fddecc50d14bdcc75f27b3708b0fa21c7887e";
 const PRO_FULL_PRICE = 790;
 const formatGel = (value: number) => `₾${value}`;
 const getProVideoUrl = (soundEnabled: boolean) =>
   PRO_VIDEO_BASE_URL.replace("muted=true", `muted=${soundEnabled ? "false" : "true"}`);
 const PRO_CURRENT_PRICE_LABEL = formatGel(PRO_CURRENT_PRICE);
+const PRO_PROMO_PRICE_LABEL = formatGel(PRO_PROMO_PRICE);
+const PRO_PROMO_DISCOUNT_LABEL = formatGel(PRO_CURRENT_PRICE - PRO_PROMO_PRICE);
+const PRO_PROMO_SAVINGS_LABEL = formatGel(PRO_FULL_PRICE - PRO_PROMO_PRICE);
+const PRO_PROMO_SAVINGS_MESSAGE = `შენ ზოგავ ${PRO_PROMO_SAVINGS_LABEL} - ს`;
 const PRO_FULL_PRICE_LABEL = formatGel(PRO_FULL_PRICE);
 const PRO_DISCOUNT_WINDOW_LABEL = "ივნისის ბოლომდე";
+const PRO_PROMO_DEADLINE_LABEL = "30 ივნისამდე";
+const PRO_PROMO_CHECKOUT: CheckoutOverride = {
+  buttonId: PRO_PROMO_BUTTON_ID,
+  name: "AI Bootcamp მენტორობით — Promo 150",
+  value: PRO_PROMO_PRICE,
+  savingsLabel: PRO_PROMO_SAVINGS_MESSAGE,
+};
+const PRO_PROMO_CONFETTI = [
+  { x: "-44vw", y: "56vh", r: "-320deg", c: "#ff766a" },
+  { x: "-36vw", y: "42vh", r: "260deg", c: "#f5f5f7" },
+  { x: "-28vw", y: "62vh", r: "-210deg", c: "#da291c" },
+  { x: "-20vw", y: "48vh", r: "340deg", c: "#ffb4ac" },
+  { x: "-14vw", y: "66vh", r: "-280deg", c: "#9adbe8" },
+  { x: "-8vw", y: "46vh", r: "220deg", c: "#ff766a" },
+  { x: "-2vw", y: "70vh", r: "-360deg", c: "#f5f5f7" },
+  { x: "6vw", y: "52vh", r: "300deg", c: "#da291c" },
+  { x: "12vw", y: "68vh", r: "-240deg", c: "#ffb4ac" },
+  { x: "18vw", y: "44vh", r: "280deg", c: "#9adbe8" },
+  { x: "26vw", y: "64vh", r: "-300deg", c: "#ff766a" },
+  { x: "34vw", y: "50vh", r: "240deg", c: "#f5f5f7" },
+  { x: "42vw", y: "60vh", r: "-260deg", c: "#da291c" },
+  { x: "-40vw", y: "74vh", r: "380deg", c: "#9adbe8" },
+  { x: "-30vw", y: "78vh", r: "-340deg", c: "#ff766a" },
+  { x: "-16vw", y: "82vh", r: "310deg", c: "#f5f5f7" },
+  { x: "0vw", y: "84vh", r: "-390deg", c: "#ffb4ac" },
+  { x: "16vw", y: "80vh", r: "330deg", c: "#da291c" },
+  { x: "30vw", y: "76vh", r: "-310deg", c: "#9adbe8" },
+  { x: "40vw", y: "72vh", r: "360deg", c: "#ff766a" },
+] as const;
 
 const proIncludes = [
   "სრული 6-მოდულიანი პროგრამა: პრომპტინგიდან n8n ავტომატიზაციამდე",
@@ -233,22 +269,108 @@ function ProHeroVideo({ className = "" }: { className?: string }) {
   );
 }
 
-function ProOffer({ className = "", id, onBuy }: { className?: string; id?: string; onBuy: () => void }) {
+function PromoActivateButton({
+  isActive,
+  onActivate,
+  compact = false,
+}: {
+  isActive: boolean;
+  onActivate: () => void;
+  compact?: boolean;
+}) {
+  return (
+    <button
+      type="button"
+      className={compact ? "campaign-promo-button campaign-promo-button--compact" : "campaign-promo-button"}
+      onClick={onActivate}
+      disabled={isActive}
+    >
+      {isActive ? "პრომო კოდი 150 გააქტიურებულია" : "გააქტიურე პრომო კოდი 150"}
+    </button>
+  );
+}
+
+function ProPromoBar({
+  isActive,
+  onActivate,
+}: {
+  isActive: boolean;
+  onActivate: () => void;
+}) {
+  return (
+    <div className={`campaign-promo-bar${isActive ? " is-active" : ""}`}>
+      <div className="campaign-shell campaign-promo-bar__inner">
+        <div>
+          <span>პრომო კოდი {PRO_PROMO_CODE}</span>
+          <strong>
+            {isActive
+              ? `${PRO_PROMO_PRICE_LABEL} - ${PRO_PROMO_SAVINGS_MESSAGE} · მოქმედებს ${PRO_PROMO_DEADLINE_LABEL}`
+              : `${PRO_PROMO_DISCOUNT_LABEL} ფასდაკლება AI სრულ პროგრამაზე · მოქმედებს ${PRO_PROMO_DEADLINE_LABEL}`}
+          </strong>
+        </div>
+        <PromoActivateButton isActive={isActive} onActivate={onActivate} />
+      </div>
+    </div>
+  );
+}
+
+function PromoConfetti() {
+  return (
+    <div className="campaign-promo-confetti" aria-hidden="true">
+      {PRO_PROMO_CONFETTI.map((piece, index) => (
+        <span
+          key={`${piece.x}-${index}`}
+          style={
+            {
+              "--confetti-x": piece.x,
+              "--confetti-y": piece.y,
+              "--confetti-r": piece.r,
+              "--confetti-color": piece.c,
+              "--confetti-delay": `${index * 18}ms`,
+            } as CSSProperties
+          }
+        />
+      ))}
+    </div>
+  );
+}
+
+function ProOffer({
+  className = "",
+  id,
+  onBuy,
+  isPromoActive,
+  onActivatePromo,
+  currentPriceLabel,
+  discountBadge,
+}: {
+  className?: string;
+  id?: string;
+  onBuy: () => void;
+  isPromoActive: boolean;
+  onActivatePromo: () => void;
+  currentPriceLabel: string;
+  discountBadge: string;
+}) {
   return (
     <div id={id} className={`campaign-hero__offer campaign-hero__offer--pro campaign-buy-anchor ${className}`}>
       <div className="campaign-offer-heading">
         <span>სრული AI პროგრამა</span>
         <strong>6 მოდული + მენტორშიფი</strong>
       </div>
+      <div className="campaign-offer-promo">
+        <span>{isPromoActive ? `${PRO_PROMO_CODE} კოდი მოქმედებს ${PRO_PROMO_DEADLINE_LABEL} - ${PRO_PROMO_SAVINGS_MESSAGE}` : `${PRO_PROMO_CODE} კოდი გაძლევს დამატებით ${PRO_PROMO_DISCOUNT_LABEL} ფასდაკლებას ${PRO_PROMO_DEADLINE_LABEL}`}</span>
+        <PromoActivateButton isActive={isPromoActive} onActivate={onActivatePromo} compact />
+      </div>
       <div className="campaign-final__price-row">
         <div>
           <span>ერთჯერადი ფასი</span>
           <span className="campaign-price__old">{PRO_FULL_PRICE_LABEL}</span>
-          <strong>{PRO_CURRENT_PRICE_LABEL}</strong>
+          <strong>{currentPriceLabel}</strong>
         </div>
-        <span className="campaign-price__save">{PRO_DISCOUNT_WINDOW_LABEL}</span>
+        <span className="campaign-price__save">{discountBadge}</span>
       </div>
-      <CtaButton label={`შემოუერთდი პროგრამას — ${PRO_CURRENT_PRICE_LABEL}`} onClick={onBuy} />
+      <CtaButton label={`შემოუერთდი პროგრამას — ${currentPriceLabel}`} onClick={onBuy} />
       <div className="campaign-offer-footer">
         <div className="campaign-secure-line">
           <ShieldCheck aria-hidden="true" size={16} />
@@ -338,7 +460,24 @@ function FAQAccordion({ items }: { items: typeof proFaqs }) {
 
 export default function AIPromptEngineering() {
   const location = useLocation();
-  const buy = () => handleBuy("pro");
+  const [isPromoActive, setIsPromoActive] = useState(false);
+  const [showPromoConfetti, setShowPromoConfetti] = useState(false);
+  const currentPriceLabel = isPromoActive ? PRO_PROMO_PRICE_LABEL : PRO_CURRENT_PRICE_LABEL;
+  const discountBadge = isPromoActive ? PRO_PROMO_SAVINGS_MESSAGE : PRO_DISCOUNT_WINDOW_LABEL;
+  const scrollToBuySection = () => {
+    window.setTimeout(() => {
+      const anchors = Array.from(document.querySelectorAll<HTMLElement>(".campaign-buy-anchor"));
+      const target = anchors.find((el) => el.offsetParent !== null) ?? anchors[0];
+      target?.scrollIntoView({ behavior: "smooth", block: "center" });
+    }, 120);
+  };
+  const activatePromo = () => {
+    if (isPromoActive) return;
+    setIsPromoActive(true);
+    setShowPromoConfetti(true);
+    scrollToBuySection();
+  };
+  const buy = () => handleBuy("pro", isPromoActive ? PRO_PROMO_CHECKOUT : undefined);
 
   useEffect(() => {
     rememberAttributionRef();
@@ -354,8 +493,14 @@ export default function AIPromptEngineering() {
     return () => window.clearTimeout(timer);
   }, [location.hash]);
 
+  useEffect(() => {
+    if (!showPromoConfetti) return;
+    const timer = window.setTimeout(() => setShowPromoConfetti(false), 1800);
+    return () => window.clearTimeout(timer);
+  }, [showPromoConfetti]);
+
   return (
-    <div className="campaign-page campaign-page--pro">
+    <div className={`campaign-page campaign-page--pro${isPromoActive ? " campaign-page--promo-active" : ""}`}>
       <SEO
         title={`AI სრული პროგრამა მენტორობით — ${PRO_CURRENT_PRICE_LABEL} | BitCamp`}
         description="6-მოდულიანი AI პროგრამა მენტორობით: prompting, business AI, visual AI, Custom GPTs, n8n ავტომატიზაცია, Python/SQL ბონუსები და 4 კვირიანი სამენტორო მხარდაჭერა."
@@ -365,6 +510,9 @@ export default function AIPromptEngineering() {
       <Helmet>
         <script async src="https://tally.so/widgets/embed.js" />
       </Helmet>
+
+      <ProPromoBar isActive={isPromoActive} onActivate={activatePromo} />
+      {showPromoConfetti ? <PromoConfetti /> : null}
 
       <main>
         <section className="campaign-hero">
@@ -400,12 +548,27 @@ export default function AIPromptEngineering() {
               <ProInstructorTrustCard />
               <ProHeroTestimonial />
 
-              <ProOffer className="campaign-hero__offer--inline" onBuy={buy} />
+              <ProOffer
+                className="campaign-hero__offer--inline"
+                onBuy={buy}
+                isPromoActive={isPromoActive}
+                onActivatePromo={activatePromo}
+                currentPriceLabel={currentPriceLabel}
+                discountBadge={discountBadge}
+              />
             </div>
 
             <div className="campaign-hero__visual">
               <ProHeroVideo className="campaign-hero-video--desktop" />
-              <ProOffer id="purchase" className="campaign-hero__offer--desktop" onBuy={buy} />
+              <ProOffer
+                id="purchase"
+                className="campaign-hero__offer--desktop"
+                onBuy={buy}
+                isPromoActive={isPromoActive}
+                onActivatePromo={activatePromo}
+                currentPriceLabel={currentPriceLabel}
+                discountBadge={discountBadge}
+              />
 
             </div>
           </div>
@@ -413,7 +576,7 @@ export default function AIPromptEngineering() {
 
         <CampaignStickyCta
           eyebrow="სრული პროგრამა"
-          price={PRO_CURRENT_PRICE_LABEL}
+          price={currentPriceLabel}
           label="შემოუერთდი"
           onClick={buy}
         />
@@ -508,11 +671,11 @@ export default function AIPromptEngineering() {
                 <div>
                   <span>სრული პროგრამა</span>
                   <span className="campaign-price__old">{PRO_FULL_PRICE_LABEL}</span>
-                  <strong>{PRO_CURRENT_PRICE_LABEL}</strong>
+                  <strong>{currentPriceLabel}</strong>
                 </div>
-                <span className="campaign-price__save">{PRO_DISCOUNT_WINDOW_LABEL}</span>
+                <span className="campaign-price__save">{discountBadge}</span>
               </div>
-              <CtaButton label={`შემოუერთდი პროგრამას — ${PRO_CURRENT_PRICE_LABEL}`} onClick={buy} />
+              <CtaButton label={`შემოუერთდი პროგრამას — ${currentPriceLabel}`} onClick={buy} />
               <PaymentLogos compact />
             </div>
           </div>
@@ -659,11 +822,11 @@ export default function AIPromptEngineering() {
                 <div>
                   <span>ერთჯერადი ფასი</span>
                   <span className="campaign-price__old">{PRO_FULL_PRICE_LABEL}</span>
-                  <strong>{PRO_CURRENT_PRICE_LABEL}</strong>
+                  <strong>{currentPriceLabel}</strong>
                 </div>
-                <span className="campaign-price__save">{PRO_DISCOUNT_WINDOW_LABEL}</span>
+                <span className="campaign-price__save">{discountBadge}</span>
               </div>
-              <CtaButton label={`შემოუერთდი პროგრამას — ${PRO_CURRENT_PRICE_LABEL}`} onClick={buy} />
+              <CtaButton label={`შემოუერთდი პროგრამას — ${currentPriceLabel}`} onClick={buy} />
               <PaymentLogos compact />
             </div>
           </div>

@@ -20,6 +20,13 @@ type ProductConfig = {
     }
 );
 
+export type CheckoutOverride = {
+  buttonId: string;
+  name?: string;
+  value?: number;
+  savingsLabel?: string;
+};
+
 // Per-product checkout config.
 export const PRODUCTS: Record<CheckoutProduct, ProductConfig> = {
   bootcamp: {
@@ -68,10 +75,22 @@ export type FlittOpenEventDetail = {
   buttonId: string;
   name: string;
   value: number;
+  savingsLabel?: string;
 };
 
-function trackInitiateCheckout(product: CheckoutProduct) {
+function getCheckoutConfig(product: CheckoutProduct, override?: CheckoutOverride) {
   const config = PRODUCTS[product];
+  if (!override) return config;
+  return {
+    ...config,
+    name: override.name ?? config.name,
+    value: override.value ?? config.value,
+    ...(config.mode === "embed" ? { buttonId: override.buttonId } : {}),
+  } as ProductConfig;
+}
+
+function trackInitiateCheckout(product: CheckoutProduct, override?: CheckoutOverride) {
+  const config = getCheckoutConfig(product, override);
   const win = window as Window & {
     fbq?: (event: string, name: string, params?: Record<string, unknown>) => void;
     gtag?: (event: string, name: string, params?: Record<string, unknown>) => void;
@@ -105,8 +124,8 @@ function trackInitiateCheckout(product: CheckoutProduct) {
   });
 }
 
-export function handleBuy(product: CheckoutProduct) {
-  const config = PRODUCTS[product];
+export function handleBuy(product: CheckoutProduct, override?: CheckoutOverride) {
+  const config = getCheckoutConfig(product, override);
   if (!config) {
     console.error(`[checkout] Unknown product: ${product}`);
     return;
@@ -117,7 +136,7 @@ export function handleBuy(product: CheckoutProduct) {
       console.error(`[checkout] No Flitt link configured for ${product}`);
       return;
     }
-    trackInitiateCheckout(product);
+    trackInitiateCheckout(product, override);
     window.location.href = config.link;
     return;
   }
@@ -127,12 +146,13 @@ export function handleBuy(product: CheckoutProduct) {
       console.error(`[checkout] No Flitt button ID configured for ${product}`);
       return;
     }
-    trackInitiateCheckout(product);
+    trackInitiateCheckout(product, override);
     const detail: FlittOpenEventDetail = {
       product,
       buttonId: config.buttonId,
       name: config.name,
       value: config.value,
+      savingsLabel: override?.savingsLabel,
     };
     window.dispatchEvent(new CustomEvent("flitt:open", { detail }));
   }

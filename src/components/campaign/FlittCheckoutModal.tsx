@@ -198,6 +198,9 @@ export function FlittCheckoutModal() {
             <strong className="campaign-modal__title">
               {detail.name} — ₾{detail.value}
             </strong>
+            {detail.savingsLabel ? (
+              <span className="campaign-modal__savings">{detail.savingsLabel}</span>
+            ) : null}
           </div>
           <button
             type="button"
@@ -212,6 +215,12 @@ export function FlittCheckoutModal() {
         <div className="campaign-modal__body">
           {step === "email" ? (
             <form className="campaign-modal__email-step" onSubmit={handleEmailSubmit}>
+              {detail.savingsLabel ? (
+                <div className="campaign-modal__savings-panel">
+                  <span>პრომო ფასი აქტიურია</span>
+                  <strong>{detail.savingsLabel}</strong>
+                </div>
+              ) : null}
               <label htmlFor="campaign-modal-email" className="campaign-modal__label">
                 ელ. ფოსტა
               </label>

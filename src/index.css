@@ -1417,6 +1417,16 @@ Red pyramid, dark navy, with vibrant pixel art accents and animations
   font-weight: 700;
 }
 
+.campaign-page--promo-active .campaign-price__save {
+  padding: 7px 11px;
+  background: rgba(218, 41, 28, 0.2);
+  color: #ff9b91;
+  font-size: 14px;
+  font-weight: 850;
+  line-height: 1.2;
+  box-shadow: 0 0 0 1px rgba(255, 118, 106, 0.22);
+}
+
 .campaign-price__new {
   color: var(--cp-text-primary);
   font-size: 42px;
@@ -1485,6 +1495,173 @@ Red pyramid, dark navy, with vibrant pixel art accents and animations
   display: none;
 }
 
+.campaign-promo-bar {
+  border-bottom: 1px solid rgba(255, 118, 106, 0.24);
+  background:
+    linear-gradient(90deg, rgba(218, 41, 28, 0.18), rgba(255, 255, 255, 0.035)),
+    rgba(10, 10, 11, 0.96);
+}
+
+.campaign-promo-bar.is-active {
+  border-bottom-color: rgba(255, 118, 106, 0.42);
+}
+
+.campaign-promo-bar__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 64px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.campaign-promo-bar__inner > div {
+  display: grid;
+  gap: 3px;
+}
+
+.campaign-promo-bar__inner span {
+  color: var(--cp-accent-text);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.campaign-promo-bar__inner strong {
+  color: var(--cp-text-primary);
+  font-size: 16px;
+  line-height: 1.35;
+}
+
+.campaign-promo-button {
+  flex-shrink: 0;
+  min-height: 40px;
+  border: 1px solid rgba(255, 118, 106, 0.48);
+  border-radius: 8px;
+  padding: 0 16px;
+  background: var(--cp-cta-bg);
+  color: var(--cp-cta-text);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 800;
+  transition: transform 150ms ease, opacity 150ms ease;
+}
+
+.campaign-promo-button:hover {
+  transform: translateY(-1px);
+}
+
+.campaign-promo-button:disabled {
+  cursor: default;
+  opacity: 0.78;
+  transform: none;
+}
+
+.campaign-promo-button--compact {
+  min-height: 34px;
+  padding: 0 12px;
+  font-size: 12px;
+}
+
+.campaign-offer-promo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border: 1px solid rgba(255, 118, 106, 0.22);
+  border-radius: 8px;
+  padding: 10px 12px;
+  background: rgba(218, 41, 28, 0.08);
+}
+
+.campaign-offer-promo > span {
+  color: var(--cp-text-secondary);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.campaign-promo-confetti {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.campaign-promo-confetti span {
+  position: absolute;
+  top: 70px;
+  left: 50%;
+  width: 9px;
+  height: 16px;
+  border-radius: 3px;
+  background: var(--confetti-color);
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.4) rotate(0deg);
+  animation: campaign-promo-confetti-pop 1500ms cubic-bezier(0.16, 1, 0.3, 1) var(--confetti-delay) forwards;
+}
+
+.campaign-page--promo-active .campaign-buy-anchor .campaign-cta,
+.campaign-page--promo-active .campaign-cta-band__action .campaign-cta,
+.campaign-page--promo-active .campaign-final__panel .campaign-cta,
+.campaign-page--promo-active .campaign-sticky-cta button {
+  border: 1px solid rgba(255, 118, 106, 0.72);
+  background:
+    linear-gradient(115deg, #8f1d14 0%, #da291c 28%, #ff766a 50%, #b82419 72%, #6f1710 100%);
+  background-size: 240% 240%;
+  color: #ffffff;
+  text-shadow:
+    0 1px 2px rgba(10, 10, 11, 0.82),
+    0 0 8px rgba(10, 10, 11, 0.42);
+  animation: campaign-promo-cta-glow 5.6s ease-in-out infinite;
+  box-shadow:
+    0 0 0 1px rgba(255, 118, 106, 0.34),
+    0 0 0 5px rgba(255, 118, 106, 0.12),
+    0 14px 30px rgba(218, 41, 28, 0.32);
+}
+
+@keyframes campaign-promo-confetti-pop {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.4) rotate(0deg);
+  }
+  12% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(calc(-50% + var(--confetti-x)), var(--confetti-y)) scale(1) rotate(var(--confetti-r));
+  }
+}
+
+@keyframes campaign-promo-cta-glow {
+  0% {
+    background-position: 18% 50%;
+    box-shadow:
+      0 0 0 1px rgba(255, 118, 106, 0.28),
+      0 0 0 4px rgba(255, 118, 106, 0.1),
+      0 12px 26px rgba(218, 41, 28, 0.28);
+  }
+  50% {
+    background-position: 82% 50%;
+    box-shadow:
+      0 0 0 1px rgba(255, 118, 106, 0.58),
+      0 0 0 8px rgba(255, 118, 106, 0.16),
+      0 18px 38px rgba(218, 41, 28, 0.4);
+  }
+  100% {
+    background-position: 18% 50%;
+    box-shadow:
+      0 0 0 1px rgba(255, 118, 106, 0.28),
+      0 0 0 4px rgba(255, 118, 106, 0.1),
+      0 12px 26px rgba(218, 41, 28, 0.28);
+  }
+}
+
 /* Flitt checkout modal */
 .campaign-modal {
   position: fixed;
@@ -1547,6 +1724,17 @@ Red pyramid, dark navy, with vibrant pixel art accents and animations
   line-height: 1.3;
 }
 
+.campaign-modal__savings {
+  width: fit-content;
+  border-radius: 8px;
+  padding: 5px 8px;
+  background: rgba(218, 41, 28, 0.14);
+  color: #DA291C;
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
 .campaign-modal__close {
   flex-shrink: 0;
   width: 36px;
@@ -1595,6 +1783,31 @@ Red pyramid, dark navy, with vibrant pixel art accents and animations
   display: flex;
   flex-direction: column;
   gap: 10px;
+}
+
+.campaign-modal__savings-panel {
+  display: grid;
+  gap: 4px;
+  margin-bottom: 6px;
+  border: 1px solid rgba(218, 41, 28, 0.18);
+  border-radius: 12px;
+  padding: 14px;
+  background: linear-gradient(135deg, rgba(218, 41, 28, 0.1), rgba(255, 118, 106, 0.08));
+}
+
+.campaign-modal__savings-panel span {
+  color: #8F1D14;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.campaign-modal__savings-panel strong {
+  color: #0A0A0B;
+  font-size: 24px;
+  font-weight: 850;
+  line-height: 1.15;
 }
 
 .campaign-modal__label {
@@ -1682,7 +1895,12 @@ Red pyramid, dark navy, with vibrant pixel art accents and animations
 @media (prefers-reduced-motion: reduce) {
   .campaign-modal,
   .campaign-modal__panel,
-  .campaign-hero-video__sound {
+  .campaign-hero-video__sound,
+  .campaign-promo-confetti span,
+  .campaign-page--promo-active .campaign-buy-anchor .campaign-cta,
+  .campaign-page--promo-active .campaign-cta-band__action .campaign-cta,
+  .campaign-page--promo-active .campaign-final__panel .campaign-cta,
+  .campaign-page--promo-active .campaign-sticky-cta button {
     animation: none;
   }
 
@@ -2793,6 +3011,16 @@ Red pyramid, dark navy, with vibrant pixel art accents and animations
 @media (max-width: 640px) {
   .campaign-shell {
     width: min(100% - 28px, 100%);
+  }
+
+  .campaign-promo-bar__inner,
+  .campaign-offer-promo {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .campaign-promo-button {
+    width: 100%;
   }
 
   .campaign-header__inner {

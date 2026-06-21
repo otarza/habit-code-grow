@@ -31,6 +31,9 @@ const PRODUCT_MAP = {
   // Pro (₾249 mentored)
   "btcp-ai-pro": PRO_PRODUCT,
   "811bb88862b6e4eb4b1a1bfdb86ba16cac23d8f8": PRO_PRODUCT,
+  // Pro promo (₾99 mentored) — Flitt dashboard button info /4056248/1266635
+  "6e5fddecc50d14bdcc75f27b3708b0fa21c7887e": PRO_PRODUCT,
+  "1266635": PRO_PRODUCT,
 };
 
 // Fallback used when product_id isn't in the map (e.g. unknown / new product)
