@@ -40,7 +40,6 @@ const PRO_PROMO_DISCOUNT_LABEL = formatGel(PRO_CURRENT_PRICE - PRO_PROMO_PRICE);
 const PRO_PROMO_SAVINGS_LABEL = formatGel(PRO_FULL_PRICE - PRO_PROMO_PRICE);
 const PRO_PROMO_SAVINGS_MESSAGE = `შენ ზოგავ ${PRO_PROMO_SAVINGS_LABEL} - ს`;
 const PRO_FULL_PRICE_LABEL = formatGel(PRO_FULL_PRICE);
-const PRO_DISCOUNT_WINDOW_LABEL = "ივნისის ბოლომდე";
 const PRO_PROMO_DEADLINE_LABEL = "30 ივნისამდე";
 const PRO_PROMO_CHECKOUT: CheckoutOverride = {
   buttonId: PRO_PROMO_BUTTON_ID,
@@ -220,7 +219,7 @@ const proFaqs = [
   },
   {
     q: "რა ხდება კურსის შეძენის შემდეგ?",
-    a: "შეძენისთანავე ელფოსტაზე მიიღებთ კურსზე წვდომის დეტალურ ინსტრუქციასა და მენტორშიფის ინფორმაციას. გადახდა უსაფრთხოდ მუშავდება Tally-ის ფორმით და საბანკო ბარათით/გადარიცხვით.",
+    a: "შეძენისთანავე ელფოსტაზე მიიღებთ კურსზე წვდომის დეტალურ ინსტრუქციასა და მენტორშიფის ინფორმაციას.",
   },
 ];
 
@@ -368,7 +367,7 @@ function ProOffer({
           <span className="campaign-price__old">{PRO_FULL_PRICE_LABEL}</span>
           <strong>{currentPriceLabel}</strong>
         </div>
-        <span className="campaign-price__save">{discountBadge}</span>
+        {discountBadge && <span className="campaign-price__save">{discountBadge}</span>}
       </div>
       <CtaButton label={`შემოუერთდი პროგრამას — ${currentPriceLabel}`} onClick={onBuy} />
       <div className="campaign-offer-footer">
@@ -463,7 +462,7 @@ export default function AIPromptEngineering() {
   const [isPromoActive, setIsPromoActive] = useState(false);
   const [showPromoConfetti, setShowPromoConfetti] = useState(false);
   const currentPriceLabel = isPromoActive ? PRO_PROMO_PRICE_LABEL : PRO_CURRENT_PRICE_LABEL;
-  const discountBadge = isPromoActive ? PRO_PROMO_SAVINGS_MESSAGE : PRO_DISCOUNT_WINDOW_LABEL;
+  const discountBadge = isPromoActive ? PRO_PROMO_SAVINGS_MESSAGE : "";
   const scrollToBuySection = () => {
     window.setTimeout(() => {
       const anchors = Array.from(document.querySelectorAll<HTMLElement>(".campaign-buy-anchor"));
@@ -673,7 +672,7 @@ export default function AIPromptEngineering() {
                   <span className="campaign-price__old">{PRO_FULL_PRICE_LABEL}</span>
                   <strong>{currentPriceLabel}</strong>
                 </div>
-                <span className="campaign-price__save">{discountBadge}</span>
+                {discountBadge && <span className="campaign-price__save">{discountBadge}</span>}
               </div>
               <CtaButton label={`შემოუერთდი პროგრამას — ${currentPriceLabel}`} onClick={buy} />
               <PaymentLogos compact />
@@ -824,7 +823,7 @@ export default function AIPromptEngineering() {
                   <span className="campaign-price__old">{PRO_FULL_PRICE_LABEL}</span>
                   <strong>{currentPriceLabel}</strong>
                 </div>
-                <span className="campaign-price__save">{discountBadge}</span>
+                {discountBadge && <span className="campaign-price__save">{discountBadge}</span>}
               </div>
               <CtaButton label={`შემოუერთდი პროგრამას — ${currentPriceLabel}`} onClick={buy} />
               <PaymentLogos compact />

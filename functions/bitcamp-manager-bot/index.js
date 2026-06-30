@@ -3,6 +3,7 @@
  *
  * Commands:
  *   /invite <email> [bootcamp|pro] [note]
+ *   /resend <email> [bootcamp|pro] [direct] [note]
  *   /help
  *
  * Security:
@@ -93,7 +94,11 @@ functions.http("telegramBot", async (req, res) => {
   if (cleanText.startsWith("/start") || cleanText.startsWith("/help")) {
     await sendMessage(chatId, helpText());
   } else if (cleanText.startsWith("/invite")) {
-    await handleInvite(chatId, cleanText);
+    await handleInvite(chatId, cleanText, { directLinks: false });
+  } else if (cleanText === "/resend" || cleanText.startsWith("/resend ")) {
+    await handleResend(chatId, cleanText);
+  } else if (cleanText.startsWith("/resend_direct")) {
+    await handleInvite(chatId, cleanText, { directLinks: true });
   } else {
     await sendMessage(chatId, "Unknown command. Try /help");
   }
@@ -128,10 +133,15 @@ function helpText() {
 <b>/invite</b> &lt;email&gt; [course] [note]
   Send free course access to anyone.
 
+<b>/resend</b> &lt;email&gt; [course] [direct] [note]
+  Resend course access. Add <code>direct</code> to disable Postmark link tracking.
+
   <b>Examples:</b>
   <code>/invite friend@example.com</code>
   <code>/invite vip@x.com pro</code>
   <code>/invite speaker@x.com pro speaker comp</code>
+  <code>/resend student@example.com bootcamp direct</code>
+  <code>/resend student@example.com pro direct</code>
 
   Courses: <code>bootcamp</code> (default) or <code>pro</code>`;
 }
@@ -244,10 +254,12 @@ async function editModerationMessage(callback, commentId, comment, status) {
   );
 }
 
-async function handleInvite(chatId, text) {
+async function handleInvite(chatId, text, options = {}) {
+  const directLinks = Boolean(options.directLinks);
+  const command = options.command || (directLinks ? "resend_direct" : "invite");
   const parts = text.split(/\s+/).slice(1);
   if (parts.length === 0) {
-    return sendMessage(chatId, "Usage:\n<code>/invite &lt;email&gt; [bootcamp|pro] [note]</code>");
+    return sendMessage(chatId, `Usage:\n<code>/${command} &lt;email&gt; [bootcamp|pro] [direct] [note]</code>`);
   }
 
   const email = parts[0].toLowerCase();
@@ -264,22 +276,26 @@ async function handleInvite(chatId, text) {
     );
   }
 
-  const note = parts.slice(2).join(" ");
+  const note = (options.noteParts || parts.slice(2)).join(" ");
   const noteSlug = note ? `_${note.replace(/[^a-zA-Z0-9_-]+/g, "_")}` : "";
-  const orderId = `INVITE_${Date.now()}${noteSlug}`;
+  const orderIdPrefix = directLinks ? "DIRECT_RESEND" : "INVITE";
+  const orderId = `${orderIdPrefix}_${Date.now()}${noteSlug}`;
   const base64Email = toBase64Url(email);
   const magicLink = `https://www.bitcamp.ge/learn/${course.slug}?access=${base64Email}`;
+  const eventType = directLinks ? "telegram_direct_resend" : "telegram_invite";
 
   try {
     await upsertCourseAccess({
       email,
       courseSlug: course.slug,
-      source: "telegram_invite",
+      source: eventType,
       metadata: {
         orderId,
         note,
         invitedBy: "telegram_bot",
+        directLinks: String(directLinks),
       },
+      eventType,
     });
 
     const result = await postmarkClient.sendEmailWithTemplate({
@@ -295,7 +311,7 @@ async function handleInvite(chatId, text) {
       },
       MessageStream: MESSAGE_STREAM,
       TrackOpens: true,
-      TrackLinks: "HtmlAndText",
+      TrackLinks: directLinks ? "None" : "HtmlAndText",
     });
 
     if (result.ErrorCode && result.ErrorCode !== 0) {
@@ -305,19 +321,26 @@ async function handleInvite(chatId, text) {
       );
     }
 
-    console.log("INVITE_SENT", { email, course: course.slug, orderId, messageId: result.MessageID });
+    console.log(directLinks ? "DIRECT_RESEND_SENT" : "INVITE_SENT", {
+      email,
+      course: course.slug,
+      orderId,
+      messageId: result.MessageID,
+      trackLinks: directLinks ? "None" : "HtmlAndText",
+    });
     await sendMessage(
       chatId,
-      `✅ <b>Invite sent</b>\n\n` +
+      `✅ <b>${directLinks ? "Direct access email sent" : "Invite sent"}</b>\n\n` +
         `To: <code>${escapeHtml(email)}</code>\n` +
         `Course: <b>${escapeHtml(course.name)}</b>\n` +
         `Access: <b>active</b>\n` +
+        `Link tracking: <b>${directLinks ? "off" : "on"}</b>\n` +
         `Order: <code>${escapeHtml(orderId)}</code>\n` +
         `Postmark MessageID: <code>${escapeHtml(result.MessageID)}</code>\n\n` +
-        `<a href="${magicLink}">Magic link</a> (works the same as a paid customer)`
+        `<a href="${magicLink}">Direct magic link</a> (copy this if email links still fail)`
     );
   } catch (err) {
-    console.error("INVITE_FAIL", err);
+    console.error(directLinks ? "DIRECT_RESEND_FAIL" : "INVITE_FAIL", err);
     await sendMessage(
       chatId,
       `❌ Send failed: ${escapeHtml(err.message || "unknown error")}`
@@ -325,7 +348,20 @@ async function handleInvite(chatId, text) {
   }
 }
 
-async function upsertCourseAccess({ email, courseSlug, source, metadata }) {
+async function handleResend(chatId, text) {
+  const parts = text.split(/\s+/).slice(1);
+  const rest = parts.slice(2);
+  const directLinks = rest.some((part) => part.toLowerCase() === "direct");
+  const noteParts = rest.filter((part) => part.toLowerCase() !== "direct");
+
+  return handleInvite(chatId, text, {
+    command: "resend",
+    directLinks,
+    noteParts,
+  });
+}
+
+async function upsertCourseAccess({ email, courseSlug, source, metadata, eventType = "telegram_invite" }) {
   const emailHash = hashEmail(email);
   const docRef = firestore.collection("course_access").doc(emailHash);
 
@@ -350,7 +386,7 @@ async function upsertCourseAccess({ email, courseSlug, source, metadata }) {
   await firestore.collection("course_access_events").add({
     emailHash,
     courseSlug,
-    type: "telegram_invite",
+    type: eventType,
     createdAt: FieldValue.serverTimestamp(),
     metadata,
   });

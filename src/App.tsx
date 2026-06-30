@@ -2,7 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import Index from "./pages/Index";
 import FullStackAI from "./pages/FullStackAI";
 import AIPromptEngineering from "./pages/AIPromptEngineering";
@@ -12,7 +12,6 @@ import CoursesIndex from "./pages/CoursesIndex";
 import NotFound from "./pages/NotFound";
 import Terms from "./pages/Terms";
 import Privacy from "./pages/Privacy";
-import AIBootcamp from "./pages/AIBootcamp";
 import AIBootcampFreeLesson from "./pages/AIBootcampFreeLesson";
 import AIFreeLesson from "./pages/AIFreeLesson";
 import ThankYou from "./pages/ThankYou";
@@ -23,6 +22,11 @@ import TeachersAIGuideRead from "./pages/TeachersAIGuideRead";
 import TeacherMasterclassConfirmed from "./pages/TeacherMasterclassConfirmed";
 
 const queryClient = new QueryClient();
+
+const RedirectToAi = () => {
+  const location = useLocation();
+  return <Navigate to={`/ai${location.search}${location.hash}`} replace />;
+};
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -40,7 +44,7 @@ const App = () => (
           <Route path="/privacy" element={<Privacy />} />
           {/* Independence Day campaign */}
           <Route path="/ai/free-lesson" element={<AIFreeLesson />} />
-          <Route path="/ai-bootcamp" element={<AIBootcamp />} />
+          <Route path="/ai-bootcamp" element={<RedirectToAi />} />
           {/* Public, ungated free-lesson retargeting funnel page */}
           <Route path="/ai-bootcamp/free-lesson" element={<AIBootcampFreeLesson />} />
           <Route path="/thank-you" element={<ThankYou />} />

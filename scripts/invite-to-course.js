@@ -10,6 +10,7 @@
  *     --email friend@example.com \
  *     [--course bootcamp|pro]    (default: bootcamp)
  *     [--note "VIP gift"]        (optional label, suffixed to order_id)
+ *     [--direct-links]           (disable Postmark link tracking for ISP-blocked users)
  *     [--dry-run]                (preview without sending)
  */
 
@@ -37,7 +38,7 @@ const COURSES = {
 
 function parseArgs() {
   const args = process.argv.slice(2);
-  const out = { course: "bootcamp", project: DEFAULT_PROJECT_ID, dryRun: false, skipEmail: false };
+  const out = { course: "bootcamp", project: DEFAULT_PROJECT_ID, dryRun: false, skipEmail: false, directLinks: false };
   for (let i = 0; i < args.length; i++) {
     if (args[i] === "--email") out.email = args[++i];
     else if (args[i] === "--course") out.course = args[++i];
@@ -45,6 +46,7 @@ function parseArgs() {
     else if (args[i] === "--project") out.project = args[++i];
     else if (args[i] === "--dry-run") out.dryRun = true;
     else if (args[i] === "--skip-email") out.skipEmail = true;
+    else if (args[i] === "--direct-links") out.directLinks = true;
   }
   return out;
 }
@@ -58,11 +60,13 @@ function usageAndExit(msg) {
     [--note "<short label>"]   (suffixed to order_id, e.g. "VIP gift")
     [--project bitcamp-flitt]  (Firestore project)
     [--skip-email]             (grant access without sending Postmark email)
+    [--direct-links]           (disable Postmark link tracking for ISP-blocked users)
     [--dry-run]                (preview without sending)
 
 Examples:
   node scripts/invite-to-course.js --email friend@example.com
   node scripts/invite-to-course.js --email vip@x.com --course pro --note "speaker comp"
+  node scripts/invite-to-course.js --email student@example.com --direct-links --note "blocked link"
 `);
   process.exit(1);
 }
@@ -164,7 +168,7 @@ async function main() {
   if (!course) usageAndExit(`unknown course: '${opts.course}' (use 'bootcamp' or 'pro')`);
 
   const noteSlug = opts.note ? `_${opts.note.replace(/[^a-zA-Z0-9_-]+/g, "_")}` : "";
-  const orderId = `INVITE_${Date.now()}${noteSlug}`;
+  const orderId = `${opts.directLinks ? "DIRECT_RESEND" : "INVITE"}_${Date.now()}${noteSlug}`;
   const base64Email = toBase64Url(email);
   const magicLink = `https://www.bitcamp.ge/learn/${course.slug}?access=${base64Email}`;
 
@@ -175,6 +179,7 @@ async function main() {
   console.log(`Order ID:    ${orderId}`);
   console.log(`Magic link:  ${magicLink}`);
   console.log(`Email:       ${opts.skipEmail ? "skip" : "send"}`);
+  console.log(`Track links: ${opts.directLinks ? "off" : "on"}`);
   console.log(`${"─".repeat(56)}\n`);
 
   if (opts.dryRun) {
@@ -186,6 +191,7 @@ async function main() {
     order_id: orderId,
     orderId,
     note: opts.note || "",
+    directLinks: String(opts.directLinks),
   };
 
   await upsertCourseAccessWithGcloudToken({
@@ -215,7 +221,7 @@ async function main() {
       },
       MessageStream: MESSAGE_STREAM,
       TrackOpens: true,
-      TrackLinks: "HtmlAndText",
+      TrackLinks: opts.directLinks ? "None" : "HtmlAndText",
     });
 
     if (result.ErrorCode && result.ErrorCode !== 0) {
@@ -225,6 +231,7 @@ async function main() {
 
   console.log(`✓ Sent to ${email}`);
   console.log(`  MessageID: ${result.MessageID}`);
+  console.log(`  Link tracking: ${opts.directLinks ? "off" : "on"}`);
   console.log(`  Check Postmark Activity to confirm delivery.`);
 }
 
