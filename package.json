@@ -10,6 +10,7 @@
     "build:bootcamp": "vite build && node scripts/prerender.js --routes=/ai-bootcamp,/ai-bootcamp/free-lesson,/learn/ai-bootcamp",
     "build:dev": "vite build --mode development",
     "dashboard": "node scripts/campaign-dashboard.js",
+    "send:cs50x-live": "node scripts/send-cs50x-live-broadcast.js",
     "lint": "eslint .",
     "preview": "vite preview"
   },

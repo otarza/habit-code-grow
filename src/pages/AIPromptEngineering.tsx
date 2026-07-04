@@ -40,7 +40,7 @@ const PRO_PROMO_DISCOUNT_LABEL = formatGel(PRO_CURRENT_PRICE - PRO_PROMO_PRICE);
 const PRO_PROMO_SAVINGS_LABEL = formatGel(PRO_FULL_PRICE - PRO_PROMO_PRICE);
 const PRO_PROMO_SAVINGS_MESSAGE = `შენ ზოგავ ${PRO_PROMO_SAVINGS_LABEL} - ს`;
 const PRO_FULL_PRICE_LABEL = formatGel(PRO_FULL_PRICE);
-const PRO_PROMO_DEADLINE_LABEL = "30 ივნისამდე";
+const PRO_PROMO_URGENCY_LABEL = "საზაფხულო შეთავაზება · ლიმიტირებული";
 const PRO_PROMO_CHECKOUT: CheckoutOverride = {
   buttonId: PRO_PROMO_BUTTON_ID,
   name: "AI Bootcamp მენტორობით — Promo 150",
@@ -303,8 +303,8 @@ function ProPromoBar({
           <span>პრომო კოდი {PRO_PROMO_CODE}</span>
           <strong>
             {isActive
-              ? `${PRO_PROMO_PRICE_LABEL} - ${PRO_PROMO_SAVINGS_MESSAGE} · მოქმედებს ${PRO_PROMO_DEADLINE_LABEL}`
-              : `${PRO_PROMO_DISCOUNT_LABEL} ფასდაკლება AI სრულ პროგრამაზე · მოქმედებს ${PRO_PROMO_DEADLINE_LABEL}`}
+              ? `${PRO_PROMO_PRICE_LABEL} - ${PRO_PROMO_SAVINGS_MESSAGE} · ${PRO_PROMO_URGENCY_LABEL}`
+              : `${PRO_PROMO_DISCOUNT_LABEL} ფასდაკლება AI სრულ პროგრამაზე · ${PRO_PROMO_URGENCY_LABEL}`}
           </strong>
         </div>
         <PromoActivateButton isActive={isActive} onActivate={onActivate} />
@@ -334,6 +334,27 @@ function PromoConfetti() {
   );
 }
 
+function ProPriceStack({
+  label,
+  currentPriceLabel,
+  isPromoActive,
+}: {
+  label: string;
+  currentPriceLabel: string;
+  isPromoActive: boolean;
+}) {
+  return (
+    <div className="campaign-price-stack">
+      <span>{label}</span>
+      <div className="campaign-price__was-chain" aria-label={isPromoActive ? `${PRO_FULL_PRICE_LABEL}, ${PRO_CURRENT_PRICE_LABEL}` : PRO_FULL_PRICE_LABEL}>
+        <span className="campaign-price__old">{PRO_FULL_PRICE_LABEL}</span>
+        {isPromoActive && <span className="campaign-price__old campaign-price__old--promo">{PRO_CURRENT_PRICE_LABEL}</span>}
+      </div>
+      <strong>{currentPriceLabel}</strong>
+    </div>
+  );
+}
+
 function ProOffer({
   className = "",
   id,
@@ -358,15 +379,11 @@ function ProOffer({
         <strong>6 მოდული + მენტორშიფი</strong>
       </div>
       <div className="campaign-offer-promo">
-        <span>{isPromoActive ? `${PRO_PROMO_CODE} კოდი მოქმედებს ${PRO_PROMO_DEADLINE_LABEL} - ${PRO_PROMO_SAVINGS_MESSAGE}` : `${PRO_PROMO_CODE} კოდი გაძლევს დამატებით ${PRO_PROMO_DISCOUNT_LABEL} ფასდაკლებას ${PRO_PROMO_DEADLINE_LABEL}`}</span>
+        <span>{isPromoActive ? `${PRO_PROMO_CODE} კოდი გააქტიურებულია - ${PRO_PROMO_SAVINGS_MESSAGE} · ${PRO_PROMO_URGENCY_LABEL}` : `${PRO_PROMO_CODE} კოდი გაძლევს დამატებით ${PRO_PROMO_DISCOUNT_LABEL} ფასდაკლებას · ${PRO_PROMO_URGENCY_LABEL}`}</span>
         <PromoActivateButton isActive={isPromoActive} onActivate={onActivatePromo} compact />
       </div>
       <div className="campaign-final__price-row">
-        <div>
-          <span>ერთჯერადი ფასი</span>
-          <span className="campaign-price__old">{PRO_FULL_PRICE_LABEL}</span>
-          <strong>{currentPriceLabel}</strong>
-        </div>
+        <ProPriceStack label="ერთჯერადი ფასი" currentPriceLabel={currentPriceLabel} isPromoActive={isPromoActive} />
         {discountBadge && <span className="campaign-price__save">{discountBadge}</span>}
       </div>
       <CtaButton label={`შემოუერთდი პროგრამას — ${currentPriceLabel}`} onClick={onBuy} />
@@ -667,11 +684,7 @@ export default function AIPromptEngineering() {
 
             <div className="campaign-cta-band__action">
               <div className="campaign-cta-price-line">
-                <div>
-                  <span>სრული პროგრამა</span>
-                  <span className="campaign-price__old">{PRO_FULL_PRICE_LABEL}</span>
-                  <strong>{currentPriceLabel}</strong>
-                </div>
+                <ProPriceStack label="სრული პროგრამა" currentPriceLabel={currentPriceLabel} isPromoActive={isPromoActive} />
                 {discountBadge && <span className="campaign-price__save">{discountBadge}</span>}
               </div>
               <CtaButton label={`შემოუერთდი პროგრამას — ${currentPriceLabel}`} onClick={buy} />
@@ -818,11 +831,7 @@ export default function AIPromptEngineering() {
                 <strong>6 მოდული + 4 კვირიანი მენტორშიფი</strong>
               </div>
               <div className="campaign-final__price-row">
-                <div>
-                  <span>ერთჯერადი ფასი</span>
-                  <span className="campaign-price__old">{PRO_FULL_PRICE_LABEL}</span>
-                  <strong>{currentPriceLabel}</strong>
-                </div>
+                <ProPriceStack label="ერთჯერადი ფასი" currentPriceLabel={currentPriceLabel} isPromoActive={isPromoActive} />
                 {discountBadge && <span className="campaign-price__save">{discountBadge}</span>}
               </div>
               <CtaButton label={`შემოუერთდი პროგრამას — ${currentPriceLabel}`} onClick={buy} />

@@ -1408,6 +1408,19 @@ Red pyramid, dark navy, with vibrant pixel art accents and animations
   text-decoration-thickness: 2px;
 }
 
+.campaign-price__was-chain,
+.campaign-cta-price-line .campaign-price__was-chain,
+.campaign-final__price-row .campaign-price__was-chain {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.campaign-price__old--promo {
+  color: #a6a6ad;
+}
+
 .campaign-price__save {
   border-radius: 6px;
   padding: 4px 8px;
