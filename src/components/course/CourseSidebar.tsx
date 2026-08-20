@@ -28,7 +28,7 @@ function isRecentlyAdded(addedAt?: string): boolean {
 
 function NewBadge() {
   return (
-    <span className="ml-2 flex-shrink-0 rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-amber-900 dark:bg-amber-300/20 dark:text-amber-200">
+    <span className="flex-shrink-0 rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-amber-900 dark:bg-amber-300/20 dark:text-amber-200">
       ახალი
     </span>
   );
@@ -57,22 +57,24 @@ function TopicSection({ topic, courseSlug, currentTopicSlug, currentLessonSlug, 
       <button
         onClick={() => setIsExpanded(!isExpanded)}
         className={cn(
-          "flex items-center w-full px-3 py-2 text-sm font-medium rounded-lg transition-colors",
+          "grid w-full grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-2 px-3 py-2.5 text-sm font-medium rounded-lg transition-colors",
           "hover:bg-accent hover:text-accent-foreground",
           isCurrentTopic && "bg-accent/50"
         )}
       >
         {isExpanded ? (
-          <ChevronDown className="h-4 w-4 mr-2 flex-shrink-0" />
+          <ChevronDown className="h-4 w-4 flex-shrink-0" />
         ) : (
-          <ChevronRight className="h-4 w-4 mr-2 flex-shrink-0" />
+          <ChevronRight className="h-4 w-4 flex-shrink-0" />
         )}
-        <span className="min-w-0 truncate text-left">{topic.title}</span>
+        <span className="min-w-0 text-left leading-snug [display:-webkit-box] [-webkit-line-clamp:2] [-webkit-box-orient:vertical] overflow-hidden">
+          {topic.title}
+        </span>
         {hasNewLessons && <NewBadge />}
       </button>
 
       {isExpanded && (
-        <ul className="ml-4 mt-1 space-y-1 border-l border-border pl-2">
+        <ul className="ml-4 mt-1.5 space-y-1 border-l border-border pl-2">
           {topic.lessons.map((lesson) => {
             const isCurrentLesson = isCurrentTopic && lesson.slug === currentLessonSlug;
             const isNewLesson = isRecentlyAdded(lesson.addedAt);
@@ -83,19 +85,20 @@ function TopicSection({ topic, courseSlug, currentTopicSlug, currentLessonSlug, 
                   to={`${routeBasePath ?? `/courses/${courseSlug}`}/${topic.slug}/${lesson.slug}`}
                   onClick={onLessonClick}
                   className={cn(
-                    "flex items-center px-3 py-1.5 text-sm rounded-md transition-colors",
-                    "hover:bg-accent hover:text-accent-foreground",
+                    "grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-2 px-3 py-2 text-sm rounded-md transition-colors",
                     isCurrentLesson
-                      ? "bg-primary text-primary-foreground font-medium"
-                      : "text-muted-foreground"
+                      ? "bg-primary text-primary-foreground font-medium hover:bg-primary hover:text-primary-foreground focus-visible:bg-primary focus-visible:text-primary-foreground"
+                      : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
                   )}
                 >
                   {lesson.videoUrl ? (
-                    <PlayCircle className="h-3.5 w-3.5 mr-2 flex-shrink-0" />
+                    <PlayCircle className="h-3.5 w-3.5 flex-shrink-0" />
                   ) : (
-                    <BookOpen className="h-3.5 w-3.5 mr-2 flex-shrink-0" />
+                    <BookOpen className="h-3.5 w-3.5 flex-shrink-0" />
                   )}
-                  <span className="min-w-0 truncate">{lesson.title}</span>
+                  <span className="min-w-0 leading-snug [display:-webkit-box] [-webkit-line-clamp:2] [-webkit-box-orient:vertical] overflow-hidden">
+                    {lesson.title}
+                  </span>
                   {isNewLesson && <NewBadge />}
                 </Link>
               </li>
@@ -174,9 +177,9 @@ export function CourseSidebar({ manifest, className, routeBasePath }: CourseSide
       {/* Sidebar */}
       <aside
         className={cn(
-          "fixed inset-y-0 left-0 z-40 w-72 bg-background border-r flex flex-col",
+          "fixed inset-y-0 left-0 z-40 w-[min(92vw,22rem)] bg-background border-r flex flex-col",
           "transform transition-transform duration-200 ease-in-out",
-          "lg:translate-x-0",
+          "lg:w-80 xl:w-96 lg:translate-x-0",
           isMobileOpen ? "translate-x-0" : "-translate-x-full",
           className
         )}
@@ -185,7 +188,7 @@ export function CourseSidebar({ manifest, className, routeBasePath }: CourseSide
       </aside>
 
       {/* Spacer for fixed sidebar on desktop */}
-      <div className="hidden lg:block lg:w-72 lg:flex-shrink-0" />
+      <div className="hidden lg:block lg:w-80 xl:w-96 lg:flex-shrink-0" />
     </>
   );
 }
