@@ -54,7 +54,9 @@
         { "slug": "ideal-customer-persona", "title": "იდეალური მომხმარებლის პერსონა: პროფილის შექმნა", "order": 301 },
         { "slug": "brand-voice-guide", "title": "ბრენდის ხმის სახელმძღვანელოს შექმნა", "order": 302 },
         { "slug": "synthesis-audience-brand-voice", "title": "სინთეზი — აუდიტორია + ბრენდის ხმა", "order": 303 },
-        { "slug": "notebooklm-central-hub", "title": "NotebookLM - ის გამოყენება ცენტრალური ჰაბის შესაქმნელად", "order": 304 }
+        { "slug": "notebooklm-central-hub", "title": "NotebookLM - ის გამოყენება ცენტრალური ჰაბის შესაქმნელად", "order": 304 },
+        { "slug": "brainstorming-idea-generation", "title": "იდეების ავტომატური გენერაცია - ბრეინშტორმინგი", "order": 305, "addedAt": "2026-08-20" },
+        { "slug": "content-calendar-practice", "title": "კონტენტის კალენდარი პრაქტიკაში", "order": 306, "addedAt": "2026-08-20" }
       ]
     }
   ]

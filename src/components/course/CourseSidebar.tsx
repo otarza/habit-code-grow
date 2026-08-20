@@ -13,6 +13,27 @@ interface CourseSidebarProps {
   routeBasePath?: string;
 }
 
+const NEW_LESSON_WINDOW_DAYS = 7;
+
+function isRecentlyAdded(addedAt?: string): boolean {
+  if (!addedAt) return false;
+
+  const addedDate = new Date(addedAt);
+  if (Number.isNaN(addedDate.getTime())) return false;
+
+  const now = new Date();
+  const ageMs = now.getTime() - addedDate.getTime();
+  return ageMs >= 0 && ageMs < NEW_LESSON_WINDOW_DAYS * 24 * 60 * 60 * 1000;
+}
+
+function NewBadge() {
+  return (
+    <span className="ml-2 flex-shrink-0 rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-amber-900 dark:bg-amber-300/20 dark:text-amber-200">
+      ახალი
+    </span>
+  );
+}
+
 function TopicSection({ topic, courseSlug, currentTopicSlug, currentLessonSlug, onLessonClick, routeBasePath }: {
   topic: TopicInfo;
   courseSlug: string;
@@ -23,6 +44,7 @@ function TopicSection({ topic, courseSlug, currentTopicSlug, currentLessonSlug, 
 }) {
   const isCurrentTopic = topic.slug === currentTopicSlug;
   const [isExpanded, setIsExpanded] = useState(isCurrentTopic);
+  const hasNewLessons = topic.lessons.some((lesson) => isRecentlyAdded(lesson.addedAt));
 
   useEffect(() => {
     if (isCurrentTopic) {
@@ -45,13 +67,15 @@ function TopicSection({ topic, courseSlug, currentTopicSlug, currentLessonSlug, 
         ) : (
           <ChevronRight className="h-4 w-4 mr-2 flex-shrink-0" />
         )}
-        <span className="text-left truncate">{topic.title}</span>
+        <span className="min-w-0 truncate text-left">{topic.title}</span>
+        {hasNewLessons && <NewBadge />}
       </button>
 
       {isExpanded && (
         <ul className="ml-4 mt-1 space-y-1 border-l border-border pl-2">
           {topic.lessons.map((lesson) => {
             const isCurrentLesson = isCurrentTopic && lesson.slug === currentLessonSlug;
+            const isNewLesson = isRecentlyAdded(lesson.addedAt);
 
             return (
               <li key={lesson.slug}>
@@ -71,7 +95,8 @@ function TopicSection({ topic, courseSlug, currentTopicSlug, currentLessonSlug, 
                   ) : (
                     <BookOpen className="h-3.5 w-3.5 mr-2 flex-shrink-0" />
                   )}
-                  <span className="truncate">{lesson.title}</span>
+                  <span className="min-w-0 truncate">{lesson.title}</span>
+                  {isNewLesson && <NewBadge />}
                 </Link>
               </li>
             );

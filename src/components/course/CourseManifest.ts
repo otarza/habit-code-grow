@@ -11,6 +11,7 @@ export interface LessonInfo {
   order: number;
   videoUrl?: string;
   videoDuration?: string;
+  addedAt?: string;
 }
 
 export interface TopicInfo {
