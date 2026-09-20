@@ -1,6 +1,6 @@
 import { type FormEvent, useEffect, useMemo, useState } from 'react';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
-import { ArrowLeft, CheckCircle2, Loader2, LockKeyhole, LogOut, MailCheck, ShieldCheck } from 'lucide-react';
+import { ArrowLeft, CheckCircle2, Clock3, Loader2, LockKeyhole, LogOut, MailCheck, ShieldCheck } from 'lucide-react';
 import { CourseSidebar } from '@/components/course/CourseSidebar';
 import { CourseOverview } from '@/components/course/CourseOverview';
 import { LessonView } from '@/components/course/LessonView';
@@ -368,6 +368,23 @@ export default function LearnCoursePage() {
               </button>
             </div>
           </div>
+
+          {courseSlug === 'ai-pro' && (
+            <aside
+              aria-label="კურსის განახლება"
+              className="mx-auto mb-8 flex max-w-4xl items-start gap-3 rounded-lg border border-amber-300/25 bg-amber-300/[0.08] px-4 py-4 sm:gap-4 sm:px-5"
+            >
+              <Clock3 className="mt-0.5 h-5 w-5 flex-shrink-0 text-amber-300" aria-hidden="true" />
+              <div className="min-w-0">
+                <p className="font-semibold text-amber-100">მოდული 4 იტვირთება</p>
+                <p className="mt-1 text-sm leading-6 text-foreground/80">
+                  მოდული 4-ის გაკვეთილებს ვამატებთ და ვებსაიტს ვაახლებთ. განახლების დასრულებას
+                  დაახლოებით 24 საათში ველით. მანამდე არსებული გაკვეთილები ჩვეულებრივ
+                  ხელმისაწვდომია. მადლობა მოთმინებისთვის!
+                </p>
+              </div>
+            </aside>
+          )}
 
           {isViewingLesson ? (
             <LessonView
