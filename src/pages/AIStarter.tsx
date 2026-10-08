@@ -113,6 +113,8 @@ export default function AIStarter() {
   // in that card; the visitor can still explicitly continue at full price.
   const [nudgeSlot, setNudgeSlot] = useState<OfferSlot | null>(null);
   const [fullPriceChosen, setFullPriceChosen] = useState(false);
+  // Offer card briefly highlighted after a locked lesson sends the visitor to it.
+  const [highlightSlot, setHighlightSlot] = useState<OfferSlot | null>(null);
   const emailInputs = useRef<Partial<Record<OfferSlot, HTMLInputElement | null>>>({});
   const [openFaq, setOpenFaq] = useState<number | null>(0);
   const price = promoActive ? PROMO_PRICE : PRODUCTS.starter.value;
@@ -210,6 +212,17 @@ export default function AIStarter() {
       ?.focus({ preventScroll: true }), 0);
   };
 
+  const goToOfferFromLesson = (lesson: string) => {
+    trackStarter("StarterLockedLessonClick", { lesson });
+    const card = nearestOfferCard();
+    const slot = card?.dataset.slot as OfferSlot | undefined;
+    if (!card || !slot) return;
+    card.scrollIntoView({ behavior: prefersReducedMotion() ? "instant" : "smooth", block: "center" });
+    setHighlightSlot(null);
+    window.setTimeout(() => setHighlightSlot(slot), 20);
+    window.setTimeout(() => setHighlightSlot(current => (current === slot ? null : current)), 2200);
+  };
+
   const continueAtFullPrice = (slot: OfferSlot) => {
     trackStarter("StarterPromoNudgeChoice", { choice: "full_price" });
     setFullPriceChosen(true);
@@ -281,7 +294,7 @@ export default function AIStarter() {
     </button>
   </form>;
   const offer = (className: string, slot: OfferSlot, id?: string) => <div id={id} data-slot={slot}
-    className={`campaign-hero__offer campaign-hero__offer--pro campaign-buy-anchor ${className}${showPromoConfetti ? " starter-offer--celebrate" : ""}`}>
+    className={`campaign-hero__offer campaign-hero__offer--pro campaign-buy-anchor ${className}${showPromoConfetti || highlightSlot === slot ? " starter-offer--celebrate" : ""}`}>
     <div className="campaign-offer-heading"><span>AI Starter</span><strong>3 მოდული · 31 ვიდეო გაკვეთილი</strong></div>
     {promoActive
       ? <div className="starter-promo-applied" role="status">
@@ -345,7 +358,8 @@ export default function AIStarter() {
         <StarterCurriculum modules={modules}
           ctaLabel={promoActive ? `შეიძინე AI Starter — ${priceLabel}` : "გააქტიურე 170₾ ფასდაკლება"}
           onCta={() => promoActive ? buyFromStickyBar() : activatePromo(undefined, "curriculum")}
-          onPreview={lesson => trackStarter("StarterPreviewPlay", { lesson })} />
+          onPreview={lesson => trackStarter("StarterPreviewPlay", { lesson })}
+          onLockedLesson={goToOfferFromLesson} />
       </div></section>
       <section id="starter-testimonials" className="campaign-section campaign-section--surface"><div className="campaign-shell"><div className="campaign-section-heading">
         <p className="campaign-kicker">სტუდენტების გამოცდილება</p><h2>გასაგები ახსნა პირველი ნაბიჯისთვის.</h2>

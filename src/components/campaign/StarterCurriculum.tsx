@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ArrowRight, ChevronDown, Clock3, PlayCircle, Video, type LucideIcon } from "lucide-react";
+import { ArrowRight, ChevronDown, Clock3, Lock, PlayCircle, Video, type LucideIcon } from "lucide-react";
 import { aiStarterCurriculum as curriculum } from "@/data/aiStarterCurriculum";
 
 // Free sample lessons that can be watched right on the landing page.
@@ -23,11 +23,13 @@ const sum = (lessons: { seconds: number }[]) => lessons.reduce((total, l) => tot
 
 const allLessons = curriculum.topics.flatMap(t => t.lessons);
 
-export function StarterCurriculum({ modules, ctaLabel, onCta, onPreview }: {
+export function StarterCurriculum({ modules, ctaLabel, onCta, onPreview, onLockedLesson }: {
   modules: CurriculumModule[];
   ctaLabel: string;
   onCta: () => void;
   onPreview?: (lessonSlug: string) => void;
+  // Paid lessons are locked; clicking one takes the visitor to the offer.
+  onLockedLesson?: (lessonSlug: string) => void;
 }) {
   const [open, setOpen] = useState<Set<number>>(() => new Set([0]));
   const [playing, setPlaying] = useState<string | null>(null);
@@ -75,20 +77,30 @@ export function StarterCurriculum({ modules, ctaLabel, onCta, onPreview }: {
                   const isPlaying = playing === lesson.slug;
                   return (
                     <li key={lesson.slug} className={preview ? "is-preview" : undefined}>
-                      <div className="starter-curriculum__lesson">
-                        <span className="starter-curriculum__index">{i + 1}</span>
-                        <span className="starter-curriculum__title">{lesson.title}</span>
-                        {preview && (
-                          <button type="button" className="starter-curriculum__preview" aria-expanded={isPlaying}
-                            onClick={() => {
-                              setPlaying(isPlaying ? null : lesson.slug);
-                              if (!isPlaying) onPreview?.(lesson.slug);
-                            }}>
-                            <PlayCircle aria-hidden="true" size={15} />{isPlaying ? "დახურვა" : "უფასო პრევიუ"}
-                          </button>
-                        )}
-                        <span className="starter-curriculum__duration">{formatClock(lesson.seconds)}</span>
-                      </div>
+                      {!preview ? (
+                        <button type="button" className="starter-curriculum__lesson is-locked"
+                          aria-label={`${lesson.title} — გაიხსნება კურსის შეძენის შემდეგ. ნახე შეთავაზება`}
+                          onClick={() => onLockedLesson?.(lesson.slug)}>
+                          <span className="starter-curriculum__index">{i + 1}</span>
+                          <span className="starter-curriculum__title">{lesson.title}</span>
+                          <Lock className="starter-curriculum__lock" aria-hidden="true" size={15} />
+                          <span className="starter-curriculum__duration">{formatClock(lesson.seconds)}</span>
+                        </button>
+                      ) : (
+                        <button type="button" className="starter-curriculum__lesson is-preview" aria-expanded={isPlaying}
+                          aria-label={`${lesson.title} — ${isPlaying ? "დახურე პრევიუ" : "ნახე უფასო პრევიუ"}`}
+                          onClick={() => {
+                            setPlaying(isPlaying ? null : lesson.slug);
+                            if (!isPlaying) onPreview?.(lesson.slug);
+                          }}>
+                          <span className="starter-curriculum__index">{i + 1}</span>
+                          <span className="starter-curriculum__title">{lesson.title}</span>
+                          <span className="starter-curriculum__preview" aria-hidden="true">
+                            <PlayCircle size={15} />{isPlaying ? "დახურვა" : "უფასო პრევიუ"}
+                          </span>
+                          <span className="starter-curriculum__duration">{formatClock(lesson.seconds)}</span>
+                        </button>
+                      )}
                       {isPlaying && (
                         <div className="starter-curriculum__player">
                           <iframe
