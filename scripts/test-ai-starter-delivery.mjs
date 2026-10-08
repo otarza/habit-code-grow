@@ -70,10 +70,10 @@ let count=0;
 for(const topic of manifest.topics)for(const lesson of topic.lessons){
   assert(fs.existsSync(`public/learn-content/ai-starter/${topic.slug}/${lesson.slug}.md`));count++;
 }
-assert.equal(count,32);
+assert.equal(count,31);
 for(const ext of ['txt','html']){
  const email=fs.readFileSync(`functions/flitt-webhook/email-templates/course-access-ai-starter.${ext}`,'utf8');
  assert(email.includes('/learn/ai-starter?access={{base64_email}}'));
  assert(!email.includes('/learn/ai-pro'));assert(!email.includes('discord.gg'));
 }
-console.log('PASS: redirect product slugs; Starter routing + inline (no Postmark template) email at both prices; signature/status/amount/currency guards; Pro/Bootcamp preserved; fixed 3-module/32-lesson snapshot; dedicated email links. No external side effects.');
+console.log('PASS: redirect product slugs; Starter routing + inline (no Postmark template) email at both prices; signature/status/amount/currency guards; Pro/Bootcamp preserved; fixed 3-module/31-lesson snapshot; dedicated email links. No external side effects.');

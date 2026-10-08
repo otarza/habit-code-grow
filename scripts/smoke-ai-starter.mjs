@@ -69,10 +69,10 @@ try {
   await page.reload({waitUntil:'networkidle0'});
   await page.waitForFunction(()=>document.querySelector('h1')?.textContent==='AI Starter — 3 ვიდეომოდული');
   assert(!(await page.evaluate(()=>document.body.innerText)).includes('მოდული 4 იტვირთება'));
-  const lessonLink=await page.$('a[href="/learn/ai-starter/fundamentals/course-usage"]');
+  const lessonLink=await page.$('a[href="/learn/ai-starter/fundamentals/intro"]');
   assert(lessonLink,'Starter lesson navigation exists');
   await page.screenshot({path:`${output}/learning.png`,fullPage:true});
-  await page.goto(`${origin}/learn/ai-starter/fundamentals/course-usage`,{waitUntil:'networkidle0'});
+  await page.goto(`${origin}/learn/ai-starter/fundamentals/intro`,{waitUntil:'networkidle0'});
   assert(!(await page.evaluate(()=>document.body.innerText)).includes('კურსი ვერ მოიძებნა'));
   await page.goto(`${origin}/learn/ai-pro`,{waitUntil:'networkidle0'});
   await page.waitForSelector('input[type="email"]');

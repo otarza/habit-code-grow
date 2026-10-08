@@ -550,3 +550,227 @@
     padding: 22px 18px;
   }
 }
+
+/* ---------- Course preview: modules, lessons, durations, free previews ---------- */
+.starter-curriculum {
+  display: grid;
+  gap: 16px;
+  max-width: 920px;
+  margin: 0 auto;
+}
+.starter-curriculum__summary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 22px;
+  color: #d4d4d8;
+  font-size: 14px;
+  font-weight: 700;
+}
+.starter-curriculum__summary span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+.starter-curriculum__summary svg {
+  color: var(--cp-accent-text);
+}
+.starter-curriculum__summary button,
+.starter-curriculum__summary button:hover {
+  margin-left: auto;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: #f5f5f7;
+  font: inherit;
+  font-size: 13px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+.starter-curriculum__modules {
+  display: grid;
+  gap: 12px;
+}
+.starter-curriculum__module {
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.025);
+  transition: border-color 200ms ease;
+}
+.starter-curriculum__module.is-open {
+  border-color: rgba(255, 118, 106, 0.35);
+}
+.starter-curriculum__header {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  width: 100%;
+  padding: 18px 20px;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.starter-curriculum__header .campaign-card-icon {
+  flex-shrink: 0;
+}
+.starter-curriculum__heading {
+  display: grid;
+  flex: 1;
+  gap: 4px;
+  min-width: 0;
+}
+.starter-curriculum__heading small {
+  color: #a1a1aa;
+  font-size: 12px;
+  font-weight: 700;
+}
+.starter-curriculum__heading strong {
+  color: #f5f5f7;
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1.3;
+}
+.starter-curriculum__heading > span {
+  color: #a1a1aa;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.starter-curriculum__chevron {
+  flex-shrink: 0;
+  margin-top: 4px;
+  color: #a1a1aa;
+  transition: transform 200ms ease;
+}
+.starter-curriculum__module.is-open .starter-curriculum__chevron {
+  transform: rotate(180deg);
+}
+.starter-curriculum__lessons {
+  margin: 0;
+  padding: 0 12px 12px;
+  list-style: none;
+}
+.starter-curriculum__lessons li {
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+.starter-curriculum__lesson {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 48px;
+  padding: 8px 8px;
+}
+.starter-curriculum__index {
+  flex-shrink: 0;
+  width: 22px;
+  color: #74747f;
+  font-size: 12px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+.starter-curriculum__title {
+  flex: 1;
+  min-width: 0;
+  color: #e4e4e7;
+  font-size: 14px;
+  line-height: 1.45;
+}
+.starter-curriculum__duration {
+  flex-shrink: 0;
+  color: #a1a1aa;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+.starter-curriculum__preview {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 5px;
+  border: 1px solid rgba(74, 222, 128, 0.5);
+  border-radius: 999px;
+  padding: 4px 10px;
+  background: rgba(34, 197, 94, 0.12);
+  color: #86efac;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: background 150ms ease;
+}
+.starter-curriculum__preview:hover {
+  background: rgba(34, 197, 94, 0.22);
+}
+.starter-curriculum__lessons li.is-preview .starter-curriculum__title {
+  color: #fff;
+  font-weight: 700;
+}
+.starter-curriculum__player {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  margin: 0 8px 12px;
+  overflow: hidden;
+  border-radius: 10px;
+  background: #000;
+}
+.starter-curriculum__player iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+.starter-curriculum__cta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-top: 6px;
+  border: 1px solid rgba(255, 118, 106, 0.3);
+  border-radius: 14px;
+  padding: 18px 20px;
+  background: rgba(218, 41, 28, 0.08);
+}
+.starter-curriculum__cta p {
+  margin: 0;
+  color: #f5f5f7;
+  font-size: 16px;
+  font-weight: 800;
+}
+@media (max-width: 640px) {
+  .starter-curriculum__header {
+    padding: 16px 14px;
+    gap: 12px;
+  }
+  .starter-curriculum__header .campaign-card-icon {
+    display: none;
+  }
+  .starter-curriculum__lessons {
+    padding: 0 6px 8px;
+  }
+  .starter-curriculum__lesson {
+    flex-wrap: wrap;
+    gap: 6px 10px;
+    padding: 10px 6px;
+  }
+  .starter-curriculum__title {
+    flex-basis: calc(100% - 90px);
+  }
+  .starter-curriculum__preview {
+    order: 4;
+    margin-left: 32px;
+  }
+  .starter-curriculum__summary button {
+    margin-left: 0;
+  }
+  .starter-curriculum__cta {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+  }
+}

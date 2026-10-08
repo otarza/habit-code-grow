@@ -4,6 +4,7 @@ import { ArrowRight, BookOpen, Gift, Brain, Briefcase, CheckCircle2, Infinity as
 import { CampaignPromoConfetti } from "@/components/campaign/CampaignPromoConfetti";
 import { TestimonialStars } from "@/components/campaign/TestimonialStars";
 import { StarterTestimonialCarousel } from "@/components/campaign/StarterTestimonialCarousel";
+import { StarterCurriculum } from "@/components/campaign/StarterCurriculum";
 import { CampaignFooter } from "@/components/campaign/CampaignFooter";
 import { CampaignHeroVideo } from "@/components/campaign/CampaignHeroVideo";
 import { CampaignStickyCta } from "@/components/campaign/CampaignStickyCta";
@@ -19,14 +20,11 @@ const PROMO_PRICE = STARTER_PROMO_CHECKOUT.value!;
 type OfferSlot = "inline" | "desktop" | "final";
 const modules = [
   { n: "01", title: "ფუნდამენტური პრომპტინგი", subtitle: "AI-სთან ეფექტური კომუნიკაცია", icon: MessageSquareText,
-    goal: "გაიგებ, როგორ ჩამოაყალიბო მოთხოვნა და მიაწოდო AI-ს საჭირო კონტექსტი.",
-    topics: ["LLM-ების მუშაობის პრინციპი", "T.C.R.E.I. ფორმულა", "კონტექსტის მართვა", "მაგალითებით სწავლება — Few-Shot Prompting"] },
+    goal: "გაიგებ, როგორ ჩამოაყალიბო მოთხოვნა და მიაწოდო AI-ს საჭირო კონტექსტი." },
   { n: "02", title: "Advanced Prompting", subtitle: "მოთხოვნიდან თანმიმდევრულ სამუშაო პროცესამდე", icon: Brain,
-    goal: "ისწავლი რთული ამოცანის ნაბიჯებად დაყოფას, პასუხის ფორმატის განსაზღვრასა და შედეგის გაუმჯობესებას.",
-    topics: ["ამოცანის ნაბიჯებად დაყოფა", "Prompt Chaining", "სტრუქტურირებული პასუხები", "ქართული ენის თავისებურებები"] },
+    goal: "ისწავლი რთული ამოცანის ნაბიჯებად დაყოფას, პასუხის ფორმატის განსაზღვრასა და შედეგის გაუმჯობესებას." },
   { n: "03", title: "პროდუქტიულობა და ბიზნესი", subtitle: "საკუთარი ბრენდის კონტენტი AI-ს დახმარებით", icon: Briefcase,
-    goal: "ჩამოაყალიბებ შენი ბრენდის ხმას, შექმნი ამ სტილით კონტენტს და მოამზადებ კონტენტის კალენდარს.",
-    topics: ["ბრენდის ხმა და სტილი", "კონტენტის შექმნა", "კონტენტის კალენდარი", "დოკუმენტები და საქმიანი მიმოწერა"] },
+    goal: "ჩამოაყალიბებ შენი ბრენდის ხმას, შექმნი ამ სტილით კონტენტს და მოამზადებ კონტენტის კალენდარს." },
 ];
 const faqs = [
   ["ვისთვისაა ეს კურსი?", "მათთვის, ვისაც AI-სთან შეხება ჯერ არ ჰქონია და სურს პირველი ნაბიჯები გასაგები ვიდეოგაკვეთილებით გადადგას."],
@@ -49,7 +47,7 @@ function GeorgianFlag() {
   </svg>;
 }
 
-type PromoSource = "bar" | "card" | "nudge";
+type PromoSource = "bar" | "card" | "nudge" | "curriculum";
 type Analytics = Window & {
   fbq?: (event: string, name: string, params?: Record<string, unknown>) => void;
   gtag?: (event: string, name: string, params?: Record<string, unknown>) => void;
@@ -284,7 +282,7 @@ export default function AIStarter() {
   </form>;
   const offer = (className: string, slot: OfferSlot, id?: string) => <div id={id} data-slot={slot}
     className={`campaign-hero__offer campaign-hero__offer--pro campaign-buy-anchor ${className}${showPromoConfetti ? " starter-offer--celebrate" : ""}`}>
-    <div className="campaign-offer-heading"><span>AI Starter</span><strong>3 მოდული · 32 ვიდეო გაკვეთილი</strong></div>
+    <div className="campaign-offer-heading"><span>AI Starter</span><strong>3 მოდული · 31 ვიდეო გაკვეთილი</strong></div>
     {promoActive
       ? <div className="starter-promo-applied" role="status">
         <CheckCircle2 aria-hidden="true" size={22} />
@@ -322,7 +320,7 @@ export default function AIStarter() {
           <p className="campaign-lead">გონია, რომ AI შენთვის ზედმეტად რთულია? დაიწყე 0 - დან, საფუძვლებით და ისწავლე მისი გამოყენება საკუთარი ვირტუალური ბიზნესის შექმნის მაგალითზე.</p>
           <CampaignHeroVideo className="campaign-hero-video--inline" title="BitCamp-ის AI კურსის ვიდეო" />
           <StarterTestimonialCarousel />
-          <div className="campaign-hero__facts"><span><BookOpen size={16} />3 მოდული · 32 გაკვეთილი</span><span><Video size={16} aria-hidden="true" />~7 საათი ვიდეო</span><span><CheckCircle2 size={16} />ნულიდან</span><span><GeorgianFlag />ქართულად</span></div>
+          <div className="campaign-hero__facts"><span><BookOpen size={16} />3 მოდული · 31 გაკვეთილი</span><span><Video size={16} aria-hidden="true" />~7 საათი ვიდეო</span><span><CheckCircle2 size={16} />ნულიდან</span><span><GeorgianFlag />ქართულად</span></div>
           <div className="campaign-author-card"><div className="campaign-author-card__top">
             <img src="/media/external/images/otar-profile-photo.png" alt="ოთარ ზაკალაშვილი" />
             <div><span>კურსს უძღვება</span><strong>ოთარ ზაკალაშვილი</strong><small>BitCamp-ის დამფუძნებელი და AI კურსის ავტორი</small><small className="starter-author-students"><Users aria-hidden="true" size={14} />3500+ სტუდენტი BitCamp-ის კურსებზე</small></div>
@@ -340,12 +338,15 @@ export default function AIStarter() {
           <div className="campaign-included-list campaign-included-list--panel">{["ჩამოაყალიბებ გასაგებ და კონკრეტულ პრომპტებს", "შექმნი საკუთარი კომპანიის ბრენდის ხმასა და სტილს", "მოამზადებ კონტენტს შენი ბრენდის ხმით", "შექმნი კონტენტის კალენდარს"].map(item => <div key={item}><CheckCircle2 aria-hidden="true" size={18} /><span>{item}</span></div>)}</div>
         </div>
       </div></section>
-      <section className="campaign-section"><div className="campaign-shell"><div className="campaign-section-heading">
+      <section id="starter-curriculum" className="campaign-section"><div className="campaign-shell"><div className="campaign-section-heading">
         <p className="campaign-kicker">სასწავლო პროგრამა</p><h2>სამი მოდული შენი პირველი ნაბიჯებისთვის.</h2>
-      </div><div className="campaign-module-grid">{modules.map(({ icon: Icon, ...module }) => <article className="campaign-module-card" key={module.n}>
-        <div className="campaign-module-card__top"><div className="campaign-card-icon"><Icon aria-hidden="true" size={22} /></div><div><span>მოდული {module.n}</span><h3>{module.title}</h3><small>{module.subtitle}</small></div></div>
-        <p>{module.goal}</p><ul>{module.topics.map(topic => <li key={topic}>{topic}</li>)}</ul>
-      </article>)}</div></div></section>
+        <p>ნახე ყველა გაკვეთილი და მისი ხანგრძლივობა. ზოგი გაკვეთილი უფასოდ შეგიძლია ახლავე ნახო.</p>
+      </div>
+        <StarterCurriculum modules={modules}
+          ctaLabel={promoActive ? `შეიძინე AI Starter — ${priceLabel}` : "გააქტიურე 170₾ ფასდაკლება"}
+          onCta={() => promoActive ? buyFromStickyBar() : activatePromo(undefined, "curriculum")}
+          onPreview={lesson => trackStarter("StarterPreviewPlay", { lesson })} />
+      </div></section>
       <section id="starter-testimonials" className="campaign-section campaign-section--surface"><div className="campaign-shell"><div className="campaign-section-heading">
         <p className="campaign-kicker">სტუდენტების გამოცდილება</p><h2>გასაგები ახსნა პირველი ნაბიჯისთვის.</h2>
         <p>3500+ სტუდენტი BitCamp-ის კურსებზე. უკუკავშირი AI კურსის მონაწილეებისგან.</p>

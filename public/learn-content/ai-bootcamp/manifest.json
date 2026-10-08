@@ -11,7 +11,6 @@
       "title": "მოდული 1 — Prompting-ის საფუძვლები",
       "order": 1,
       "lessons": [
-        { "slug": "course-usage", "title": "კურსის გამოყენების ინსტრუქცია", "order": 101 },
         { "slug": "intro", "title": "AI კურსის შესავალი", "order": 102 },
         { "slug": "at-work", "title": "AI სამუშაოში", "order": 103 },
         { "slug": "what-is-prompting", "title": "რა არის Prompting?", "order": 104 },
