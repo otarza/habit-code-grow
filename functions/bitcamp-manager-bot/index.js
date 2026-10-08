@@ -46,6 +46,11 @@ const COURSES = {
 const firestore = new Firestore();
 const postmarkClient = new postmark.ServerClient(POSTMARK_TOKEN);
 
+// Postmark's SDK converts HTTP failures into Error objects and drops the
+// original response headers/body. Preserve a small, sanitized diagnostic
+// record so upstream 403s can be distinguished from Postmark API errors.
+installPostmarkErrorDiagnostics(postmarkClient);
+
 functions.http("telegramBot", async (req, res) => {
   if (req.method !== "POST") {
     return res.status(200).send("ok");
@@ -144,6 +149,84 @@ function helpText() {
   <code>/resend student@example.com pro direct</code>
 
   Courses: <code>bootcamp</code> (default) or <code>pro</code>`;
+}
+
+function installPostmarkErrorDiagnostics(client) {
+  const httpClient = client?.httpClient?.client;
+  if (!httpClient?.interceptors?.response) {
+    console.warn("POSTMARK_DIAGNOSTICS_UNAVAILABLE");
+    return;
+  }
+
+  httpClient.interceptors.response.use(undefined, async (error) => {
+    const response = error?.response;
+    if (response) {
+      const headers = response.headers || {};
+      const requestHeaders = error?.config?.headers || {};
+      const data = response.data;
+      const isJson = data && typeof data === "object" && !Array.isArray(data);
+      const rawPreview =
+        typeof data === "string"
+          ? data.slice(0, 1200)
+          : data == null
+            ? ""
+            : JSON.stringify(data).slice(0, 1200);
+      const bodyPreview = rawPreview
+        .replace(/[\w.+-]+@[\w.-]+\.[A-Za-z]{2,}/g, "[email]")
+        .replace(/(authorization|token|api[_ -]?key)(\s*[:=]\s*)[^\s,"<>]+/gi, "$1$2[redacted]");
+      const egressIp = await getPublicEgressIp();
+
+      console.error(
+        "POSTMARK_HTTP_ERROR",
+        JSON.stringify({
+          status: response.status,
+          statusText: response.statusText || "",
+          contentType: headers["content-type"] || "",
+          errorCode: isJson ? data.ErrorCode ?? null : null,
+          message: isJson ? String(data.Message || "").slice(0, 500) : "",
+          requestId:
+            headers["x-pm-request-id"] ||
+            headers["x-request-id"] ||
+            headers["cf-ray"] ||
+            "",
+          server: headers.server || "",
+          requestHeaders: sanitizeHeaders(requestHeaders),
+          responseHeaders: sanitizeHeaders(headers),
+          proxyEnvironment: ["HTTP_PROXY", "HTTPS_PROXY", "ALL_PROXY", "http_proxy", "https_proxy", "all_proxy"]
+            .filter((name) => Boolean(process.env[name])),
+          publicEgressIp: egressIp,
+          bodyPreview,
+        })
+      );
+    } else {
+      console.error(
+        "POSTMARK_TRANSPORT_ERROR",
+        JSON.stringify({ message: String(error?.message || "unknown error").slice(0, 500) })
+      );
+    }
+
+    return Promise.reject(error);
+  });
+}
+
+function sanitizeHeaders(headers) {
+  const values = typeof headers?.toJSON === "function" ? headers.toJSON() : headers;
+  return Object.fromEntries(
+    Object.entries(values || {})
+      .filter(([name]) => !/(authorization|cookie|token|secret|api[_-]?key)/i.test(name))
+      .map(([name, value]) => [name, Array.isArray(value) ? value.join(", ") : String(value)])
+  );
+}
+
+async function getPublicEgressIp() {
+  try {
+    const response = await fetch("https://api.ipify.org", { signal: AbortSignal.timeout(3000) });
+    if (!response.ok) return `lookup_http_${response.status}`;
+    const value = (await response.text()).trim();
+    return /^(?:\d{1,3}\.){3}\d{1,3}$/.test(value) ? value : "lookup_invalid_response";
+  } catch (error) {
+    return `lookup_failed_${String(error?.name || "error")}`;
+  }
 }
 
 async function handleCommentModeration(callback, data, moderatorTelegramId) {
