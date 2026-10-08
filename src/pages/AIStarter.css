@@ -810,3 +810,18 @@ button.starter-curriculum__lesson.is-locked:hover .starter-curriculum__lock {
     flex-basis: auto;
   }
 }
+
+/* ---------- Real promo deadline countdown ---------- */
+.starter-countdown {
+  display: block;
+  margin-top: 4px;
+  color: #f4c465;
+  font-size: 12px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.01em;
+}
+.starter-nudge .starter-countdown {
+  margin: -2px 0 6px;
+  font-size: 13px;
+}

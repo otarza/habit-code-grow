@@ -44,6 +44,7 @@ try {
     assert.equal(await (await visibleCard()).evaluate(c => c.querySelector('button[type=submit]').classList.contains('starter-cta--secondary')), true);
     assert.equal(await page.$$eval('.campaign-inline-checkout__email input', els => els.length), 0);
     assert((await cardText('.starter-assurances')).includes('5-დღიანი გარანტია'));
+    assert((await cardText('.campaign-offer-promo .starter-countdown')).includes('18 ოქტომბრის ჩათვლით'));
 
     // Buying at full price first shows the in-card discount prompt.
     await clickInCard('button[type=submit]');
@@ -89,6 +90,35 @@ try {
   assert(fired.includes('StarterPreviewPlay') && fired.includes('StarterLockedLessonClick'));
   await page.$$eval('.campaign-faq__item button', els => els.at(-1).click());
   console.log('Curriculum: 31 lessons, 3 previews, 28 locked rows, preview player, locked → offer highlight');
+
+  // After the promo deadline the page must fall back to a plain 249 offer.
+  const expired = await browser.newPage();
+  await expired.setRequestInterception(true);
+  expired.on('request', r => r.url().startsWith(origin + '/') || r.url().startsWith('data:') ? r.continue() : r.abort());
+  expired.on('pageerror', error => errors.push(error.message));
+  await expired.evaluateOnNewDocument(() => {
+    const offset = Date.parse('2026-10-19T10:00:00+04:00') - Date.now();
+    const realNow = Date.now.bind(Date);
+    Date.now = () => realNow() + offset;
+  });
+  await expired.setViewport({ width: 1440, height: 1000 });
+  await expired.goto(`${origin}/ai-starter`, { waitUntil: 'networkidle0' });
+  const card = '.campaign-buy-anchor[data-slot="desktop"]';
+  const state = await expired.evaluate(c => ({
+    promoBar: !!document.querySelector('.campaign-promo-bar'),
+    promoRow: !!document.querySelector(`${c} .campaign-offer-promo`),
+    countdowns: document.querySelectorAll('.starter-countdown').length,
+    price: document.querySelector(`${c} .campaign-price__current .sr-only`).textContent,
+    secondary: document.querySelector(`${c} button[type=submit]`).classList.contains('starter-cta--secondary'),
+    faq79: document.body.innerText.includes('როგორ მივიღო 79₾'),
+    curriculumCta: document.querySelector('.starter-curriculum__cta button').innerText.trim(),
+  }), card);
+  assert.deepEqual(state, { promoBar: false, promoRow: false, countdowns: 0, price: '₾249', secondary: false, faq79: false, curriculumCta: 'შეიძინე AI Starter — ₾249' });
+  await expired.$eval(`${card} button[type=submit]`, b => b.click());
+  await expired.waitForSelector(`${card} input[type=email]`);
+  assert.equal(await expired.$(`${card} .starter-nudge`), null, 'no discount prompt after deadline');
+  await expired.close();
+  console.log('After deadline: no promo bar/row/countdown/FAQ, plain 249 checkout without discount prompt');
 
   // Learning page with soft access; Pro stays gated.
   await page.goto(`${origin}/learn/ai-starter`, { waitUntil: 'networkidle0' });
