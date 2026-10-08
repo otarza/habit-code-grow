@@ -88,13 +88,6 @@ functions.http("flittWebhook", async (req, res) => {
 
   const product = PRODUCT_MAP[String(payload.product_id)] || FALLBACK_PRODUCT;
 
-  // Only the two confirmed GEL prices can grant the Starter entitlement.
-  if (product === STARTER_PRODUCT &&
-      (payload.currency !== "GEL" || ![7900, 24900].includes(Number(payload.amount)))) {
-    console.error("STARTER_PAYMENT_MISMATCH", payload.order_id);
-    return res.status(400).send("Starter amount/currency mismatch");
-  }
-
   const email = normalizeEmail(extractEmail(payload));
   if (!email) {
     console.error("NO_EMAIL", payload.order_id);

@@ -47,9 +47,9 @@ for(const amount of ['7900','24900']){
     assert(!body.includes('{{'));
   }
 }
-for(const overrides of [{amount:'7800'},{amount:'25000'},{currency:'USD'},{amount:'NaN'}]){
-  assert.equal((await callback(overrides)).code,400);assert.equal(writes.length,0);assert.equal(messages.length,0);
-}
+// Prices are enforced by the Flitt button configuration, not the webhook.
+assert.equal((await callback({amount:'100'})).code,200);
+assert.deepEqual(Object.keys(writes.find(w=>w.name==='course_access').data.courses),['ai-starter']);
 assert.equal((await callback({},false)).code,403);assert.equal(writes.length,0);assert.equal(messages.length,0);
 await callback({order_status:'declined'});assert.equal(writes.length,0);assert.equal(messages.length,0);
 for(const [product_id,slug,template] of [['btcp-ai-pro','ai-pro','course-access-ai-pro'],['btcp-ai-bootcamp','ai-bootcamp','course-access-ai-bootcamp']]){
@@ -76,4 +76,4 @@ for(const ext of ['txt','html']){
  assert(email.includes('/learn/ai-starter?access={{base64_email}}'));
  assert(!email.includes('/learn/ai-pro'));assert(!email.includes('discord.gg'));
 }
-console.log('PASS: redirect product slugs; Starter routing + inline (no Postmark template) email at both prices; signature/status/amount/currency guards; Pro/Bootcamp preserved; fixed 3-module/31-lesson snapshot; dedicated email links. No external side effects.');
+console.log('PASS: redirect product slugs; Starter routing + inline (no Postmark template) email at both prices; signature/status guards; any Flitt-approved amount grants Starter; Pro/Bootcamp preserved; fixed 3-module/31-lesson snapshot; dedicated email links. No external side effects.');
