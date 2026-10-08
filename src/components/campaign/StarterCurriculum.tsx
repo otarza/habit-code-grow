@@ -2,8 +2,19 @@ import { useEffect, useState } from "react";
 import { ArrowRight, ChevronDown, Clock3, Lock, PlayCircle, Video, type LucideIcon } from "lucide-react";
 import { aiStarterCurriculum as curriculum } from "@/data/aiStarterCurriculum";
 
+// Free previews play from Bunny Stream (no YouTube branding or outbound links).
+// Bunny video IDs in library 678241; lessons without one fall back to YouTube.
+const BUNNY_LIBRARY = "678241";
+const PREVIEW_BUNNY_IDS: Record<string, string> = {
+  intro: "f1a8e486-b50c-4072-af74-fd192ca8cf76",
+  "what-is-prompting": "1b7735dd-595b-46f3-8f82-8266a6213c07",
+  "framework-step1": "cfa913a9-38dc-47b1-80f5-3d394c8f79a6",
+};
 // Free sample lessons that can be watched right on the landing page.
 const PREVIEW_LESSONS = new Set(["intro", "what-is-prompting", "framework-step1"]);
+const previewSrc = (slug: string, youtubeId: string) => PREVIEW_BUNNY_IDS[slug]
+  ? `https://player.mediadelivery.net/embed/${BUNNY_LIBRARY}/${PREVIEW_BUNNY_IDS[slug]}?autoplay=true&loop=false&muted=false&preload=true&responsive=true`
+  : `https://www.youtube-nocookie.com/embed/${youtubeId}?autoplay=1&rel=0&modestbranding=1`;
 
 export type PreviewSource = "curriculum" | "hero" | "link";
 // Ask the section to open a free preview from elsewhere on the page.
@@ -127,7 +138,7 @@ export function StarterCurriculum({ modules, ctaLabel, onCta, onPreview, onLocke
                       {isPlaying && (
                         <div className="starter-curriculum__player">
                           <iframe
-                            src={`https://www.youtube-nocookie.com/embed/${lesson.videoId}?autoplay=1&rel=0&modestbranding=1`}
+                            src={previewSrc(lesson.slug, lesson.videoId)}
                             title={lesson.title}
                             allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
                             allowFullScreen
