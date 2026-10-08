@@ -132,3 +132,356 @@
 }
 .starter-review-preview__slide .starter-testimonial-stars { margin-bottom: 10px; }
 .starter-review-preview__slide blockquote { flex: 1; }
+
+/* Inline checkout: email above the buy button, Flitt form in place of it. */
+.campaign-inline-checkout__email {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+}
+.campaign-inline-checkout__email label {
+  color: #c5c5cb;
+  font-size: 13px;
+  font-weight: 700;
+}
+.campaign-inline-checkout__email input {
+  width: 100%;
+  min-height: 48px;
+  padding: 12px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.06);
+  color: #f5f5f7;
+  font: inherit;
+  font-size: 16px;
+  outline: none;
+  -webkit-appearance: none;
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+}
+.campaign-inline-checkout__email input::placeholder {
+  color: #74747f;
+}
+.campaign-inline-checkout__email input:focus {
+  border-color: #f5f5f7;
+  box-shadow: 0 0 0 3px rgba(245, 245, 247, 0.14);
+}
+.campaign-inline-checkout__email input.is-invalid {
+  border-color: #ff766a;
+  box-shadow: 0 0 0 3px rgba(255, 118, 106, 0.18);
+}
+.campaign-inline-checkout__error {
+  margin: 0;
+  color: #ff766a;
+  font-size: 13px;
+  font-weight: 600;
+}
+.campaign-inline-checkout__hint {
+  margin: 0 0 4px;
+  color: #9a9aa3;
+  font-size: 13px;
+  line-height: 1.45;
+}
+.campaign-inline-checkout {
+  display: grid;
+  gap: 12px;
+  scroll-margin-top: 72px;
+}
+.campaign-inline-checkout__summary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px 12px;
+  color: #c5c5cb;
+  font-size: 13px;
+  min-width: 0;
+}
+.campaign-inline-checkout__summary strong {
+  color: #f5f5f7;
+  overflow-wrap: anywhere;
+}
+.campaign-inline-checkout__summary button {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: #f5f5f7;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+.campaign-inline-checkout__flitt {
+  min-width: 0;
+  border-radius: 12px;
+  overflow: hidden;
+}
+.campaign-inline-checkout__status {
+  padding: 18px 0;
+  color: #c5c5cb;
+  font-size: 14px;
+}
+.campaign-inline-checkout__status--error {
+  color: #ff766a;
+}
+
+/* ---------- Promo applied: make the price drop impossible to miss ---------- */
+.starter-promo-applied {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid rgba(74, 222, 128, 0.45);
+  border-radius: 10px;
+  padding: 12px 14px;
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.16), rgba(34, 197, 94, 0.05));
+  color: #4ade80;
+  animation: starter-applied-pop 520ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+.starter-promo-applied > div {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+.starter-promo-applied strong {
+  color: #f5f5f7;
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1.3;
+}
+.starter-promo-applied span {
+  color: #a7f3c0;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* Strike line draws across the old price. */
+.starter-price-old {
+  position: relative;
+  align-self: flex-start;
+  justify-self: start;
+  width: max-content;
+  text-decoration: none;
+}
+.starter-price-old::after {
+  content: "";
+  position: absolute;
+  left: -2px;
+  right: -2px;
+  top: 52%;
+  height: 3px;
+  border-radius: 2px;
+  background: #ff766a;
+  transform-origin: left center;
+  animation: starter-strike 520ms ease-out 150ms both;
+}
+/* The animated digits sit in a span; keep the big price styling, not the
+   small label styling that .campaign-price-stack applies to spans. */
+.campaign-price-stack .campaign-price__current > span[aria-hidden] {
+  font: inherit;
+  color: inherit;
+  letter-spacing: inherit;
+  text-transform: none;
+  margin: 0;
+}
+.starter-price-new {
+  display: inline-block;
+  color: #fff;
+  animation: starter-price-pop 700ms cubic-bezier(0.34, 1.56, 0.64, 1) 750ms both;
+  font-variant-numeric: tabular-nums;
+}
+.starter-price-save {
+  animation: starter-applied-pop 520ms cubic-bezier(0.34, 1.56, 0.64, 1) 950ms both;
+}
+
+/* One-off glow around the offer card when the promo activates. */
+.starter-offer--celebrate {
+  animation: starter-card-glow 1600ms ease-out both;
+}
+
+/* ---------- Email step: call the visitor to the field ---------- */
+.starter-email-step {
+  display: grid;
+  gap: 8px;
+  animation: starter-step-in 420ms ease-out both;
+}
+.starter-email-step__heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+.starter-email-step__heading label {
+  color: #f5f5f7;
+  font-size: 15px;
+  font-weight: 800;
+}
+.starter-email-step__chip {
+  border-radius: 999px;
+  padding: 3px 9px;
+  background: #4ade80;
+  color: #0a0a0b;
+  font-size: 11px;
+  font-weight: 850;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.campaign-inline-checkout__email input.is-calling {
+  border-color: rgba(74, 222, 128, 0.8);
+  animation: starter-input-call 1.6s ease-in-out 3;
+}
+
+@keyframes starter-applied-pop {
+  from { opacity: 0; transform: scale(0.92); }
+  to { opacity: 1; transform: scale(1); }
+}
+@keyframes starter-strike {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+@keyframes starter-price-pop {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.14); color: #4ade80; }
+  100% { transform: scale(1); }
+}
+@keyframes starter-card-glow {
+  0% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0); }
+  25% { box-shadow: 0 0 0 4px rgba(74, 222, 128, 0.55), 0 0 40px rgba(74, 222, 128, 0.25); }
+  100% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0); }
+}
+@keyframes starter-step-in {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes starter-input-call {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0); }
+  50% { box-shadow: 0 0 0 5px rgba(74, 222, 128, 0.28); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .starter-promo-applied,
+  .starter-price-old::after,
+  .starter-price-new,
+  .starter-price-save,
+  .starter-offer--celebrate,
+  .starter-email-step,
+  .campaign-inline-checkout__email input.is-calling {
+    animation: none;
+  }
+}
+
+/* ---------- Before activation: the promo button is the primary action ---------- */
+.campaign-promo-button.starter-promo-call {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-color: rgba(255, 118, 106, 0.85);
+  background: linear-gradient(115deg, #b82419 0%, #da291c 45%, #ff766a 100%);
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(10, 10, 11, 0.55);
+  animation: starter-promo-call 2.4s ease-in-out infinite;
+}
+.campaign-promo-button.starter-promo-call:hover {
+  transform: translateY(-1px) scale(1.02);
+}
+.campaign-promo-button.starter-promo-call svg {
+  flex-shrink: 0;
+  animation: starter-gift-wiggle 2.4s ease-in-out infinite;
+}
+.campaign-page--starter .campaign-offer-promo .starter-promo-call {
+  min-height: 44px;
+  font-size: 14px;
+}
+/* Until the discount is active, full-price buy is visually secondary. */
+.campaign-page--starter .campaign-cta.starter-cta--secondary {
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  background: transparent;
+  color: #f5f5f7;
+  box-shadow: none;
+}
+.campaign-page--starter .campaign-cta.starter-cta--secondary:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+/* ---------- "You have a discount" prompt shown instead of full-price buy ---------- */
+.starter-nudge {
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  border: 1px solid rgba(255, 118, 106, 0.55);
+  border-radius: 12px;
+  padding: 18px 16px 14px;
+  background: linear-gradient(160deg, rgba(218, 41, 28, 0.2), rgba(218, 41, 28, 0.06));
+  text-align: center;
+  animation: starter-applied-pop 420ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+.starter-nudge > svg {
+  color: #ff766a;
+}
+.starter-nudge strong {
+  color: #fff;
+  font-size: 18px;
+  font-weight: 850;
+  line-height: 1.3;
+}
+.starter-nudge p {
+  margin: 0 0 4px;
+  color: #d4d4d8;
+  font-size: 14px;
+  line-height: 1.45;
+}
+.starter-nudge .starter-nudge__activate {
+  width: 100%;
+  border: 1px solid rgba(255, 118, 106, 0.85);
+  background: linear-gradient(115deg, #b82419 0%, #da291c 45%, #ff766a 100%);
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(10, 10, 11, 0.55);
+  animation: starter-promo-call 2.4s ease-in-out infinite;
+}
+.starter-nudge__full {
+  padding: 4px;
+  border: 0;
+  background: none;
+  color: #9a9aa3;
+  font: inherit;
+  font-size: 13px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+.starter-nudge__full:hover {
+  color: #c5c5cb;
+}
+
+@keyframes starter-promo-call {
+  0%, 60%, 100% { box-shadow: 0 0 0 0 rgba(255, 118, 106, 0); }
+  30% { box-shadow: 0 0 0 7px rgba(255, 118, 106, 0.28), 0 8px 22px rgba(218, 41, 28, 0.35); }
+}
+@keyframes starter-gift-wiggle {
+  0%, 50%, 100% { transform: rotate(0deg); }
+  10% { transform: rotate(-14deg); }
+  20% { transform: rotate(12deg); }
+  30% { transform: rotate(-8deg); }
+  40% { transform: rotate(4deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .campaign-promo-button.starter-promo-call,
+  .campaign-promo-button.starter-promo-call svg,
+  .starter-nudge,
+  .starter-nudge .starter-nudge__activate {
+    animation: none;
+  }
+}
+/* Stack the card's promo row so the activate button gets full width. */
+.campaign-page--starter .campaign-offer-promo:has(.starter-promo-call) {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 10px;
+}
+.campaign-page--starter .campaign-offer-promo .starter-promo-call {
+  width: 100%;
+  min-height: 48px;
+  font-size: 15px;
+}

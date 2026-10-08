@@ -1,5 +1,6 @@
 import { type FormEvent, useEffect, useMemo, useState } from 'react';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { ArrowLeft, CheckCircle2, Clock3, Loader2, LockKeyhole, LogOut, MailCheck, ShieldCheck } from 'lucide-react';
 import { CourseSidebar } from '@/components/course/CourseSidebar';
 import { CourseOverview } from '@/components/course/CourseOverview';
@@ -282,6 +283,15 @@ export default function LearnCoursePage() {
     loadCourse();
   }, [config, courseSlug, hasAccess]);
 
+  const lessonTitle = manifest?.topics
+    .find((topic) => topic.slug === topicSlug)
+    ?.lessons.find((lesson) => lesson.slug === lessonSlug)?.title;
+  const pageHead = config ? (
+    <Helmet>
+      <title>{lessonTitle ? `${lessonTitle} — ${config.title} | BitCamp` : `${config.title} | BitCamp`}</title>
+    </Helmet>
+  ) : null;
+
   if (!config) {
     return (
       <div className="dark min-h-screen bg-background text-foreground flex flex-col items-center justify-center text-center p-4">
@@ -298,12 +308,15 @@ export default function LearnCoursePage() {
 
   if (!hasAccess) {
     return (
-      <AccessGate
-        courseSlug={courseSlug!}
-        title={config.title}
-        buyPath={config.buyPath}
-        buyLabel={config.buyLabel}
-      />
+      <>
+        {pageHead}
+        <AccessGate
+          courseSlug={courseSlug!}
+          title={config.title}
+          buyPath={config.buyPath}
+          buyLabel={config.buyLabel}
+        />
+      </>
     );
   }
 
@@ -334,6 +347,7 @@ export default function LearnCoursePage() {
 
   return (
     <div className="dark min-h-screen flex bg-background text-foreground">
+      {pageHead}
       <CourseSidebar manifest={manifest} routeBasePath={routeBasePath} />
 
       <main className="flex-1 min-w-0">

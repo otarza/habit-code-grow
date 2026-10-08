@@ -1,6 +1,6 @@
 import { getAttributionRef } from "./attribution";
 
-type CheckoutProduct = "bootcamp" | "pro" | "starter";
+export type CheckoutProduct = "bootcamp" | "pro" | "starter";
 
 type ProductConfig = {
   name: string;
@@ -45,7 +45,7 @@ export const PRODUCTS: Record<CheckoutProduct, ProductConfig> = {
     mode: "embed",
     // Public Flitt button ID supplied by the owner for the ₾249 Starter product.
     buttonId: import.meta.env.VITE_AI_STARTER_FLITT_BUTTON_ID ?? "8dd7438a4579ed39bd7ae731fb8b6f359a2aae58",
-    name: "AI Starter — 3 პრაქტიკული მოდული",
+    name: "AI Starter — 3 ვიდეომოდული",
     value: 249,
   },
 };
@@ -104,7 +104,7 @@ function getCheckoutConfig(product: CheckoutProduct, override?: CheckoutOverride
   } as ProductConfig;
 }
 
-function trackInitiateCheckout(product: CheckoutProduct, override?: CheckoutOverride) {
+export function trackInitiateCheckout(product: CheckoutProduct, override?: CheckoutOverride) {
   const config = getCheckoutConfig(product, override);
   const win = window as Window & {
     fbq?: (event: string, name: string, params?: Record<string, unknown>) => void;
