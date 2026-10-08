@@ -97,7 +97,7 @@ function formatCountdown(ms: number) {
   const days = Math.floor(total / 86400);
   const clock = [Math.floor((total % 86400) / 3600), Math.floor((total % 3600) / 60), total % 60]
     .map(n => String(n).padStart(2, "0")).join(":");
-  return days ? `${days} დღე ${clock}` : clock;
+  return days ? `${days} დღე და ${clock} საათი` : `${clock} საათი`;
 }
 
 // Counts the displayed price down to the new value so the drop is noticed.
@@ -344,7 +344,7 @@ export default function AIStarter() {
           {promoAvailable && <small className="starter-countdown" role="timer" aria-live="off">ფასი მოქმედებს {PROMO_END_LABEL} · დარჩა {countdown}</small>}</div>
       </div>
       : promoAvailable && <div className="campaign-offer-promo"><span>პირველი ნაბიჯი AI-ში — 170₾ ფასდაკლებით
-        <small className="starter-countdown" role="timer" aria-live="off">სრულდება {PROMO_END_LABEL} · დარჩა {countdown}</small></span>{promoButton(true, slot)}</div>}
+        <small className="starter-countdown" role="timer" aria-live="off">შეთავაზება სრულდება 18 ოქტომბერს · დარჩა {countdown}</small></span>{promoButton(true, slot)}</div>}
     <div className="campaign-final__price-row"><div className="campaign-price-stack">
       <span>ერთჯერადი ფასი</span>
       {promoActive && <span className="campaign-price__old starter-price-old">₾249</span>}
