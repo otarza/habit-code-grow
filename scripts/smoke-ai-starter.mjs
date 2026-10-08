@@ -44,7 +44,7 @@ try {
     assert.equal(await (await visibleCard()).evaluate(c => c.querySelector('button[type=submit]').classList.contains('starter-cta--secondary')), true);
     assert.equal(await page.$$eval('.campaign-inline-checkout__email input', els => els.length), 0);
     assert((await cardText('.starter-assurances')).includes('5-დღიანი გარანტია'));
-    assert((await cardText('.campaign-offer-promo .starter-countdown')).includes('შეთავაზება სრულდება 18 ოქტომბერს · დარჩა '));
+    assert((await cardText('.campaign-offer-promo .starter-countdown')).includes('სრულდება 18 ოქტომბერს · დარჩა '));
 
     // Buying at full price first shows the in-card discount prompt.
     await clickInCard('button[type=submit]');

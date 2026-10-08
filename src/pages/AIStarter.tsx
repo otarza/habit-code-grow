@@ -344,7 +344,7 @@ export default function AIStarter() {
           {promoAvailable && <small className="starter-countdown" role="timer" aria-live="off">ფასი მოქმედებს {PROMO_END_LABEL} · დარჩა {countdown}</small>}</div>
       </div>
       : promoAvailable && <div className="campaign-offer-promo"><span>პირველი ნაბიჯი AI-ში — 170₾ ფასდაკლებით
-        <small className="starter-countdown" role="timer" aria-live="off">შეთავაზება სრულდება 18 ოქტომბერს · დარჩა {countdown}</small></span>{promoButton(true, slot)}</div>}
+        <small className="starter-countdown" role="timer" aria-live="off">სრულდება 18 ოქტომბერს · დარჩა {countdown}</small></span>{promoButton(true, slot)}</div>}
     <div className="campaign-final__price-row"><div className="campaign-price-stack">
       <span>ერთჯერადი ფასი</span>
       {promoActive && <span className="campaign-price__old starter-price-old">₾249</span>}
