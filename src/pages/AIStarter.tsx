@@ -1,6 +1,6 @@
 import "./AIStarter.css";
 import { useEffect, useRef, useState } from "react";
-import { ArrowRight, BookOpen, Gift, Brain, Briefcase, CheckCircle2, MessageSquareText, Video } from "lucide-react";
+import { ArrowRight, BookOpen, Gift, Brain, Briefcase, CheckCircle2, Infinity as InfinityIcon, Lock, Mail, MessageSquareText, ShieldCheck, Users, Video } from "lucide-react";
 import { CampaignPromoConfetti } from "@/components/campaign/CampaignPromoConfetti";
 import { TestimonialStars } from "@/components/campaign/TestimonialStars";
 import { StarterTestimonialCarousel } from "@/components/campaign/StarterTestimonialCarousel";
@@ -32,6 +32,8 @@ const faqs = [
   ["ვისთვისაა ეს კურსი?", "მათთვის, ვისაც AI-სთან შეხება ჯერ არ ჰქონია და სურს პირველი ნაბიჯები გასაგები ვიდეოგაკვეთილებით გადადგას."],
   ["მჭირდება პროგრამირების ცოდნა?", "არა. კურსი იწყება საფუძვლებით და პრომპტების შესაქმნელად პროგრამირების ცოდნა არ გჭირდება."],
   ["როგორ მივიღო 79₾-იანი ფასი?", "დააჭირე ღილაკს „გააქტიურე 170₾ ფასდაკლება“. გვერდზე ფასი 249₾-დან 79₾-მდე შემცირდება. კოდის დამახსოვრება ან ხელით შეყვანა არ გჭირდება."],
+  ["რა მოხდება, თუ კურსი არ მომეწონა?", "გაქვს 5-დღიანი გარანტია: შეძენიდან 5 დღის განმავლობაში მოგვწერე hello@bitcamp.ge-ზე შეკვეთის ელ. ფოსტიდან და თანხას სრულად დაგიბრუნებთ — მაშინაც, თუ უკვე დაიწყე გაკვეთილების ყურება. თანხა ბრუნდება იმავე ბარათზე, 7 სამუშაო დღეში."],
+  ["როდის მივიღებ წვდომას?", "გადახდიდან რამდენიმე წუთში ელ. ფოსტაზე მიიღებ პირად ბმულს, რომლითაც კურსი მაშინვე გაიხსნება. წვდომა უვადოა — გაკვეთილებს ნებისმიერ დროს დაუბრუნდები."],
   ["რა შედის პაკეტში?", "ვიდეოკურსის პირველი სამი მოდული: ფუნდამენტური პრომპტინგი, Advanced Prompting და პროდუქტიულობა და ბიზნესი. მენტორობა, ბონუს კურსები და დანარჩენი სამი მოდული ამ პაკეტში არ შედის."],
   ["თუ უფრო სიღრმისეულად სწავლა მომინდება?", "შემდგომ შეგიძლია დაინტერესდე BitCamp-ის სხვა მოდულებით ან მენტორობით. ისინი ცალკე შეთავაზებებია და AI Starter-ის ფასში არ შედის."],
 ];
@@ -282,7 +284,7 @@ export default function AIStarter() {
   </form>;
   const offer = (className: string, slot: OfferSlot, id?: string) => <div id={id} data-slot={slot}
     className={`campaign-hero__offer campaign-hero__offer--pro campaign-buy-anchor ${className}${showPromoConfetti ? " starter-offer--celebrate" : ""}`}>
-    <div className="campaign-offer-heading"><span>AI Starter</span><strong>3 მოდული · ვიდეოკურსი</strong></div>
+    <div className="campaign-offer-heading"><span>AI Starter</span><strong>3 მოდული · 32 ვიდეო გაკვეთილი</strong></div>
     {promoActive
       ? <div className="starter-promo-applied" role="status">
         <CheckCircle2 aria-hidden="true" size={22} />
@@ -297,7 +299,12 @@ export default function AIStarter() {
       </strong>
     </div>{promoActive && <span className="campaign-price__save starter-price-save">შენ ზოგავ ₾170-ს</span>}</div>
     {purchase(slot)}
-    <p className="campaign-secure-line">მენტორობისა და ბონუს კურსების გარეშე</p>
+    <ul className="starter-assurances">
+      <li><ShieldCheck aria-hidden="true" size={16} /><span><strong>5-დღიანი გარანტია</strong> — თანხის სრული დაბრუნება</span></li>
+      <li><InfinityIcon aria-hidden="true" size={16} /><span><strong>უვადო წვდომა</strong> — ისწავლე შენს ტემპში</span></li>
+      <li><Mail aria-hidden="true" size={16} /><span>წვდომა ელ. ფოსტაზე გადახდიდან რამდენიმე წუთში</span></li>
+      <li><Lock aria-hidden="true" size={16} /><span>უსაფრთხო გადახდა · Visa / Mastercard / Apple Pay / Google Pay</span></li>
+    </ul>
   </div>;
 
   return <div className={`campaign-page campaign-page--pro campaign-page--starter${promoActive ? " campaign-page--promo-active" : ""}`}>
@@ -315,10 +322,10 @@ export default function AIStarter() {
           <p className="campaign-lead">გონია, რომ AI შენთვის ზედმეტად რთულია? დაიწყე 0 - დან, საფუძვლებით და ისწავლე მისი გამოყენება საკუთარი ვირტუალური ბიზნესის შექმნის მაგალითზე.</p>
           <CampaignHeroVideo className="campaign-hero-video--inline" title="BitCamp-ის AI კურსის ვიდეო" />
           <StarterTestimonialCarousel />
-          <div className="campaign-hero__facts"><span><BookOpen size={16} />3 მოდული</span><span><CheckCircle2 size={16} />ნულიდან</span><span><GeorgianFlag />ქართულად</span><span><Video size={16} aria-hidden="true" />ვიდეო გაკვეთილები</span></div>
+          <div className="campaign-hero__facts"><span><BookOpen size={16} />3 მოდული · 32 გაკვეთილი</span><span><Video size={16} aria-hidden="true" />~7 საათი ვიდეო</span><span><CheckCircle2 size={16} />ნულიდან</span><span><GeorgianFlag />ქართულად</span></div>
           <div className="campaign-author-card"><div className="campaign-author-card__top">
             <img src="/media/external/images/otar-profile-photo.png" alt="ოთარ ზაკალაშვილი" />
-            <div><span>კურსს უძღვება</span><strong>ოთარ ზაკალაშვილი</strong><small>BitCamp-ის დამფუძნებელი და AI კურსის ავტორი</small></div>
+            <div><span>კურსს უძღვება</span><strong>ოთარ ზაკალაშვილი</strong><small>BitCamp-ის დამფუძნებელი და AI კურსის ავტორი</small><small className="starter-author-students"><Users aria-hidden="true" size={14} />3500+ სტუდენტი BitCamp-ის კურსებზე</small></div>
           </div></div>
           {offer("campaign-hero__offer--inline", "inline")}
         </div>
@@ -341,13 +348,21 @@ export default function AIStarter() {
       </article>)}</div></div></section>
       <section id="starter-testimonials" className="campaign-section campaign-section--surface"><div className="campaign-shell"><div className="campaign-section-heading">
         <p className="campaign-kicker">სტუდენტების გამოცდილება</p><h2>გასაგები ახსნა პირველი ნაბიჯისთვის.</h2>
-        <p>უკუკავშირი BitCamp-ის AI კურსის მონაწილეებისგან.</p>
+        <p>3500+ სტუდენტი BitCamp-ის კურსებზე. უკუკავშირი AI კურსის მონაწილეებისგან.</p>
       </div><div className="campaign-testimonial-grid">
         {aiStarterTestimonials.map(({ name, quote }) => <figure className="campaign-testimonial" key={name}>
           <TestimonialStars />
           <blockquote>„{quote}“</blockquote>
           <figcaption><strong>{name}</strong><span>BitCamp-ის AI კურსის მონაწილე</span></figcaption>
         </figure>)}
+      </div></div></section>
+      <section className="campaign-section"><div className="campaign-shell"><div className="starter-guarantee">
+        <ShieldCheck aria-hidden="true" size={44} />
+        <div>
+          <p className="campaign-kicker">რისკის გარეშე</p>
+          <h2>5-დღიანი თანხის დაბრუნების გარანტია</h2>
+          <p>დაიწყე კურსი და ნახე გაკვეთილები. თუ 5 დღის განმავლობაში მიხვდები, რომ კურსი შენთვის არ არის, მოგვწერე hello@bitcamp.ge-ზე და თანხას სრულად დაგიბრუნებთ — დამატებითი კითხვების გარეშე.</p>
+        </div>
       </div></div></section>
       <section className="campaign-section"><div className="campaign-shell campaign-faq-grid"><div><p className="campaign-kicker">კითხვები</p><h2>სანამ დაიწყებ</h2></div>
         <div className="campaign-faq">{faqs.map(([q, a], i) => <div className="campaign-faq__item" key={q}>
