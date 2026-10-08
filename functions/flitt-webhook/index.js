@@ -1,5 +1,7 @@
 const functions = require("@google-cloud/functions-framework");
 const crypto = require("crypto");
+const fs = require("fs");
+const path = require("path");
 const { Firestore, FieldValue } = require("@google-cloud/firestore");
 const postmark = require("postmark");
 
@@ -24,7 +26,23 @@ const PRO_PRODUCT = {
   name: "AI Bootcamp Mentored",
 };
 
+const STARTER_PRODUCT = {
+  slug: "starter",
+  courseSlug: "ai-starter",
+  template: "course-access-ai-starter",
+  name: "AI Starter — 3 ვიდეომოდული",
+  // Email content ships with this function (email-templates/) and is sent via
+  // Postmark's plain send API, so no template has to exist in Postmark.
+  inlineTemplate: loadInlineTemplate(
+    "course-access-ai-starter",
+    "შენი AI Starter-ის წვდომა გააქტიურებულია — BitCamp"
+  ),
+};
+
 const PRODUCT_MAP = {
+  "btcp-ai-3m": STARTER_PRODUCT,
+  "6e34b7a462c13603d26c45affbc44ae17bddf82d": STARTER_PRODUCT,
+  "8dd7438a4579ed39bd7ae731fb8b6f359a2aae58": STARTER_PRODUCT,
   // Bootcamp (₾99 self-paced) — both the dashboard product_id and button hash
   "btcp-ai-bootcamp": BOOTCAMP_PRODUCT,
   "74de94a0a998fdf3f37f433e90448cd5dd11ee97": BOOTCAMP_PRODUCT,
@@ -70,6 +88,13 @@ functions.http("flittWebhook", async (req, res) => {
 
   const product = PRODUCT_MAP[String(payload.product_id)] || FALLBACK_PRODUCT;
 
+  // Only the two confirmed GEL prices can grant the Starter entitlement.
+  if (product === STARTER_PRODUCT &&
+      (payload.currency !== "GEL" || ![7900, 24900].includes(Number(payload.amount)))) {
+    console.error("STARTER_PAYMENT_MISMATCH", payload.order_id);
+    return res.status(400).send("Starter amount/currency mismatch");
+  }
+
   const email = normalizeEmail(extractEmail(payload));
   if (!email) {
     console.error("NO_EMAIL", payload.order_id);
@@ -108,19 +133,30 @@ functions.http("flittWebhook", async (req, res) => {
   }
 
   try {
-    const result = await postmarkClient.sendEmailWithTemplate({
-      From: FROM_EMAIL,
-      To: email,
-      TemplateAlias: product.template,
-      TemplateModel: {
-        order_id: payload.order_id,
-        amount: amountGel,
-        currency: payload.currency || "GEL",
-        product_name: product.name,
-        base64_email: toBase64Url(email),
-      },
-      MessageStream: MESSAGE_STREAM,
-    });
+    const templateModel = {
+      order_id: payload.order_id,
+      amount: amountGel,
+      currency: payload.currency || "GEL",
+      product_name: product.name,
+      base64_email: toBase64Url(email),
+    };
+    const result = product.inlineTemplate
+      ? await postmarkClient.sendEmail({
+          From: FROM_EMAIL,
+          To: email,
+          Subject: renderTemplate(product.inlineTemplate.subject, templateModel, String),
+          HtmlBody: renderTemplate(product.inlineTemplate.html, templateModel, escapeHtml),
+          TextBody: renderTemplate(product.inlineTemplate.text, templateModel, String),
+          Tag: product.template,
+          MessageStream: MESSAGE_STREAM,
+        })
+      : await postmarkClient.sendEmailWithTemplate({
+          From: FROM_EMAIL,
+          To: email,
+          TemplateAlias: product.template,
+          TemplateModel: templateModel,
+          MessageStream: MESSAGE_STREAM,
+        });
     console.log(
       "POSTMARK_RESPONSE",
       payload.order_id,
@@ -151,6 +187,23 @@ functions.http("flittWebhook", async (req, res) => {
 
   return res.status(200).send("OK");
 });
+
+function loadInlineTemplate(name, subject) {
+  const read = (ext) =>
+    fs.readFileSync(path.join(__dirname, "email-templates", `${name}.${ext}`), "utf8");
+  return { subject, html: read("html"), text: read("txt") };
+}
+
+// Minimal Mustachio-compatible {{var}} substitution for inline templates.
+function renderTemplate(source, model, escape) {
+  return source.replace(/{{\s*(\w+)\s*}}/g, (_, key) => escape(String(model[key] ?? "")));
+}
+
+function escapeHtml(value) {
+  return value.replace(/[&<>"']/g, (c) =>
+    ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]
+  );
+}
 
 function verifySignature(payload, secret) {
   if (!secret) {

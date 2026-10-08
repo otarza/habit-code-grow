@@ -14,6 +14,13 @@ const COURSE_ACCESS_API_URL =
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const courseAccess = {
+  'ai-starter': {
+    storageKey: 'bitcamp_soft_access_ai_starter',
+    emailStorageKey: 'bitcamp_soft_access_ai_starter_email',
+    title: 'AI Starter — 3 ვიდეომოდული',
+    buyPath: '/ai-starter',
+    buyLabel: 'ნახე AI Starter-ის შეთავაზება',
+  },
   'ai-bootcamp': {
     storageKey: 'bitcamp_soft_access_ai_bootcamp',
     emailStorageKey: 'bitcamp_soft_access_ai_bootcamp_email',

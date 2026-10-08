@@ -18,6 +18,12 @@ const ALLOWED_ORIGINS = (process.env.ALLOWED_ORIGINS ||
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const COURSES = {
+  "ai-starter": {
+    title: "AI Starter — 3 ვიდეომოდული",
+    productName: "AI Starter — 3 ვიდეომოდული",
+    learnPath: "/learn/ai-starter",
+    buyPath: "/ai-starter",
+  },
   "ai-bootcamp": {
     title: "AI Prompt Engineering Bootcamp",
     productName: "AI Bootcamp Self-Paced",

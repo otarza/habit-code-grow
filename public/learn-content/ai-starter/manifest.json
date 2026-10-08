@@ -1,0 +1,193 @@
+{
+  "id": "ai-starter",
+  "title": "AI Starter — 3 ვიდეომოდული",
+  "slug": "ai-starter",
+  "description": "AI ვიდეოკურსი ნულიდან: ფუნდამენტური პრომპტინგი, Advanced Prompting და პროდუქტიულობა და ბიზნესი.",
+  "thumbnail": "/ai-meta.png",
+  "exportedAt": "2026-05-19T00:00:00.000Z",
+  "topics": [
+    {
+      "slug": "fundamentals",
+      "title": "მოდული 1 — Prompting-ის საფუძვლები",
+      "order": 1,
+      "lessons": [
+        {
+          "slug": "course-usage",
+          "title": "კურსის გამოყენების ინსტრუქცია",
+          "order": 101
+        },
+        {
+          "slug": "intro",
+          "title": "AI კურსის შესავალი",
+          "order": 102
+        },
+        {
+          "slug": "at-work",
+          "title": "AI სამუშაოში",
+          "order": 103
+        },
+        {
+          "slug": "what-is-prompting",
+          "title": "რა არის Prompting?",
+          "order": 104
+        },
+        {
+          "slug": "overview",
+          "title": "კურსის მიმოხილვა",
+          "order": 105
+        },
+        {
+          "slug": "planning",
+          "title": "Planning — დაგეგმვა",
+          "order": 106
+        },
+        {
+          "slug": "framework-step1",
+          "title": "Framework ნაბიჯი 1: Task, Persona, Format",
+          "order": 107
+        },
+        {
+          "slug": "context-theory",
+          "title": "კონტექსტი — თეორია",
+          "order": 108
+        },
+        {
+          "slug": "context-practice",
+          "title": "კონტექსტი — პრაქტიკა",
+          "order": 109
+        },
+        {
+          "slug": "references-theory",
+          "title": "References — თეორია",
+          "order": 110
+        },
+        {
+          "slug": "references-practice",
+          "title": "References — პრაქტიკა",
+          "order": 111
+        },
+        {
+          "slug": "shots",
+          "title": "Few-Shot მაგალითები (Shots)",
+          "order": 112
+        },
+        {
+          "slug": "evaluate",
+          "title": "შეფასება (Evaluate)",
+          "order": 113
+        },
+        {
+          "slug": "iterate",
+          "title": "Iterate — გამეორება",
+          "order": 114
+        },
+        {
+          "slug": "tcrei-model",
+          "title": "T.C.R.E.I. მოდელი (პრაქტიკა)",
+          "order": 115
+        }
+      ]
+    },
+    {
+      "slug": "practice",
+      "title": "მოდული 2 — პრაქტიკული შაბლონები და მონაცემები",
+      "order": 2,
+      "lessons": [
+        {
+          "slug": "auto-plan-template",
+          "title": "ავტომატური გეგმის შაბლონი",
+          "order": 201
+        },
+        {
+          "slug": "complex-concept-template",
+          "title": "რთული კონცეფციის ახსნის შაბლონი",
+          "order": 202
+        },
+        {
+          "slug": "youtube-script-template",
+          "title": "YouTube ვიდეოს სცენარის შაბლონი",
+          "order": 203
+        },
+        {
+          "slug": "research-practice",
+          "title": "AI კვლევის ჩატარების შაბლონი",
+          "order": 204
+        },
+        {
+          "slug": "cot-intro",
+          "title": "Advanced Prompting: Chain of Thought",
+          "order": 205
+        },
+        {
+          "slug": "prompt-chaining",
+          "title": "პრომპტების ჯაჭვი (Prompt Chaining)",
+          "order": 206
+        },
+        {
+          "slug": "data-processing-intro",
+          "title": "მონაცემების დამუშავება — შესავალი",
+          "order": 207
+        },
+        {
+          "slug": "table-data-part2",
+          "title": "ცხრილური მონაცემები (ნაწილი 2)",
+          "order": 208
+        },
+        {
+          "slug": "csv",
+          "title": "CSV ფორმატი",
+          "order": 209
+        },
+        {
+          "slug": "markdown",
+          "title": "Markdown ფორმატი",
+          "order": 210
+        },
+        {
+          "slug": "json",
+          "title": "JSON — ფორმატების მეფე",
+          "order": 211
+        }
+      ]
+    },
+    {
+      "slug": "customer-profile",
+      "title": "მოდული 3 — პროდუქტიულობა და ბიზნესი",
+      "order": 3,
+      "lessons": [
+        {
+          "slug": "ideal-customer-persona",
+          "title": "იდეალური მომხმარებლის პერსონა: პროფილის შექმნა",
+          "order": 301
+        },
+        {
+          "slug": "brand-voice-guide",
+          "title": "ბრენდის ხმის სახელმძღვანელოს შექმნა",
+          "order": 302
+        },
+        {
+          "slug": "synthesis-audience-brand-voice",
+          "title": "სინთეზი — აუდიტორია + ბრენდის ხმა",
+          "order": 303
+        },
+        {
+          "slug": "notebooklm-central-hub",
+          "title": "NotebookLM - ის გამოყენება ცენტრალური ჰაბის შესაქმნელად",
+          "order": 304
+        },
+        {
+          "slug": "brainstorming-idea-generation",
+          "title": "იდეების ავტომატური გენერაცია - ბრეინშტორმინგი",
+          "order": 305,
+          "addedAt": "2026-08-20"
+        },
+        {
+          "slug": "content-calendar-practice",
+          "title": "კონტენტის კალენდარი პრაქტიკაში",
+          "order": 306,
+          "addedAt": "2026-08-20"
+        }
+      ]
+    }
+  ]
+}

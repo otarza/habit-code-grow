@@ -1,6 +1,6 @@
 import { getAttributionRef } from "./attribution";
 
-type CheckoutProduct = "bootcamp" | "pro";
+type CheckoutProduct = "bootcamp" | "pro" | "starter";
 
 type ProductConfig = {
   name: string;
@@ -41,6 +41,21 @@ export const PRODUCTS: Record<CheckoutProduct, ProductConfig> = {
     name: "AI Bootcamp მენტორობით",
     value: 249,
   },
+  starter: {
+    mode: "embed",
+    // Public Flitt button ID supplied by the owner for the ₾249 Starter product.
+    buttonId: import.meta.env.VITE_AI_STARTER_FLITT_BUTTON_ID ?? "8dd7438a4579ed39bd7ae731fb8b6f359a2aae58",
+    name: "AI Starter — 3 პრაქტიკული მოდული",
+    value: 249,
+  },
+};
+
+// Dedicated Starter promo product; these are public identifiers, not API secrets.
+export const STARTER_PROMO_CHECKOUT: CheckoutOverride = {
+  buttonId: import.meta.env.VITE_AI_STARTER_PROMO_FLITT_BUTTON_ID ?? "6e34b7a462c13603d26c45affbc44ae17bddf82d",
+  name: "AI Starter — 3 ვიდეომოდული",
+  value: 79,
+  savingsLabel: "შენ ზოგავ ₾170-ს",
 };
 
 export type PromoCode = {

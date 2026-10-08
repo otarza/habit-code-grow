@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-route
 import Index from "./pages/Index";
 import FullStackAI from "./pages/FullStackAI";
 import AIPromptEngineering from "./pages/AIPromptEngineering";
+import AIStarter from "./pages/AIStarter";
 import PythonSQL from "./pages/PythonSQL";
 import CoursePage from "./pages/CoursePage";
 import CoursesIndex from "./pages/CoursesIndex";
@@ -38,6 +39,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/fullstack-ai" element={<FullStackAI />} />
           <Route path="/ai" element={<AIPromptEngineering />} />
+          <Route path="/ai-starter" element={<AIStarter />} />
           <Route path="/python-sql" element={<PythonSQL />} />
           {/* Legal pages (Flitt compliance) */}
           <Route path="/terms" element={<Terms />} />

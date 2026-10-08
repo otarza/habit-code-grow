@@ -1,0 +1,134 @@
+.campaign-page--starter .campaign-offer-promo {
+  flex-wrap: wrap;
+}
+.campaign-page--starter .campaign-promo-button {
+  white-space: normal;
+  max-width: 100%;
+  height: auto;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.campaign-page--starter .campaign-module-card__top > div {
+  min-width: 0;
+}
+.campaign-page--starter .campaign-card-icon {
+  flex-shrink: 0;
+}
+@media (min-width: 1100px) {
+  .campaign-page--starter .campaign-module-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.campaign-page--starter .campaign-testimonial-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.campaign-page--starter .campaign-testimonial {
+  margin: 0;
+  grid-template-rows: auto 1fr auto;
+}
+.campaign-page--starter .campaign-testimonial figcaption {
+  display: grid;
+  gap: 6px;
+}
+@media (max-width: 760px) {
+  .campaign-page--starter .campaign-testimonial-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.campaign-page--starter .starter-review-preview {
+  margin: 20px 0;
+  min-width: 0;
+  max-width: 100%;
+}
+.starter-review-preview__header,
+.starter-review-preview__header > span,
+.starter-review-preview__slide figcaption,
+.starter-review-preview__slide figcaption > span,
+.starter-review-preview__bottom,
+.starter-review-preview__controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.starter-review-preview__header,
+.starter-review-preview__slide figcaption,
+.starter-review-preview__bottom {
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.starter-review-preview__header > span {
+  color: #f4c465;
+  font-size: 12px;
+  font-weight: 700;
+}
+.starter-review-preview__header a {
+  color: #c5c5cb;
+  font-size: 11px;
+  text-underline-offset: 3px;
+  text-decoration: underline;
+}
+.starter-review-preview__track {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  margin: 12px 0 8px;
+  border-radius: 10px;
+}
+.starter-review-preview__track::-webkit-scrollbar { display: none; }
+.starter-review-preview__slide {
+  flex: 0 0 86%;
+  min-width: 0;
+  margin: 0;
+  padding: 16px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  scroll-snap-align: start;
+  border: 1px solid rgba(244, 196, 101, 0.28);
+  border-radius: 10px;
+  background: linear-gradient(120deg, rgba(244, 196, 101, 0.07), rgba(255, 255, 255, 0.025));
+}
+.starter-review-preview__slide blockquote {
+  margin: 0 0 10px;
+  min-height: 3.4em;
+  color: #f5f5f7;
+  font-size: 15px;
+  line-height: 1.7;
+}
+.starter-review-preview__slide figcaption strong { font-size: 13px; color: #f5f5f7; }
+.starter-review-preview__slide figcaption > span { font-size: 11px; color: #f4c465; }
+.starter-review-preview__bottom small { font-size: 10px; color: #b5b5bd; }
+.starter-review-preview__controls { font-size: 11px; color: #b5b5bd; }
+.starter-review-preview__controls button {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid rgba(244, 196, 101, 0.25);
+  border-radius: 50%;
+  color: #f4c465;
+  background: rgba(244, 196, 101, 0.06);
+  cursor: pointer;
+}
+.starter-review-preview__controls button:hover { background: rgba(244, 196, 101, 0.16); }
+.starter-review-preview__controls button:focus-visible,
+.starter-review-preview__header a:focus-visible { outline: 2px solid #f4c465; outline-offset: 3px; }
+#starter-testimonials { scroll-margin-top: 24px; }
+
+.starter-review-preview__controls button:disabled { opacity: 0.35; cursor: default; }
+.starter-review-preview__track:focus-visible { outline: 2px solid #f4c465; outline-offset: 3px; }
+
+.campaign-page--starter .starter-testimonial-stars {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  color: #f4c465;
+}
+.starter-review-preview__slide .starter-testimonial-stars { margin-bottom: 10px; }
+.starter-review-preview__slide blockquote { flex: 1; }
