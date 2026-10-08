@@ -1,81 +1,116 @@
-// Local-only UI checks. Blocks external requests; does not submit a payment.
+// Local-only UI checks for /ai-starter against the Vite dev server.
+// Blocks every external request (Flitt, YouTube, pixels), so nothing is paid,
+// emailed or tracked. Usage: npm run dev, then node scripts/smoke-ai-starter.mjs
 import puppeteer from 'puppeteer';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-const origin = process.env.STARTER_TEST_ORIGIN || 'http://127.0.0.1:5174';
+
+const origin = process.env.STARTER_TEST_ORIGIN || 'http://localhost:8080';
 const output = '/tmp/bitcamp-starter-qa';
-fs.mkdirSync(output, {recursive:true});
-const browser = await puppeteer.launch({headless:true});
+fs.mkdirSync(output, { recursive: true });
+
+const browser = await puppeteer.launch({ headless: true });
 try {
   const page = await browser.newPage();
   await page.setRequestInterception(true);
   page.on('request', r => r.url().startsWith(origin + '/') || r.url().startsWith('data:') ? r.continue() : r.abort());
-  const errors=[];
-  page.on('pageerror',error=>errors.push(error.message));
-  for (const width of [1440,390,320]) {
-    await page.setViewport({width,height:1000,deviceScaleFactor:1});
-    await page.goto(`${origin}/ai-starter`,{waitUntil:'networkidle0'});
-    assert.equal(await page.title(),'AI Starter — პირველი ნაბიჯები AI-ში | BitCamp');
-    assert.equal(await page.$$eval('.campaign-module-card', els=>els.length),3);
-    assert.equal(await page.$eval('.campaign-sticky-cta strong',el=>el.textContent),'₾249');
-    await page.click('.campaign-promo-bar button');
-    assert.equal(await page.$eval('.campaign-sticky-cta strong',el=>el.textContent),'₾79');
-    assert(await page.$$eval('.campaign-price__current',els=>els.every(el=>el.textContent==='₾79')));
-    assert(await page.$$eval('.campaign-promo-button',els=>els.every(el=>el.disabled)));
-    assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'horizontal overflow');
-    await page.screenshot({path:`${output}/${width}.png`,fullPage:true});
-    const buttons = await page.$$('.campaign-hero .campaign-cta');
-    for(const button of buttons) {
-      if (await button.isVisible()) { await button.click(); break; }
-    }
-    await page.waitForSelector('[role="dialog"]');
-    assert((await page.$eval('[role="dialog"]',el=>el.textContent)).includes('ონლაინ შეძენა ჯერ არ არის ხელმისაწვდომი'));
-    await page.keyboard.press('Escape');
-    await page.waitForSelector('[role="dialog"]',{hidden:true});
-    await page.$eval('.campaign-faq__item:nth-child(4) button',el=>el.click());
-    assert.equal(await page.$eval('.campaign-faq__item:nth-child(4) button',el=>el.getAttribute('aria-expanded')),'true');
-    assert.equal(await page.$eval('#starter-faq-3',el=>el.hidden),false);
-    console.log(`${width}px: layout, modules, 249→79 prices, activation, purchase guard, Escape and FAQ passed`);
-  }
-  // Exercise the actual checkout configuration without changing the launch gate,
-  // sending an email, submitting a payment, or loading any external services.
-  const details = await page.evaluate(async () => {
-    const {handleBuy, PRODUCTS, STARTER_PROMO_CHECKOUT} = await import('/src/lib/checkout.ts');
-    const events=[];
-    const listener = event => events.push(event.detail);
-    window.addEventListener('flitt:open',listener);
-    handleBuy('starter');
-    handleBuy('starter',STARTER_PROMO_CHECKOUT);
-    window.removeEventListener('flitt:open',listener);
-    return {events, proButton: PRODUCTS.pro.buttonId};
+  const errors = [];
+  page.on('pageerror', error => errors.push(error.message));
+  // Reduced motion makes the price countdown and scrolling instant and deterministic.
+  await page.emulateMediaFeatures([{ name: 'prefers-reduced-motion', value: 'reduce' }]);
+  // Record analytics calls locally (the real pixel script is blocked anyway).
+  const recordEvents = () => page.evaluate(() => {
+    window.__events = [];
+    window.fbq = (...args) => window.__events.push(args[1]);
+    window.gtag = () => {};
   });
-  assert.deepEqual(details.events.map(({product,buttonId,value})=>({product,buttonId,value})),[
-    {product:'starter',buttonId:'8dd7438a4579ed39bd7ae731fb8b6f359a2aae58',value:249},
-    {product:'starter',buttonId:'6e34b7a462c13603d26c45affbc44ae17bddf82d',value:79},
-  ]);
-  assert.equal(details.proButton,'811bb88862b6e4eb4b1a1bfdb86ba16cac23d8f8');
-  await page.waitForSelector('[role="dialog"]');
-  assert((await page.$eval('[role="dialog"]',el=>el.textContent)).includes('₾79'));
-  assert.equal(await page.$eval('#campaign-modal-email',el=>el.value),'');
-  await page.keyboard.press('Escape');
-  console.log('Starter checkout events: dedicated 249/79 GEL buttons, correct product, promo modal, and unchanged Pro config passed; no email/payment submitted');
-  await page.setViewport({width:1440,height:1000});
-  await page.goto(`${origin}/learn/ai-starter`,{waitUntil:'networkidle0'});
+
+  const visibleCard = () => page.evaluateHandle(() =>
+    [...document.querySelectorAll('.campaign-buy-anchor')].find(el => el.offsetParent !== null));
+  const cardText = async (selector) => (await visibleCard()).evaluate((card, s) => card.querySelector(s)?.textContent ?? null, selector);
+  const clickInCard = async (selector) => (await visibleCard()).evaluate((card, s) => card.querySelector(s).click(), selector);
+  const events = () => page.evaluate(() => window.__events);
+  const noOverflow = () => page.evaluate(() => document.documentElement.scrollWidth <= innerWidth);
+
+  for (const width of [1440, 390, 320]) {
+    await page.setViewport({ width, height: 1000, deviceScaleFactor: 1 });
+    await page.goto(`${origin}/ai-starter`, { waitUntil: 'networkidle0' });
+    await recordEvents();
+    assert.equal(await page.title(), 'AI Starter — პირველი ნაბიჯები AI-ში | BitCamp');
+
+    // Before activation: promo is the primary action, full-price buy is secondary, no email field.
+    assert.equal(await page.$eval('.campaign-sticky-cta strong', el => el.textContent), '₾249');
+    assert(await cardText('.starter-promo-call'), 'promo button visible in card');
+    assert.equal(await (await visibleCard()).evaluate(c => c.querySelector('button[type=submit]').classList.contains('starter-cta--secondary')), true);
+    assert.equal(await page.$$eval('.campaign-inline-checkout__email input', els => els.length), 0);
+    assert((await cardText('.starter-assurances')).includes('5-დღიანი გარანტია'));
+
+    // Buying at full price first shows the in-card discount prompt.
+    await clickInCard('button[type=submit]');
+    assert((await cardText('.starter-nudge')).includes('მოიცა! შენ გაქვს ₾170 ფასდაკლება'));
+    await clickInCard('.starter-nudge__activate');
+    await page.waitForSelector('.starter-promo-applied');
+    assert.equal(await page.$eval('.campaign-sticky-cta strong', el => el.textContent), '₾79');
+    assert(await page.$$eval('.campaign-price__current .sr-only', els => els.every(el => el.textContent === '₾79')));
+    assert.equal(await cardText('button[type=submit] span'), 'შეიძინე AI Starter — ₾79');
+
+    // Email step: invalid email blocks checkout, valid email opens the inline checkout.
+    await clickInCard('button[type=submit]');
+    assert.equal(await cardText('.campaign-inline-checkout__error'), 'შეიყვანე სწორი ელ. ფოსტა');
+    const input = await (await visibleCard()).evaluateHandle(c => c.querySelector('input[type=email]'));
+    await input.type('starter-test@example.invalid');
+    await clickInCard('button[type=submit]');
+    await page.waitForSelector('.campaign-inline-checkout');
+    assert((await cardText('.campaign-inline-checkout__summary')).includes('starter-test@example.invalid'));
+    assert.equal(await page.$$('[role="dialog"]').then(d => d.length), 0, 'no checkout modal');
+    assert(await noOverflow(), 'horizontal overflow');
+    await page.screenshot({ path: `${output}/${width}.png`, fullPage: true });
+
+    const fired = await events();
+    for (const name of ['StarterPromoNudgeShown', 'StarterPromoActivated', 'StarterPromoNudgeChoice', 'InitiateCheckout', 'Lead']) {
+      assert(fired.includes(name), `event ${name}`);
+    }
+    console.log(`${width}px: promo-first nudge, 249→79, email validation, inline checkout, events, no overflow`);
+  }
+
+  // Course preview: 31 lessons, 3 free previews, locked rows lead to the offer.
+  await page.setViewport({ width: 1440, height: 1000 });
+  await page.goto(`${origin}/ai-starter`, { waitUntil: 'networkidle0' });
+  await recordEvents();
+  assert.equal(await page.$$eval('#starter-curriculum .starter-curriculum__lesson', els => els.length), 31);
+  assert.equal(await page.$$eval('#starter-curriculum button.is-preview', els => els.length), 3);
+  assert.equal(await page.$$eval('#starter-curriculum button.is-locked', els => els.length), 28);
+  await page.$eval('#starter-curriculum button.is-preview .starter-curriculum__title', el => el.click());
+  await page.waitForSelector('#starter-curriculum .starter-curriculum__player iframe');
+  await page.$eval('#starter-curriculum button.is-locked', el => el.click());
+  await page.waitForSelector('.campaign-buy-anchor.starter-offer--celebrate');
+  assert.equal(await page.$$('.starter-promo-applied').then(e => e.length), 0, 'locked lesson does not auto-activate promo');
+  const fired = await events();
+  assert(fired.includes('StarterPreviewPlay') && fired.includes('StarterLockedLessonClick'));
+  await page.$$eval('.campaign-faq__item button', els => els.at(-1).click());
+  console.log('Curriculum: 31 lessons, 3 previews, 28 locked rows, preview player, locked → offer highlight');
+
+  // Learning page with soft access; Pro stays gated.
+  await page.goto(`${origin}/learn/ai-starter`, { waitUntil: 'networkidle0' });
   await page.waitForSelector('input[type="email"]');
   await page.evaluate(() => {
-    localStorage.setItem('bitcamp_soft_access_ai_starter','true');
-    localStorage.setItem('bitcamp_soft_access_ai_starter_email','starter-test@example.invalid');
+    localStorage.setItem('bitcamp_soft_access_ai_starter', 'true');
+    localStorage.setItem('bitcamp_soft_access_ai_starter_email', 'starter-test@example.invalid');
   });
-  await page.reload({waitUntil:'networkidle0'});
-  await page.waitForFunction(()=>document.querySelector('h1')?.textContent==='AI Starter — 3 ვიდეომოდული');
-  assert(!(await page.evaluate(()=>document.body.innerText)).includes('მოდული 4 იტვირთება'));
-  const lessonLink=await page.$('a[href="/learn/ai-starter/fundamentals/intro"]');
-  assert(lessonLink,'Starter lesson navigation exists');
-  await page.screenshot({path:`${output}/learning.png`,fullPage:true});
-  await page.goto(`${origin}/learn/ai-starter/fundamentals/intro`,{waitUntil:'networkidle0'});
-  assert(!(await page.evaluate(()=>document.body.innerText)).includes('კურსი ვერ მოიძებნა'));
-  await page.goto(`${origin}/learn/ai-pro`,{waitUntil:'networkidle0'});
+  await page.reload({ waitUntil: 'networkidle0' });
+  await page.waitForFunction(() => document.querySelector('h1')?.textContent === 'AI Starter — 3 ვიდეომოდული');
+  assert(!(await page.evaluate(() => document.body.innerText)).includes('მოდული 4 იტვირთება'));
+  assert(await page.$('a[href="/learn/ai-starter/fundamentals/intro"]'), 'first lesson link');
+  assert.equal(await page.$('a[href="/learn/ai-starter/fundamentals/course-usage"]'), null, 'removed lesson is gone');
+  await page.screenshot({ path: `${output}/learning.png`, fullPage: true });
+  await page.goto(`${origin}/learn/ai-starter/fundamentals/intro`, { waitUntil: 'networkidle0' });
+  assert(!(await page.evaluate(() => document.body.innerText)).includes('კურსი ვერ მოიძებნა'));
+  await page.goto(`${origin}/learn/ai-pro`, { waitUntil: 'networkidle0' });
   await page.waitForSelector('input[type="email"]');
-  console.log('Starter learning route and first lesson load; Pro remains separately gated in the normal UI');
-  assert.deepEqual(errors,[]);
-} finally { await browser.close(); }
+  console.log('Learning: Starter course and first lesson load; Pro stays gated');
+
+  assert.deepEqual(errors, []);
+  console.log(`PASS — screenshots in ${output}`);
+} finally {
+  await browser.close();
+}
