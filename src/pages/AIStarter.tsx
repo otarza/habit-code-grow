@@ -1,10 +1,10 @@
 import "./AIStarter.css";
 import { useEffect, useRef, useState } from "react";
-import { ArrowRight, BookOpen, Gift, Brain, Briefcase, CheckCircle2, Infinity as InfinityIcon, Lock, Mail, MessageSquareText, ShieldCheck, Users, Video } from "lucide-react";
+import { ArrowRight, BookOpen, Gift, PlayCircle, Brain, Briefcase, CheckCircle2, Infinity as InfinityIcon, Lock, Mail, MessageSquareText, ShieldCheck, Users, Video } from "lucide-react";
 import { CampaignPromoConfetti } from "@/components/campaign/CampaignPromoConfetti";
 import { TestimonialStars } from "@/components/campaign/TestimonialStars";
 import { StarterTestimonialCarousel } from "@/components/campaign/StarterTestimonialCarousel";
-import { StarterCurriculum } from "@/components/campaign/StarterCurriculum";
+import { FIRST_PREVIEW_LESSON, type PreviewRequest, type PreviewSource, StarterCurriculum } from "@/components/campaign/StarterCurriculum";
 import { CampaignFooter } from "@/components/campaign/CampaignFooter";
 import { CampaignHeroVideo } from "@/components/campaign/CampaignHeroVideo";
 import { CampaignStickyCta } from "@/components/campaign/CampaignStickyCta";
@@ -142,6 +142,16 @@ export default function AIStarter() {
   const [fullPriceChosen, setFullPriceChosen] = useState(false);
   // Offer card briefly highlighted after a locked lesson sends the visitor to it.
   const [highlightSlot, setHighlightSlot] = useState<OfferSlot | null>(null);
+  const [previewRequest, setPreviewRequest] = useState<PreviewRequest | null>(null);
+  const openPreview = (source: PreviewSource) =>
+    setPreviewRequest({ slug: FIRST_PREVIEW_LESSON, source, nonce: Date.now() });
+
+  // Ads promising free lessons link to /ai-starter#preview.
+  useEffect(() => {
+    if (window.location.hash !== "#preview") return;
+    const timer = window.setTimeout(() => openPreview("link"), 300);
+    return () => window.clearTimeout(timer);
+  }, []);
   const emailInputs = useRef<Partial<Record<OfferSlot, HTMLInputElement | null>>>({});
   const [openFaq, setOpenFaq] = useState<number | null>(0);
   const now = useNow(PROMO_ENDS_AT);
@@ -364,6 +374,9 @@ export default function AIStarter() {
         <div className="campaign-hero__copy"><p className="campaign-eyebrow">AI ვიდეოკურსი ნულიდან</p>
           <h1>პირველი ნაბიჯები AI-ში — მარტივად და გასაგებად</h1>
           <p className="campaign-lead">გონია, რომ AI შენთვის ზედმეტად რთულია? დაიწყე 0 - დან, საფუძვლებით და ისწავლე მისი გამოყენება საკუთარი ვირტუალური ბიზნესის შექმნის მაგალითზე.</p>
+          <button type="button" className="starter-preview-link" onClick={() => openPreview("hero")}>
+            <PlayCircle aria-hidden="true" size={18} />ნახე 3 უფასო გაკვეთილი
+          </button>
           <CampaignHeroVideo className="campaign-hero-video--inline" title="BitCamp-ის AI კურსის ვიდეო" />
           <StarterTestimonialCarousel />
           <div className="campaign-hero__facts"><span><BookOpen size={16} />3 მოდული · 31 გაკვეთილი</span><span><Video size={16} aria-hidden="true" />~7 საათი ვიდეო</span><span><CheckCircle2 size={16} />ნულიდან</span><span><GeorgianFlag />ქართულად</span></div>
@@ -391,7 +404,8 @@ export default function AIStarter() {
         <StarterCurriculum modules={modules}
           ctaLabel={promoActive || !promoAvailable ? `შეიძინე AI Starter — ${priceLabel}` : "გააქტიურე 170₾ ფასდაკლება"}
           onCta={() => promoActive || !promoAvailable ? buyFromStickyBar() : activatePromo(undefined, "curriculum")}
-          onPreview={lesson => trackStarter("StarterPreviewPlay", { lesson })}
+          previewRequest={previewRequest}
+          onPreview={(lesson, source) => trackStarter("StarterPreviewPlay", { lesson, source })}
           onLockedLesson={goToOfferFromLesson} />
       </div></section>
       <section id="starter-testimonials" className="campaign-section campaign-section--surface"><div className="campaign-shell"><div className="campaign-section-heading">

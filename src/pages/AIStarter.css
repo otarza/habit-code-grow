@@ -825,3 +825,29 @@ button.starter-curriculum__lesson.is-locked:hover .starter-curriculum__lock {
   margin: -2px 0 6px;
   font-size: 13px;
 }
+
+/* Secondary hero link to the free preview lessons (not a competing button). */
+.starter-preview-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 14px 0 4px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: #86efac;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 800;
+  text-decoration: underline;
+  text-decoration-color: rgba(134, 239, 172, 0.45);
+  text-underline-offset: 4px;
+  cursor: pointer;
+}
+.starter-preview-link:hover {
+  color: #bbf7d0;
+  text-decoration-color: currentColor;
+}
+.starter-curriculum__lessons li {
+  scroll-margin-top: 90px;
+}

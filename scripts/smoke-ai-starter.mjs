@@ -88,8 +88,14 @@ try {
   assert.equal(await page.$$('.starter-promo-applied').then(e => e.length), 0, 'locked lesson does not auto-activate promo');
   const fired = await events();
   assert(fired.includes('StarterPreviewPlay') && fired.includes('StarterLockedLessonClick'));
+  // Hero link and the #preview deep link open the first free lesson.
+  await page.goto(`${origin}/ai-starter`, { waitUntil: 'networkidle0' });
+  await page.$eval('.starter-preview-link', el => el.click());
+  await page.waitForSelector('#starter-lesson-intro .starter-curriculum__player iframe');
+  await page.goto(`${origin}/ai-starter#preview`, { waitUntil: 'networkidle0' });
+  await page.waitForSelector('#starter-lesson-intro .starter-curriculum__player iframe');
   await page.$$eval('.campaign-faq__item button', els => els.at(-1).click());
-  console.log('Curriculum: 31 lessons, 3 previews, 28 locked rows, preview player, locked → offer highlight');
+  console.log('Curriculum: 31 lessons, 3 previews, 28 locked rows, preview player, locked → offer highlight, hero link + #preview open the intro lesson');
 
   // After the promo deadline the page must fall back to a plain 249 offer.
   const expired = await browser.newPage();

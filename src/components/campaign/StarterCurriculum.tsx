@@ -1,9 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ArrowRight, ChevronDown, Clock3, Lock, PlayCircle, Video, type LucideIcon } from "lucide-react";
 import { aiStarterCurriculum as curriculum } from "@/data/aiStarterCurriculum";
 
 // Free sample lessons that can be watched right on the landing page.
 const PREVIEW_LESSONS = new Set(["intro", "what-is-prompting", "framework-step1"]);
+
+export type PreviewSource = "curriculum" | "hero" | "link";
+// Ask the section to open a free preview from elsewhere on the page.
+export type PreviewRequest = { slug: string; source: PreviewSource; nonce: number };
+export const FIRST_PREVIEW_LESSON = "intro";
 
 export type CurriculumModule = {
   n: string;
@@ -23,17 +28,35 @@ const sum = (lessons: { seconds: number }[]) => lessons.reduce((total, l) => tot
 
 const allLessons = curriculum.topics.flatMap(t => t.lessons);
 
-export function StarterCurriculum({ modules, ctaLabel, onCta, onPreview, onLockedLesson }: {
+export function StarterCurriculum({ modules, ctaLabel, onCta, onPreview, onLockedLesson, previewRequest }: {
   modules: CurriculumModule[];
   ctaLabel: string;
   onCta: () => void;
-  onPreview?: (lessonSlug: string) => void;
+  onPreview?: (lessonSlug: string, source: PreviewSource) => void;
+  previewRequest?: PreviewRequest | null;
   // Paid lessons are locked; clicking one takes the visitor to the offer.
   onLockedLesson?: (lessonSlug: string) => void;
 }) {
   const [open, setOpen] = useState<Set<number>>(() => new Set([0]));
   const [playing, setPlaying] = useState<string | null>(null);
   const allOpen = open.size === curriculum.topics.length;
+
+  // Open the requested preview: expand its module, play it, bring it into view.
+  useEffect(() => {
+    if (!previewRequest) return;
+    const moduleIndex = curriculum.topics.findIndex(t => t.lessons.some(l => l.slug === previewRequest.slug));
+    if (moduleIndex < 0) return;
+    setOpen(prev => new Set(prev).add(moduleIndex));
+    setPlaying(previewRequest.slug);
+    onPreview?.(previewRequest.slug, previewRequest.source);
+    const timer = window.setTimeout(() => {
+      document.getElementById(`starter-lesson-${previewRequest.slug}`)?.scrollIntoView({
+        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth",
+        block: "start",
+      });
+    }, 60);
+    return () => window.clearTimeout(timer);
+  }, [previewRequest]); // eslint-disable-line react-hooks/exhaustive-deps -- run once per request
 
   const toggle = (index: number) => setOpen(prev => {
     const next = new Set(prev);
@@ -76,7 +99,7 @@ export function StarterCurriculum({ modules, ctaLabel, onCta, onPreview, onLocke
                   const preview = PREVIEW_LESSONS.has(lesson.slug);
                   const isPlaying = playing === lesson.slug;
                   return (
-                    <li key={lesson.slug} className={preview ? "is-preview" : undefined}>
+                    <li key={lesson.slug} id={`starter-lesson-${lesson.slug}`} className={preview ? "is-preview" : undefined}>
                       {!preview ? (
                         <button type="button" className="starter-curriculum__lesson is-locked"
                           aria-label={`${lesson.title} — გაიხსნება კურსის შეძენის შემდეგ. ნახე შეთავაზება`}
@@ -91,7 +114,7 @@ export function StarterCurriculum({ modules, ctaLabel, onCta, onPreview, onLocke
                           aria-label={`${lesson.title} — ${isPlaying ? "დახურე პრევიუ" : "ნახე უფასო პრევიუ"}`}
                           onClick={() => {
                             setPlaying(isPlaying ? null : lesson.slug);
-                            if (!isPlaying) onPreview?.(lesson.slug);
+                            if (!isPlaying) onPreview?.(lesson.slug, "curriculum");
                           }}>
                           <span className="starter-curriculum__index">{i + 1}</span>
                           <span className="starter-curriculum__title">{lesson.title}</span>
