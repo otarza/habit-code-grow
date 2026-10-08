@@ -373,7 +373,7 @@ export default function AIStarter() {
       <section className="campaign-hero"><div className="campaign-shell campaign-hero__grid">
         <div className="campaign-hero__copy"><p className="campaign-eyebrow">AI ვიდეოკურსი ნულიდან</p>
           <h1>შენი პირველი პრაქტიკული ნაბიჯი AI სამყაროში</h1>
-          <p className="campaign-lead">გონია, რომ AI შენთვის ზედმეტად რთულია? დაიწყე 0 - დან, საფუძვლებით და ისწავლე მისი გამოყენება საკუთარი ვირტუალური ბიზნესის შექმნის მაგალითზე.</p>
+          <p className="campaign-lead">0 - დან იწყებ და ფიქრობ რომ შეიძლება პირველი ნაბიჯების გადადგმა გერთულოს? ამ კურსის გავლის შემდეგ დარწმუნდები რომ იმაზე გაცილებით მარტივად შეძლებ ყველაფერს ვიდრე გეგონა. შენი ხელით შექმნილი პრაქტიკული შედეგი ამის ნათელი დასტური იქნება.</p>
           <button type="button" className="starter-preview-link" onClick={() => openPreview("hero")}>
             <PlayCircle aria-hidden="true" size={18} />ნახე 3 უფასო გაკვეთილი
           </button>
