@@ -5,6 +5,7 @@ import { CampaignPromoConfetti } from "@/components/campaign/CampaignPromoConfet
 import { TestimonialStars } from "@/components/campaign/TestimonialStars";
 import { StarterTestimonialCarousel } from "@/components/campaign/StarterTestimonialCarousel";
 import { CampaignFooter } from "@/components/campaign/CampaignFooter";
+import { CampaignHeroVideo } from "@/components/campaign/CampaignHeroVideo";
 import { CampaignStickyCta } from "@/components/campaign/CampaignStickyCta";
 import { InlineFlittCheckout } from "@/components/campaign/InlineFlittCheckout";
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
@@ -44,6 +45,19 @@ function GeorgianFlag() {
         d="M-1-2.5h2l-.25 1.75L2.5-1v2L.75.75 1 2.5h-2L-.75.75-2.5 1v-2l1.75.25z" />
     )}
   </svg>;
+}
+
+type PromoSource = "bar" | "card" | "nudge";
+type Analytics = Window & {
+  fbq?: (event: string, name: string, params?: Record<string, unknown>) => void;
+  gtag?: (event: string, name: string, params?: Record<string, unknown>) => void;
+};
+
+// Funnel events between PageView and Purchase, so drop-off is measurable.
+function trackStarter(name: string, params: Record<string, unknown> = {}, standard = false) {
+  const win = window as Analytics;
+  win.fbq?.(standard ? "track" : "trackCustom", name, { content_ids: ["starter"], currency: "GEL", ...params });
+  win.gtag?.("event", name, { item_id: "starter", currency: "GEL", ...params });
 }
 
 const prefersReducedMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -141,8 +155,10 @@ export default function AIStarter() {
     return () => window.clearTimeout(timer);
   }, [checkoutSlot]);
 
-  const activatePromo = (slot?: OfferSlot) => {
+  const activatePromo = (slot?: OfferSlot, source: PromoSource = slot ? "card" : "bar") => {
     if (promoActive) return;
+    trackStarter("StarterPromoActivated", { source, value: PROMO_PRICE });
+    if (source === "nudge") trackStarter("StarterPromoNudgeChoice", { choice: "activated" });
     promoSlotRef.current = slot ?? null;
     // The price changes, so close any checkout opened at the old price.
     setCheckoutSlot(null);
@@ -180,11 +196,13 @@ export default function AIStarter() {
     setEmailError(null);
     setCheckoutMessage("");
     trackInitiateCheckout("starter", promoActive ? STARTER_PROMO_CHECKOUT : undefined);
+    trackStarter("Lead", { value: price }, true);
     setCheckoutEmail(trimmed);
     setCheckoutSlot(slot);
   };
 
   const showNudge = (slot: OfferSlot) => {
+    if (nudgeSlot !== slot) trackStarter("StarterPromoNudgeShown");
     setNudgeSlot(slot);
     loadFlitt().catch(() => undefined);
     window.setTimeout(() => document
@@ -193,6 +211,7 @@ export default function AIStarter() {
   };
 
   const continueAtFullPrice = (slot: OfferSlot) => {
+    trackStarter("StarterPromoNudgeChoice", { choice: "full_price" });
     setFullPriceChosen(true);
     setNudgeSlot(null);
     setEmailVisible(true);
@@ -227,7 +246,7 @@ export default function AIStarter() {
     <Gift aria-hidden="true" size={28} />
     <strong id={`starter-nudge-${slot}`}>მოიცა! შენ გაქვს ₾170 ფასდაკლება</strong>
     <p>ერთი კლიკით ფასი ₾249-დან ₾79-მდე შემცირდება.</p>
-    <button type="button" className="campaign-cta starter-nudge__activate" onClick={() => activatePromo(slot)}>
+    <button type="button" className="campaign-cta starter-nudge__activate" onClick={() => activatePromo(slot, "nudge")}>
       <span>გააქტიურე და გადაიხადე ₾79</span><ArrowRight aria-hidden="true" size={18} />
     </button>
     <button type="button" className="starter-nudge__full" onClick={() => continueAtFullPrice(slot)}>გაგრძელება ₾249-ად</button>
@@ -239,7 +258,8 @@ export default function AIStarter() {
         window.setTimeout(() => emailInputs.current[slot]?.focus(), 0);
       }}>← შეცვალე ელ. ფოსტა</button>
     </div>
-    <InlineFlittCheckout buttonId={buttonId} email={checkoutEmail} />
+    <InlineFlittCheckout buttonId={buttonId} email={checkoutEmail}
+      onReady={() => trackStarter("AddPaymentInfo", { value: price }, true)} />
   </div> : <form className="campaign-inline-checkout__email" noValidate onSubmit={e => { e.preventDefault(); buy(slot); }}>
     {emailVisible && <div className="starter-email-step">
     <div className="starter-email-step__heading">
@@ -293,6 +313,7 @@ export default function AIStarter() {
         <div className="campaign-hero__copy"><p className="campaign-eyebrow">AI ვიდეოკურსი ნულიდან</p>
           <h1>პირველი ნაბიჯები AI-ში — მარტივად და გასაგებად</h1>
           <p className="campaign-lead">გონია, რომ AI შენთვის ზედმეტად რთულია? დაიწყე 0 - დან, საფუძვლებით და ისწავლე მისი გამოყენება საკუთარი ვირტუალური ბიზნესის შექმნის მაგალითზე.</p>
+          <CampaignHeroVideo className="campaign-hero-video--inline" title="BitCamp-ის AI კურსის ვიდეო" />
           <StarterTestimonialCarousel />
           <div className="campaign-hero__facts"><span><BookOpen size={16} />3 მოდული</span><span><CheckCircle2 size={16} />ნულიდან</span><span><GeorgianFlag />ქართულად</span><span><Video size={16} aria-hidden="true" />ვიდეო გაკვეთილები</span></div>
           <div className="campaign-author-card"><div className="campaign-author-card__top">
@@ -301,7 +322,7 @@ export default function AIStarter() {
           </div></div>
           {offer("campaign-hero__offer--inline", "inline")}
         </div>
-        <div className="campaign-hero__visual">{offer("campaign-hero__offer--desktop", "desktop", "purchase")}</div>
+        <div className="campaign-hero__visual"><CampaignHeroVideo className="campaign-hero-video--desktop" title="BitCamp-ის AI კურსის ვიდეო" />{offer("campaign-hero__offer--desktop", "desktop", "purchase")}</div>
       </div></section>
       <CampaignStickyCta eyebrow="AI Starter · 3 მოდული" price={priceLabel} label="შეიძინე კურსი" onClick={buyFromStickyBar} />
       <section className="campaign-section campaign-section--surface"><div className="campaign-shell campaign-decision-grid">

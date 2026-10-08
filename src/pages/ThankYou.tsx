@@ -8,12 +8,14 @@ import bitcampLogo from "@/assets/bitcamp-logo.png";
 const PRODUCT_LABELS: Record<string, string> = {
   bootcamp: "AI Prompt Engineering Bootcamp",
   pro: "AI Bootcamp მენტორობით",
+  starter: "AI Starter — 3 ვიდეომოდული",
 };
 
 // Default values per product slug — used when Flitt's redirect doesn't carry amount/currency
 const PRODUCT_DEFAULTS: Record<string, { value: number; currency: string }> = {
   bootcamp: { value: 149, currency: "GEL" },
   pro: { value: 249, currency: "GEL" },
+  starter: { value: 79, currency: "GEL" },
 };
 
 type Variant = "success" | "declined" | "default";

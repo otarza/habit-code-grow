@@ -3,7 +3,14 @@ import { buildFlittOptions, loadFlitt } from "@/lib/flitt";
 
 // Mounts Flitt's embedded checkout directly in the page (no modal).
 // Remounts whenever the button (price) or email changes.
-export function InlineFlittCheckout({ buttonId, email }: { buttonId: string; email: string }) {
+export function InlineFlittCheckout({ buttonId, email, onReady }: {
+  buttonId: string;
+  email: string;
+  onReady?: () => void;
+}) {
+  // Kept in a ref so a new callback identity doesn't remount the payment form.
+  const onReadyRef = useRef(onReady);
+  onReadyRef.current = onReady;
   const mountRef = useRef<HTMLDivElement>(null);
   const targetId = `flitt-inline-${useId().replace(/[^a-zA-Z0-9_-]/g, "")}`;
   const [status, setStatus] = useState<"loading" | "ready" | "error">("loading");
@@ -19,6 +26,7 @@ export function InlineFlittCheckout({ buttonId, email }: { buttonId: string; ema
         node.innerHTML = `<div id="${targetId}"></div>`;
         checkout(`#${targetId}`, buildFlittOptions(buttonId, email));
         setStatus("ready");
+        onReadyRef.current?.();
       })
       .catch((err) => {
         if (cancelled) return;

@@ -13,10 +13,10 @@ import {
   MessageSquareText,
   ShieldCheck,
   Users,
-  Volume2,
   Workflow,
 } from "lucide-react";
 import { CampaignFooter } from "@/components/campaign/CampaignFooter";
+import { CampaignHeroVideo } from "@/components/campaign/CampaignHeroVideo";
 import { CampaignStickyCta } from "@/components/campaign/CampaignStickyCta";
 import { FlittCheckoutModal } from "@/components/campaign/FlittCheckoutModal";
 import { SEO } from "@/components/SEO";
@@ -24,16 +24,12 @@ import { rememberAttributionRef } from "@/lib/attribution";
 import { type CheckoutOverride, handleBuy } from "@/lib/checkout";
 
 const paymentLogos = ["visa", "mastercard", "apple-pay", "google-pay"] as const;
-const PRO_VIDEO_BASE_URL =
-  "https://player.mediadelivery.net/embed/678241/5c33a6d3-33fc-41a5-83ca-1a9c8ee702ff?autoplay=true&loop=false&muted=true&preload=true&responsive=true";
 const PRO_CURRENT_PRICE = 249;
 const PRO_PROMO_CODE = "150";
 const PRO_PROMO_PRICE = 99;
 const PRO_PROMO_BUTTON_ID = "6e5fddecc50d14bdcc75f27b3708b0fa21c7887e";
 const PRO_FULL_PRICE = 790;
 const formatGel = (value: number) => `₾${value}`;
-const getProVideoUrl = (soundEnabled: boolean) =>
-  PRO_VIDEO_BASE_URL.replace("muted=true", `muted=${soundEnabled ? "false" : "true"}`);
 const PRO_CURRENT_PRICE_LABEL = formatGel(PRO_CURRENT_PRICE);
 const PRO_PROMO_PRICE_LABEL = formatGel(PRO_PROMO_PRICE);
 const PRO_PROMO_DISCOUNT_LABEL = formatGel(PRO_CURRENT_PRICE - PRO_PROMO_PRICE);
@@ -238,32 +234,6 @@ function PaymentLogos({ compact = false }: { compact?: boolean }) {
       {paymentLogos.map((name) => (
         <img key={name} src={`/assets/payment/${name}.svg`} alt={name} />
       ))}
-    </div>
-  );
-}
-
-function ProHeroVideo({ className = "" }: { className?: string }) {
-  const [soundEnabled, setSoundEnabled] = useState(false);
-
-  return (
-    <div className={`campaign-hero-video ${className}`} aria-label="AI სრული პროგრამის ვიდეო">
-      <iframe
-        key={soundEnabled ? "sound-on" : "muted"}
-        src={getProVideoUrl(soundEnabled)}
-        title="AI სრული პროგრამის ვიდეო"
-        loading="lazy"
-        allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture; fullscreen"
-        allowFullScreen
-      />
-      <button
-        type="button"
-        className={`campaign-hero-video__sound${soundEnabled ? " is-on" : ""}`}
-        onClick={() => setSoundEnabled(true)}
-        disabled={soundEnabled}
-      >
-        <Volume2 aria-hidden="true" size={16} />
-        <span>{soundEnabled ? "ხმა ჩართულია" : "ჩართე ხმა"}</span>
-      </button>
     </div>
   );
 }
@@ -540,7 +510,7 @@ export default function AIPromptEngineering() {
                 6-მოდულიანი პრაქტიკული პროგრამა მათთვის, ვისაც AI-ს გამოყენება რეალური სამუშაო პროცესების დასაჩქარებლად და გასამარტივებლად სურს.
               </p>
 
-              <ProHeroVideo className="campaign-hero-video--inline" />
+              <CampaignHeroVideo className="campaign-hero-video--inline" />
 
               <div className="campaign-hero__facts" aria-label="პროგრამის ძირითადი ინფორმაცია">
                 <span>
@@ -575,7 +545,7 @@ export default function AIPromptEngineering() {
             </div>
 
             <div className="campaign-hero__visual">
-              <ProHeroVideo className="campaign-hero-video--desktop" />
+              <CampaignHeroVideo className="campaign-hero-video--desktop" />
               <ProOffer
                 id="purchase"
                 className="campaign-hero__offer--desktop"

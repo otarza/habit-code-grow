@@ -376,6 +376,13 @@ functions.http("flittRedirect", (req, res) => {
     }
   }
 
+  // Tell the thank-you page which product was bought so the Purchase pixel
+  // is attributed correctly (it defaulted to "bootcamp" before).
+  const productId = String(body.product_id ?? req.query.product_id ?? "");
+  const product = PRODUCT_MAP[productId];
+  if (product) params.set("product", product.slug);
+  else if (productId) console.log("REDIRECT_UNKNOWN_PRODUCT", productId);
+
   const qs = params.toString();
   res.redirect(303, qs ? `${targetBase}?${qs}` : targetBase);
 });
