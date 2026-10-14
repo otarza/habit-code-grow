@@ -2,8 +2,8 @@
  * BitCamp Manager — Telegram bot
  *
  * Commands:
- *   /invite <email> [bootcamp|pro] [note]
- *   /resend <email> [bootcamp|pro] [direct] [note]
+ *   /invite <email> [bootcamp|pro|starter] [note]
+ *   /resend <email> [bootcamp|pro|starter] [direct] [note]
  *   /help
  *
  * Security:
@@ -15,6 +15,8 @@
 
 const functions = require("@google-cloud/functions-framework");
 const crypto = require("crypto");
+const fs = require("fs");
+const path = require("path");
 const { Firestore, FieldValue } = require("@google-cloud/firestore");
 const postmark = require("postmark");
 
@@ -40,6 +42,17 @@ const COURSES = {
     slug: "ai-pro",
     template: "course-access-ai-pro",
     name: "AI Bootcamp Mentored",
+  },
+  starter: {
+    slug: "ai-starter",
+    template: "course-access-ai-starter",
+    name: "AI Starter — 3 ვიდეომოდული",
+    // Same bundled email as flitt-webhook (email-templates/), sent via
+    // Postmark's plain send API because no Postmark template exists for it.
+    inlineTemplate: loadInlineTemplate(
+      "course-access-ai-starter",
+      "შენი AI Starter-ის წვდომა გააქტიურებულია — BitCamp"
+    ),
   },
 };
 
@@ -148,7 +161,9 @@ function helpText() {
   <code>/resend student@example.com bootcamp direct</code>
   <code>/resend student@example.com pro direct</code>
 
-  Courses: <code>bootcamp</code> (default) or <code>pro</code>`;
+  <code>/invite friend@example.com starter</code>
+
+  Courses: <code>bootcamp</code> (default), <code>pro</code> or <code>starter</code>`;
 }
 
 function installPostmarkErrorDiagnostics(client) {
@@ -342,7 +357,7 @@ async function handleInvite(chatId, text, options = {}) {
   const command = options.command || (directLinks ? "resend_direct" : "invite");
   const parts = text.split(/\s+/).slice(1);
   if (parts.length === 0) {
-    return sendMessage(chatId, `Usage:\n<code>/${command} &lt;email&gt; [bootcamp|pro] [direct] [note]</code>`);
+    return sendMessage(chatId, `Usage:\n<code>/${command} &lt;email&gt; [bootcamp|pro|starter] [direct] [note]</code>`);
   }
 
   const email = parts[0].toLowerCase();
@@ -355,7 +370,7 @@ async function handleInvite(chatId, text, options = {}) {
   if (!course) {
     return sendMessage(
       chatId,
-      `❌ Unknown course: <code>${escapeHtml(courseArg)}</code>\nUse <code>bootcamp</code> or <code>pro</code>`
+      `❌ Unknown course: <code>${escapeHtml(courseArg)}</code>\nUse <code>bootcamp</code>, <code>pro</code> or <code>starter</code>`
     );
   }
 
@@ -381,21 +396,33 @@ async function handleInvite(chatId, text, options = {}) {
       eventType,
     });
 
-    const result = await postmarkClient.sendEmailWithTemplate({
+    const templateModel = {
+      product_name: course.name,
+      order_id: orderId,
+      amount: "უფასო",
+      currency: "",
+      base64_email: base64Email,
+    };
+    const delivery = {
       From: FROM,
       To: email,
-      TemplateAlias: course.template,
-      TemplateModel: {
-        product_name: course.name,
-        order_id: orderId,
-        amount: "უფასო",
-        currency: "",
-        base64_email: base64Email,
-      },
       MessageStream: MESSAGE_STREAM,
       TrackOpens: true,
       TrackLinks: directLinks ? "None" : "HtmlAndText",
-    });
+    };
+    const result = course.inlineTemplate
+      ? await postmarkClient.sendEmail({
+          ...delivery,
+          Subject: renderTemplate(course.inlineTemplate.subject, templateModel, String),
+          HtmlBody: renderTemplate(course.inlineTemplate.html, templateModel, escapeTemplateHtml),
+          TextBody: renderTemplate(course.inlineTemplate.text, templateModel, String),
+          Tag: course.template,
+        })
+      : await postmarkClient.sendEmailWithTemplate({
+          ...delivery,
+          TemplateAlias: course.template,
+          TemplateModel: templateModel,
+        });
 
     if (result.ErrorCode && result.ErrorCode !== 0) {
       return sendMessage(
@@ -542,6 +569,23 @@ async function editMessageText(chatId, messageId, text) {
   } catch (err) {
     console.error("TG_EDIT_FAIL", err);
   }
+}
+
+function loadInlineTemplate(name, subject) {
+  const read = (ext) =>
+    fs.readFileSync(path.join(__dirname, "email-templates", `${name}.${ext}`), "utf8");
+  return { subject, html: read("html"), text: read("txt") };
+}
+
+// Minimal Mustachio-compatible {{var}} substitution for inline templates.
+function renderTemplate(source, model, escape) {
+  return source.replace(/{{\s*(\w+)\s*}}/g, (_, key) => escape(String(model[key] ?? "")));
+}
+
+function escapeTemplateHtml(value) {
+  return value.replace(/[&<>"']/g, (c) =>
+    ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]
+  );
 }
 
 function escapeHtml(s) {
