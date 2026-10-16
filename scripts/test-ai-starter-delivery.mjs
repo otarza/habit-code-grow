@@ -47,6 +47,13 @@ for(const amount of ['7900','24900']){
     assert(!body.includes('{{'));
   }
 }
+// Phase 2 (₾99): its own Flitt product id and button hash must map to Starter, not the Bootcamp fallback.
+for(const product_id of ['btcp-ai-3m-150','fe99a05bc8302656378089f4f0e8c854c3fc6e51']){
+  assert.equal((await callback({product_id,amount:'9900'})).code,200);
+  assert.deepEqual(Object.keys(writes.find(w=>w.name==='course_access').data.courses),['ai-starter']);
+  assert.equal(messages[0].Tag,'course-access-ai-starter');
+  assert(messages[0].TextBody.includes('99.00 GEL'));
+}
 // Prices are enforced by the Flitt button configuration, not the webhook.
 assert.equal((await callback({amount:'100'})).code,200);
 assert.deepEqual(Object.keys(writes.find(w=>w.name==='course_access').data.courses),['ai-starter']);
@@ -58,7 +65,7 @@ for(const [product_id,slug,template] of [['btcp-ai-pro','ai-pro','course-access-
   assert.equal(messages[0].TemplateAlias,template);
 }
 // Browser redirect after payment carries the product slug for the Purchase pixel.
-for(const [product_id,slug] of [['btcp-ai-3m','starter'],['btcp-ai-pro','pro'],['btcp-ai-bootcamp','bootcamp']]){
+for(const [product_id,slug] of [['btcp-ai-3m','starter'],['btcp-ai-3m-150','starter'],['btcp-ai-pro','pro'],['btcp-ai-bootcamp','bootcamp']]){
   let location='';
   redirectHandler({query:{status:'success'},body:{order_id:'o1',amount:'7900',currency:'GEL',product_id}},{redirect(code,url){location=url;}});
   const q=new URL(location).searchParams;
