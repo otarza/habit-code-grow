@@ -9,9 +9,17 @@ const origin = process.env.STARTER_TEST_ORIGIN || 'http://localhost:8080';
 const output = '/tmp/bitcamp-starter-qa';
 fs.mkdirSync(output, { recursive: true });
 
+// Pins the page clock so each promo phase is tested regardless of today's date.
+const clockAt = (p, iso) => p.evaluateOnNewDocument(at => {
+  const offset = Date.parse(at) - Date.now();
+  const realNow = Date.now.bind(Date);
+  Date.now = () => realNow() + offset;
+}, iso);
+
 const browser = await puppeteer.launch({ headless: true });
 try {
   const page = await browser.newPage();
+  await clockAt(page, '2026-10-17T12:00:00+04:00'); // phase 1: ₾79 until Oct 18
   await page.setRequestInterception(true);
   page.on('request', r => r.url().startsWith(origin + '/') || r.url().startsWith('data:') ? r.continue() : r.abort());
   const errors = [];
@@ -97,13 +105,39 @@ try {
   await page.$$eval('.campaign-faq__item button', els => els.at(-1).click());
   console.log('Curriculum: 31 lessons, 3 previews, 28 locked rows, preview player, locked → offer highlight, hero link + #preview open the intro lesson');
 
-  // After the promo deadline the page must fall back to a plain 249 offer.
+  // Phase 2 (Oct 19 – Oct 31): same flow at ₾99 with the ₾99 Flitt button.
+  const phase2 = await browser.newPage();
+  await phase2.setRequestInterception(true);
+  phase2.on('request', r => r.url().startsWith(origin + '/') || r.url().startsWith('data:') ? r.continue() : r.abort());
+  phase2.on('pageerror', error => errors.push(error.message));
+  await clockAt(phase2, '2026-10-19T10:00:00+04:00');
+  await phase2.emulateMediaFeatures([{ name: 'prefers-reduced-motion', value: 'reduce' }]);
+  await phase2.setViewport({ width: 1440, height: 1000 });
+  await phase2.goto(`${origin}/ai-starter`, { waitUntil: 'networkidle0' });
+  const c2 = '.campaign-buy-anchor[data-slot="desktop"]';
+  const t2 = sel => phase2.$eval(sel, el => el.textContent);
+  assert((await t2(`${c2} .campaign-offer-promo .starter-countdown`)).includes('სრულდება 31 ოქტომბერს · დარჩა '));
+  assert((await t2('.campaign-promo-bar')).includes('249₾ → 99₾'));
+  await phase2.$eval(`${c2} button[type=submit]`, b => b.click());
+  assert((await t2(`${c2} .starter-nudge`)).includes('მოიცა! შენ გაქვს ₾150 ფასდაკლება'));
+  assert((await t2(`${c2} .starter-nudge`)).includes('გააქტიურე და გადაიხადე ₾99'));
+  await phase2.$eval(`${c2} .starter-nudge__activate`, b => b.click());
+  await phase2.waitForSelector(`${c2} .starter-promo-applied`);
+  assert((await t2(`${c2} .starter-promo-applied`)).includes('₾249 → ₾99 · დაზოგე ₾150'));
+  assert.equal(await t2(`${c2} .campaign-price__current .sr-only`), '₾99');
+  assert.equal(await t2(`${c2} .starter-price-save`), 'შენ ზოგავ ₾150-ს');
+  assert(await phase2.evaluate(() => document.body.innerText.includes('როგორ მივიღო 99₾')));
+  assert(!(await phase2.evaluate(() => /79₾|₾79|170₾|₾170/.test(document.body.innerText))), 'no phase-1 prices left');
+  await phase2.close();
+  console.log('Phase 2: ₾99 until Oct 31 — countdown, promo bar, nudge, activation, savings, FAQ; no ₾79/₾170 left');
+
+  // After the last promo deadline the page must fall back to a plain 249 offer.
   const expired = await browser.newPage();
   await expired.setRequestInterception(true);
   expired.on('request', r => r.url().startsWith(origin + '/') || r.url().startsWith('data:') ? r.continue() : r.abort());
   expired.on('pageerror', error => errors.push(error.message));
   await expired.evaluateOnNewDocument(() => {
-    const offset = Date.parse('2026-10-19T10:00:00+04:00') - Date.now();
+    const offset = Date.parse('2026-11-01T10:00:00+04:00') - Date.now();
     const realNow = Date.now.bind(Date);
     Date.now = () => realNow() + offset;
   });
@@ -116,7 +150,7 @@ try {
     countdowns: document.querySelectorAll('.starter-countdown').length,
     price: document.querySelector(`${c} .campaign-price__current .sr-only`).textContent,
     secondary: document.querySelector(`${c} button[type=submit]`).classList.contains('starter-cta--secondary'),
-    faq79: document.body.innerText.includes('როგორ მივიღო 79₾'),
+    faq79: /როგორ მივიღო (79|99)₾/.test(document.body.innerText),
     curriculumCta: document.querySelector('.starter-curriculum__cta button').innerText.trim(),
   }), card);
   assert.deepEqual(state, { promoBar: false, promoRow: false, countdowns: 0, price: '₾249', secondary: false, faq79: false, curriculumCta: 'შეიძინე AI Starter — ₾249' });

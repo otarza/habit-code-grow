@@ -43,6 +43,9 @@ const PRODUCT_MAP = {
   "btcp-ai-3m": STARTER_PRODUCT,
   "6e34b7a462c13603d26c45affbc44ae17bddf82d": STARTER_PRODUCT,
   "8dd7438a4579ed39bd7ae731fb8b6f359a2aae58": STARTER_PRODUCT,
+  // Starter phase 2 (₾99, Oct 19–31) — own Flitt product + button
+  "btcp-ai-3m-150": STARTER_PRODUCT,
+  "fe99a05bc8302656378089f4f0e8c854c3fc6e51": STARTER_PRODUCT,
   // Bootcamp (₾99 self-paced) — both the dashboard product_id and button hash
   "btcp-ai-bootcamp": BOOTCAMP_PRODUCT,
   "74de94a0a998fdf3f37f433e90448cd5dd11ee97": BOOTCAMP_PRODUCT,

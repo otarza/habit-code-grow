@@ -50,13 +50,38 @@ export const PRODUCTS: Record<CheckoutProduct, ProductConfig> = {
   },
 };
 
-// Dedicated Starter promo product; these are public identifiers, not API secrets.
-export const STARTER_PROMO_CHECKOUT: CheckoutOverride = {
-  buttonId: import.meta.env.VITE_AI_STARTER_PROMO_FLITT_BUTTON_ID ?? "6e34b7a462c13603d26c45affbc44ae17bddf82d",
-  name: "AI Starter — 3 ვიდეომოდული",
-  value: 79,
-  savingsLabel: "შენ ზოგავ ₾170-ს",
+export type StarterPromoPhase = CheckoutOverride & {
+  value: number;
+  // Last moment the phase price is offered (Tbilisi time).
+  endsAt: number;
+  endLabel: string; // "… ჩათვლით"
+  endDay: string; // "სრულდება …"
 };
+
+// Starter promo phases, in order; after the last one the page shows the full ₾249 price.
+// Button IDs are public Flitt identifiers, not API secrets.
+export const STARTER_PROMO_PHASES: StarterPromoPhase[] = [
+  {
+    buttonId: import.meta.env.VITE_AI_STARTER_PROMO_FLITT_BUTTON_ID ?? "6e34b7a462c13603d26c45affbc44ae17bddf82d",
+    name: "AI Starter — 3 ვიდეომოდული",
+    value: 79,
+    savingsLabel: "შენ ზოგავ ₾170-ს",
+    endsAt: Date.parse("2026-10-18T23:59:59+04:00"),
+    endLabel: "18 ოქტომბრის ჩათვლით",
+    endDay: "სრულდება 18 ოქტომბერს",
+  },
+  {
+    buttonId: "fe99a05bc8302656378089f4f0e8c854c3fc6e51",
+    name: "AI Starter — 3 ვიდეომოდული",
+    value: 99,
+    savingsLabel: "შენ ზოგავ ₾150-ს",
+    endsAt: Date.parse("2026-10-31T23:59:59+04:00"),
+    endLabel: "31 ოქტომბრის ჩათვლით",
+    endDay: "სრულდება 31 ოქტომბერს",
+  },
+];
+
+export const starterPromoPhase = (now: number) => STARTER_PROMO_PHASES.find(p => now < p.endsAt);
 
 export type PromoCode = {
   product: CheckoutProduct;

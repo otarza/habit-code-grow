@@ -13,14 +13,13 @@ import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/compone
 import { aiStarterTestimonials } from "@/data/aiStarterTestimonials";
 import { SEO } from "@/components/SEO";
 import { rememberAttributionRef } from "@/lib/attribution";
-import { PRODUCTS, STARTER_PROMO_CHECKOUT, trackInitiateCheckout } from "@/lib/checkout";
+import { PRODUCTS, STARTER_PROMO_PHASES, starterPromoPhase, trackInitiateCheckout } from "@/lib/checkout";
 import { EMAIL_RE, loadFlitt } from "@/lib/flitt";
 
-const PROMO_PRICE = STARTER_PROMO_CHECKOUT.value!;
-// Real promo deadline (Tbilisi time). After it the page switches back to 249
-// automatically; change this one line to move the deadline.
-const PROMO_ENDS_AT = Date.parse("2026-10-18T23:59:59+04:00");
-const PROMO_END_LABEL = "18 ოქტომბრის ჩათვლით";
+const FULL_PRICE = PRODUCTS.starter.value;
+// Real promo deadlines live in STARTER_PROMO_PHASES (₾79, then ₾99). The page switches
+// phase by itself at each deadline and back to the full price after the last one.
+const LAST_PROMO_PHASE = STARTER_PROMO_PHASES[STARTER_PROMO_PHASES.length - 1];
 type OfferSlot = "inline" | "desktop" | "final";
 const modules = [
   { n: "01", title: "ფუნდამენტური პრომპტინგი", subtitle: "AI-სთან ეფექტური კომუნიკაცია", icon: MessageSquareText,
@@ -30,10 +29,14 @@ const modules = [
   { n: "03", title: "პროდუქტიულობა და ბიზნესი", subtitle: "საკუთარი ბრენდის კონტენტი AI-ს დახმარებით", icon: Briefcase,
     goal: "ჩამოაყალიბებ შენი ბრენდის ხმას, შექმნი ამ სტილით კონტენტს და მოამზადებ კონტენტის კალენდარს." },
 ];
+// Placeholder replaced with the current phase's question when rendering.
+const PROMO_FAQ = ["promo", ""];
+const promoFaq = (price: number, endLabel: string) => [`როგორ მივიღო ${price}₾-იანი ფასი?`,
+  `დააჭირე ღილაკს „გააქტიურე ${FULL_PRICE - price}₾ ფასდაკლება“. გვერდზე ფასი ${FULL_PRICE}₾-დან ${price}₾-მდე შემცირდება. კოდის დამახსოვრება ან ხელით შეყვანა არ გჭირდება. ფასდაკლება მოქმედებს ${endLabel}.`];
 const faqs = [
   ["ვისთვისაა ეს კურსი?", "მათთვის, ვისაც AI-სთან შეხება ჯერ არ ჰქონია და სურს პირველი ნაბიჯები გასაგები ვიდეოგაკვეთილებით გადადგას."],
   ["მჭირდება პროგრამირების ცოდნა?", "არა. კურსი იწყება საფუძვლებით და პრომპტების შესაქმნელად პროგრამირების ცოდნა არ გჭირდება."],
-  ["როგორ მივიღო 79₾-იანი ფასი?", "დააჭირე ღილაკს „გააქტიურე 170₾ ფასდაკლება“. გვერდზე ფასი 249₾-დან 79₾-მდე შემცირდება. კოდის დამახსოვრება ან ხელით შეყვანა არ გჭირდება. ფასდაკლება მოქმედებს 18 ოქტომბრის ჩათვლით."],
+  PROMO_FAQ,
   ["რა მოხდება, თუ კურსი არ მომეწონა?", "გაქვს 5-დღიანი გარანტია: შეძენიდან 5 დღის განმავლობაში მოგვწერე hello@bitcamp.ge-ზე შეკვეთის ელ. ფოსტიდან და თანხას სრულად დაგიბრუნებთ — მაშინაც, თუ უკვე დაიწყე გაკვეთილების ყურება. თანხა ბრუნდება იმავე ბარათზე, 7 სამუშაო დღეში."],
   ["როდის მივიღებ წვდომას?", "გადახდიდან რამდენიმე წუთში ელ. ფოსტაზე მიიღებ პირად ბმულს, რომლითაც კურსი მაშინვე გაიხსნება. წვდომა უვადოა — გაკვეთილებს ნებისმიერ დროს დაუბრუნდები."],
   ["რა შედის პაკეტში?", "ვიდეოკურსის პირველი სამი მოდული: ფუნდამენტური პრომპტინგი, პრაქტიკული შაბლონები და მონაცემები, პროდუქტიულობა და ბიზნესი. მენტორობა, ბონუს კურსები და დანარჩენი სამი მოდული ამ პაკეტში არ შედის."],
@@ -154,10 +157,16 @@ export default function AIStarter() {
   }, []);
   const emailInputs = useRef<Partial<Record<OfferSlot, HTMLInputElement | null>>>({});
   const [openFaq, setOpenFaq] = useState<number | null>(0);
-  const now = useNow(PROMO_ENDS_AT);
-  const promoAvailable = now < PROMO_ENDS_AT;
-  const countdown = formatCountdown(PROMO_ENDS_AT - now);
-  const price = promoActive ? PROMO_PRICE : PRODUCTS.starter.value;
+  const now = useNow(LAST_PROMO_PHASE.endsAt);
+  const phase = starterPromoPhase(now);
+  const promoAvailable = !!phase;
+  // A visitor who activated the promo keeps the latest phase price if the last deadline passes mid-visit.
+  const promo = phase ?? LAST_PROMO_PHASE;
+  const PROMO_PRICE = promo.value;
+  const SAVINGS = FULL_PRICE - PROMO_PRICE;
+  const PROMO_END_LABEL = promo.endLabel;
+  const countdown = formatCountdown(promo.endsAt - now);
+  const price = promoActive ? PROMO_PRICE : FULL_PRICE;
   const priceLabel = `₾${price}`;
   const displayedPrice = useAnimatedNumber(price);
   // Card the visitor activated the promo from; the email call-out focuses there.
@@ -211,7 +220,10 @@ export default function AIStarter() {
   };
 
   const config = PRODUCTS.starter;
-  const buttonId = promoActive ? STARTER_PROMO_CHECKOUT.buttonId : config.mode === "embed" ? config.buttonId : "";
+  const buttonId = promoActive ? promo.buttonId : config.mode === "embed" ? config.buttonId : "";
+  // At a phase deadline the promo button changes; close a checkout opened at the old price.
+  const phaseEndsAt = promo.endsAt;
+  useEffect(() => { setCheckoutSlot(null); }, [phaseEndsAt]);
 
   const buy = (slot: OfferSlot) => {
     if (!buttonId) {
@@ -237,7 +249,7 @@ export default function AIStarter() {
     setEmail(trimmed);
     setEmailError(null);
     setCheckoutMessage("");
-    trackInitiateCheckout("starter", promoActive ? STARTER_PROMO_CHECKOUT : undefined);
+    trackInitiateCheckout("starter", promoActive ? promo : undefined);
     trackStarter("Lead", { value: price }, true);
     setCheckoutEmail(trimmed);
     setCheckoutSlot(slot);
@@ -293,17 +305,17 @@ export default function AIStarter() {
     className={`campaign-promo-button${compact ? " campaign-promo-button--compact" : ""}${promoActive ? "" : " starter-promo-call"}`}
     disabled={promoActive} onClick={() => activatePromo(slot)}>
     {!promoActive && <Gift aria-hidden="true" size={compact ? 16 : 18} />}
-    {promoActive ? "170₾ ფასდაკლება გააქტიურებულია" : "გააქტიურე 170₾ ფასდაკლება"}
+    {promoActive ? `${SAVINGS}₾ ფასდაკლება გააქტიურებულია` : `გააქტიურე ${SAVINGS}₾ ფასდაკლება`}
   </button>;
   const purchase = (slot: OfferSlot) => nudgeSlot === slot ? <div className="starter-nudge" role="alertdialog" aria-labelledby={`starter-nudge-${slot}`}>
     <Gift aria-hidden="true" size={28} />
-    <strong id={`starter-nudge-${slot}`}>მოიცა! შენ გაქვს ₾170 ფასდაკლება</strong>
-    <p>ერთი კლიკით ფასი ₾249-დან ₾79-მდე შემცირდება. ფასდაკლება მოქმედებს {PROMO_END_LABEL}.</p>
+    <strong id={`starter-nudge-${slot}`}>მოიცა! შენ გაქვს ₾{SAVINGS} ფასდაკლება</strong>
+    <p>ერთი კლიკით ფასი ₾{FULL_PRICE}-დან ₾{PROMO_PRICE}-მდე შემცირდება. ფასდაკლება მოქმედებს {PROMO_END_LABEL}.</p>
     <span className="starter-countdown" role="timer" aria-live="off">დარჩა {countdown}</span>
     <button type="button" className="campaign-cta starter-nudge__activate" onClick={() => activatePromo(slot, "nudge")}>
-      <span>გააქტიურე და გადაიხადე ₾79</span><ArrowRight aria-hidden="true" size={18} />
+      <span>გააქტიურე და გადაიხადე ₾{PROMO_PRICE}</span><ArrowRight aria-hidden="true" size={18} />
     </button>
-    <button type="button" className="starter-nudge__full" onClick={() => continueAtFullPrice(slot)}>გაგრძელება ₾249-ად</button>
+    <button type="button" className="starter-nudge__full" onClick={() => continueAtFullPrice(slot)}>გაგრძელება ₾{FULL_PRICE}-ად</button>
   </div> : checkoutSlot === slot ? <div id={`starter-checkout-${slot}`} className="campaign-inline-checkout">
     <div className="campaign-inline-checkout__summary">
       <span>წვდომა გამოიგზავნება: <strong>{checkoutEmail}</strong></span>
@@ -340,18 +352,18 @@ export default function AIStarter() {
     {promoActive
       ? <div className="starter-promo-applied" role="status">
         <CheckCircle2 aria-hidden="true" size={22} />
-        <div><strong>ფასდაკლება გააქტიურებულია</strong><span>₾249 → ₾79 · დაზოგე ₾170</span>
+        <div><strong>ფასდაკლება გააქტიურებულია</strong><span>₾{FULL_PRICE} → ₾{PROMO_PRICE} · დაზოგე ₾{SAVINGS}</span>
           {promoAvailable && <small className="starter-countdown" role="timer" aria-live="off">ფასი მოქმედებს {PROMO_END_LABEL} · დარჩა {countdown}</small>}</div>
       </div>
-      : promoAvailable && <div className="campaign-offer-promo"><span>პირველი ნაბიჯი AI-ში — 170₾ ფასდაკლებით
-        <small className="starter-countdown" role="timer" aria-live="off">სრულდება 18 ოქტომბერს · დარჩა {countdown}</small></span>{promoButton(true, slot)}</div>}
+      : promoAvailable && <div className="campaign-offer-promo"><span>პირველი ნაბიჯი AI-ში — {SAVINGS}₾ ფასდაკლებით
+        <small className="starter-countdown" role="timer" aria-live="off">{promo.endDay} · დარჩა {countdown}</small></span>{promoButton(true, slot)}</div>}
     <div className="campaign-final__price-row"><div className="campaign-price-stack">
       <span>ერთჯერადი ფასი</span>
-      {promoActive && <span className="campaign-price__old starter-price-old">₾249</span>}
+      {promoActive && <span className="campaign-price__old starter-price-old">₾{FULL_PRICE}</span>}
       <strong className={`campaign-price__current${promoActive ? " starter-price-new" : ""}`} aria-live="polite">
         <span aria-hidden="true">₾{displayedPrice}</span><span className="sr-only">{priceLabel}</span>
       </strong>
-    </div>{promoActive && <span className="campaign-price__save starter-price-save">შენ ზოგავ ₾170-ს</span>}</div>
+    </div>{promoActive && <span className="campaign-price__save starter-price-save">{promo.savingsLabel}</span>}</div>
     {purchase(slot)}
     <ul className="starter-assurances">
       <li><ShieldCheck aria-hidden="true" size={16} /><span><strong>5-დღიანი გარანტია</strong> — თანხის სრული დაბრუნება</span></li>
@@ -363,10 +375,10 @@ export default function AIStarter() {
 
   return <div className={`campaign-page campaign-page--pro campaign-page--starter${promoActive ? " campaign-page--promo-active" : ""}`}>
     <SEO title="AI Starter — პირველი ნაბიჯები AI-ში | BitCamp"
-      description="AI ვიდეოკურსი დამწყებთათვის: პრომპტები, ბრენდის ხმა და კონტენტის კალენდარი. 3 მოდული — 249₾; ფასდაკლების გააქტიურებით 79₾."
+      description="AI ვიდეოკურსი დამწყებთათვის: პრომპტები, ბრენდის ხმა და კონტენტის კალენდარი. 3 მოდული — 249₾; ფასდაკლების გააქტიურებით ნაკლებ ფასად."
       url="https://www.bitcamp.ge/ai-starter" />
     {(promoAvailable || promoActive) && <div className={`campaign-promo-bar${promoActive ? " is-active" : ""}`}><div className="campaign-shell campaign-promo-bar__inner">
-      <div><span>AI Starter · ფასდაკლება {PROMO_END_LABEL}{promoAvailable ? ` · დარჩა ${countdown}` : ""}</span><strong aria-live="polite">{promoActive ? "ფასდაკლება აქტიურია — 3 მოდული 79₾-ად" : "249₾ → 79₾ · გააქტიურე ფასდაკლება ერთი კლიკით"}</strong></div>{promoButton()}
+      <div><span>AI Starter · ფასდაკლება {PROMO_END_LABEL}{promoAvailable ? ` · დარჩა ${countdown}` : ""}</span><strong aria-live="polite">{promoActive ? `ფასდაკლება აქტიურია — 3 მოდული ${PROMO_PRICE}₾-ად` : `${FULL_PRICE}₾ → ${PROMO_PRICE}₾ · გააქტიურე ფასდაკლება ერთი კლიკით`}</strong></div>{promoButton()}
     </div></div>}
     {showPromoConfetti && <CampaignPromoConfetti />}
     <main>
@@ -402,7 +414,7 @@ export default function AIStarter() {
         <p>ნახე ყველა გაკვეთილი და მისი ხანგრძლივობა. ზოგი გაკვეთილი უფასოდ შეგიძლია ახლავე ნახო.</p>
       </div>
         <StarterCurriculum modules={modules}
-          ctaLabel={promoActive || !promoAvailable ? `შეიძინე AI Starter — ${priceLabel}` : "გააქტიურე 170₾ ფასდაკლება"}
+          ctaLabel={promoActive || !promoAvailable ? `შეიძინე AI Starter — ${priceLabel}` : `გააქტიურე ${SAVINGS}₾ ფასდაკლება`}
           onCta={() => promoActive || !promoAvailable ? buyFromStickyBar() : activatePromo(undefined, "curriculum")}
           previewRequest={previewRequest}
           onPreview={(lesson, source) => trackStarter("StarterPreviewPlay", { lesson, source })}
@@ -427,7 +439,7 @@ export default function AIStarter() {
         </div>
       </div></div></section>
       <section className="campaign-section"><div className="campaign-shell campaign-faq-grid"><div><p className="campaign-kicker">კითხვები</p><h2>სანამ დაიწყებ</h2></div>
-        <div className="campaign-faq">{faqs.filter(([q]) => promoAvailable || !q.includes("79₾")).map(([q, a], i) => <div className="campaign-faq__item" key={q}>
+        <div className="campaign-faq">{faqs.flatMap(f => f !== PROMO_FAQ ? [f] : promoAvailable ? [promoFaq(PROMO_PRICE, PROMO_END_LABEL)] : []).map(([q, a], i) => <div className="campaign-faq__item" key={q}>
           <button type="button" aria-expanded={openFaq === i} aria-controls={`starter-faq-${i}`} onClick={() => setOpenFaq(openFaq === i ? null : i)}><span>{q}</span><span aria-hidden="true">{openFaq === i ? "−" : "+"}</span></button>
           <div id={`starter-faq-${i}`} hidden={openFaq !== i} className="campaign-faq__answer">{a}</div>
         </div>)}</div>
