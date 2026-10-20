@@ -10,7 +10,7 @@ const FLOOR_Y = 450;
 
 const GRAVITY = 2200;
 const MOVE_SPEED = 260;
-const JUMP_SPEED = 820;
+const JUMP_SPEED = 630; // ~90px jump, about one Grave-height
 
 type Keys = { left: boolean; right: boolean; jump: boolean };
 
@@ -47,6 +47,7 @@ const updateHero = (hero: Hero, keys: Keys, dt: number) => {
 
   if (keys.jump && hero.onGround) {
     hero.vy = -JUMP_SPEED;
+    keys.jump = false; // one jump per key press
     hero.onGround = false;
   }
 
@@ -269,6 +270,11 @@ const EAP = () => {
       return true;
     };
     const onKeyDown = (e: KeyboardEvent) => {
+      // Ignore OS key auto-repeat so holding jump doesn't re-trigger it
+      if (e.repeat) {
+        if (e.code === "Space" || e.code.startsWith("Arrow")) e.preventDefault();
+        return;
+      }
       if (setKey(e.code, true)) e.preventDefault();
     };
     const onKeyUp = (e: KeyboardEvent) => {
