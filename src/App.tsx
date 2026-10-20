@@ -21,6 +21,7 @@ import AIPromptsLibrary from "./pages/AIPromptsLibrary";
 import TeachersAIGuide from "./pages/TeachersAIGuide";
 import TeachersAIGuideRead from "./pages/TeachersAIGuideRead";
 import TeacherMasterclassConfirmed from "./pages/TeacherMasterclassConfirmed";
+import EAP from "./pages/EAP";
 
 const queryClient = new QueryClient();
 
@@ -37,6 +38,7 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
+          <Route path="/eap" element={<EAP />} />
           <Route path="/fullstack-ai" element={<FullStackAI />} />
           <Route path="/ai" element={<AIPromptEngineering />} />
           <Route path="/ai-starter" element={<AIStarter />} />
