@@ -22,6 +22,7 @@ export const BEAM_MAX_DAMAGE = 40;
 
 // Destruction Maker
 export const GOBLIN_MAX_HP = 150;
+export const GOBLIN_SCALE = 1.8; // drawing is authored at 1x and scaled up
 export const GOBLIN_START_X = 1500;
 export const GOBLIN_WAKE_RANGE = 750;
 export const GOBLIN_SPEED = 120;
@@ -29,7 +30,7 @@ export const GOBLIN_KEEP_DISTANCE = 320;
 export const LAVA_GRAVITY = 900;
 export const LAVA_FLIGHT_TIME = 1.0;
 export const LAVA_DAMAGE = 20;
-export const LAVA_RADIUS = 9;
+export const LAVA_RADIUS = 18;
 
 // Van
 export const VAN_X = 2640;

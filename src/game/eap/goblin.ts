@@ -3,6 +3,7 @@ import {
   FLOOR_Y,
   GOBLIN_KEEP_DISTANCE,
   GOBLIN_MAX_HP,
+  GOBLIN_SCALE,
   GOBLIN_SPEED,
   GOBLIN_START_X,
   GOBLIN_WAKE_RANGE,
@@ -39,8 +40,8 @@ export const createGoblin = (): Goblin => ({
   x: GOBLIN_START_X,
   y: FLOOR_Y,
   vy: 0,
-  w: 28,
-  h: 40,
+  w: 28 * GOBLIN_SCALE,
+  h: 40 * GOBLIN_SCALE,
   facing: -1,
   hp: GOBLIN_MAX_HP,
   awake: false,
@@ -54,7 +55,7 @@ export const createGoblin = (): Goblin => ({
 
 const throwLava = (goblin: Goblin, hero: Hero, lava: LavaBall[]) => {
   // Lob an arc that lands roughly where Grave is standing (slightly randomised)
-  const hx = goblin.x + 8 * goblin.facing;
+  const hx = goblin.x + 14 * goblin.facing;
   const hy = goblin.y - goblin.h - 6;
   const targetX = hero.x + (Math.random() - 0.5) * 80;
   const t = LAVA_FLIGHT_TIME * (0.85 + Math.random() * 0.3);
@@ -111,23 +112,23 @@ export const drawGoblin = (ctx: CanvasRenderingContext2D, goblin: Goblin, camX: 
   const x = Math.round(goblin.x - camX);
   const feet = Math.round(goblin.y);
   const step = Math.sin(goblin.walkTime * 16) * 3;
-  const skin = goblin.hurtFlash > 0 ? "#ffffff" : "#5fae3c";
+  const skin = goblin.hurtFlash > 0 ? "#ffffff" : "#d4372b";
 
   ctx.fillStyle = "rgba(0,0,0,0.3)";
   ctx.beginPath();
-  ctx.ellipse(x, FLOOR_Y + 2, 16, 4, 0, 0, Math.PI * 2);
+  ctx.ellipse(x, FLOOR_Y + 2, 16 * GOBLIN_SCALE, 5, 0, 0, Math.PI * 2);
   ctx.fill();
 
   ctx.save();
   ctx.translate(x, feet);
-  ctx.scale(goblin.facing, 1);
+  ctx.scale(goblin.facing * GOBLIN_SCALE, GOBLIN_SCALE);
 
   // Legs
   ctx.fillStyle = skin;
   ctx.fillRect(-8, -12, 6, 12 + step);
   ctx.fillRect(2, -12, 6, 12 - step);
   // Ragged tunic
-  ctx.fillStyle = goblin.hurtFlash > 0 ? "#ffffff" : "#6b4a2b";
+  ctx.fillStyle = goblin.hurtFlash > 0 ? "#ffffff" : "#3a2618";
   ctx.fillRect(-11, -28, 22, 18);
   ctx.fillRect(-11, -10, 5, 3);
   ctx.fillRect(1, -10, 6, 3);
@@ -143,7 +144,7 @@ export const drawGoblin = (ctx: CanvasRenderingContext2D, goblin: Goblin, camX: 
   ctx.lineTo(10, -32);
   ctx.fill();
   // Glowing red eyes and a grin
-  ctx.fillStyle = "#ff2a2a";
+  ctx.fillStyle = "#ffd23a";
   ctx.fillRect(1, -38, 4, 3);
   ctx.fillRect(-5, -38, 3, 3);
   ctx.fillStyle = "#1a1a1a";
@@ -156,7 +157,7 @@ export const drawGoblin = (ctx: CanvasRenderingContext2D, goblin: Goblin, camX: 
     ctx.fillRect(9, -26, 5, 12);
     ctx.fillStyle = COLORS.lava;
     ctx.beginPath();
-    ctx.arc(12, -14, 5, 0, Math.PI * 2);
+    ctx.arc(12, -14, 7, 0, Math.PI * 2);
     ctx.fill();
   }
   ctx.restore();

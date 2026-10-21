@@ -113,7 +113,7 @@ export const updateGame = (game: GameState, input: Input, dt: number) => {
       if (goblin.hp <= 0) {
         goblin.alive = false;
         steam(game, goblin.x, goblin.y - goblin.h / 2, 60);
-        burst(game, goblin.x, goblin.y - goblin.h / 2, 30, "#5fae3c", 220, 4);
+        burst(game, goblin.x, goblin.y - goblin.h / 2, 30, "#d4372b", 220, 5);
         game.texts.push({ x: goblin.x, y: goblin.y - 80, text: "EVAPORATED!", life: 2, color: COLORS.accent });
       }
     }
@@ -137,7 +137,7 @@ export const updateGame = (game: GameState, input: Input, dt: number) => {
     ball.x += ball.vx * dt;
     ball.y += ball.vy * dt;
     if (Math.random() < 0.5) {
-      game.particles.push({ x: ball.x, y: ball.y, vx: 0, vy: -20, life: 0.3, maxLife: 0.3, size: 3, color: COLORS.lava });
+      game.particles.push({ x: ball.x, y: ball.y, vx: 0, vy: -20, life: 0.3, maxLife: 0.3, size: 6, color: COLORS.lava });
     }
     if (grave.invuln <= 0 && hitsBox(ball.x, ball.y, LAVA_RADIUS, grave.x, grave.y, grave.w, grave.h)) {
       grave.hp = Math.max(0, grave.hp - LAVA_DAMAGE);
