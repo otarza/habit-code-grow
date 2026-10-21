@@ -343,6 +343,8 @@ func _process(delta: float) -> void:
 	var mood_level := next_level if status == "title" else level
 	var dread := footstep_volume() if (level == 3 and status == "playing") else 0.0
 	update_audio(mood_level, dread, delta)
+	var charging := status == "playing" and level != 3 and grave.charging
+	update_charge_hum(grave.charge / MAX_CHARGE if charging else 0.0)
 
 	if status == "driving" and phase_time > DRIVE_TIME:
 		status = "title"
@@ -446,12 +448,15 @@ func fire_beam() -> void:
 	b.damage = roundi(BEAM_MIN_DAMAGE + power * (BEAM_MAX_DAMAGE - BEAM_MIN_DAMAGE))
 	b.size = 4.0 + power * 10.0
 	beams.append(b)
+	# Zap: quick shots are bright, charged shots deeper and louder
+	play_sound("shoot%d" % roundi(power * 2.0), 0.9 + power * 0.3)
 
 
 func hurt_grave(damage: float, color: Color) -> void:
 	grave.hp = maxf(0.0, grave.hp - damage)
 	grave.invuln = HIT_INVULN
 	float_text(Vector2(grave.x, grave.y - grave.h - 34), "-%d" % int(damage), color)
+	play_sound("grave_hurt")
 	if grave.hp <= 0:
 		status = "lost"
 		death_reason = ""
@@ -512,8 +517,11 @@ func update_forest(delta: float) -> void:
 			goblin.hurt_flash = 0.12
 			steam(b.pos, 4 + roundi(b.size))
 			float_text(Vector2(goblin.x, goblin.y - goblin.h - 34), "-%d" % b.damage, BEAM_COLOR)
+			if goblin.hp > 0:
+				play_sound("goblin_hurt", 1.0, randf_range(0.9, 1.15))
 			if goblin.hp <= 0:
 				goblin.alive = false
+				play_sound("goblin_death")
 				steam(Vector2(goblin.x, goblin.y - goblin.h / 2), 60)
 				burst(Vector2(goblin.x, goblin.y - goblin.h / 2), 30, Color("#d4372b"), 220.0, 5.0)
 				float_text(Vector2(goblin.x, goblin.y - 80), "EVAPORATED!", ACCENT, 2.0)
@@ -522,6 +530,7 @@ func update_forest(delta: float) -> void:
 			if not ball.dead and ball.pos.distance_to(b.pos) < LAVA_RADIUS + b.size / 2 + 4:
 				ball.dead = true
 				steam(b.pos, 6)
+				play_sound("lava_splat", 0.6)
 
 	for ball: LavaBall in lava:
 		if ball.dead:
@@ -540,10 +549,12 @@ func update_forest(delta: float) -> void:
 		if grave.invuln <= 0 and hits_box(ball.pos, LAVA_RADIUS, grave.x, grave.y, grave.w, grave.h):
 			burst(ball.pos, 14, LAVA_COLOR, 200.0, 3.0)
 			ball.dead = true
+			play_sound("lava_splat")
 			hurt_grave(LAVA_DAMAGE, HP_COLOR)
 		elif ball.pos.y >= FLOOR_Y:
 			burst(Vector2(ball.pos.x, FLOOR_Y), 10, LAVA_COLOR, 160.0, 3.0)
 			ball.dead = true
+			play_sound("lava_splat", 0.5)
 	lava = lava.filter(func(ball: LavaBall) -> bool: return not ball.dead)
 
 	# Getting in the van: checkpoint, refill, drive to the next place
@@ -601,6 +612,7 @@ func throw_lava() -> void:
 	ball.pos = hand
 	ball.vel = Vector2((target_x - hand.x) / t, (FLOOR_Y - 30 - hand.y - 0.5 * LAVA_GRAVITY * t * t) / t)
 	lava.append(ball)
+	play_sound("lava_throw")
 
 
 # ---------- level 2: the resting of the unstable ----------
@@ -620,6 +632,7 @@ func update_resting(delta: float) -> void:
 		u.hop_cooldown = randf_range(0.6, 1.6)
 		u.seed_offset = randf() * 1000.0
 		unstables.append(u)
+		play_sound("unstable_emerge")
 		burst(Vector2(x, FLOOR_Y), 12, Color("#5a4a6a"), 160.0, 4.0)
 		unstable_spawned += 1
 		spawn_timer = UNSTABLE_SPAWN_INTERVAL * randf_range(0.6, 1.4)
@@ -635,10 +648,13 @@ func update_resting(delta: float) -> void:
 				u.hurt_flash = 0.1
 				steam(b.pos, 3 + roundi(b.size / 2))
 				float_text(Vector2(u.x, u.y - u.h - 24), "-%d" % b.damage, BEAM_COLOR, 0.7)
+				if u.hp > 0:
+					play_sound("unstable_hurt", 1.0, randf_range(0.85, 1.2))
 		if u.hp <= 0:
 			steam(Vector2(u.x, u.y - u.h / 2), 24)
 			burst(Vector2(u.x, u.y - u.h / 2), 16, UNSTABLE_COLOR, 200.0, 4.0)
 			unstable_evaporated += 1
+			play_sound("unstable_death")
 	unstables = unstables.filter(func(u: Unstable) -> bool: return u.hp > 0)
 
 	# All evaporated: back to the van... where the Keys Keeper is waiting
@@ -1615,6 +1631,7 @@ var dread_player := AudioStreamPlayer.new()
 var current_mood := 0
 var spooky_timer := 4.0
 var heartbeat_timer := 0.0
+var charge_player := AudioStreamPlayer.new()
 
 
 func make_wav(samples: PackedFloat32Array, loop := false) -> AudioStreamWAV:
@@ -1819,6 +1836,19 @@ func build_sounds() -> void:
 		"amb2": make_wav(gen_ambience([49.0, 49.25, 51.75], 0.6, 0.35), true), # resting of the unstable
 		"amb3": make_wav(gen_ambience([44.0, 44.25, 46.5], 0.55, 0.12), true), # van
 		"dread": make_wav(gen_dread(), true),
+		# Shooting and monsters
+		"shoot0": make_wav(gen_shoot(0.0)),
+		"shoot1": make_wav(gen_shoot(0.5)),
+		"shoot2": make_wav(gen_shoot(1.0)),
+		"charge_hum": make_wav(gen_charge_hum(), true),
+		"grave_hurt": make_wav(gen_grave_hurt()),
+		"lava_throw": make_wav(gen_hiss("band", 300, 1400, 0.35, 0.5)),
+		"lava_splat": make_wav(gen_lava_splat()),
+		"goblin_hurt": make_wav(gen_tone("saw", 620, 300, 0.16, 0.3, 40.0)),
+		"goblin_death": make_wav(gen_goblin_death()),
+		"unstable_emerge": make_wav(gen_unstable_emerge()),
+		"unstable_hurt": make_wav(gen_unstable_hurt()),
+		"unstable_death": make_wav(gen_unstable_death()),
 	}
 	for i in 10:
 		var p := AudioStreamPlayer.new()
@@ -1829,15 +1859,20 @@ func build_sounds() -> void:
 	dread_player.stream = sounds["dread"]
 	dread_player.volume_db = -80.0
 	dread_player.play()
+	add_child(charge_player)
+	charge_player.stream = sounds["charge_hum"]
+	charge_player.volume_db = -80.0
+	charge_player.play()
 
 
-func play_sound(sound_name: String, volume := 1.0) -> void:
+func play_sound(sound_name: String, volume := 1.0, pitch := 1.0) -> void:
 	if volume <= 0.01 or not sounds.has(sound_name):
 		return
 	var p: AudioStreamPlayer = sfx_players[next_player]
 	next_player = (next_player + 1) % sfx_players.size()
 	p.stream = sounds[sound_name]
 	p.volume_db = linear_to_db(volume)
+	p.pitch_scale = pitch
 	p.play()
 
 
@@ -1870,3 +1905,119 @@ func update_audio(mood: int, dread: float, delta: float) -> void:
 			var choices: Array = SPOOKY[mood]
 			play_sound(choices[randi() % choices.size()], 0.8)
 			spooky_timer = randf_range(5.0, 14.0)
+
+
+# Rising whine while the evaporator charges (power 0 = silent)
+func update_charge_hum(power: float) -> void:
+	charge_player.volume_db = linear_to_db(maxf(0.0001, (0.25 + power * 0.35) if power > 0 else 0.0))
+	charge_player.pitch_scale = 1.0 + power * 3.0
+
+
+# ---------- sound building blocks for shooting and monsters ----------
+
+func wave(kind: String, phase: float) -> float:
+	match kind:
+		"square":
+			return 1.0 if sin(phase) >= 0 else -1.0
+		"saw":
+			return fposmod(phase / TAU, 1.0) * 2.0 - 1.0
+		"triangle":
+			return absf(fposmod(phase / TAU, 1.0) * 4.0 - 2.0) - 1.0
+	return sin(phase)
+
+
+# A tone that slides from f0 to f1 and fades out; vibrato wobbles the pitch (in Hz)
+func gen_tone(kind: String, f0: float, f1: float, dur: float, peak: float, vibrato := 0.0) -> PackedFloat32Array:
+	var s := samples_for(dur)
+	var ph := 0.0
+	for i in s.size():
+		var t := float(i) / SR
+		var f := f0 * pow(f1 / f0, t / dur) + sin(TAU * 28.0 * t) * vibrato
+		ph += TAU * f / SR
+		var env := minf(t / 0.008, 1.0) * exp(-6.9 * t / dur)
+		s[i] = wave(kind, ph) * env * peak
+	return s
+
+
+# Noise through a filter that sweeps from f0 to f1: hisses, whooshes, sizzles, rumbles
+func gen_hiss(kind: String, f0: float, f1: float, dur: float, peak: float) -> PackedFloat32Array:
+	var s := samples_for(dur)
+	var lp := 0.0
+	var lp2 := 0.0
+	for i in s.size():
+		var t := float(i) / SR
+		var f := f0 * pow(f1 / f0, t / dur)
+		var a := clampf(1.0 - exp(-TAU * f / SR), 0.0, 1.0)
+		var n := randf_range(-1, 1)
+		lp += (n - lp) * a
+		lp2 += (n - lp2) * a * 0.5
+		var v := lp
+		if kind == "high":
+			v = n - lp
+		elif kind == "band":
+			v = (lp - lp2) * 2.0
+		var env := minf(t / minf(0.05, dur / 4.0), 1.0) * exp(-6.9 * t / dur)
+		s[i] = v * env * peak
+	return s
+
+
+# Add `src` into `dst`, starting `delay` seconds in
+func mix_into(dst: PackedFloat32Array, src: PackedFloat32Array, delay := 0.0) -> PackedFloat32Array:
+	var start := int(delay * SR)
+	if dst.size() < start + src.size():
+		dst.resize(start + src.size())
+	for i in src.size():
+		dst[start + i] += src[i]
+	return dst
+
+
+func gen_shoot(power: float) -> PackedFloat32Array:
+	var s := gen_tone("square", 1400 - power * 700, 260 - power * 140, 0.14 + power * 0.25, 0.3 + power * 0.15)
+	s = mix_into(s, gen_tone("saw", 900 - power * 400, 120, 0.12 + power * 0.3, 0.2 + power * 0.12))
+	if power > 0.2:
+		s = mix_into(s, gen_hiss("high", 3000, 800, 0.2 + power * 0.3, 0.4 * power))
+	return s
+
+
+# One-second loop (220 Hz with an 18 Hz wobble); pitch_scale raises it while charging
+func gen_charge_hum() -> PackedFloat32Array:
+	var s := samples_for(1.0)
+	var ph := 0.0
+	for i in s.size():
+		var t := float(i) / SR
+		ph += TAU * (220.0 + sin(TAU * 18.0 * t) * 6.0) / SR
+		s[i] = wave("triangle", ph) * 0.25
+	return s
+
+
+func gen_grave_hurt() -> PackedFloat32Array:
+	return mix_into(gen_tone("saw", 190, 110, 0.18, 0.35), gen_hiss("low", 900, 300, 0.12, 0.5))
+
+
+func gen_lava_splat() -> PackedFloat32Array:
+	return mix_into(gen_tone("sine", 120, 50, 0.18, 0.7), gen_hiss("high", 4000, 1500, 0.5, 0.5), 0.02)
+
+
+func gen_goblin_death() -> PackedFloat32Array:
+	var s := gen_tone("saw", 700, 70, 1.1, 0.35, 60.0) # long falling screech
+	s = mix_into(s, gen_tone("square", 350, 40, 1.0, 0.15), 0.05)
+	return mix_into(s, gen_hiss("high", 2500, 600, 1.6, 0.6), 0.1) # evaporating steam
+
+
+func gen_unstable_emerge() -> PackedFloat32Array:
+	return mix_into(gen_hiss("low", 180, 60, 0.6, 1.0), gen_hiss("band", 1800, 600, 0.12, 0.6), 0.25)
+
+
+# Glitchy blip: three quick random pitch jumps
+func gen_unstable_hurt() -> PackedFloat32Array:
+	var s := PackedFloat32Array()
+	for k in 3:
+		var f := randf_range(300, 1200)
+		s = mix_into(s, gen_tone("square", f, f * 0.9, 0.04, 0.15), k * 0.035)
+	return s
+
+
+func gen_unstable_death() -> PackedFloat32Array:
+	var s := gen_tone("sine", 520, 90, 0.7, 0.4, 90.0) # warbling dissolve
+	s = mix_into(s, gen_tone("square", 1200, 300, 0.25, 0.1), 0.05)
+	return mix_into(s, gen_hiss("high", 3500, 900, 0.8, 0.45), 0.05) # fizz
