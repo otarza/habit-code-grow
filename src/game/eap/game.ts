@@ -25,7 +25,22 @@ import { createGoblin, drawGoblin, drawLava, updateGoblin, type Goblin, type Lav
 import { createGrave, drawBeam, drawHero, updateHero, type Beam, type Hero, type Input } from "./grave";
 import { drawResting } from "./resting";
 import { createUnstable, drawUnstable, isHittable, updateUnstable, type Unstable } from "./unstable";
-import { playClunk, playDeath, updateAmbience, type Mood } from "./audio";
+import {
+  playClunk,
+  playDeath,
+  playGoblinDeath,
+  playGoblinHurt,
+  playGraveHurt,
+  playLavaSplat,
+  playLavaThrow,
+  playShoot,
+  playUnstableDeath,
+  playUnstableEmerge,
+  playUnstableHurt,
+  updateAmbience,
+  updateChargeHum,
+  type Mood,
+} from "./audio";
 import { createVanRoom, drawKeysKeeper, drawVanHud, drawVanRoom, footstepVolume, updateVanRoom, type VanRoom } from "./van";
 
 type Particle = { x: number; y: number; vx: number; vy: number; life: number; maxLife: number; size: number; color: string };
@@ -174,6 +189,7 @@ const hurtGrave = (game: GameState, damage: number, color: string) => {
   grave.hp = Math.max(0, grave.hp - damage);
   grave.invuln = HIT_INVULN;
   game.texts.push({ x: grave.x, y: grave.y - grave.h - 34, text: `-${damage}`, life: 0.8, color });
+  playGraveHurt();
   if (grave.hp <= 0) {
     game.status = "lost";
     game.deathReason = "";
@@ -183,7 +199,9 @@ const hurtGrave = (game: GameState, damage: number, color: string) => {
 
 const updateForest = (game: GameState, dt: number) => {
   const { grave, goblin } = game;
+  const lavaBefore = game.lava.length;
   updateGoblin(goblin, grave, dt, game.lava);
+  if (game.lava.length > lavaBefore) playLavaThrow();
 
   for (const beam of game.beams) {
     if (goblin.alive && hitsBox(beam.x, beam.y, beam.size / 2, goblin.x, goblin.y, goblin.w + 6, goblin.h + 6)) {
@@ -192,8 +210,10 @@ const updateForest = (game: GameState, dt: number) => {
       goblin.hurtFlash = 0.12;
       steam(game, beam.x, beam.y, 4 + Math.round(beam.size));
       game.texts.push({ x: goblin.x, y: goblin.y - goblin.h - 34, text: `-${beam.damage}`, life: 0.8, color: COLORS.beam });
+      if (goblin.hp > 0) playGoblinHurt();
       if (goblin.hp <= 0) {
         goblin.alive = false;
+        playGoblinDeath();
         steam(game, goblin.x, goblin.y - goblin.h / 2, 60);
         burst(game, goblin.x, goblin.y - goblin.h / 2, 30, "#d4372b", 220, 5);
         game.texts.push({ x: goblin.x, y: goblin.y - 80, text: "EVAPORATED!", life: 2, color: COLORS.accent });
@@ -204,6 +224,7 @@ const updateForest = (game: GameState, dt: number) => {
       if (Math.hypot(ball.x - beam.x, ball.y - beam.y) < LAVA_RADIUS + beam.size / 2 + 4) {
         ball.y = Infinity;
         steam(game, beam.x, beam.y, 6);
+        playLavaSplat(0.6);
       }
     }
   }
@@ -218,10 +239,12 @@ const updateForest = (game: GameState, dt: number) => {
     if (grave.invuln <= 0 && hitsBox(ball.x, ball.y, LAVA_RADIUS, grave.x, grave.y, grave.w, grave.h)) {
       burst(game, ball.x, ball.y, 14, COLORS.lava, 200, 3);
       ball.y = Infinity;
+      playLavaSplat(1);
       hurtGrave(game, LAVA_DAMAGE, COLORS.hp);
     } else if (ball.y >= FLOOR_Y) {
       burst(game, ball.x, FLOOR_Y, 10, COLORS.lava, 160, 3);
       ball.y = Infinity;
+      playLavaSplat(0.5);
     }
   }
   game.lava = game.lava.filter((b) => Number.isFinite(b.y));
@@ -245,6 +268,7 @@ const updateResting = (game: GameState, dt: number) => {
     x = Math.max(VAN_PARK_X + VAN_W + 20, Math.min(WORLD_W - 40, x));
     game.unstable.push(createUnstable(x));
     burst(game, x, FLOOR_Y, 12, "#5a4a6a", 160, 4);
+    playUnstableEmerge();
     game.unstableSpawned++;
     game.spawnTimer = UNSTABLE_SPAWN_INTERVAL * (0.6 + Math.random() * 0.8);
   }
@@ -258,9 +282,11 @@ const updateResting = (game: GameState, dt: number) => {
         u.hurtFlash = 0.1;
         steam(game, beam.x, beam.y, 3 + Math.round(beam.size / 2));
         game.texts.push({ x: u.x, y: u.y - u.h - 24, text: `-${beam.damage}`, life: 0.7, color: COLORS.beam });
+        if (u.hp > 0) playUnstableHurt();
       }
     }
     if (u.hp <= 0) {
+      playUnstableDeath();
       steam(game, u.x, u.y - u.h / 2, 24);
       burst(game, u.x, u.y - u.h / 2, 16, COLORS.unstable, 200, 4);
       game.unstableEvaporated++;
@@ -303,6 +329,8 @@ export const updateGame = (game: GameState, input: Input, dt: number) => {
   }
 
   game.hintTime = Math.max(0, game.hintTime - dt);
+  const charging = game.status === "playing" && game.level !== 3 && game.grave.charging;
+  updateChargeHum(charging ? game.grave.charge / MAX_CHARGE : 0);
 
   if (game.status === "playing" && game.level === 3) {
     const event = updateVanRoom(game.room, game.grave, input, dt);
@@ -320,7 +348,12 @@ export const updateGame = (game: GameState, input: Input, dt: number) => {
   input.action = input.down = false;
 
   if (game.status === "playing") {
+    const beamsBefore = game.beams.length;
     updateHero(game.grave, input, dt, game.beams);
+    if (game.beams.length > beamsBefore) {
+      const shot = game.beams[game.beams.length - 1];
+      playShoot((shot.size - 4) / 10); // size grows 4 -> 14 with charge
+    }
     for (const beam of game.beams) {
       beam.x += beam.vx * dt;
       beam.y += beam.vy * dt;

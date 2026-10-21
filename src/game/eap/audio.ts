@@ -399,3 +399,113 @@ export const updateAmbience = (next: Mood, dread: number, dt: number) => {
     }
   }
 };
+
+// ---------- shooting and monster sound effects ----------
+
+// A pitched tone that slides from f0 to f1, with a quick attack and an exponential fade
+const tone = (type: OscillatorType, f0: number, f1: number, duration: number, peak: number, delay = 0, vibrato = 0) => {
+  if (!ctx || !bus) return;
+  const ac = ctx;
+  const t = ac.currentTime + delay;
+  const o = ac.createOscillator();
+  o.type = type;
+  o.frequency.setValueAtTime(f0, t);
+  o.frequency.exponentialRampToValueAtTime(Math.max(1, f1), t + duration);
+  if (vibrato) lfo(ac, 28, vibrato, o.frequency);
+  const g = ac.createGain();
+  g.gain.setValueAtTime(0.0001, t);
+  g.gain.exponentialRampToValueAtTime(peak, t + 0.008);
+  g.gain.exponentialRampToValueAtTime(0.0001, t + duration);
+  o.connect(g);
+  g.connect(bus);
+  o.start(t);
+  o.stop(t + duration + 0.05);
+};
+
+// Filtered noise whose filter sweeps from f0 to f1: hisses, whooshes, sizzles and rumbles
+const hiss = (filter: BiquadFilterType, f0: number, f1: number, duration: number, peak: number, delay = 0) => {
+  if (!ctx || !bus) return;
+  const ac = ctx;
+  const t = ac.currentTime + delay;
+  const n = noise(ac, duration + 0.05);
+  const f = ac.createBiquadFilter();
+  f.type = filter;
+  f.Q.value = filter === "bandpass" ? 1.5 : 0.7;
+  f.frequency.setValueAtTime(f0, t);
+  f.frequency.exponentialRampToValueAtTime(f1, t + duration);
+  const g = ac.createGain();
+  g.gain.setValueAtTime(0.0001, t);
+  g.gain.exponentialRampToValueAtTime(peak, t + Math.min(0.05, duration / 4));
+  g.gain.exponentialRampToValueAtTime(0.0001, t + duration);
+  n.connect(f);
+  f.connect(g);
+  g.connect(bus);
+  n.start(t);
+};
+
+// Evaporator shot: a bright zap; charged shots (power up to 1) are deeper, longer and louder
+export const playShoot = (power: number) => {
+  tone("square", 1400 - power * 700, 260 - power * 140, 0.14 + power * 0.25, 0.12 + power * 0.06);
+  tone("sawtooth", 900 - power * 400, 120, 0.12 + power * 0.3, 0.07 + power * 0.05);
+  if (power > 0.2) hiss("highpass", 3000, 800, 0.2 + power * 0.3, 0.12 * power);
+};
+
+// Rising whine while the evaporator charges (call every frame; power 0 = silent)
+let chargeOsc: OscillatorNode | null = null;
+let chargeGain: GainNode | null = null;
+export const updateChargeHum = (power: number) => {
+  if (!ctx || !bus) return;
+  if (!chargeOsc || !chargeGain) {
+    chargeOsc = ctx.createOscillator();
+    chargeOsc.type = "triangle";
+    chargeGain = ctx.createGain();
+    chargeGain.gain.value = 0;
+    lfo(ctx, 18, 6, chargeOsc.frequency);
+    chargeOsc.connect(chargeGain);
+    chargeGain.connect(bus);
+    chargeOsc.start();
+  }
+  const now = ctx.currentTime;
+  chargeOsc.frequency.setTargetAtTime(220 + power * 660, now, 0.05);
+  chargeGain.gain.setTargetAtTime(power > 0 ? 0.03 + power * 0.04 : 0, now, 0.04);
+};
+
+// Grave gets hurt: short low grunt
+export const playGraveHurt = () => {
+  tone("sawtooth", 190, 110, 0.18, 0.12);
+  hiss("lowpass", 900, 300, 0.12, 0.15);
+};
+
+// Destruction Maker
+export const playLavaThrow = () => hiss("bandpass", 300, 1400, 0.35, 0.18);
+export const playLavaSplat = (volume: number) => {
+  tone("sine", 120, 50, 0.18, 0.25 * volume);
+  hiss("highpass", 4000, 1500, 0.5, 0.18 * volume, 0.02); // sizzle
+};
+export const playGoblinHurt = () => {
+  const p = 0.9 + Math.random() * 0.25;
+  tone("sawtooth", 620 * p, 300 * p, 0.16, 0.09, 0, 40); // squeal
+};
+export const playGoblinDeath = () => {
+  tone("sawtooth", 700, 70, 1.1, 0.12, 0, 60); // long falling screech
+  tone("square", 350, 40, 1.0, 0.05, 0.05);
+  hiss("highpass", 2500, 600, 1.6, 0.22, 0.1); // evaporating steam
+};
+
+// THE UNSTABLE
+export const playUnstableEmerge = () => {
+  hiss("lowpass", 180, 60, 0.6, 0.35); // rumble
+  hiss("bandpass", 1800, 600, 0.12, 0.2, 0.25); // ground cracks open
+};
+export const playUnstableHurt = () => {
+  // Glitchy blip: three random pitch jumps
+  for (let i = 0; i < 3; i++) {
+    const f = 300 + Math.random() * 900;
+    tone("square", f, f * 0.9, 0.04, 0.05, i * 0.035);
+  }
+};
+export const playUnstableDeath = () => {
+  tone("sine", 520, 90, 0.7, 0.14, 0, 90); // warbling dissolve
+  tone("square", 1200, 300, 0.25, 0.03, 0.05);
+  hiss("highpass", 3500, 900, 0.8, 0.16, 0.05); // fizz
+};
