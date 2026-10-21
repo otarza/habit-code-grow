@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import { VIEW_H, VIEW_W } from "@/game/eap/constants";
+import { unlockAudio } from "@/game/eap/audio";
 import { arriveAt, createGame, createInput, drawGame, restartGame, updateGame } from "@/game/eap/game";
 
 // EAP — Evaporate All Parasites
@@ -16,8 +17,9 @@ const EAP = () => {
     if (!canvas || !ctx) return;
 
     const input = inputRef.current;
-    // ?level=2 jumps straight to THE RESTING OF THE UNSTABLE
-    let game = new URLSearchParams(window.location.search).get("level") === "2" ? arriveAt(2) : createGame();
+    // ?level=2 or ?level=3 jumps straight to that part of the story
+    const startLevel = new URLSearchParams(window.location.search).get("level");
+    let game = startLevel === "2" ? arriveAt(2) : startLevel === "3" ? arriveAt(3) : createGame();
     const mouse = { x: VIEW_W / 2, y: VIEW_H / 2 };
 
     const isOver = () => game.status === "won" || game.status === "lost";
@@ -30,10 +32,13 @@ const EAP = () => {
       if (code === "ArrowLeft" || code === "KeyA") input.left = down;
       else if (code === "ArrowRight" || code === "KeyD") input.right = down;
       else if (code === "ArrowUp" || code === "KeyW" || code === "Space") input.jump = down;
+      else if (code === "KeyE") input.action = down;
+      else if (code === "ArrowDown" || code === "KeyS") input.down = down;
       else return false;
       return true;
     };
     const onKeyDown = (e: KeyboardEvent) => {
+      unlockAudio();
       if (e.code === "KeyR" && isOver()) return restart();
       // Ignore OS key auto-repeat so holding jump doesn't re-trigger it
       if (e.repeat) {
@@ -42,8 +47,11 @@ const EAP = () => {
       }
       if (setKey(e.code, true)) e.preventDefault();
     };
+    // Jump / E / S are taps: the game clears them once used, so releasing the key
+    // must not wipe a press the game loop hasn't seen yet
     const onKeyUp = (e: KeyboardEvent) => {
-      if (setKey(e.code, false)) e.preventDefault();
+      if (e.code === "ArrowLeft" || e.code === "KeyA") input.left = false;
+      else if (e.code === "ArrowRight" || e.code === "KeyD") input.right = false;
     };
 
     // Mouse aims; right button shoots (hold to charge)
@@ -57,6 +65,7 @@ const EAP = () => {
       input.aimWithMouse = true;
     };
     const onMouseDown = (e: MouseEvent) => {
+      unlockAudio();
       toCanvas(e);
       if (isOver()) return restart();
       if (e.button === 2) {
@@ -107,8 +116,9 @@ const EAP = () => {
     };
   }, []);
 
-  const touch = (key: "left" | "right" | "jump" | "firing") => ({
+  const touch = (key: "left" | "right" | "jump" | "down" | "firing") => ({
     onPointerDown: () => {
+      unlockAudio();
       if (key === "firing") inputRef.current.aimWithMouse = false;
       inputRef.current[key] = true;
     },
@@ -128,6 +138,7 @@ const EAP = () => {
       <div className="flex gap-3 md:hidden select-none touch-none">
         <button className={btn} {...touch("left")}>←</button>
         <button className={btn} {...touch("jump")}>↑</button>
+        <button className={btn} {...touch("down")}>↓</button>
         <button className={btn} {...touch("right")}>→</button>
         <button className={`${btn} text-[#ffe24a]`} {...touch("firing")}>⚡</button>
       </div>

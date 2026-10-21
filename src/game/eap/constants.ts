@@ -42,9 +42,9 @@ export const UNSTABLE_MAX_HP = 16;
 export const UNSTABLE_DAMAGE = 5;
 export const UNSTABLE_SPEED = 90;
 export const UNSTABLE_EMERGE_TIME = 0.9;
-export const UNSTABLE_TOTAL = 20; // evaporate this many to clear the level
-export const UNSTABLE_MAX_ALIVE = 5;
-export const UNSTABLE_SPAWN_INTERVAL = 1.6;
+export const UNSTABLE_TOTAL = 100; // evaporate this many, then get back to the van
+export const UNSTABLE_MAX_ALIVE = 6;
+export const UNSTABLE_SPAWN_INTERVAL = 1.1;
 
 export const COLORS = {
   accent: "#35e0a1",

@@ -19,6 +19,8 @@ export type Input = {
   left: boolean;
   right: boolean;
   jump: boolean;
+  action: boolean; // E pressed (used inside the van)
+  down: boolean; // S / ↓ pressed (used inside the van)
   firing: boolean; // right mouse button (or touch fire) is held
   aimX: number; // world coordinates of the aim point
   aimY: number;
@@ -96,9 +98,9 @@ export const updateHero = (hero: Hero, input: Input, dt: number, beams: Beam[]) 
 
   if (input.jump && hero.onGround) {
     hero.vy = -JUMP_SPEED;
-    input.jump = false; // one jump per key press
     hero.onGround = false;
   }
+  input.jump = false; // one jump per key press
 
   hero.vy += GRAVITY * dt;
   hero.x += hero.vx * dt;

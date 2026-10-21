@@ -25,19 +25,24 @@ import { createGoblin, drawGoblin, drawLava, updateGoblin, type Goblin, type Lav
 import { createGrave, drawBeam, drawHero, updateHero, type Beam, type Hero, type Input } from "./grave";
 import { drawResting } from "./resting";
 import { createUnstable, drawUnstable, isHittable, updateUnstable, type Unstable } from "./unstable";
+import { playClunk, playDeath } from "./audio";
+import { createVanRoom, drawKeysKeeper, drawVanHud, drawVanRoom, updateVanRoom, type VanRoom } from "./van";
 
 type Particle = { x: number; y: number; vx: number; vy: number; life: number; maxLife: number; size: number; color: string };
 type FloatText = { x: number; y: number; text: string; life: number; color: string };
 
-export type Level = 1 | 2;
+export type Level = 1 | 2 | 3;
 
 const LEVEL_NAMES: Record<Level, string> = {
   1: "THE FOREST",
   2: "THE RESTING OF THE UNSTABLE",
+  3: "THE KEYS KEEPER",
 };
 
-// Story phases:
-//   playing  -> driving (got in the van: checkpoint) -> title (place name) -> arriving (van pulls in) -> playing
+// Story phases (every time Grave gets in the van it's a checkpoint: health and battery refill):
+//   1 forest:  playing -> driving -> title -> arriving (van pulls in) -> 2
+//   2 resting: playing -> back to the van -> title (locked in) -> 3
+//   3 van:     playing (hide, find keys) -> won
 const DRIVE_TIME = 2;
 const TITLE_TIME = 3.2;
 const ARRIVE_TIME = 1.5;
@@ -47,6 +52,9 @@ export type GameState = {
   status: "playing" | "driving" | "title" | "arriving" | "won" | "lost";
   phaseTime: number;
   checkpoint: Level; // where Grave restarts after dying
+  nextLevel: Level; // level the title card leads into
+  deathReason: string;
+  room: VanRoom;
   grave: Hero;
   goblin: Goblin;
   unstable: Unstable[];
@@ -58,7 +66,8 @@ export type GameState = {
   particles: Particle[];
   texts: FloatText[];
   camX: number;
-  vanHint: number; // seconds to show the "van won't start" hint
+  hint: string;
+  hintTime: number;
 };
 
 const baseState = (level: Level, checkpoint: Level): GameState => ({
@@ -66,6 +75,9 @@ const baseState = (level: Level, checkpoint: Level): GameState => ({
   status: "playing",
   phaseTime: 0,
   checkpoint,
+  nextLevel: level,
+  deathReason: "",
+  room: createVanRoom(),
   grave: createGrave(), // full health and battery
   goblin: createGoblin(),
   unstable: [],
@@ -77,7 +89,8 @@ const baseState = (level: Level, checkpoint: Level): GameState => ({
   particles: [],
   texts: [],
   camX: 0,
-  vanHint: 0,
+  hint: "",
+  hintTime: 0,
 });
 
 export const createGame = (): GameState => baseState(1, 1);
@@ -85,9 +98,30 @@ export const createGame = (): GameState => baseState(1, 1);
 // Start a level straight from the van (used after the title card and when retrying a checkpoint)
 export const arriveAt = (level: Level): GameState => {
   const game = baseState(level, level);
+  if (level === 3) {
+    game.grave.x = 448; // locked inside the van, beside the back door
+    return game;
+  }
   game.status = "arriving";
   game.grave.x = VAN_PARK_X + VAN_W + 40;
   return game;
+};
+
+// Got in the van: checkpoint, then a title card for the next place
+const boardVan = (game: GameState, next: Level, status: "driving" | "title") => {
+  game.status = status;
+  game.phaseTime = 0;
+  game.nextLevel = next;
+  game.checkpoint = next;
+  game.grave.hp = GRAVE_MAX_HP;
+  game.grave.battery = BATTERY_MAX;
+  game.lava = [];
+  game.beams = [];
+};
+
+const showHint = (game: GameState, hint: string) => {
+  game.hint = hint;
+  game.hintTime = 0.5;
 };
 
 // R / click on the end screens
@@ -98,6 +132,8 @@ export const createInput = (): Input => ({
   left: false,
   right: false,
   jump: false,
+  action: false,
+  down: false,
   firing: false,
   aimX: 0,
   aimY: 0,
@@ -138,7 +174,11 @@ const hurtGrave = (game: GameState, damage: number, color: string) => {
   grave.hp = Math.max(0, grave.hp - damage);
   grave.invuln = HIT_INVULN;
   game.texts.push({ x: grave.x, y: grave.y - grave.h - 34, text: `-${damage}`, life: 0.8, color });
-  if (grave.hp <= 0) game.status = "lost";
+  if (grave.hp <= 0) {
+    game.status = "lost";
+    game.deathReason = "";
+    playDeath();
+  }
 };
 
 const updateForest = (game: GameState, dt: number) => {
@@ -187,19 +227,9 @@ const updateForest = (game: GameState, dt: number) => {
   game.lava = game.lava.filter((b) => Number.isFinite(b.y));
 
   // Getting in the van: checkpoint, refill, and drive to the next place
-  game.vanHint = Math.max(0, game.vanHint - dt);
   if (grave.x > VAN_X) {
-    if (goblin.alive) {
-      game.vanHint = 0.5;
-    } else {
-      game.status = "driving";
-      game.phaseTime = 0;
-      game.checkpoint = 2;
-      grave.hp = GRAVE_MAX_HP;
-      grave.battery = BATTERY_MAX;
-      game.lava = [];
-      game.beams = [];
-    }
+    if (goblin.alive) showHint(game, "The van won't start while Destruction Maker is around!");
+    else boardVan(game, 2, "driving");
   }
 };
 
@@ -238,9 +268,13 @@ const updateResting = (game: GameState, dt: number) => {
   }
   game.unstable = game.unstable.filter((u) => u.hp > 0);
 
+  // All evaporated: get back in the van... where the Keys Keeper is waiting
   if (game.unstableEvaporated >= UNSTABLE_TOTAL) {
-    game.status = "won";
-    game.phaseTime = 0;
+    showHint(game, "All the Unstable are evaporated! Get back to the van  <<");
+    if (grave.x < VAN_PARK_X + VAN_W + 10) {
+      boardVan(game, 3, "title");
+      playClunk();
+    }
   }
 };
 
@@ -253,13 +287,30 @@ export const updateGame = (game: GameState, input: Input, dt: number) => {
   }
   if (game.status === "title" && game.phaseTime > TITLE_TIME) {
     // Swap in the next level's state in place so the caller's reference stays valid
-    Object.assign(game, arriveAt(2));
+    Object.assign(game, arriveAt(game.nextLevel));
     return;
   }
   if (game.status === "arriving" && game.phaseTime > ARRIVE_TIME) {
     game.status = "playing";
     game.phaseTime = 0;
   }
+
+  game.hintTime = Math.max(0, game.hintTime - dt);
+
+  if (game.status === "playing" && game.level === 3) {
+    const event = updateVanRoom(game.room, game.grave, input, dt);
+    if (event?.type === "caught") {
+      game.status = "lost";
+      game.deathReason = event.reason ?? "";
+      playDeath();
+    } else if (event?.type === "escaped") {
+      game.status = "won";
+      game.phaseTime = 0;
+    }
+    return;
+  }
+  // E / S presses only matter inside the van
+  input.action = input.down = false;
 
   if (game.status === "playing") {
     updateHero(game.grave, input, dt, game.beams);
@@ -409,50 +460,67 @@ const drawHud = (ctx: CanvasRenderingContext2D, game: GameState) => {
   ctx.textAlign = "right";
   ctx.fillText("Move A/D  Jump W/Space  Right-click: shoot (hold to charge)", VIEW_W - 14, VIEW_H - 12);
 
-  if (game.vanHint > 0) {
+  if (game.hintTime > 0) {
     ctx.fillStyle = "#ffcf5a";
     ctx.font = "bold 18px monospace";
     ctx.textAlign = "center";
-    ctx.fillText("The van won't start while Destruction Maker is around!", VIEW_W / 2, 150);
+    ctx.fillText(game.hint, VIEW_W / 2, 150);
   }
 };
 
-const drawOverlay = (ctx: CanvasRenderingContext2D, title: string, sub: string, color: string) => {
-  ctx.fillStyle = "rgba(5,8,14,0.65)";
+const drawOverlay = (ctx: CanvasRenderingContext2D, title: string, sub: string, color: string, detail = "") => {
+  ctx.fillStyle = "rgba(5,8,14,0.7)";
   ctx.fillRect(0, 0, VIEW_W, VIEW_H);
   ctx.textAlign = "center";
   ctx.fillStyle = color;
   ctx.font = "bold 44px monospace";
   ctx.fillText(title, VIEW_W / 2, VIEW_H / 2 - 10);
   ctx.fillStyle = "#e6e9ef";
+  ctx.font = "16px monospace";
+  if (detail) ctx.fillText(detail, VIEW_W / 2, VIEW_H / 2 + 28);
   ctx.font = "18px monospace";
-  ctx.fillText(sub, VIEW_W / 2, VIEW_H / 2 + 30);
+  ctx.fillText(sub, VIEW_W / 2, VIEW_H / 2 + (detail ? 60 : 30));
 };
 
-const drawTitleCard = (ctx: CanvasRenderingContext2D, t: number) => {
+const TITLE_LINES: Record<Level, { color: string; glow: string; line: string }> = {
+  1: { color: COLORS.accent, glow: COLORS.accent, line: "" },
+  2: { color: "#cfa8ff", glow: COLORS.unstable, line: "Something is moving under the ground..." },
+  3: { color: "#ffc94a", glow: "#ffc94a", line: "*click* ... the van doors lock from the outside." },
+};
+
+const drawTitleCard = (ctx: CanvasRenderingContext2D, t: number, level: Level) => {
   ctx.fillStyle = "#07040d";
   ctx.fillRect(0, 0, VIEW_W, VIEW_H);
-  const alpha = Math.min(1, t / 0.6, (TITLE_TIME - t) / 0.6);
-  ctx.globalAlpha = Math.max(0, alpha);
+  const alpha = Math.max(0, Math.min(1, t / 0.6, (TITLE_TIME - t) / 0.6));
+  if (level === 3) drawKeysKeeper(ctx, VIEW_W / 2, VIEW_H + 130, 1.6, alpha * 0.8, "#241a30");
+  ctx.globalAlpha = alpha;
+  const { color, glow, line } = TITLE_LINES[level];
   ctx.textAlign = "center";
   ctx.fillStyle = "#9aa3b5";
   ctx.font = "16px monospace";
   ctx.fillText("Checkpoint — health and battery refilled", VIEW_W / 2, VIEW_H / 2 - 70);
-  ctx.fillStyle = "#cfa8ff";
-  ctx.shadowColor = COLORS.unstable;
+  ctx.fillStyle = color;
+  ctx.shadowColor = glow;
   ctx.shadowBlur = 24;
   ctx.font = "bold 40px monospace";
-  ctx.fillText(LEVEL_NAMES[2], VIEW_W / 2, VIEW_H / 2);
+  ctx.fillText(LEVEL_NAMES[level], VIEW_W / 2, VIEW_H / 2);
   ctx.shadowBlur = 0;
   ctx.fillStyle = "#e6e9ef";
   ctx.font = "18px monospace";
-  ctx.fillText("Something is moving under the ground...", VIEW_W / 2, VIEW_H / 2 + 44);
+  ctx.fillText(line, VIEW_W / 2, VIEW_H / 2 + 44);
   ctx.globalAlpha = 1;
 };
 
 export const drawGame = (ctx: CanvasRenderingContext2D, game: GameState, input: Input) => {
   if (game.status === "title") {
-    drawTitleCard(ctx, game.phaseTime);
+    drawTitleCard(ctx, game.phaseTime, game.nextLevel);
+    return;
+  }
+
+  if (game.level === 3) {
+    drawVanRoom(ctx, game.room, game.grave, { ...input, aimWithMouse: false });
+    drawVanHud(ctx, game.room, game.grave);
+    drawEndScreens(ctx, game);
     return;
   }
 
@@ -490,11 +558,16 @@ export const drawGame = (ctx: CanvasRenderingContext2D, game: GameState, input: 
     ctx.fillRect(0, 0, VIEW_W, VIEW_H);
   }
 
+  drawEndScreens(ctx, game);
+};
+
+const drawEndScreens = (ctx: CanvasRenderingContext2D, game: GameState) => {
   if (game.status === "lost") {
     const where = game.checkpoint === 1 ? "Press R or click to try again" : "Press R or click to restart from the van";
-    drawOverlay(ctx, "GRAVE WAS MELTED", where, COLORS.hp);
+    if (game.level === 3) drawOverlay(ctx, "THE KEYS KEEPER GOT YOU", where, COLORS.hp, game.deathReason);
+    else drawOverlay(ctx, "GRAVE WAS MELTED", where, COLORS.hp);
   }
-  if (game.status === "won" && game.phaseTime > 1.2) {
-    drawOverlay(ctx, "THE UNSTABLE ARE EVAPORATED", "To be continued... — press R or click to play again", COLORS.accent);
+  if (game.status === "won") {
+    drawOverlay(ctx, "YOU ESCAPED THE VAN", "To be continued... — press R or click to play again", COLORS.accent);
   }
 };
