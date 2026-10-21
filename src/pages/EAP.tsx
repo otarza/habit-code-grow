@@ -1,6 +1,6 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { VIEW_H, VIEW_W } from "@/game/eap/constants";
-import { unlockAudio } from "@/game/eap/audio";
+import { isMuted, setMuted, unlockAudio } from "@/game/eap/audio";
 import { arriveAt, createGame, createInput, drawGame, restartGame, updateGame } from "@/game/eap/game";
 
 // EAP — Evaporate All Parasites
@@ -9,6 +9,11 @@ import { arriveAt, createGame, createInput, drawGame, restartGame, updateGame } 
 const EAP = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const inputRef = useRef(createInput());
+  const [muted, setMutedState] = useState(isMuted);
+  const toggleMute = () => {
+    setMuted(!isMuted());
+    setMutedState(isMuted());
+  };
 
   useEffect(() => {
     document.title = "EAP — Evaporate All Parasites";
@@ -40,6 +45,7 @@ const EAP = () => {
     const onKeyDown = (e: KeyboardEvent) => {
       unlockAudio();
       if (e.code === "KeyR" && isOver()) return restart();
+      if (e.code === "KeyM" && !e.repeat) return toggleMute();
       // Ignore OS key auto-repeat so holding jump doesn't re-trigger it
       if (e.repeat) {
         if (e.code === "Space" || e.code.startsWith("Arrow")) e.preventDefault();
@@ -135,6 +141,16 @@ const EAP = () => {
         height={VIEW_H}
         className="w-full max-w-[960px] rounded-lg border border-[#35e0a1]/40 cursor-crosshair"
       />
+      <button
+        onClick={(e) => {
+          unlockAudio();
+          toggleMute();
+          e.currentTarget.blur(); // so Space (jump) doesn't toggle it again
+        }}
+        className="text-sm text-[#9aa3b5] hover:text-[#35e0a1]"
+      >
+        {muted ? "🔇 Sound off" : "🔊 Sound on"} (M)
+      </button>
       <div className="flex gap-3 md:hidden select-none touch-none">
         <button className={btn} {...touch("left")}>←</button>
         <button className={btn} {...touch("jump")}>↑</button>

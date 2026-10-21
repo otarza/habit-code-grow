@@ -1,5 +1,5 @@
 import { COLORS, FLOOR_Y, MOVE_SPEED, VIEW_H, VIEW_W } from "./constants";
-import { playClunk, playFootstep, playJangle, playPickup } from "./audio";
+import { playClunk, playFootstep, playJangle, playPickup, playSting } from "./audio";
 import { drawHero, type Hero, type Input } from "./grave";
 
 // Level 3: locked inside the EAP van by THE KEYS KEEPER.
@@ -93,7 +93,10 @@ const advanceKeeper = (room: VanRoom, dt: number) => {
     if (k.phase === "quiet") {
       k.phase = "approach";
       k.side = Math.random() < 0.5 ? "left" : "right";
-    } else if (k.phase === "approach") k.phase = "near";
+    } else if (k.phase === "approach") {
+      k.phase = "near";
+      playSting();
+    }
     else if (k.phase === "near") k.phase = "leaving";
     else k.phase = "quiet";
     k.duration = k.phase === "quiet" ? 4 + Math.random() * 3.5 : PHASE_TIME[k.phase];

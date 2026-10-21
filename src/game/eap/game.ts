@@ -25,8 +25,8 @@ import { createGoblin, drawGoblin, drawLava, updateGoblin, type Goblin, type Lav
 import { createGrave, drawBeam, drawHero, updateHero, type Beam, type Hero, type Input } from "./grave";
 import { drawResting } from "./resting";
 import { createUnstable, drawUnstable, isHittable, updateUnstable, type Unstable } from "./unstable";
-import { playClunk, playDeath } from "./audio";
-import { createVanRoom, drawKeysKeeper, drawVanHud, drawVanRoom, updateVanRoom, type VanRoom } from "./van";
+import { playClunk, playDeath, updateAmbience, type Mood } from "./audio";
+import { createVanRoom, drawKeysKeeper, drawVanHud, drawVanRoom, footstepVolume, updateVanRoom, type VanRoom } from "./van";
 
 type Particle = { x: number; y: number; vx: number; vy: number; life: number; maxLife: number; size: number; color: string };
 type FloatText = { x: number; y: number; text: string; life: number; color: string };
@@ -278,8 +278,15 @@ const updateResting = (game: GameState, dt: number) => {
   }
 };
 
+const MOOD_FOR_LEVEL: Record<Level, Mood> = { 1: "forest", 2: "resting", 3: "van" };
+
 export const updateGame = (game: GameState, input: Input, dt: number) => {
   game.phaseTime += dt;
+
+  // Spooky background sound for the current place; dread rises as the Keys Keeper gets close
+  const moodLevel = game.status === "title" ? game.nextLevel : game.level;
+  const dread = game.level === 3 && game.status === "playing" ? footstepVolume(game.room) : 0;
+  updateAmbience(MOOD_FOR_LEVEL[moodLevel], dread, dt);
 
   if (game.status === "driving" && game.phaseTime > DRIVE_TIME) {
     game.status = "title";
