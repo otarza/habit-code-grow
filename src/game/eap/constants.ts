@@ -32,9 +32,19 @@ export const LAVA_FLIGHT_TIME = 1.0;
 export const LAVA_DAMAGE = 20;
 export const LAVA_RADIUS = 18;
 
-// Van
-export const VAN_X = 2640;
+// Van (checkpoint: getting in refills health and battery)
+export const VAN_X = 2640; // where it waits in the forest
 export const VAN_W = 200;
+export const VAN_PARK_X = 40; // where it parks after arriving somewhere new
+
+// THE UNSTABLE (level 2 parasites)
+export const UNSTABLE_MAX_HP = 16;
+export const UNSTABLE_DAMAGE = 5;
+export const UNSTABLE_SPEED = 90;
+export const UNSTABLE_EMERGE_TIME = 0.9;
+export const UNSTABLE_TOTAL = 20; // evaporate this many to clear the level
+export const UNSTABLE_MAX_ALIVE = 5;
+export const UNSTABLE_SPAWN_INTERVAL = 1.6;
 
 export const COLORS = {
   accent: "#35e0a1",
@@ -42,4 +52,5 @@ export const COLORS = {
   lava: "#ff6a1a",
   hp: "#e74c3c",
   battery: "#4ab8ff",
+  unstable: "#b45cff",
 };

@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { VIEW_H, VIEW_W } from "@/game/eap/constants";
-import { createGame, createInput, drawGame, updateGame } from "@/game/eap/game";
+import { arriveAt, createGame, createInput, drawGame, restartGame, updateGame } from "@/game/eap/game";
 
 // EAP — Evaporate All Parasites
 // 2D side-view canvas game. Hero: GRAVE, an employee of EAP Corporation, in a forest.
@@ -16,11 +16,13 @@ const EAP = () => {
     if (!canvas || !ctx) return;
 
     const input = inputRef.current;
-    let game = createGame();
+    // ?level=2 jumps straight to THE RESTING OF THE UNSTABLE
+    let game = new URLSearchParams(window.location.search).get("level") === "2" ? arriveAt(2) : createGame();
     const mouse = { x: VIEW_W / 2, y: VIEW_H / 2 };
 
+    const isOver = () => game.status === "won" || game.status === "lost";
     const restart = () => {
-      game = createGame();
+      game = restartGame(game);
       input.firing = false;
     };
 
@@ -32,7 +34,7 @@ const EAP = () => {
       return true;
     };
     const onKeyDown = (e: KeyboardEvent) => {
-      if (e.code === "KeyR" && game.status !== "playing") return restart();
+      if (e.code === "KeyR" && isOver()) return restart();
       // Ignore OS key auto-repeat so holding jump doesn't re-trigger it
       if (e.repeat) {
         if (e.code === "Space" || e.code.startsWith("Arrow")) e.preventDefault();
@@ -56,7 +58,7 @@ const EAP = () => {
     };
     const onMouseDown = (e: MouseEvent) => {
       toCanvas(e);
-      if (game.status !== "playing") return restart();
+      if (isOver()) return restart();
       if (e.button === 2) {
         input.aimWithMouse = true;
         input.firing = true;
