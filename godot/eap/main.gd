@@ -4,10 +4,15 @@ extends Node2D
 # The whole game in one script: attach it to a Node2D and press Play. No other files needed.
 #
 # Story:
-#   1. THE FOREST: GRAVE (EAP Corporation) evaporates DESTRUCTION MAKER, then gets in the van.
-#   2. THE RESTING OF THE UNSTABLE: evaporate 100 UNSTABLE, then get back in the van.
-#   3. THE KEYS KEEPER: locked in the van. Hide from his footsteps, find 3 keys, unlock the back door.
-# Every time Grave gets in the van it's a checkpoint: health and battery refill.
+#   Before playing, pick one of 3 save files. The game saves every time Grave gets in the van.
+#   1. THE SCARY FOREST: 50 wolves and 50 bears, then the boss DESTRUCTION MAKER. Then the van.
+#   2. THE RESTING OF THE UNSTABLE: 100 UNSTABLE, then the boss THE UNSTABLE CORE. Walk into the van.
+#   3. Inside the van, walk up to the map on the wall and choose where to go:
+#        THE DARK CAVE: 200 spiders, boss THE BROODMOTHER. Clearing it unlocks
+#        THE CREEPY WAREHOUSE: 300 witches + 300 skeletons, boss THE GRAND WITCH. Clearing it unlocks
+#        THE BEACH OF DOOM: 300 infected crabs + 300 land sharks + 300 infected octopuses, boss THE INFECTED KRAKEN.
+#   4. After the beach, THE KEYS KEEPER locks Grave in the van. Hide from his footsteps, find 3 keys, unlock the back door.
+# Every time Grave gets in the van it's a checkpoint: health and battery refill, and the game is saved.
 #
 # Controls:
 #   A / D or arrows ........ move
@@ -15,11 +20,13 @@ extends Node2D
 #   Right-click (or left-click, or F) ... shoot, hold to charge
 #   E ...................... hide in drawer / open door / pick up key (inside the van)
 #   S / Down ............... climb out / close door (inside the van)
+#   1 / 2 / 3 .............. pick a save file, or a place on the van's map
 #   R ...................... try again after dying
+#   Esc .................... back to the save files
 #   M ...................... sound on / off
 
-# Change to 2 or 3 to start at a later part of the story (handy for testing)
-const START_LEVEL := 1
+# Every monster count is multiplied by this. Set it to 0.1 to test quickly; 1.0 is the real game.
+const QUOTA_SCALE := 1.0
 
 const VIEW_W := 960.0
 const VIEW_H := 540.0
@@ -42,30 +49,21 @@ const BATTERY_DRAIN := 35.0 # per second while charging (never refills, except a
 const BEAM_MIN_DAMAGE := 8
 const BEAM_MAX_DAMAGE := 40
 
-# Destruction Maker
-const GOBLIN_MAX_HP := 150.0
+# Thrown attacks (lava, ink, webs, orbs)
 const GOBLIN_SCALE := 1.8
-const GOBLIN_WAKE_RANGE := 750.0
-const GOBLIN_SPEED := 120.0
-const GOBLIN_KEEP_DISTANCE := 320.0
 const LAVA_GRAVITY := 900.0
 const LAVA_FLIGHT_TIME := 1.0
-const LAVA_DAMAGE := 20.0
-const LAVA_RADIUS := 18.0
 
 # Van
-const VAN_X := 2640.0 # where it waits in the forest
+const VAN_X := 2640.0 # where it waits at the end of the forest
 const VAN_W := 200.0
 const VAN_PARK_X := 40.0 # where it parks after arriving somewhere new
 
-# THE UNSTABLE
-const UNSTABLE_MAX_HP := 16.0
-const UNSTABLE_DAMAGE := 5.0
-const UNSTABLE_SPEED := 90.0
-const UNSTABLE_EMERGE_TIME := 0.9
-const UNSTABLE_TOTAL := 100
-const UNSTABLE_MAX_ALIVE := 6
-const UNSTABLE_SPAWN_INTERVAL := 1.1
+# Monsters
+const MAX_ALIVE := 8 # regular monsters on screen at once
+const MAX_MINIONS := 6 # monsters a boss can have summoned at once
+const SPAWN_INTERVAL := 0.7
+const EMERGE_TIME := 0.9
 
 # Story timing
 const DRIVE_TIME := 2.0
@@ -82,6 +80,10 @@ const RIGHT_DOOR_X := 810.0
 const SIDE_DOOR_W := 110.0
 const RED_CHANCE := 0.35
 const STEP_INTERVAL := 0.55
+const MAP_X := 190.0 # the map on the van wall
+const MAP_W := 250.0
+
+const SAVE_PATH := "user://eap_saves.cfg"
 
 const ACCENT := Color("#35e0a1")
 const BEAM_COLOR := Color("#ffe24a")
@@ -89,9 +91,63 @@ const LAVA_COLOR := Color("#ff6a1a")
 const HP_COLOR := Color("#e74c3c")
 const BATTERY_COLOR := Color("#4ab8ff")
 const UNSTABLE_COLOR := Color("#b45cff")
+const INFECTED := Color("#8cff5a")
 const KEEPER_EYES := Color("#ffc94a")
 const KEY_COLORS := {"blue": Color("#3d8bff"), "green": Color("#35e05a"), "red": Color("#ff3030")}
-const LEVEL_NAMES := {1: "THE FOREST", 2: "THE RESTING OF THE UNSTABLE", 3: "THE KEYS KEEPER"}
+
+# Monster stats. pitch = how high their hurt/death sounds are.
+const ENEMY := {
+	"wolf": {"plural": "wolves", "hp": 16, "dmg": 10, "speed": 170, "w": 60, "h": 44, "color": Color("#5d6370"), "pitch": 1.25},
+	"bear": {"plural": "bears", "hp": 40, "dmg": 20, "speed": 70, "w": 70, "h": 66, "color": Color("#5a3a22"), "pitch": 0.6},
+	"unstable": {"plural": "unstable", "hp": 16, "dmg": 5, "speed": 90, "w": 40, "h": 40, "color": UNSTABLE_COLOR, "pitch": 1.0},
+	"spider": {"plural": "spiders", "hp": 8, "dmg": 5, "speed": 140, "w": 34, "h": 22, "color": Color("#2a2030"), "pitch": 1.7},
+	"witch": {"plural": "witches", "hp": 16, "dmg": 8, "speed": 110, "w": 44, "h": 70, "color": Color("#79c25a"), "pitch": 1.4, "fly": true},
+	"skeleton": {"plural": "skeletons", "hp": 16, "dmg": 10, "speed": 80, "w": 30, "h": 72, "color": Color("#e8e2cf"), "pitch": 1.1},
+	"crab": {"plural": "infected crabs", "hp": 12, "dmg": 8, "speed": 120, "w": 46, "h": 32, "color": Color("#c9452c"), "pitch": 1.5},
+	"shark": {"plural": "land sharks", "hp": 20, "dmg": 12, "speed": 160, "w": 90, "h": 40, "color": Color("#5d6b78"), "pitch": 0.8, "fly": true},
+	"octopus": {"plural": "infected octopuses", "hp": 16, "dmg": 8, "speed": 70, "w": 44, "h": 50, "color": Color("#6b3a8a"), "pitch": 1.0},
+}
+
+# The boss at the end of every place
+const BOSSES := {
+	"destruction_maker": {"name": "DESTRUCTION MAKER", "hp": 600, "w": 50, "h": 72, "contact": 0, "color": Color("#d4372b")},
+	"unstable_core": {"name": "THE UNSTABLE CORE", "hp": 500, "w": 120, "h": 110, "contact": 15, "color": UNSTABLE_COLOR},
+	"broodmother": {"name": "THE BROODMOTHER", "hp": 700, "w": 150, "h": 95, "contact": 18, "color": Color("#c0262a")},
+	"grand_witch": {"name": "THE GRAND WITCH", "hp": 800, "w": 70, "h": 130, "contact": 12, "color": Color("#79c25a")},
+	"kraken": {"name": "THE INFECTED KRAKEN", "hp": 1000, "w": 130, "h": 150, "contact": 20, "color": INFECTED},
+}
+
+const PLACES := {
+	"forest": {
+		"name": "THE SCARY FOREST", "line": "Wolves and bears are out tonight...", "color": Color("#ff6a5a"),
+		"quota": {"wolf": 50, "bear": 50}, "boss": "destruction_maker",
+	},
+	"resting": {
+		"name": "THE RESTING OF THE UNSTABLE", "line": "Something is moving under the ground...", "color": Color("#cfa8ff"),
+		"quota": {"unstable": 100}, "boss": "unstable_core",
+	},
+	"cave": {
+		"name": "THE DARK CAVE", "line": "Thousands of little legs in the dark...", "color": Color("#3ff2d6"),
+		"quota": {"spider": 200}, "boss": "broodmother",
+	},
+	"warehouse": {
+		"name": "THE CREEPY WAREHOUSE", "line": "Witches above. Skeletons below.", "color": Color("#ffcf5a"),
+		"quota": {"witch": 300, "skeleton": 300}, "boss": "grand_witch",
+	},
+	"beach": {
+		"name": "THE BEACH OF DOOM", "line": "The tide washed up something infected...", "color": INFECTED,
+		"quota": {"crab": 300, "shark": 300, "octopus": 300}, "boss": "kraken",
+	},
+}
+const MAP_ORDER := ["cave", "warehouse", "beach"]
+
+const SHOT_STYLE := {
+	"lava": {"color": LAVA_COLOR, "r": 18, "dmg": 20},
+	"orb": {"color": UNSTABLE_COLOR, "r": 16, "dmg": 15},
+	"web": {"color": Color("#e8e8f0"), "r": 14, "dmg": 12},
+	"ink": {"color": Color("#3b2b5a"), "r": 15, "dmg": 14},
+	"magic": {"color": Color("#7dff6a"), "r": 9, "dmg": 10},
+}
 
 
 class Hero:
@@ -120,42 +176,62 @@ class Beam:
 	var life := 1.5
 
 
-class Goblin:
-	var name := "DESTRUCTION MAKER"
-	var x := 1500.0
-	var y := 450.0
+class Enemy:
+	var kind := ""
+	var x := 0.0
+	var y := 450.0 # feet position (flyers: bottom of the body)
 	var vy := 0.0
-	var w := 50.0 # 28 * GOBLIN_SCALE
-	var h := 72.0 # 40 * GOBLIN_SCALE
+	var w := 40.0
+	var h := 40.0
+	var hp := 10.0
+	var max_hp := 10.0
+	var damage := 5.0
+	var speed := 100.0
+	var flying := false
+	var state := "active" # emerging (out of the ground), dropping (on a thread), active
+	var t := 0.0
+	var drop_from := 0.0
+	var hop_cooldown := 1.0
+	var attack_cooldown := 2.0
+	var hurt_flash := 0.0
+	var seed_offset := 0.0
+	var facing := 1
+	var minion := false # summoned by a boss: doesn't count toward the place's total
+	var walk_time := 0.0
+
+
+class Boss:
+	var kind := ""
+	var name := ""
+	var x := 0.0
+	var y := 450.0
+	var vx := 0.0
+	var vy := 0.0
+	var w := 60.0
+	var h := 80.0
+	var hp := 100.0
+	var max_hp := 100.0
+	var contact := 15.0 # damage for touching it
 	var facing := -1
-	var hp := 150.0
-	var awake := false
-	var alive := true
-	var throw_cooldown := 1.2
-	var throw_anim := 0.0 # > 0 while the throwing arm is raised
+	var t := 0.0
+	var attack_cooldown := 2.0
+	var summon_cooldown := 3.0
 	var hop_cooldown := 1.5
+	var throw_anim := 0.0
 	var hurt_flash := 0.0
 	var walk_time := 0.0
 
 
-class LavaBall:
+class Shot:
+	var kind := ""
 	var pos := Vector2.ZERO
 	var vel := Vector2.ZERO
+	var gravity := 0.0
+	var radius := 10.0
+	var color := Color.WHITE
+	var damage := 10.0
+	var life := 0.0
 	var dead := false
-
-
-class Unstable:
-	var x := 0.0
-	var y := 450.0
-	var vy := 0.0
-	var w := 40.0
-	var h := 40.0
-	var hp := 16.0
-	var emerging := true
-	var t := 0.0
-	var hop_cooldown := 1.0
-	var hurt_flash := 0.0
-	var seed_offset := 0.0
 
 
 class Particle:
@@ -182,34 +258,49 @@ class Thud:
 
 # ---------- game state ----------
 
-var level := 1
-var status := "playing" # playing, driving, title, arriving, won, lost
+var scene := "forest" # forest, resting, cave, warehouse, beach, hub (inside the van), keeper
+var status := "menu" # menu, playing, driving, title, arriving, won, lost
 var phase_time := 0.0
-var checkpoint := 1 # where Grave restarts after dying
-var next_level := 1 # level the title card leads into
+var next_scene := "forest" # where the title card leads
 var death_reason := ""
 
 var grave := Hero.new()
-var goblin := Goblin.new()
 var beams: Array = []
-var lava: Array = []
-var unstables: Array = []
+var enemies: Array = []
+var boss: Boss = null
+var shots: Array = []
 var particles: Array = []
 var texts: Array = []
-var unstable_spawned := 0
-var unstable_evaporated := 0
-var spawn_timer := 1.5
+var place_phase := "fight" # fight (monsters), boss, cleared
+var kills := {}
+var spawned := {}
+var spawn_timer := 1.0
+var boss_banner := 0.0
 var cam_x := 0.0
 var hint := ""
 var hint_time := 0.0
+
+# Save files
+var slots: Array = [{}, {}, {}]
+var slot := 0
+var progress := {"checkpoint": "forest", "cleared": []}
+var menu_index := 0
+var erase_armed := -1
+var last_mouse := Vector2.ZERO
+
+# The map on the van wall
+var map_open := false
+var map_choice := ""
+var map_index := -1
 
 # Input
 var aim := Vector2.ZERO # mouse position in the world
 var jump_pressed := false
 var action_pressed := false
 var down_pressed := false
+var fire_block := false # ignore the click that picked a menu item until it's released
 
-# Inside the van
+# Inside the van (the Keys Keeper)
 var hiding_in := -1
 var door_open := "" # "left", "right" or ""
 var door_key := "" # key lying outside the open door: "blue", "green", "red" or ""
@@ -231,70 +322,199 @@ var unlock_time := 0.0
 func _ready() -> void:
 	randomize()
 	build_sounds()
-	if START_LEVEL == 1:
-		new_game()
+	load_slots()
+	status = "menu"
+
+
+# ---------- save files ----------
+
+func load_slots() -> void:
+	var cfg := ConfigFile.new()
+	cfg.load(SAVE_PATH) # a missing file just means there are no saves yet
+	for i in 3:
+		var section := "slot%d" % (i + 1)
+		if cfg.has_section(section):
+			slots[i] = {
+				"checkpoint": str(cfg.get_value(section, "checkpoint", "forest")),
+				"cleared": Array(cfg.get_value(section, "cleared", [])),
+			}
+		else:
+			slots[i] = {}
+
+
+func save_progress() -> void:
+	var cfg := ConfigFile.new()
+	cfg.load(SAVE_PATH)
+	var section := "slot%d" % (slot + 1)
+	cfg.set_value(section, "checkpoint", progress["checkpoint"])
+	cfg.set_value(section, "cleared", progress["cleared"])
+	cfg.save(SAVE_PATH)
+	slots[slot] = progress.duplicate(true)
+
+
+func erase_slot(i: int) -> void:
+	var cfg := ConfigFile.new()
+	cfg.load(SAVE_PATH)
+	var section := "slot%d" % (i + 1)
+	if cfg.has_section(section):
+		cfg.erase_section(section)
+	cfg.save(SAVE_PATH)
+	slots[i] = {}
+	erase_armed = -1
+
+
+# Erasing needs two presses, so a save can't be wiped by accident
+func arm_or_erase(i: int) -> void:
+	var saved: Dictionary = slots[i]
+	if saved.is_empty():
+		return
+	if erase_armed == i:
+		erase_slot(i)
 	else:
-		arrive_at(START_LEVEL)
+		erase_armed = i
 
 
-func reset_level(lvl: int, cp: int) -> void:
-	level = lvl
-	checkpoint = cp
-	next_level = lvl
+func start_slot(i: int) -> void:
+	slot = i
+	erase_armed = -1
+	fire_block = true
+	var saved: Dictionary = slots[i]
+	if saved.is_empty():
+		progress = {"checkpoint": "forest", "cleared": []}
+		save_progress()
+	else:
+		progress = saved.duplicate(true)
+	var cp: String = progress["checkpoint"]
+	show_title("hub" if cp == "done" else cp)
+
+
+func go_to_menu() -> void:
+	load_slots()
+	status = "menu"
+	menu_index = slot
+	erase_armed = -1
+
+
+func is_cleared(place: String) -> bool:
+	var cleared: Array = progress["cleared"]
+	return cleared.has(place)
+
+
+# The map's places unlock one after another
+func is_unlocked(place: String) -> bool:
+	match place:
+		"warehouse":
+			return is_cleared("cave")
+		"beach":
+			return is_cleared("warehouse")
+	return true
+
+
+func scene_name(s: String) -> String:
+	if PLACES.has(s):
+		return PLACES[s]["name"]
+	match s:
+		"hub":
+			return "THE EAP VAN"
+		"keeper":
+			return "THE KEYS KEEPER"
+		"done":
+			return "COMPLETED"
+	return s
+
+
+# ---------- moving between places ----------
+
+func reset_scene(s: String) -> void:
+	scene = s
 	status = "playing"
 	phase_time = 0.0
 	death_reason = ""
 	grave = Hero.new() # full health and battery
-	goblin = Goblin.new()
 	beams.clear()
-	lava.clear()
-	unstables.clear()
+	enemies.clear()
+	shots.clear()
 	particles.clear()
 	texts.clear()
-	unstable_spawned = 0
-	unstable_evaporated = 0
-	spawn_timer = 1.5
+	boss = null
+	place_phase = "fight"
+	kills = {}
+	spawned = {}
+	if PLACES.has(s):
+		for k in PLACES[s]["quota"]:
+			kills[k] = 0
+			spawned[k] = 0
+	spawn_timer = 1.0
+	boss_banner = 0.0
 	cam_x = 0.0
 	hint_time = 0.0
+	map_open = false
+	map_choice = ""
 	reset_van_room()
 
 
-func new_game() -> void:
-	reset_level(1, 1)
+# Start a scene: the van drops Grave off, or he's inside it
+func start_scene(s: String) -> void:
+	reset_scene(s)
+	match s:
+		"forest":
+			grave.x = 200.0
+			show_hint(place_goal("forest"), 5.0)
+		"hub":
+			grave.x = 640.0
+			show_hint("Walk up to the map on the wall to choose where to go.", 4.0)
+		"keeper":
+			grave.x = 448.0 # locked inside the van, beside the back door
+		_:
+			status = "arriving"
+			grave.x = VAN_PARK_X + VAN_W + 40.0
 
 
-# Start a level straight from the van (after a title card, or when retrying a checkpoint)
-func arrive_at(lvl: int) -> void:
-	reset_level(lvl, lvl)
-	if lvl == 3:
-		grave.x = 448.0 # locked inside the van, beside the back door
+func show_title(next: String) -> void:
+	status = "title"
+	next_scene = next
+	phase_time = 0.0
+
+
+# Got in the van: checkpoint (refill and save), then on to the next scene
+func board_van(next: String, drive := false) -> void:
+	grave.hp = GRAVE_MAX_HP
+	grave.battery = BATTERY_MAX
+	shots.clear()
+	beams.clear()
+	progress["checkpoint"] = next
+	save_progress()
+	if drive:
+		status = "driving"
+		next_scene = next
+		phase_time = 0.0
 	else:
-		status = "arriving"
-		grave.x = VAN_PARK_X + VAN_W + 40.0
+		show_title(next)
+
+
+# Where the van goes after a place is cleared
+func leave_place() -> void:
+	match scene:
+		"forest":
+			board_van("resting", true)
+		"beach":
+			board_van("keeper")
+		_:
+			board_van("hub")
 
 
 func restart() -> void:
-	if status == "lost" and checkpoint != 1:
-		arrive_at(checkpoint)
+	fire_block = true
+	if status == "won":
+		go_to_menu()
 	else:
-		new_game()
+		start_scene(scene)
 
 
-# Got in the van: checkpoint (refill), then a title card for the next place
-func board_van(next: int, new_status: String) -> void:
-	status = new_status
-	phase_time = 0.0
-	next_level = next
-	checkpoint = next
-	grave.hp = GRAVE_MAX_HP
-	grave.battery = BATTERY_MAX
-	lava.clear()
-	beams.clear()
-
-
-func show_hint(text_to_show: String) -> void:
-	hint = text_to_show
-	hint_time = 0.5
+func show_hint(text_to_show: String, time := 0.5) -> void:
+	if hint != text_to_show or hint_time < time:
+		hint = text_to_show
+		hint_time = time
 
 
 func is_over() -> bool:
@@ -305,20 +525,79 @@ func is_over() -> bool:
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and not event.echo:
-		match event.keycode:
+		var k: Key = event.keycode
+		if k == KEY_M:
+			AudioServer.set_bus_mute(0, not AudioServer.is_bus_mute(0))
+			return
+		if status == "menu":
+			menu_key(k)
+			return
+		match k:
 			KEY_W, KEY_UP, KEY_SPACE:
 				jump_pressed = true
 			KEY_E:
 				action_pressed = true
 			KEY_S, KEY_DOWN:
 				down_pressed = true
+			KEY_1, KEY_2, KEY_3:
+				if scene == "hub" and map_open:
+					map_choice = MAP_ORDER[k - KEY_1]
 			KEY_R:
 				if is_over():
 					restart()
-			KEY_M:
-				AudioServer.set_bus_mute(0, not AudioServer.is_bus_mute(0))
-	if event is InputEventMouseButton and event.pressed and is_over():
-		restart()
+			KEY_ESCAPE:
+				go_to_menu()
+	if event is InputEventMouseButton and event.pressed:
+		var m := get_local_mouse_position()
+		if status == "menu":
+			if event.button_index == MOUSE_BUTTON_LEFT:
+				menu_click(m)
+		elif is_over():
+			restart()
+		elif scene == "hub" and map_open and status == "playing":
+			for i in 3:
+				if map_card_rect(i).has_point(m):
+					map_choice = MAP_ORDER[i]
+					fire_block = true
+
+
+func menu_key(k: Key) -> void:
+	match k:
+		KEY_W, KEY_UP:
+			menu_index = (menu_index + 2) % 3
+			erase_armed = -1
+		KEY_S, KEY_DOWN:
+			menu_index = (menu_index + 1) % 3
+			erase_armed = -1
+		KEY_1, KEY_2, KEY_3:
+			start_slot(k - KEY_1)
+		KEY_E, KEY_ENTER, KEY_KP_ENTER, KEY_SPACE:
+			start_slot(menu_index)
+		KEY_X, KEY_DELETE, KEY_BACKSPACE:
+			arm_or_erase(menu_index)
+
+
+func menu_click(m: Vector2) -> void:
+	for i in 3:
+		var saved: Dictionary = slots[i]
+		if not saved.is_empty() and erase_rect(i).has_point(m):
+			arm_or_erase(i)
+			return
+		if slot_rect(i).has_point(m):
+			start_slot(i)
+			return
+
+
+func slot_rect(i: int) -> Rect2:
+	return Rect2(VIEW_W / 2 - 300, 170 + i * 105, 600, 88)
+
+
+func erase_rect(i: int) -> Rect2:
+	return Rect2(VIEW_W / 2 + 300 - 112, 170 + i * 105 + 27, 96, 34)
+
+
+func map_card_rect(i: int) -> Rect2:
+	return Rect2(VIEW_W / 2 - 375 + i * 252, 150, 234, 250)
 
 
 func key(a: Key, b: Key) -> bool:
@@ -326,9 +605,14 @@ func key(a: Key, b: Key) -> bool:
 
 
 func fire_held() -> bool:
-	return Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT) \
+	var held := Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT) \
 		or Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) \
 		or Input.is_key_pressed(KEY_F)
+	if fire_block:
+		if not held:
+			fire_block = false
+		return false
+	return held
 
 
 # ---------- main loop ----------
@@ -338,40 +622,57 @@ func _process(delta: float) -> void:
 	phase_time += delta
 	aim = get_local_mouse_position() + Vector2(cam_x, 0)
 	hint_time = maxf(0.0, hint_time - delta)
+	boss_banner = maxf(0.0, boss_banner - delta)
+
+	if status == "menu":
+		# Hovering a save file selects it
+		var m := get_local_mouse_position()
+		if m != last_mouse:
+			last_mouse = m
+			for i in 3:
+				if slot_rect(i).has_point(m):
+					menu_index = i
+		update_audio("menu", 0.0, delta)
+		update_charge_hum(0.0)
+		queue_redraw()
+		return
 
 	# Spooky background sound for the current place; dread rises as the Keys Keeper gets close
-	var mood_level := next_level if status == "title" else level
-	var dread := footstep_volume() if (level == 3 and status == "playing") else 0.0
-	update_audio(mood_level, dread, delta)
-	var charging := status == "playing" and level != 3 and grave.charging
+	var mood_scene := next_scene if status == "title" else scene
+	var dread := footstep_volume() if (scene == "keeper" and status == "playing") else 0.0
+	update_audio(mood_scene, dread, delta)
+	var charging := status == "playing" and PLACES.has(scene) and grave.charging
 	update_charge_hum(grave.charge / MAX_CHARGE if charging else 0.0)
 
 	if status == "driving" and phase_time > DRIVE_TIME:
-		status = "title"
-		phase_time = 0.0
+		show_title(next_scene)
 	elif status == "title" and phase_time > TITLE_TIME:
-		arrive_at(next_level)
+		start_scene(next_scene)
 	elif status == "arriving" and phase_time > ARRIVE_TIME:
 		status = "playing"
 		phase_time = 0.0
+		show_hint(place_goal(scene), 5.0)
 
 	if status == "playing":
-		if level == 3:
-			update_van_room(delta)
-		else:
-			update_grave(delta)
-			for b: Beam in beams:
-				b.pos += b.vel * delta
-				b.life -= delta
-			if level == 1:
-				update_forest(delta)
-			else:
-				update_resting(delta)
-			for b: Beam in beams:
-				if b.life > 0 and b.pos.y > FLOOR_Y:
-					b.life = 0
-					burst(Vector2(b.pos.x, FLOOR_Y), 5, BEAM_COLOR, 120.0, 2.0)
-			beams = beams.filter(func(b: Beam) -> bool: return b.life > 0)
+		match scene:
+			"keeper":
+				update_van_room(delta)
+				if status == "won" and progress["checkpoint"] != "done":
+					progress["checkpoint"] = "done"
+					save_progress()
+			"hub":
+				update_hub(delta)
+			_:
+				update_grave(delta)
+				for b: Beam in beams:
+					b.pos += b.vel * delta
+					b.life -= delta
+				update_place(delta)
+				for b: Beam in beams:
+					if b.life > 0 and b.pos.y > FLOOR_Y:
+						b.life = 0
+						burst(Vector2(b.pos.x, FLOOR_Y), 5, BEAM_COLOR, 120.0, 2.0)
+				beams = beams.filter(func(b: Beam) -> bool: return b.life > 0)
 
 	# Taps only count for one frame
 	jump_pressed = false
@@ -387,13 +688,12 @@ func _process(delta: float) -> void:
 		t.life -= delta
 	texts = texts.filter(func(t: FloatText) -> bool: return t.life > 0)
 
-	if level != 3:
+	if PLACES.has(scene):
 		cam_x = clampf(grave.x - VIEW_W / 2.0, 0.0, WORLD_W - VIEW_W)
 	queue_redraw()
 
 
 # ---------- Grave and the evaporator ----------
-
 func update_grave(delta: float) -> void:
 	var dir := 0
 	if key(KEY_D, KEY_RIGHT):
@@ -503,201 +803,559 @@ func float_text(pos: Vector2, s: String, color: Color, life := 0.8) -> void:
 	texts.append(t)
 
 
-# ---------- level 1: the forest ----------
+# ---------- places: monsters, bosses and the van ----------
 
-func update_forest(delta: float) -> void:
-	update_goblin(delta)
+func quota_of(place: String, kind: String) -> int:
+	var quota: Dictionary = PLACES[place]["quota"]
+	return maxi(1, roundi(float(quota[kind]) * QUOTA_SCALE))
 
-	for b: Beam in beams:
-		if b.life <= 0:
-			continue
-		if goblin.alive and hits_box(b.pos, b.size / 2, goblin.x, goblin.y, goblin.w + 6, goblin.h + 6):
-			b.life = 0
-			goblin.hp = maxf(0.0, goblin.hp - b.damage)
-			goblin.hurt_flash = 0.12
-			steam(b.pos, 4 + roundi(b.size))
-			float_text(Vector2(goblin.x, goblin.y - goblin.h - 34), "-%d" % b.damage, BEAM_COLOR)
-			if goblin.hp > 0:
-				play_sound("goblin_hurt", 1.0, randf_range(0.9, 1.15))
-			if goblin.hp <= 0:
-				goblin.alive = false
-				play_sound("goblin_death")
-				steam(Vector2(goblin.x, goblin.y - goblin.h / 2), 60)
-				burst(Vector2(goblin.x, goblin.y - goblin.h / 2), 30, Color("#d4372b"), 220.0, 5.0)
-				float_text(Vector2(goblin.x, goblin.y - 80), "EVAPORATED!", ACCENT, 2.0)
-		# Beams can also evaporate lava balls in mid-air
-		for ball: LavaBall in lava:
-			if not ball.dead and ball.pos.distance_to(b.pos) < LAVA_RADIUS + b.size / 2 + 4:
-				ball.dead = true
-				steam(b.pos, 6)
-				play_sound("lava_splat", 0.6)
 
-	for ball: LavaBall in lava:
-		if ball.dead:
-			continue
-		ball.vel.y += LAVA_GRAVITY * delta
-		ball.pos += ball.vel * delta
-		if randf() < 0.5:
-			var spark := Particle.new()
-			spark.pos = ball.pos
-			spark.vel = Vector2(0, -20)
-			spark.life = 0.3
-			spark.max_life = 0.3
-			spark.size = 6.0
-			spark.color = LAVA_COLOR
-			particles.append(spark)
-		if grave.invuln <= 0 and hits_box(ball.pos, LAVA_RADIUS, grave.x, grave.y, grave.w, grave.h):
-			burst(ball.pos, 14, LAVA_COLOR, 200.0, 3.0)
-			ball.dead = true
-			play_sound("lava_splat")
-			hurt_grave(LAVA_DAMAGE, HP_COLOR)
-		elif ball.pos.y >= FLOOR_Y:
-			burst(Vector2(ball.pos.x, FLOOR_Y), 10, LAVA_COLOR, 160.0, 3.0)
-			ball.dead = true
-			play_sound("lava_splat", 0.5)
-	lava = lava.filter(func(ball: LavaBall) -> bool: return not ball.dead)
+func place_goal(place: String) -> String:
+	if not PLACES.has(place):
+		return ""
+	var parts := PackedStringArray()
+	for k in PLACES[place]["quota"]:
+		parts.append("%d %s" % [quota_of(place, k), ENEMY[k]["plural"]])
+	return "Evaporate " + " and ".join(parts) + ", then beat the boss!"
 
-	# Getting in the van: checkpoint, refill, drive to the next place
-	if status == "playing" and grave.x > VAN_X:
-		if goblin.alive:
-			show_hint("The van won't start while Destruction Maker is around!")
+
+# The van is at the end of the forest; everywhere else it's parked where it dropped Grave off
+func min_x() -> float:
+	return 60.0 if scene == "forest" else VAN_PARK_X + VAN_W + 20.0
+
+
+func max_x() -> float:
+	return VAN_X - 40.0 if scene == "forest" else WORLD_W - 40.0
+
+
+func grave_chest() -> Vector2:
+	return Vector2(grave.x, grave.y - grave.h * 0.55)
+
+
+func count_regular() -> int:
+	var n := 0
+	for e: Enemy in enemies:
+		if not e.minion:
+			n += 1
+	return n
+
+
+func quota_done() -> bool:
+	for k in kills:
+		if int(kills[k]) < quota_of(scene, k):
+			return false
+	return true
+
+
+# Pick which monster to send next, weighted by how many of each are still to come
+func pick_kind() -> String:
+	var weights := {}
+	var total := 0
+	for k in kills:
+		var left: int = quota_of(scene, k) - int(spawned[k])
+		if left > 0:
+			weights[k] = left
+			total += left
+	if total == 0:
+		return ""
+	var r := randi() % total
+	for k in weights:
+		r -= int(weights[k])
+		if r < 0:
+			return k
+	return ""
+
+
+func update_place(delta: float) -> void:
+	var place: Dictionary = PLACES[scene]
+
+	# Monsters keep coming until the place's total has been sent, then the boss
+	if place_phase == "fight":
+		spawn_timer -= delta
+		if spawn_timer <= 0 and count_regular() < MAX_ALIVE:
+			var kind := pick_kind()
+			if kind != "":
+				spawn_enemy(kind, false)
+				spawned[kind] = int(spawned[kind]) + 1
+			spawn_timer = SPAWN_INTERVAL * randf_range(0.6, 1.4)
+		if quota_done() and count_regular() == 0:
+			start_boss(place["boss"])
+
+	for e: Enemy in enemies:
+		if update_enemy(e, delta):
+			hurt_grave(e.damage, HP_COLOR)
+	if boss != null:
+		update_boss(delta)
+	update_shots(delta)
+	beam_hits()
+
+	for e: Enemy in enemies:
+		if e.hp <= 0:
+			enemy_death(e)
+	enemies = enemies.filter(func(e: Enemy) -> bool: return e.hp > 0)
+	if boss != null and boss.hp <= 0:
+		boss_death()
+
+	# Back to the van
+	if status != "playing":
+		return
+	var at_van := grave.x > VAN_X if scene == "forest" else grave.x < VAN_PARK_X + VAN_W + 10
+	if place_phase == "cleared":
+		if at_van:
+			leave_place()
 		else:
-			board_van(2, "driving")
+			show_hint("%s is clear! Get back to the van %s" % [place["name"], ">>" if scene == "forest" else "<<"])
+	elif at_van:
+		show_hint("The van won't start until this place is clear!")
 
 
-func update_goblin(delta: float) -> void:
-	if not goblin.alive:
-		return
-	goblin.hurt_flash = maxf(0.0, goblin.hurt_flash - delta)
-	goblin.throw_anim = maxf(0.0, goblin.throw_anim - delta)
-	var dx := grave.x - goblin.x
-	if not goblin.awake:
-		if absf(dx) < GOBLIN_WAKE_RANGE:
-			goblin.awake = true
-		return
-	goblin.facing = 1 if dx >= 0 else -1
-
-	# Keep a throwing distance from Grave
-	var side := -1 if dx >= 0 else 1
-	var target_x := grave.x + side * GOBLIN_KEEP_DISTANCE
-	if absf(target_x - goblin.x) > 10:
-		goblin.x += signf(target_x - goblin.x) * GOBLIN_SPEED * delta
-		goblin.walk_time += delta
-	goblin.x = clampf(goblin.x, 40.0, WORLD_W - 40.0)
-
-	# Random hops
-	goblin.hop_cooldown -= delta
-	if goblin.hop_cooldown <= 0 and goblin.y >= FLOOR_Y:
-		goblin.vy = -520.0
-		goblin.hop_cooldown = randf_range(1.2, 3.0)
-	goblin.vy += GRAVITY * delta
-	goblin.y += goblin.vy * delta
-	if goblin.y >= FLOOR_Y:
-		goblin.y = FLOOR_Y
-		goblin.vy = 0.0
-
-	goblin.throw_cooldown -= delta
-	if goblin.throw_cooldown <= 0:
-		throw_lava()
-		goblin.throw_anim = 0.25
-		goblin.throw_cooldown = randf_range(1.3, 2.1)
+func make_enemy(kind: String, minion: bool) -> Enemy:
+	var stats: Dictionary = ENEMY[kind]
+	var e := Enemy.new()
+	e.kind = kind
+	e.hp = float(stats["hp"])
+	e.max_hp = e.hp
+	e.damage = float(stats["dmg"])
+	e.speed = float(stats["speed"])
+	e.w = float(stats["w"])
+	e.h = float(stats["h"])
+	e.flying = stats.get("fly", false)
+	e.minion = minion
+	e.seed_offset = randf() * 1000.0
+	e.hop_cooldown = randf_range(0.6, 1.6)
+	e.attack_cooldown = randf_range(1.5, 3.0)
+	match kind:
+		"unstable", "skeleton":
+			e.state = "emerging" # out of the ground
+		"spider":
+			e.state = "dropping" # down from the cave ceiling
+			e.drop_from = 40.0
+			e.y = 40.0
+		"witch":
+			e.y = FLOOR_Y - 160.0
+		"shark":
+			e.y = FLOOR_Y - 90.0
+	return e
 
 
-# Lob an arc that lands roughly where Grave is standing
-func throw_lava() -> void:
-	var hand := Vector2(goblin.x + 14 * goblin.facing, goblin.y - goblin.h - 6)
-	var target_x := grave.x + randf_range(-40, 40)
-	var t := LAVA_FLIGHT_TIME * randf_range(0.85, 1.15)
-	var ball := LavaBall.new()
-	ball.pos = hand
-	ball.vel = Vector2((target_x - hand.x) / t, (FLOOR_Y - 30 - hand.y - 0.5 * LAVA_GRAVITY * t * t) / t)
-	lava.append(ball)
-	play_sound("lava_throw")
+# near_x >= 0: a boss summons it right next to itself
+func spawn_enemy(kind: String, minion: bool, near_x := -1.0) -> void:
+	var e := make_enemy(kind, minion)
+	var side := -1.0 if randf() < 0.5 else 1.0
+	var center := grave.x if near_x < 0 else near_x
+	var dist := randf_range(220, 480)
+	match kind:
+		"witch", "shark", "wolf", "bear", "crab", "octopus":
+			dist = randf_range(480, 560) # they come in from the edge of the screen
+		"spider":
+			dist = randf_range(120, 420)
+	if near_x >= 0:
+		dist = randf_range(40, 160)
+	var x := center + side * dist
+	if x < min_x() or x > max_x():
+		x = center - side * dist
+	e.x = clampf(x, min_x(), max_x())
+	enemies.append(e)
+	if e.state == "emerging":
+		burst(Vector2(e.x, FLOOR_Y), 12, Color("#5a4a6a"), 160.0, 4.0)
+	match kind:
+		"unstable":
+			play_sound("unstable_emerge")
+		"skeleton":
+			play_sound("unstable_emerge", 0.8, 1.4)
+		"wolf":
+			if randf() < 0.3:
+				play_sound("howl", 0.7, randf_range(0.9, 1.1))
+		"bear":
+			play_sound("growl", 0.8)
+		"witch":
+			if randf() < 0.3:
+				play_sound("cackle", 0.7, randf_range(0.9, 1.15))
+		"shark":
+			play_sound("lava_throw", 0.7, 0.6)
+		"crab", "octopus":
+			play_sound("lava_splat", 0.35, 1.6)
 
 
-# ---------- level 2: the resting of the unstable ----------
-
-func update_resting(delta: float) -> void:
-	# THE UNSTABLE burst out of the ground near Grave
-	spawn_timer -= delta
-	if spawn_timer <= 0 and unstable_spawned < UNSTABLE_TOTAL and unstables.size() < UNSTABLE_MAX_ALIVE:
-		var side := -1.0 if randf() < 0.5 else 1.0
-		var min_x := VAN_PARK_X + VAN_W + 20.0
-		var x := grave.x + side * randf_range(150, 450)
-		if x < min_x or x > WORLD_W - 40:
-			x = grave.x - side * randf_range(150, 450)
-		x = clampf(x, min_x, WORLD_W - 40.0)
-		var u := Unstable.new()
-		u.x = x
-		u.hop_cooldown = randf_range(0.6, 1.6)
-		u.seed_offset = randf() * 1000.0
-		unstables.append(u)
-		play_sound("unstable_emerge")
-		burst(Vector2(x, FLOOR_Y), 12, Color("#5a4a6a"), 160.0, 4.0)
-		unstable_spawned += 1
-		spawn_timer = UNSTABLE_SPAWN_INTERVAL * randf_range(0.6, 1.4)
-
-	for u: Unstable in unstables:
-		if update_unstable(u, delta):
-			hurt_grave(UNSTABLE_DAMAGE, UNSTABLE_COLOR)
-		var hittable := not u.emerging or u.t > UNSTABLE_EMERGE_TIME * 0.5
-		for b: Beam in beams:
-			if b.life > 0 and hittable and hits_box(b.pos, b.size / 2, u.x, u.y, u.w + 6, u.h + 6):
-				b.life = 0
-				u.hp = maxf(0.0, u.hp - b.damage)
-				u.hurt_flash = 0.1
-				steam(b.pos, 3 + roundi(b.size / 2))
-				float_text(Vector2(u.x, u.y - u.h - 24), "-%d" % b.damage, BEAM_COLOR, 0.7)
-				if u.hp > 0:
-					play_sound("unstable_hurt", 1.0, randf_range(0.85, 1.2))
-		if u.hp <= 0:
-			steam(Vector2(u.x, u.y - u.h / 2), 24)
-			burst(Vector2(u.x, u.y - u.h / 2), 16, UNSTABLE_COLOR, 200.0, 4.0)
-			unstable_evaporated += 1
-			play_sound("unstable_death")
-	unstables = unstables.filter(func(u: Unstable) -> bool: return u.hp > 0)
-
-	# All evaporated: back to the van... where the Keys Keeper is waiting
-	if unstable_evaporated >= UNSTABLE_TOTAL and status == "playing":
-		show_hint("All the Unstable are evaporated! Get back to the van  <<")
-		if grave.x < VAN_PARK_X + VAN_W + 10:
-			board_van(3, "title")
-			play_sound("clunk")
+func enemy_hittable(e: Enemy) -> bool:
+	return e.state != "emerging" or e.t > EMERGE_TIME * 0.5
 
 
 # Returns true if it bit Grave this frame
-func update_unstable(u: Unstable, delta: float) -> bool:
-	u.t += delta
-	u.hurt_flash = maxf(0.0, u.hurt_flash - delta)
-	if u.emerging:
-		if u.t >= UNSTABLE_EMERGE_TIME:
-			u.emerging = false
-			u.t = 0.0
+func update_enemy(e: Enemy, delta: float) -> bool:
+	e.t += delta
+	e.hurt_flash = maxf(0.0, e.hurt_flash - delta)
+	if e.state == "emerging":
+		if e.t >= EMERGE_TIME:
+			e.state = "active"
+			e.t = 0.0
+		return false
+	if e.state == "dropping":
+		e.y = lerpf(e.drop_from, FLOOR_Y, minf(1.0, e.t / 0.9))
+		if e.t >= 0.9:
+			e.state = "active"
+			e.y = FLOOR_Y
 		return false
 
-	# Jittery crawl toward Grave: they can't move in a straight line
-	var dir := signf(grave.x - u.x)
-	var jitter := sin(u.t * 9.0 + u.seed_offset) * 0.6
-	u.x = clampf(u.x + (dir + jitter) * UNSTABLE_SPEED * delta, 20.0, WORLD_W - 20.0)
-	u.hop_cooldown -= delta
-	if u.hop_cooldown <= 0 and u.y >= FLOOR_Y:
-		u.vy = -380.0 - randf() * 200.0
-		u.hop_cooldown = randf_range(0.8, 2.2)
-	u.vy += GRAVITY * delta
-	u.y += u.vy * delta
-	if u.y >= FLOOR_Y:
-		u.y = FLOOR_Y
-		u.vy = 0.0
+	var dx := grave.x - e.x
+	var dir := 1.0 if dx >= 0 else -1.0
+	e.facing = 1 if dx >= 0 else -1
+	e.walk_time += delta
+	var move := dir
+	match e.kind:
+		"unstable", "spider":
+			move = dir + sin(e.t * 9.0 + e.seed_offset) * 0.6 # jittery
+		"crab":
+			move = dir + sin(e.t * 6.0 + e.seed_offset) * 0.9 # sideways scuttle
+		"witch":
+			# Hover at a distance and throw spells
+			var hover_x := grave.x - dir * 240.0
+			move = clampf((hover_x - e.x) / 60.0, -1.0, 1.0)
+			e.y = FLOOR_Y - 160.0 + sin(e.t * 2.0 + e.seed_offset) * 22.0
+			e.attack_cooldown -= delta
+			if e.attack_cooldown <= 0 and absf(dx) < 600:
+				shoot_at(Vector2(e.x + 12 * e.facing, e.y - 40), grave_chest(), 300.0, "magic")
+				e.attack_cooldown = randf_range(2.2, 3.4)
+		"shark":
+			# No legs: it flies low, swooping up and down
+			e.y = FLOOR_Y - 40.0 - (sin(e.t * 2.4 + e.seed_offset) * 0.5 + 0.5) * 100.0
+		"octopus":
+			e.attack_cooldown -= delta
+			if e.attack_cooldown <= 0 and absf(dx) < 520:
+				lob(Vector2(e.x, e.y - e.h), grave.x + randf_range(-40, 40), "ink")
+				e.attack_cooldown = randf_range(2.6, 3.8)
+	e.x = clampf(e.x + move * e.speed * delta, min_x(), max_x())
+
+	if not e.flying:
+		e.hop_cooldown -= delta
+		if e.hop_cooldown <= 0 and e.y >= FLOOR_Y:
+			match e.kind:
+				"wolf":
+					if absf(dx) < 200:
+						e.vy = -520.0 # lunge
+						e.hop_cooldown = 1.4
+				"unstable", "spider":
+					e.vy = -380.0 - randf() * 200.0
+					e.hop_cooldown = randf_range(0.8, 2.2)
+				_:
+					e.hop_cooldown = 1.0
+		e.vy += GRAVITY * delta
+		e.y += e.vy * delta
+		if e.y >= FLOOR_Y:
+			e.y = FLOOR_Y
+			e.vy = 0.0
 
 	var touching := grave.invuln <= 0 \
-		and absf(grave.x - u.x) < (grave.w + u.w) / 2 - 4 \
-		and u.y > grave.y - grave.h and u.y - u.h < grave.y
+		and absf(grave.x - e.x) < (grave.w + e.w) / 2 - 4 \
+		and e.y > grave.y - grave.h and e.y - e.h < grave.y
 	if touching:
 		# Bounce back after biting so it can't stay stuck on Grave
-		u.x -= dir * 70.0
-		u.vy = -360.0
-		u.hop_cooldown = 1.2
+		e.x = clampf(e.x - dir * (120.0 if e.flying else 70.0), min_x(), max_x())
+		if not e.flying:
+			e.vy = -360.0
+			e.hop_cooldown = 1.2
 	return touching
+
+
+func enemy_death(e: Enemy) -> void:
+	var mid := Vector2(e.x, e.y - e.h / 2)
+	steam(mid, 18)
+	burst(mid, 14, ENEMY[e.kind]["color"], 200.0, 4.0)
+	match e.kind:
+		"unstable":
+			play_sound("unstable_death")
+		"skeleton":
+			play_sound("bones")
+		"witch":
+			play_sound("cackle", 0.8, 1.3)
+		_:
+			play_sound("monster_death", 0.9, float(ENEMY[e.kind]["pitch"]) * randf_range(0.92, 1.08))
+	if not e.minion and kills.has(e.kind):
+		kills[e.kind] = int(kills[e.kind]) + 1
+
+
+func enemy_hurt_sound(kind: String) -> void:
+	if kind == "unstable":
+		play_sound("unstable_hurt", 1.0, randf_range(0.85, 1.2))
+	else:
+		play_sound("monster_hurt", 0.8, float(ENEMY[kind]["pitch"]) * randf_range(0.9, 1.1))
+
+
+# Evaporator beams against monsters, the boss, and anything thrown
+func beam_hits() -> void:
+	for b: Beam in beams:
+		if b.life <= 0:
+			continue
+		for e: Enemy in enemies:
+			if e.hp > 0 and enemy_hittable(e) and hits_box(b.pos, b.size / 2, e.x, e.y, e.w + 6, e.h + 6):
+				b.life = 0
+				e.hp = maxf(0.0, e.hp - b.damage)
+				e.hurt_flash = 0.1
+				steam(b.pos, 3 + roundi(b.size / 2))
+				float_text(Vector2(e.x, e.y - e.h - 20), "-%d" % b.damage, BEAM_COLOR, 0.7)
+				if e.hp > 0:
+					enemy_hurt_sound(e.kind)
+				break
+		if b.life > 0 and boss != null and boss.hp > 0 and hits_box(b.pos, b.size / 2, boss.x, boss.y, boss.w + 8, boss.h + 8):
+			b.life = 0
+			boss.hp = maxf(0.0, boss.hp - b.damage)
+			boss.hurt_flash = 0.12
+			steam(b.pos, 4 + roundi(b.size))
+			float_text(Vector2(boss.x, boss.y - boss.h - 30), "-%d" % b.damage, BEAM_COLOR)
+			if boss.hp > 0:
+				play_sound("goblin_hurt" if boss.kind == "destruction_maker" else "boss_hurt", 1.0, randf_range(0.9, 1.1))
+		if b.life > 0:
+			for s: Shot in shots:
+				if not s.dead and s.pos.distance_to(b.pos) < s.radius + b.size / 2 + 4:
+					s.dead = true
+					steam(b.pos, 6)
+					play_sound("lava_splat", 0.6)
+
+
+# ---------- thrown attacks ----------
+
+func make_shot(kind: String, from: Vector2) -> Shot:
+	var style: Dictionary = SHOT_STYLE[kind]
+	var s := Shot.new()
+	s.kind = kind
+	s.pos = from
+	s.color = style["color"]
+	s.radius = float(style["r"])
+	s.damage = float(style["dmg"])
+	return s
+
+
+# Lob an arc that lands roughly at target_x
+func lob(from: Vector2, target_x: float, kind: String) -> void:
+	var t := LAVA_FLIGHT_TIME * randf_range(0.85, 1.15)
+	var s := make_shot(kind, from)
+	s.gravity = LAVA_GRAVITY
+	s.vel = Vector2((target_x - from.x) / t, (FLOOR_Y - 30 - from.y - 0.5 * LAVA_GRAVITY * t * t) / t)
+	shots.append(s)
+	play_sound("lava_throw", 0.8, 1.0 if kind == "lava" else 0.75)
+
+
+# Fire straight at a point (spells)
+func shoot_at(from: Vector2, target: Vector2, speed: float, kind: String, spread := 0.0) -> void:
+	var s := make_shot(kind, from)
+	s.vel = Vector2.from_angle((target - from).angle() + spread) * speed
+	shots.append(s)
+	play_sound("magic", 0.6, randf_range(0.9, 1.1))
+
+
+func update_shots(delta: float) -> void:
+	for s: Shot in shots:
+		if s.dead:
+			continue
+		s.life += delta
+		s.vel.y += s.gravity * delta
+		s.pos += s.vel * delta
+		if randf() < 0.5:
+			var spark := Particle.new()
+			spark.pos = s.pos
+			spark.vel = Vector2(0, -20)
+			spark.life = 0.3
+			spark.max_life = 0.3
+			spark.size = 5.0
+			spark.color = s.color
+			particles.append(spark)
+		if grave.invuln <= 0 and hits_box(s.pos, s.radius, grave.x, grave.y, grave.w, grave.h):
+			burst(s.pos, 14, s.color, 200.0, 3.0)
+			s.dead = true
+			play_sound("lava_splat")
+			hurt_grave(s.damage, HP_COLOR)
+		elif s.pos.y >= FLOOR_Y:
+			burst(Vector2(s.pos.x, FLOOR_Y), 10, s.color, 160.0, 3.0)
+			s.dead = true
+			play_sound("lava_splat", 0.5)
+		elif s.life > 5.0 or absf(s.pos.x - grave.x) > 900:
+			s.dead = true
+	shots = shots.filter(func(s: Shot) -> bool: return not s.dead)
+
+
+# ---------- bosses ----------
+
+func start_boss(kind: String) -> void:
+	var stats: Dictionary = BOSSES[kind]
+	var b := Boss.new()
+	b.kind = kind
+	b.name = stats["name"]
+	b.hp = float(stats["hp"])
+	b.max_hp = b.hp
+	b.w = float(stats["w"])
+	b.h = float(stats["h"])
+	b.contact = float(stats["contact"])
+	var side := 1.0 if grave.x < (min_x() + max_x()) / 2.0 else -1.0
+	b.x = clampf(grave.x + side * 520.0, min_x() + 60.0, max_x() - 60.0)
+	b.y = FLOOR_Y - 230.0 if kind == "grand_witch" else FLOOR_Y
+	boss = b
+	place_phase = "boss"
+	boss_banner = 3.0
+	play_sound("boss_roar")
+
+
+func update_boss(delta: float) -> void:
+	var b := boss
+	b.t += delta
+	b.hurt_flash = maxf(0.0, b.hurt_flash - delta)
+	b.throw_anim = maxf(0.0, b.throw_anim - delta)
+	b.attack_cooldown -= delta
+	var dx := grave.x - b.x
+	b.facing = 1 if dx >= 0 else -1
+	var angry := b.hp < b.max_hp * 0.5 # attacks get faster at half health
+	var rate := 0.7 if angry else 1.0
+	match b.kind:
+		"destruction_maker":
+			boss_keep_distance(b, 320.0, 120.0, delta)
+			boss_hop(b, -520.0, 1.2, 3.0, delta)
+			if b.attack_cooldown <= 0:
+				lob(boss_hand(b), grave.x + randf_range(-40, 40), "lava")
+				if angry:
+					lob(boss_hand(b), grave.x + randf_range(-170, 170), "lava")
+				b.throw_anim = 0.25
+				b.attack_cooldown = randf_range(1.3, 2.1) * rate
+		"unstable_core":
+			# Big hops right at Grave, purple orbs, and more Unstable
+			b.hop_cooldown -= delta
+			if b.hop_cooldown <= 0 and b.y >= FLOOR_Y:
+				b.vy = -700.0
+				b.vx = signf(dx) * 240.0
+				b.hop_cooldown = randf_range(1.6, 2.6)
+			if b.attack_cooldown <= 0:
+				for off in [-130.0, 0.0, 130.0]:
+					lob(Vector2(b.x, b.y - b.h * 0.7), grave.x + off, "orb")
+				b.attack_cooldown = 2.4 * rate
+			boss_summon(b, ["unstable"], 2, 7.0, delta)
+		"broodmother":
+			boss_keep_distance(b, 270.0, 170.0, delta)
+			if b.attack_cooldown <= 0:
+				lob(Vector2(b.x + 30 * b.facing, b.y - b.h * 0.6), grave.x + randf_range(-30, 30), "web")
+				b.attack_cooldown = 1.8 * rate
+			boss_summon(b, ["spider"], 3, 6.0, delta)
+		"grand_witch":
+			# Flies above Grave and rains down spells
+			var target_x := grave.x + sin(b.t * 0.6) * 260.0
+			b.x += clampf(target_x - b.x, -200.0 * delta, 200.0 * delta)
+			b.y = FLOOR_Y - 230.0 + sin(b.t * 1.7) * 25.0
+			if b.attack_cooldown <= 0:
+				for spread in [-0.25, 0.0, 0.25]:
+					shoot_at(Vector2(b.x + 20 * b.facing, b.y - 70), grave_chest(), 360.0, "magic", spread)
+				b.attack_cooldown = 1.6 * rate
+			boss_summon(b, ["skeleton"], 2, 7.0, delta)
+		"kraken":
+			boss_keep_distance(b, 380.0, 70.0, delta)
+			boss_hop(b, -380.0, 2.5, 4.0, delta)
+			if b.attack_cooldown <= 0:
+				for off in [-110.0, 0.0, 110.0]:
+					lob(Vector2(b.x, b.y - b.h * 0.8), grave.x + off, "ink")
+				b.attack_cooldown = 2.0 * rate
+			boss_summon(b, ["crab", "shark", "octopus"], 2, 6.0, delta)
+
+	# Ground bosses fall and land; the Grand Witch flies
+	if b.kind != "grand_witch":
+		b.vy += GRAVITY * delta
+		b.x += b.vx * delta
+		b.y += b.vy * delta
+		if b.y >= FLOOR_Y:
+			b.y = FLOOR_Y
+			b.vy = 0.0
+			b.vx = 0.0
+	b.x = clampf(b.x, min_x() + 40.0, max_x() - 40.0)
+
+	# Touching a boss hurts and knocks Grave back
+	if b.contact > 0 and grave.invuln <= 0 \
+		and absf(grave.x - b.x) < (grave.w + b.w) / 2 - 6 \
+		and grave.y > b.y - b.h and grave.y - grave.h < b.y:
+		hurt_grave(b.contact, HP_COLOR)
+		grave.x = clampf(grave.x + (80.0 if grave.x >= b.x else -80.0), grave.w, WORLD_W - grave.w)
+
+
+func boss_keep_distance(b: Boss, dist: float, speed: float, delta: float) -> void:
+	var side := -1.0 if grave.x >= b.x else 1.0
+	var target_x := grave.x + side * dist
+	if absf(target_x - b.x) > 10:
+		b.x += signf(target_x - b.x) * speed * delta
+		b.walk_time += delta
+
+
+func boss_hop(b: Boss, power: float, min_wait: float, max_wait: float, delta: float) -> void:
+	b.hop_cooldown -= delta
+	if b.hop_cooldown <= 0 and b.y >= FLOOR_Y:
+		b.vy = power
+		b.hop_cooldown = randf_range(min_wait, max_wait)
+
+
+func boss_summon(b: Boss, kinds: Array, count: int, interval: float, delta: float) -> void:
+	b.summon_cooldown -= delta
+	if b.summon_cooldown > 0:
+		return
+	b.summon_cooldown = interval
+	var minions := 0
+	for e: Enemy in enemies:
+		if e.minion:
+			minions += 1
+	for i in mini(count, MAX_MINIONS - minions):
+		spawn_enemy(kinds[randi() % kinds.size()], true, b.x)
+
+
+func boss_hand(b: Boss) -> Vector2:
+	return Vector2(b.x + 14 * b.facing, b.y - b.h - 6)
+
+
+func boss_death() -> void:
+	var mid := Vector2(boss.x, boss.y - boss.h / 2)
+	steam(mid, 70)
+	burst(mid, 40, BOSSES[boss.kind]["color"], 260.0, 6.0)
+	float_text(Vector2(boss.x, boss.y - boss.h - 40), "EVAPORATED!", ACCENT, 2.5)
+	play_sound("goblin_death", 1.0, 1.0 if boss.kind == "destruction_maker" else 0.7)
+	boss = null
+	place_phase = "cleared"
+	# Its minions evaporate with it
+	for e: Enemy in enemies:
+		steam(Vector2(e.x, e.y - e.h / 2), 10)
+	enemies.clear()
+	shots.clear()
+	if not is_cleared(scene):
+		var cleared: Array = progress["cleared"]
+		cleared.append(scene)
+
+
+# ---------- inside the van: the map on the wall ----------
+
+func van_walk(delta: float) -> void:
+	var dir := 0
+	if key(KEY_D, KEY_RIGHT):
+		dir += 1
+	if key(KEY_A, KEY_LEFT):
+		dir -= 1
+	grave.x = clampf(grave.x + dir * MOVE_SPEED * 0.8 * delta, 110.0, 850.0)
+	if dir != 0:
+		grave.facing = dir
+	grave.walk_time = grave.walk_time + delta if dir != 0 else 0.0
+	grave.y = FLOOR_Y
+
+
+func update_hub(delta: float) -> void:
+	van_walk(delta)
+	# The map opens when Grave gets close to it
+	map_open = grave.x > MAP_X - 30 and grave.x < MAP_X + MAP_W + 30
+	if not map_open:
+		map_choice = ""
+		map_index = -1
+		return
+	var m := get_local_mouse_position()
+	map_index = -1
+	for i in 3:
+		if map_card_rect(i).has_point(m):
+			map_index = i
+	if map_choice != "":
+		var choice := map_choice
+		map_choice = ""
+		if is_unlocked(choice):
+			board_van(choice)
+		else:
+			var needed := "cave" if choice == "warehouse" else "warehouse"
+			show_hint("Locked! Clear %s first." % scene_name(needed), 2.5)
 
 
 # ---------- level 3: locked in the van ----------
@@ -896,28 +1554,42 @@ func update_van_room(delta: float) -> void:
 # =====================================================================
 
 func _draw() -> void:
+	if status == "menu":
+		draw_menu()
+		return
 	if status == "title":
 		draw_title_card()
 		return
-	if level == 3:
+	if scene == "keeper":
 		draw_van_room()
 		draw_van_hud()
 		draw_end_screens()
 		return
+	if scene == "hub":
+		draw_van_room()
+		draw_hub_hud()
+		return
 
-	if level == 1:
-		draw_forest()
-	else:
-		draw_resting()
+	match scene:
+		"forest":
+			draw_forest()
+		"resting":
+			draw_resting()
+		"cave":
+			draw_cave()
+		"warehouse":
+			draw_warehouse()
+		"beach":
+			draw_beach()
 	draw_van_exterior(van_world_x() - cam_x)
-	if level == 1:
-		draw_goblin()
-	for u: Unstable in unstables:
-		draw_unstable(u)
+	if boss != null:
+		draw_boss(boss)
+	for e: Enemy in enemies:
+		draw_enemy(e)
 	if status != "driving" and status != "arriving":
 		draw_grave()
-	for ball: LavaBall in lava:
-		draw_lava(ball)
+	for s: Shot in shots:
+		draw_shot(s)
 	for b: Beam in beams:
 		draw_beam(b)
 	for p: Particle in particles:
@@ -925,6 +1597,11 @@ func _draw() -> void:
 			Color(p.color, maxf(0.0, p.life / p.max_life)))
 	for t: FloatText in texts:
 		text(t.text, t.pos.x - cam_x, t.pos.y, 16, Color(t.color, minf(1.0, t.life * 2)))
+	if scene == "cave":
+		# Only a little light around Grave in the dark cave
+		var c := Vector2(grave.x - cam_x, grave.y - 50)
+		darkness(c, 240.0, 0.4)
+		darkness(c, 380.0, 0.4)
 	draw_hud()
 
 	# Fade to black as the van drives off
@@ -933,7 +1610,212 @@ func _draw() -> void:
 	draw_end_screens()
 
 
-# Text helper: x is the centre (or left / right edge)
+# ---------- save file chooser ----------
+
+func draw_menu() -> void:
+	sky(Color("#05070d"), Color("#122019"))
+	draw_tree_layer(0.35, 70, FLOOR_Y + 60, 140, 220, Color("#0c1a16"), Color("#0c1a16"), 7)
+	draw_rect(Rect2(0, FLOOR_Y + 60, VIEW_W, VIEW_H), Color("#080d0b"))
+	glow(Vector2(VIEW_W / 2, 80), 60, ACCENT, 0.05)
+	text("EAP", VIEW_W / 2, 92, 64, ACCENT)
+	text("EVAPORATE ALL PARASITES", VIEW_W / 2, 128, 18, Color("#e6e9ef"))
+	text("CHOOSE A SAVE FILE", VIEW_W / 2, 158, 13, Color("#9aa3b5"))
+	for i in 3:
+		var r := slot_rect(i)
+		var selected := i == menu_index
+		draw_rect(r, Color(0.06, 0.09, 0.13, 0.92))
+		draw_rect(r, ACCENT if selected else Color("#2a3a50"), false, 3.0 if selected else 2.0)
+		text("SAVE %d" % (i + 1), r.position.x + 20, r.position.y + 30, 18, ACCENT if selected else Color("#e6e9ef"), HORIZONTAL_ALIGNMENT_LEFT)
+		var saved: Dictionary = slots[i]
+		if saved.is_empty():
+			text("Empty - start a new game", r.position.x + 20, r.position.y + 60, 14, Color("#9aa3b5"), HORIZONTAL_ALIGNMENT_LEFT)
+			continue
+		var cp: String = saved["checkpoint"]
+		var cleared: Array = saved["cleared"]
+		var line := "COMPLETED - Grave escaped the van!" if cp == "done" else "Continue at: " + scene_name(cp)
+		text(line, r.position.x + 20, r.position.y + 58, 14, Color("#e6e9ef"), HORIZONTAL_ALIGNMENT_LEFT)
+		text("Places cleared: %d/5" % cleared.size(), r.position.x + 20, r.position.y + 78, 12, Color("#9aa3b5"), HORIZONTAL_ALIGNMENT_LEFT)
+		var er := erase_rect(i)
+		var armed := erase_armed == i
+		draw_rect(er, Color("#3a1414") if armed else Color("#1a2230"))
+		draw_rect(er, HP_COLOR if armed else Color("#3a4a60"), false, 2.0)
+		text("SURE?" if armed else "ERASE", er.get_center().x, er.position.y + 22, 13, HP_COLOR if armed else Color("#9aa3b5"))
+	text("Click a save file or press 1 / 2 / 3.   W/S and E work too.   X erases (press twice).   M sound",
+		VIEW_W / 2, VIEW_H - 20, 12, Color("#9aa3b5"))
+
+
+# ---------- the map inside the van ----------
+
+func draw_map_board() -> void:
+	var r := Rect2(MAP_X, 105, MAP_W, 150)
+	if map_open:
+		glow(r.get_center(), 120, Color("#ffcf5a"), 0.05)
+	draw_rect(r.grow(6), Color("#3b2a1a"))
+	draw_rect(r, Color("#d9c9a3"))
+	text("MAP", r.get_center().x, r.position.y + 22, 16, Color("#3b2a1a"))
+	var pts := [Vector2(MAP_X + 45, 215), Vector2(MAP_X + 125, 165), Vector2(MAP_X + 205, 215)]
+	draw_polyline(PackedVector2Array(pts), Color("#7a5a3a"), 2.0)
+	for i in 3:
+		var place: String = MAP_ORDER[i]
+		var c := Color("#2f8f5a") if is_cleared(place) else (Color("#b03a2e") if is_unlocked(place) else Color("#6b6b6b"))
+		draw_circle(pts[i], 10, c)
+		text(str(i + 1), pts[i].x, pts[i].y + 5, 12, Color.WHITE)
+
+
+func draw_place_icon(place: String, c: Vector2, unlocked: bool) -> void:
+	var ink := Color("#3b2a1a") if unlocked else Color("#7a7262")
+	match place:
+		"cave":
+			var arch := PackedVector2Array()
+			for i in 13:
+				arch.append(c + Vector2.from_angle(PI + i * PI / 12.0) * 34.0 + Vector2(0, 16))
+			draw_colored_polygon(arch, ink)
+			for sx in [-14.0, 0.0, 14.0]:
+				draw_colored_polygon(PackedVector2Array([c + Vector2(sx - 5, -10), c + Vector2(sx + 5, -10), c + Vector2(sx, 4)]), Color("#d9c9a3"))
+		"warehouse":
+			draw_rect(Rect2(c.x - 34, c.y - 14, 68, 32), ink)
+			draw_colored_polygon(PackedVector2Array([c + Vector2(-40, -14), c + Vector2(40, -14), c + Vector2(0, -36)]), ink)
+			draw_rect(Rect2(c.x - 10, c.y, 20, 18), Color("#d9c9a3"))
+		"beach":
+			draw_circle(c + Vector2(14, -14), 14, ink)
+			for j in 3:
+				var pts := PackedVector2Array()
+				for k in 9:
+					pts.append(c + Vector2(-36 + k * 9, 6 + j * 9 + sin(k * 1.4) * 3))
+				draw_polyline(pts, ink, 3.0)
+
+
+func draw_map_overlay() -> void:
+	draw_rect(Rect2(0, 0, VIEW_W, VIEW_H), Color(0, 0, 0, 0.55))
+	var panel := Rect2(VIEW_W / 2 - 390, 90, 780, 370)
+	draw_rect(panel, Color("#d9c9a3"))
+	draw_rect(panel, Color("#3b2a1a"), false, 6.0)
+	text("WHERE TO NEXT?", VIEW_W / 2, 128, 26, Color("#3b2a1a"))
+	for i in 3:
+		var place: String = MAP_ORDER[i]
+		var r := map_card_rect(i)
+		var unlocked := is_unlocked(place)
+		var bg := Color("#efe3c4") if unlocked else Color("#bdb39b")
+		if map_index == i and unlocked:
+			bg = Color("#fff4d6")
+		draw_rect(r, bg)
+		draw_rect(r, Color("#3b2a1a"), false, 3.0)
+		text("[%d]" % (i + 1), r.position.x + 22, r.position.y + 24, 14, Color("#3b2a1a"))
+		draw_place_icon(place, Vector2(r.get_center().x, r.position.y + 66), unlocked)
+		text(PLACES[place]["name"], r.get_center().x, r.position.y + 128, 14, Color("#2a1d10"))
+		var y := r.position.y + 152
+		for k in PLACES[place]["quota"]:
+			text("%d %s" % [quota_of(place, k), ENEMY[k]["plural"]], r.get_center().x, y, 12, Color("#4a3a28"))
+			y += 18
+		text("Boss: " + BOSSES[PLACES[place]["boss"]]["name"], r.get_center().x, y + 4, 11, Color("#6a3a28"))
+		var state := "CLEARED - play again" if is_cleared(place) else ("GO!" if unlocked else "LOCKED")
+		var sc := Color("#2f8f5a") if is_cleared(place) else (Color("#b03a2e") if unlocked else Color("#6b6b6b"))
+		text(state, r.get_center().x, r.end.y - 14, 15, sc)
+	text("Press 1, 2 or 3, or click a place. Walk away to close the map.", VIEW_W / 2, panel.end.y - 12, 13, Color("#3b2a1a"))
+
+
+func draw_hub_hud() -> void:
+	draw_rect(Rect2(VIEW_W / 2 - 230, 82, 460, 34), Color(0.04, 0.05, 0.09, 0.75))
+	text("THE EAP VAN - walk up to the map on the wall", VIEW_W / 2, 104, 14, Color("#9fd7ff"))
+	text("Esc: save files", VIEW_W - 14, VIEW_H - 12, 12, Color("#9aa3b5"), HORIZONTAL_ALIGNMENT_RIGHT)
+	if map_open:
+		draw_map_overlay()
+	if hint_time > 0:
+		text(hint, VIEW_W / 2, VIEW_H - 50, 16, Color("#ffcf5a"))
+
+
+# ---------- HUD and screens ----------
+
+func draw_hud() -> void:
+	draw_rect(Rect2(12, 12, 250, 98), Color(0.04, 0.05, 0.09, 0.7))
+	text("GRAVE", 22, 32, 16, ACCENT, HORIZONTAL_ALIGNMENT_LEFT)
+	bar(22, 40, 230, 18, grave.hp / GRAVE_MAX_HP, HP_COLOR, "HEALTH %d" % ceili(grave.hp))
+	if grave.battery > 0:
+		bar(22, 62, 230, 18, grave.battery / BATTERY_MAX, BATTERY_COLOR, "BATTERY %d%%" % ceili(grave.battery))
+	else:
+		bar(22, 62, 230, 18, 0.0, Color(0.33, 0.33, 0.33), "BATTERY EMPTY - NO CHARGING")
+	bar(22, 84, 230, 18, grave.charge / MAX_CHARGE, BEAM_COLOR, "CHARGE")
+
+	# How many monsters are left in this place
+	var place: Dictionary = PLACES[scene]
+	draw_rect(Rect2(VIEW_W - 282, 12, 270, 36 + kills.size() * 20), Color(0.04, 0.05, 0.09, 0.7))
+	text(place["name"], VIEW_W - 22, 30, 12, place["color"], HORIZONTAL_ALIGNMENT_RIGHT)
+	var y := 52.0
+	for k in kills:
+		var need := quota_of(scene, k)
+		var got := mini(int(kills[k]), need)
+		var plural: String = ENEMY[k]["plural"]
+		text("%s %d/%d" % [plural.to_upper(), got, need], VIEW_W - 22, y, 14, ACCENT if got >= need else Color.WHITE, HORIZONTAL_ALIGNMENT_RIGHT)
+		y += 20
+
+	if boss != null:
+		text(boss.name, VIEW_W / 2, 30, 14, Color("#ff8a5a"))
+		bar((VIEW_W - 380) / 2, 36, 380, 16, boss.hp / boss.max_hp, HP_COLOR, "")
+		if boss_banner > 0:
+			text("BOSS: " + boss.name, VIEW_W / 2, 200, 34, Color(1.0, 0.4, 0.3, minf(1.0, boss_banner)))
+
+	text("A/D move   W/Space jump   Click or F shoot (hold to charge)   Esc save files   M sound", VIEW_W - 14, VIEW_H - 12, 12, Color("#9aa3b5"), HORIZONTAL_ALIGNMENT_RIGHT)
+	if hint_time > 0:
+		text(hint, VIEW_W / 2, 150, 18, Color("#ffcf5a"))
+
+
+func draw_end_screens() -> void:
+	if status == "lost":
+		var where := "Press R or click to try again"
+		if scene == "keeper":
+			draw_overlay("THE KEYS KEEPER GOT YOU", where, HP_COLOR, death_reason)
+		else:
+			draw_overlay("GRAVE WAS MELTED", where + " (from the van)", HP_COLOR)
+	elif status == "won":
+		draw_overlay("YOU ESCAPED THE VAN", "To be continued...  Press R or click for the save files", ACCENT)
+
+
+func draw_title_card() -> void:
+	draw_rect(Rect2(0, 0, VIEW_W, VIEW_H), Color("#07040d"))
+	var a := clampf(minf(phase_time / 0.6, (TITLE_TIME - phase_time) / 0.6), 0.0, 1.0)
+	var color := ACCENT
+	var line := ""
+	if PLACES.has(next_scene):
+		color = PLACES[next_scene]["color"]
+		line = PLACES[next_scene]["line"]
+	elif next_scene == "hub":
+		color = Color("#9fd7ff")
+		line = "Walk up to the map on the wall to choose where to go."
+	elif next_scene == "keeper":
+		color = KEEPER_EYES
+		line = "*click* ... the van doors lock from the outside."
+		draw_keys_keeper(VIEW_W / 2, VIEW_H + 130, 1.6, a * 0.8, Color("#241a30"))
+	text("Checkpoint - health and battery refilled - game saved", VIEW_W / 2, VIEW_H / 2 - 70, 16, Color("#9aa3b5", a))
+	glow(Vector2(VIEW_W / 2, VIEW_H / 2 - 14), 60, color, 0.05 * a)
+	text(scene_name(next_scene), VIEW_W / 2, VIEW_H / 2, 40, Color(color, a))
+	text(line, VIEW_W / 2, VIEW_H / 2 + 44, 18, Color("#e6e9ef", a))
+	if PLACES.has(next_scene):
+		text(place_goal(next_scene), VIEW_W / 2, VIEW_H / 2 + 80, 14, Color("#9aa3b5", a))
+
+
+# ---------- drawing helpers ----------
+
+func ellipse(c: Vector2, rx: float, ry: float, color: Color) -> void:
+	var pts := PackedVector2Array()
+	for i in 20:
+		pts.append(c + Vector2(cos(i * TAU / 20.0) * rx, sin(i * TAU / 20.0) * ry))
+	draw_colored_polygon(pts, color)
+
+
+# Darken everything outside a circle (for the dark cave)
+func darkness(center: Vector2, radius: float, alpha: float) -> void:
+	var seg := 40
+	for i in seg:
+		var a0 := i * TAU / seg
+		var a1 := (i + 1) * TAU / seg
+		draw_colored_polygon(PackedVector2Array([
+			center + Vector2.from_angle(a0) * radius,
+			center + Vector2.from_angle(a1) * radius,
+			center + Vector2.from_angle(a1) * 1600.0,
+			center + Vector2.from_angle(a0) * 1600.0,
+		]), Color(0, 0, 0, alpha))
+
+
 func text(s: String, x: float, y: float, size: int, color: Color, align: HorizontalAlignment = HORIZONTAL_ALIGNMENT_CENTER) -> void:
 	var font := ThemeDB.fallback_font
 	if align == HORIZONTAL_ALIGNMENT_CENTER:
@@ -966,7 +1848,7 @@ func sky(top: Color, bottom: Color) -> void:
 		PackedColorArray([top, top, bottom, bottom]))
 
 
-# ---------- forest ----------
+# ---------- the scary forest ----------
 
 func draw_pine(x: float, base_y: float, h: float, color: Color, trunk: Color) -> void:
 	draw_rect(Rect2(x - h * 0.04, base_y - h * 0.25, h * 0.08, h * 0.25), trunk)
@@ -991,29 +1873,63 @@ func draw_tree_layer(depth: float, spacing: float, base_y: float, min_h: float, 
 		draw_pine(x, base_y, h, color, trunk)
 
 
+# Twisted dead trees between the pines
+func draw_dead_trees(depth: float) -> void:
+	var off := cam_x * depth
+	var first := int(floorf(off / 260.0)) - 1
+	var c := Color("#1a1512")
+	for i in range(first, first + int(VIEW_W / 260.0) + 3):
+		var x := i * 260 + rand(i + 90) * 120 - off
+		var h := 160 + rand(i + 91) * 90
+		draw_colored_polygon(PackedVector2Array([
+			Vector2(x - 9, FLOOR_Y), Vector2(x - 4, FLOOR_Y - h), Vector2(x + 4, FLOOR_Y - h), Vector2(x + 9, FLOOR_Y),
+		]), c)
+		for j in 4:
+			var by := FLOOR_Y - h * (0.45 + j * 0.15)
+			var side := -1.0 if j % 2 == 0 else 1.0
+			draw_line(Vector2(x, by), Vector2(x + side * (30 + rand(i * 7 + j) * 30), by - 25 - rand(i * 5 + j) * 20), c, 4.0 - j * 0.7)
+
+
 func draw_forest() -> void:
-	sky(Color("#0b1a2a"), Color("#1f3a3a"))
-	for i in 60:
+	var time := now()
+	sky(Color("#03050a"), Color("#141b1a"))
+	for i in 40:
 		var sx := fposmod(rand(i) * VIEW_W * 2.0 - cam_x * 0.05, VIEW_W)
-		draw_rect(Rect2(sx, rand(i + 99) * 200.0, 2, 2), Color(1, 1, 1, 0.7))
-	draw_circle(Vector2(780 - cam_x * 0.05, 90), 34, Color("#e8f0d8"))
+		draw_rect(Rect2(sx, rand(i + 99) * 180.0, 2, 2), Color(1, 1, 1, 0.4))
+
+	# Blood-red moon
+	var moon := Vector2(780 - cam_x * 0.05, 90)
+	glow(moon, 40, Color("#ff4a3a"), 0.08)
+	draw_circle(moon, 34, Color("#a8322a"))
+	draw_circle(moon + Vector2(-9, -7), 8, Color("#8f2a23"))
+	draw_circle(moon + Vector2(10, 9), 5, Color("#8f2a23"))
 
 	var hills := PackedVector2Array([Vector2(0, FLOOR_Y)])
 	for x in range(0, int(VIEW_W) + 1, 20):
 		var hx := x + cam_x * 0.2
 		hills.append(Vector2(x, 300 + sin(hx * 0.006) * 30 + sin(hx * 0.017) * 12))
 	hills.append(Vector2(VIEW_W, FLOOR_Y))
-	draw_colored_polygon(hills, Color("#16302e"))
+	draw_colored_polygon(hills, Color("#0d1b19"))
+	draw_tree_layer(0.35, 70, FLOOR_Y - 20, 120, 190, Color("#0c1d18"), Color("#0c1d18"), 1)
 
-	draw_tree_layer(0.35, 70, FLOOR_Y - 20, 120, 190, Color("#173a32"), Color("#173a32"), 1)
-	draw_tree_layer(0.6, 110, FLOOR_Y, 180, 280, Color("#1d4a38"), Color("#2a2620"), 50)
+	# Glowing eyes watching from the dark, blinking now and then
+	for i in 14:
+		var ex := fposmod(i * 211.0 + rand(i + 70) * 150 - cam_x * 0.45, VIEW_W + 100) - 50
+		var ey := FLOOR_Y - 60 - rand(i + 71) * 140
+		var blink := sin(time * (0.7 + rand(i + 72)) + i * 3.0) > 0.92
+		if not blink and rand(i + 73) > 0.35:
+			draw_rect(Rect2(ex, ey, 3, 2), Color(1.0, 0.25, 0.2, 0.8))
+			draw_rect(Rect2(ex + 7, ey, 3, 2), Color(1.0, 0.25, 0.2, 0.8))
 
-	draw_rect(Rect2(0, FLOOR_Y, VIEW_W, VIEW_H - FLOOR_Y), Color("#3a2c1f"))
-	draw_rect(Rect2(0, FLOOR_Y, VIEW_W, 10), Color("#2f6b3a"))
+	draw_tree_layer(0.6, 110, FLOOR_Y, 180, 280, Color("#11281f"), Color("#1d1a15"), 50)
+	draw_dead_trees(0.8)
+
+	draw_rect(Rect2(0, FLOOR_Y, VIEW_W, VIEW_H - FLOOR_Y), Color("#2a2018"))
+	draw_rect(Rect2(0, FLOOR_Y, VIEW_W, 10), Color("#1f4a2a"))
 	var gx := floorf(cam_x / 12.0) * 12.0
 	while gx < cam_x + VIEW_W:
 		var gh := 4 + rand(gx) * 8
-		draw_rect(Rect2(gx - cam_x, FLOOR_Y - gh, 3, gh), Color("#3f8a47"))
+		draw_rect(Rect2(gx - cam_x, FLOOR_Y - gh, 3, gh), Color("#2b5e34"))
 		gx += 12
 	for i in int(WORLD_W / 90):
 		var mx := i * 90 + rand(i + 7) * 60
@@ -1024,6 +1940,181 @@ func draw_forest() -> void:
 			draw_rect(Rect2(mx - cam_x - 2, FLOOR_Y - 6, 4, 6), Color("#e8dcc0"))
 		else:
 			draw_rect(Rect2(mx - cam_x, FLOOR_Y + 20 + rand(i) * 50, 10, 6), Color("#4a3d30"))
+
+	# Low fog drifting over the ground
+	for i in 6:
+		var fog_x := fposmod(i * 260 + time * (10 + i * 3) - cam_x * 0.8, VIEW_W + 400) - 200
+		for j in 3:
+			draw_circle(Vector2(fog_x, FLOOR_Y - 6), 150 - j * 45, Color(0.75, 0.8, 0.8, 0.045))
+
+
+# ---------- the dark cave ----------
+
+func draw_cave() -> void:
+	sky(Color("#07060a"), Color("#16110d"))
+	# Far rock wall
+	var off := cam_x * 0.3
+	var wall := PackedVector2Array([Vector2(0, FLOOR_Y)])
+	for x in range(0, int(VIEW_W) + 1, 24):
+		var wx := x + off
+		wall.append(Vector2(x, 150 + sin(wx * 0.011) * 40 + sin(wx * 0.031) * 18))
+	wall.append(Vector2(VIEW_W, FLOOR_Y))
+	draw_colored_polygon(wall, Color("#1c1611"))
+
+	# Glowing crystals in the rock
+	var first := int(floorf(off / 140.0)) - 1
+	for i in range(first, first + 10):
+		var cx := i * 140 + rand(i + 200) * 90 - off
+		var cy := 220 + rand(i + 201) * 160
+		var col := Color("#3ff2d6") if rand(i + 202) > 0.5 else Color("#b45cff")
+		glow(Vector2(cx, cy), 10, col, 0.12)
+		draw_colored_polygon(PackedVector2Array([Vector2(cx - 5, cy + 8), Vector2(cx, cy - 12), Vector2(cx + 5, cy + 8)]), col)
+
+	# Stalactites hanging from the ceiling (the spiders drop from up here)
+	var off2 := cam_x * 0.7
+	draw_rect(Rect2(0, 0, VIEW_W, 30), Color("#0d0a08"))
+	var first2 := int(floorf(off2 / 60.0)) - 1
+	for i in range(first2, first2 + 19):
+		var sx := i * 60 + rand(i + 300) * 40 - off2
+		var sh := 40 + rand(i + 301) * 90
+		draw_colored_polygon(PackedVector2Array([Vector2(sx - 14, 28), Vector2(sx + 14, 28), Vector2(sx + 2, 28 + sh)]), Color("#2a211a"))
+		if rand(i + 302) > 0.7:
+			# Cobweb between two stalactites
+			draw_line(Vector2(sx, 50), Vector2(sx + 60, 50), Color(0.85, 0.85, 0.9, 0.2), 1.0)
+			draw_line(Vector2(sx + 6, 36), Vector2(sx + 50, 70), Color(0.85, 0.85, 0.9, 0.2), 1.0)
+			draw_line(Vector2(sx + 54, 36), Vector2(sx + 10, 70), Color(0.85, 0.85, 0.9, 0.2), 1.0)
+
+	# Ground with stalagmites
+	draw_rect(Rect2(0, FLOOR_Y, VIEW_W, VIEW_H - FLOOR_Y), Color("#1a140f"))
+	draw_rect(Rect2(0, FLOOR_Y, VIEW_W, 5), Color("#2c231b"))
+	var first3 := int(floorf(cam_x / 180.0)) - 1
+	for i in range(first3, first3 + 8):
+		var gx := i * 180 + rand(i + 400) * 100 - cam_x
+		var gh := 20 + rand(i + 401) * 40
+		draw_colored_polygon(PackedVector2Array([Vector2(gx - 12, FLOOR_Y), Vector2(gx + 1, FLOOR_Y - gh), Vector2(gx + 12, FLOOR_Y)]), Color("#2a211a"))
+
+
+# ---------- the creepy warehouse ----------
+
+func draw_warehouse() -> void:
+	var time := now()
+	# Brick back wall
+	draw_rect(Rect2(0, 0, VIEW_W, FLOOR_Y), Color("#24191a"))
+	var off := cam_x * 0.5
+	for row in range(0, int(FLOOR_Y / 22.0) + 1):
+		var y := row * 22.0
+		draw_line(Vector2(0, y), Vector2(VIEW_W, y), Color("#1a1213"), 2.0)
+		var bx := -fposmod(off + (0.0 if row % 2 == 0 else 24.0), 48.0)
+		while bx < VIEW_W:
+			draw_line(Vector2(bx, y), Vector2(bx, y + 22), Color("#1a1213"), 2.0)
+			bx += 48.0
+
+	# Broken windows with the moon outside
+	var first := int(floorf(off / 420.0)) - 1
+	for i in range(first, first + 5):
+		var wx := i * 420 + 120 - off
+		draw_rect(Rect2(wx, 60, 140, 90), Color("#0a1020"))
+		draw_circle(Vector2(wx + 100, 90), 14, Color("#d8e0c8"))
+		draw_rect(Rect2(wx, 60, 140, 90), Color("#3a2c22"), false, 5.0)
+		draw_line(Vector2(wx + 70, 60), Vector2(wx + 70, 150), Color("#3a2c22"), 4.0)
+		draw_line(Vector2(wx, 105), Vector2(wx + 140, 105), Color("#3a2c22"), 4.0)
+		draw_colored_polygon(PackedVector2Array([Vector2(wx + 74, 64), Vector2(wx + 120, 64), Vector2(wx + 90, 90)]), Color(0.6, 0.7, 0.8, 0.25))
+
+	# Tall shelves full of crates
+	var off2 := cam_x * 0.8
+	var first2 := int(floorf(off2 / 300.0)) - 1
+	for i in range(first2, first2 + 5):
+		var sx := i * 300 + rand(i + 500) * 60 - off2
+		draw_rect(Rect2(sx, 200, 8, FLOOR_Y - 200), Color("#3a2e22"))
+		draw_rect(Rect2(sx + 180, 200, 8, FLOOR_Y - 200), Color("#3a2e22"))
+		for board_y in [260.0, 340.0, FLOOR_Y - 10]:
+			draw_rect(Rect2(sx, board_y, 188, 6), Color("#4a3a2a"))
+			for k in 3:
+				if rand(i * 11 + k + board_y) > 0.3:
+					var cx := sx + 12 + k * 58
+					draw_rect(Rect2(cx, board_y - 40, 44, 40), Color("#6b4e2e"))
+					draw_rect(Rect2(cx, board_y - 40, 44, 40), Color("#4a341e"), false, 2.0)
+					draw_line(Vector2(cx, board_y - 40), Vector2(cx + 44, board_y), Color("#4a341e"), 2.0)
+
+	# Hanging lamps that flicker
+	var first3 := int(floorf(cam_x / 360.0)) - 1
+	for i in range(first3, first3 + 5):
+		var lx := i * 360 + 180 - cam_x
+		var flick := 0.3 if sin(time * 13.0 + i * 5.0) > 0.85 else 1.0
+		draw_line(Vector2(lx, 0), Vector2(lx, 70), Color("#111111"), 2.0)
+		draw_colored_polygon(PackedVector2Array([Vector2(lx - 16, 82), Vector2(lx + 16, 82), Vector2(lx + 8, 70), Vector2(lx - 8, 70)]), Color("#2b2b2b"))
+		draw_colored_polygon(PackedVector2Array([
+			Vector2(lx - 14, 82), Vector2(lx + 14, 82), Vector2(lx + 110, FLOOR_Y), Vector2(lx - 110, FLOOR_Y),
+		]), Color(1.0, 0.85, 0.5, 0.06 * flick))
+		draw_circle(Vector2(lx, 84), 5, Color(1.0, 0.9, 0.6, flick))
+
+	# Concrete floor
+	draw_rect(Rect2(0, FLOOR_Y, VIEW_W, VIEW_H - FLOOR_Y), Color("#2e2c2a"))
+	draw_rect(Rect2(0, FLOOR_Y, VIEW_W, 5), Color("#3d3a37"))
+	for i in int(WORLD_W / 150):
+		var px := i * 150 + rand(i + 800) * 90
+		if px < cam_x - 40 or px > cam_x + VIEW_W + 40:
+			continue
+		ellipse(Vector2(px - cam_x, FLOOR_Y + 30 + rand(i + 801) * 40), 22, 5, Color(0.1, 0.09, 0.08, 0.5))
+
+
+# ---------- the beach of doom ----------
+
+func draw_beach() -> void:
+	var time := now()
+	sky(Color("#2a0a10"), Color("#b0452a"))
+	# A sick, greenish sun sinking into the sea
+	var sun := Vector2(620 - cam_x * 0.04, 280)
+	glow(sun, 60, Color("#c8ff6a"), 0.07)
+	draw_circle(sun, 50, Color("#d8b24a"))
+
+	# The sea, with moving waves
+	var sea_top := 330.0
+	draw_rect(Rect2(0, sea_top, VIEW_W, FLOOR_Y - sea_top), Color("#1d3b3a"))
+	for j in 4:
+		var pts := PackedVector2Array()
+		for x in range(0, int(VIEW_W) + 1, 16):
+			var wx := x + cam_x * (0.3 + j * 0.15)
+			pts.append(Vector2(x, sea_top + 10 + j * 26 + sin(wx * 0.03 + time * (1.5 + j * 0.4)) * 4))
+		draw_polyline(pts, Color(0.55, 0.85, 0.8, 0.35), 2.0)
+
+	# Dead palm trees
+	var off := cam_x * 0.85
+	var first := int(floorf(off / 380.0)) - 1
+	for i in range(first, first + 5):
+		var px := i * 380 + rand(i + 600) * 120 - off
+		var top := Vector2(px + 26, FLOOR_Y - 170)
+		draw_polyline(PackedVector2Array([Vector2(px, FLOOR_Y), Vector2(px + 10, FLOOR_Y - 85), top]), Color("#4a3424"), 8.0)
+		for k in 5:
+			var a := -PI * 0.15 - k * 0.6
+			var tip := top + Vector2(cos(a) * 60, sin(a) * 25 + 40)
+			draw_line(top, tip, Color("#5a4a2a"), 4.0)
+
+	# Sand, shells and infected slime
+	draw_rect(Rect2(0, FLOOR_Y, VIEW_W, VIEW_H - FLOOR_Y), Color("#b89a62"))
+	draw_rect(Rect2(0, FLOOR_Y, VIEW_W, 6), Color("#8f7444"))
+	for i in int(WORLD_W / 120):
+		var bx := i * 120 + rand(i + 700) * 80
+		if bx < cam_x - 40 or bx > cam_x + VIEW_W + 40:
+			continue
+		var by := FLOOR_Y + 20 + rand(i + 702) * 50
+		if rand(i + 701) > 0.6:
+			ellipse(Vector2(bx - cam_x, by), 18, 5, Color(0.55, 1.0, 0.35, 0.5))
+		else:
+			draw_rect(Rect2(bx - cam_x, by, 6, 4), Color("#e8dcc0"))
+
+
+# ---------- the van (outside) ----------
+
+func van_world_x() -> float:
+	if scene == "forest":
+		var t := maxf(0.0, phase_time - 0.4) if status == "driving" else 0.0
+		return VAN_X + t * t * 400
+	if status == "arriving":
+		var k := minf(1.0, phase_time / ARRIVE_TIME)
+		var eased := 1.0 - pow(1.0 - k, 3)
+		return VAN_PARK_X - 700 * (1.0 - eased)
+	return VAN_PARK_X
 
 
 # ---------- the resting of the unstable ----------
@@ -1110,19 +2201,6 @@ func draw_resting() -> void:
 			draw_circle(Vector2(mist_x, FLOOR_Y - 10), 160 - j * 50, Color(0.78, 0.67, 1.0, 0.04))
 
 
-# ---------- the van (outside) ----------
-
-func van_world_x() -> float:
-	if level == 1:
-		var t := maxf(0.0, phase_time - 0.4) if status == "driving" else 0.0
-		return VAN_X + t * t * 400
-	if status == "arriving":
-		var k := minf(1.0, phase_time / ARRIVE_TIME)
-		var eased := 1.0 - pow(1.0 - k, 3)
-		return VAN_PARK_X - 700 * (1.0 - eased)
-	return VAN_PARK_X
-
-
 func draw_van_exterior(x: float) -> void:
 	var y := FLOOR_Y
 	draw_rect(Rect2(x, y - 92, VAN_W - 40, 74), Color("#e9ecef"))
@@ -1179,7 +2257,7 @@ func draw_grave() -> void:
 
 # Front arm holding the evaporator, pointed at the mouse
 func draw_evaporator(x: float, feet: float) -> void:
-	var a := aim_angle() if level != 3 else (0.0 if grave.facing == 1 else PI)
+	var a := aim_angle() if PLACES.has(scene) else (0.0 if grave.facing == 1 else PI)
 	var flip := -1.0 if cos(a) < 0 else 1.0 # keep it upright when aiming left
 	draw_set_transform(Vector2(x + 10 * grave.facing, feet - 58), a, Vector2(1, flip))
 	draw_rect(Rect2(0, -4, 14, 8), Color("#e6e9ef")) # sleeve
@@ -1202,25 +2280,226 @@ func draw_beam(b: Beam) -> void:
 	draw_line(tail, head, Color("#fffbe0"), maxf(1.5, b.size / 3.0))
 
 
-# ---------- Destruction Maker ----------
+# ---------- monsters ----------
+# Each one is drawn facing right with its feet at (0, 0); draw_enemy flips and places it.
 
-func draw_goblin() -> void:
-	if not goblin.alive:
-		return
-	var x := roundf(goblin.x - cam_x)
-	var feet := roundf(goblin.y)
-	var step := sin(goblin.walk_time * 16.0) * 3.0
-	var white := goblin.hurt_flash > 0
-	var skin := Color.WHITE if white else Color("#d4372b")
+func draw_enemy(e: Enemy) -> void:
+	var x := roundf(e.x - cam_x)
+	if e.kind == "unstable":
+		draw_unstable(e)
+	else:
+		if not e.flying:
+			draw_set_transform(Vector2(x, FLOOR_Y + 2), 0, Vector2(1, 0.2))
+			draw_circle(Vector2.ZERO, e.w * 0.45, Color(0, 0, 0, 0.3))
+		if e.kind == "spider" and e.state == "dropping":
+			draw_set_transform(Vector2.ZERO, 0, Vector2.ONE)
+			draw_line(Vector2(x, 0), Vector2(x, e.y - e.h), Color(0.9, 0.9, 0.95, 0.6), 1.0) # silk thread
+		draw_set_transform(Vector2(x, roundf(e.y)), 0, Vector2(e.facing, 1))
+		var flash := e.hurt_flash > 0
+		match e.kind:
+			"wolf":
+				draw_wolf(e, flash)
+			"bear":
+				draw_bear(e, flash)
+			"spider":
+				draw_spider(e.walk_time, flash, Color("#1b1620"))
+			"witch":
+				draw_witch(flash)
+			"skeleton":
+				draw_skeleton(e, flash)
+			"crab":
+				draw_crab(e, flash)
+			"shark":
+				draw_shark(flash)
+			"octopus":
+				draw_octopus(flash, e.t)
+		draw_set_transform(Vector2.ZERO, 0, Vector2.ONE)
+	# Small health bar once it's been hit
+	if e.state == "active" and e.hp < e.max_hp:
+		draw_rect(Rect2(x - 16, e.y - e.h - 14, 32, 4), Color(0, 0, 0, 0.6))
+		draw_rect(Rect2(x - 16, e.y - e.h - 14, 32 * e.hp / e.max_hp, 4), HP_COLOR)
 
-	draw_set_transform(Vector2(x, FLOOR_Y + 2), 0, Vector2(1, 0.18))
-	draw_circle(Vector2.ZERO, 16 * GOBLIN_SCALE, Color(0, 0, 0, 0.3))
 
+func draw_wolf(e: Enemy, flash: bool) -> void:
+	var fur := Color.WHITE if flash else Color("#5d6370")
+	var dark := Color.WHITE if flash else Color("#3e434d")
+	var step := sin(e.walk_time * 18.0) * 5.0
+	draw_rect(Rect2(-18 + step, -14, 5, 14), dark) # legs
+	draw_rect(Rect2(-10 - step, -14, 5, 14), fur)
+	draw_rect(Rect2(8 + step, -14, 5, 14), dark)
+	draw_rect(Rect2(15 - step, -14, 5, 14), fur)
+	draw_colored_polygon(PackedVector2Array([Vector2(-22, -24), Vector2(-38, -32), Vector2(-30, -18)]), dark) # tail
+	draw_rect(Rect2(-24, -28, 44, 16), fur) # body
+	draw_rect(Rect2(-20, -14, 36, 3), Color("#8a909c"))
+	draw_rect(Rect2(14, -36, 16, 14), fur) # head
+	draw_colored_polygon(PackedVector2Array([Vector2(16, -36), Vector2(19, -44), Vector2(22, -36)]), dark) # ears
+	draw_colored_polygon(PackedVector2Array([Vector2(23, -36), Vector2(26, -44), Vector2(29, -36)]), dark)
+	draw_rect(Rect2(28, -30, 10, 7), fur) # snout
+	draw_rect(Rect2(36, -31, 3, 3), Color("#111111"))
+	draw_rect(Rect2(24, -33, 3, 3), Color("#ff3030")) # red eye
+	draw_rect(Rect2(30, -24, 2, 3), Color.WHITE) # fang
+
+
+func draw_bear(e: Enemy, flash: bool) -> void:
+	var fur := Color.WHITE if flash else Color("#5a3a22")
+	var dark := Color.WHITE if flash else Color("#3d2615")
+	var step := sin(e.walk_time * 9.0) * 4.0
+	for lx in [-28.0, -14.0, 8.0, 20.0]:
+		draw_rect(Rect2(lx + step, -20, 9, 20), dark if lx < 0 else fur) # legs
+		draw_rect(Rect2(lx + step + 6, -3, 4, 3), Color("#e8e2cf")) # claws
+		step = -step
+	draw_rect(Rect2(-32, -52, 60, 36), fur) # body
+	draw_circle(Vector2(-8, -48), 20, fur) # shoulder hump
+	draw_circle(Vector2(28, -46), 15, fur) # head
+	draw_circle(Vector2(20, -59), 5, dark) # ears
+	draw_circle(Vector2(34, -59), 5, dark)
+	draw_circle(Vector2(40, -42), 7, Color.WHITE if flash else Color("#a07850")) # muzzle
+	draw_rect(Rect2(44, -46, 4, 4), Color("#111111"))
+	draw_rect(Rect2(30, -51, 3, 3), Color("#ff3030"))
+
+
+func draw_spider(walk_time: float, flash: bool, body: Color) -> void:
+	var c := Color.WHITE if flash else body
+	for i in 4:
+		var a := sin(walk_time * 20.0 + i) * 3.0
+		draw_polyline(PackedVector2Array([Vector2(-4 + i * 3, -10), Vector2(-14 + i * 7 + a, -18), Vector2(-18 + i * 10 + a, 0)]), c, 2.0)
+	draw_circle(Vector2(-5, -11), 9, c) # abdomen
+	draw_circle(Vector2(7, -9), 6, c) # head
+	draw_rect(Rect2(9, -12, 2, 2), Color("#ff3030"))
+	draw_rect(Rect2(11, -9, 2, 2), Color("#ff3030"))
+
+
+# Witches ride brooms; their feet (0, 0) is the broom
+func draw_witch(flash: bool) -> void:
+	var skin := Color.WHITE if flash else Color("#79c25a")
+	var dress := Color.WHITE if flash else Color("#3d1757")
+	draw_line(Vector2(-28, 0), Vector2(26, 0), Color("#7a5230"), 3.0) # broom
+	draw_colored_polygon(PackedVector2Array([Vector2(-28, -4), Vector2(-42, -8), Vector2(-44, 6), Vector2(-28, 4)]), Color("#c9a24a"))
+	draw_colored_polygon(PackedVector2Array([Vector2(-12, -4), Vector2(12, -4), Vector2(5, -34), Vector2(-5, -34)]), dress)
+	draw_line(Vector2(3, -26), Vector2(16, -18), dress, 4.0) # arm
+	draw_circle(Vector2(17, -18), 3, skin)
+	draw_rect(Rect2(-9, -45, 3, 12), Color("#2a1a2a")) # hair
+	draw_circle(Vector2(0, -40), 8, skin) # head
+	draw_colored_polygon(PackedVector2Array([Vector2(7, -41), Vector2(14, -37), Vector2(7, -37)]), skin) # nose
+	draw_rect(Rect2(3, -43, 2, 2), Color("#ffe24a")) # eye
+	draw_rect(Rect2(-13, -48, 26, 3), Color("#16101c")) # hat brim
+	draw_colored_polygon(PackedVector2Array([Vector2(-9, -48), Vector2(9, -48), Vector2(-3, -70)]), Color("#16101c"))
+	draw_rect(Rect2(-8, -52, 16, 3), Color("#7a3aa8"))
+
+
+func draw_skeleton(e: Enemy, flash: bool) -> void:
+	# Fades in as it climbs out of the ground
+	var a := minf(1.0, e.t / EMERGE_TIME) if e.state == "emerging" else 1.0
+	var bone := Color(1, 1, 1, a) if flash else Color(0.91, 0.89, 0.81, a)
+	var dark := Color(0.08, 0.07, 0.06, a)
+	var step := sin(e.walk_time * 12.0) * 5.0
+	draw_line(Vector2(-4, -26), Vector2(-6 + step, 0), bone, 3.0) # legs
+	draw_line(Vector2(4, -26), Vector2(6 - step, 0), bone, 3.0)
+	draw_rect(Rect2(-8, -30, 16, 5), bone) # pelvis
+	draw_line(Vector2(0, -30), Vector2(0, -53), bone, 3.0) # spine
+	for i in 3:
+		draw_line(Vector2(-10, -48 + i * 6), Vector2(10, -48 + i * 6), bone, 2.0) # ribs
+	draw_line(Vector2(0, -50), Vector2(14, -36 - step * 0.5), bone, 3.0) # arms
+	draw_line(Vector2(0, -50), Vector2(-12, -34), bone, 3.0)
+	draw_circle(Vector2(0, -62), 9, bone) # skull
+	draw_rect(Rect2(-5, -56, 10, 4), bone) # jaw
+	draw_rect(Rect2(1, -66, 4, 4), dark) # eye sockets
+	draw_rect(Rect2(-5, -66, 4, 4), dark)
+	draw_rect(Rect2(2, -65, 2, 2), Color(1.0, 0.2, 0.2, a))
+
+
+func draw_crab(e: Enemy, flash: bool) -> void:
+	var shell := Color.WHITE if flash else Color("#c9452c")
+	for i in 3:
+		var a := sin(e.walk_time * 20.0 + i) * 3.0
+		draw_line(Vector2(-10 + i * 4, -8), Vector2(-20 + i * 4 + a, 0), shell, 2.0) # legs
+		draw_line(Vector2(10 - i * 4, -8), Vector2(20 - i * 4 - a, 0), shell, 2.0)
+	ellipse(Vector2(0, -12), 20, 11, shell)
+	draw_circle(Vector2(-6, -15), 3, INFECTED) # infected spots
+	draw_circle(Vector2(6, -10), 2, INFECTED)
+	draw_line(Vector2(14, -14), Vector2(20, -22), shell, 3.0) # claws
+	draw_line(Vector2(-14, -14), Vector2(-20, -22), shell, 3.0)
+	draw_circle(Vector2(21, -24), 6, shell)
+	draw_circle(Vector2(-21, -24), 6, shell)
+	draw_line(Vector2(4, -20), Vector2(4, -28), shell, 2.0) # eye stalks
+	draw_line(Vector2(-4, -20), Vector2(-4, -28), shell, 2.0)
+	draw_circle(Vector2(4, -29), 2.5, INFECTED)
+	draw_circle(Vector2(-4, -29), 2.5, INFECTED)
+
+
+# Land sharks have no legs: they just fly
+func draw_shark(flash: bool) -> void:
+	var skin := Color.WHITE if flash else Color("#5d6b78")
+	var o := Vector2(0, -20)
+	var body := PackedVector2Array()
+	for p in [Vector2(-40, -8), Vector2(-10, -16), Vector2(30, -12), Vector2(44, -2), Vector2(30, 8), Vector2(-10, 10), Vector2(-40, 2)]:
+		body.append(o + p)
+	draw_colored_polygon(body, skin)
+	draw_colored_polygon(PackedVector2Array([o + Vector2(-28, 4), o + Vector2(30, 6), o + Vector2(40, 0), o + Vector2(28, 9), o + Vector2(-10, 11)]), Color("#d9dde2"))
+	draw_colored_polygon(PackedVector2Array([o + Vector2(-4, -14), o + Vector2(8, -34), o + Vector2(14, -13)]), skin) # dorsal fin
+	draw_colored_polygon(PackedVector2Array([o + Vector2(-38, -3), o + Vector2(-56, -22), o + Vector2(-50, 0), o + Vector2(-56, 16)]), skin) # tail
+	draw_colored_polygon(PackedVector2Array([o + Vector2(0, 6), o + Vector2(10, 18), o + Vector2(14, 6)]), skin) # side fin
+	draw_circle(o + Vector2(30, -5), 3, INFECTED) # infected eye
+	draw_circle(o + Vector2(-14, -4), 4, Color(INFECTED, 0.7))
+	draw_circle(o + Vector2(4, -9), 3, Color(INFECTED, 0.7))
+	for i in 4:
+		draw_colored_polygon(PackedVector2Array([o + Vector2(31 + i * 3, 3), o + Vector2(33 + i * 3, 3), o + Vector2(32 + i * 3, 7)]), Color.WHITE) # teeth
+
+
+func draw_octopus(flash: bool, t: float) -> void:
+	var skin := Color.WHITE if flash else Color("#6b3a8a")
+	for i in 6:
+		var bx := -15 + i * 6
+		draw_polyline(PackedVector2Array([
+			Vector2(bx, -18), Vector2(bx + sin(t * 6.0 + i) * 4, -10), Vector2(bx * 1.6 + sin(t * 6.0 + i + 1.0) * 6, 0),
+		]), skin, 4.0)
+	ellipse(Vector2(0, -30), 16, 18, skin)
+	draw_circle(Vector2(-6, -38), 3, INFECTED)
+	draw_circle(Vector2(6, -44), 2.5, INFECTED)
+	draw_circle(Vector2(-9, -26), 2, INFECTED)
+	draw_circle(Vector2(6, -28), 4, Color.WHITE)
+	draw_circle(Vector2(-3, -28), 4, Color.WHITE)
+	draw_rect(Rect2(7, -29, 2, 3), Color("#111111"))
+	draw_rect(Rect2(-2, -29, 2, 3), Color("#111111"))
+
+
+# ---------- bosses ----------
+
+func draw_boss(b: Boss) -> void:
+	var x := roundf(b.x - cam_x)
+	var flash := b.hurt_flash > 0
+	if b.kind != "grand_witch":
+		draw_set_transform(Vector2(x, FLOOR_Y + 2), 0, Vector2(1, 0.18))
+		draw_circle(Vector2.ZERO, b.w * 0.55, Color(0, 0, 0, 0.35))
+		draw_set_transform(Vector2.ZERO, 0, Vector2.ONE)
+	match b.kind:
+		"destruction_maker":
+			draw_destruction_maker(b, x, flash)
+		"unstable_core":
+			draw_unstable_core(b, x, flash)
+		"broodmother":
+			draw_set_transform(Vector2(x, roundf(b.y)), 0, Vector2(b.facing, 1))
+			draw_broodmother(b, flash)
+		"grand_witch":
+			glow(Vector2(x, b.y - 60), 70, Color("#b45cff"), 0.07)
+			draw_set_transform(Vector2(x, roundf(b.y)), 0, Vector2(b.facing * 1.9, 1.9))
+			draw_witch(flash)
+		"kraken":
+			glow(Vector2(x, b.y - 70), 90, INFECTED, 0.06)
+			draw_set_transform(Vector2(x, roundf(b.y)), 0, Vector2(b.facing * 3.0, 3.0))
+			draw_octopus(flash, b.t)
+	draw_set_transform(Vector2.ZERO, 0, Vector2.ONE)
+
+
+func draw_destruction_maker(b: Boss, x: float, flash: bool) -> void:
+	var feet := roundf(b.y)
+	var step := sin(b.walk_time * 16.0) * 3.0
+	var skin := Color.WHITE if flash else Color("#d4372b")
 	# The drawing is made at small size and scaled up
-	draw_set_transform(Vector2(x, feet), 0, Vector2(goblin.facing * GOBLIN_SCALE, GOBLIN_SCALE))
+	draw_set_transform(Vector2(x, feet), 0, Vector2(b.facing * GOBLIN_SCALE, GOBLIN_SCALE))
 	draw_rect(Rect2(-8, -12, 6, 12 + step), skin) # legs
 	draw_rect(Rect2(2, -12, 6, 12 - step), skin)
-	var tunic := Color.WHITE if white else Color("#3a2618")
+	var tunic := Color.WHITE if flash else Color("#3a2618")
 	draw_rect(Rect2(-11, -28, 22, 18), tunic) # ragged tunic
 	draw_rect(Rect2(-11, -10, 5, 3), tunic)
 	draw_rect(Rect2(1, -10, 6, 3), tunic)
@@ -1230,24 +2509,53 @@ func draw_goblin() -> void:
 	draw_rect(Rect2(1, -38, 4, 3), Color("#ffd23a")) # glowing eyes
 	draw_rect(Rect2(-5, -38, 3, 3), Color("#ffd23a"))
 	draw_rect(Rect2(-3, -31, 9, 2), Color("#1a1a1a")) # grin
-	if goblin.throw_anim > 0:
+	if b.throw_anim > 0:
 		draw_rect(Rect2(8, -48, 5, 22), skin) # arm raised to throw
 	else:
 		draw_rect(Rect2(9, -26, 5, 12), skin)
 		draw_circle(Vector2(12, -14), 7, LAVA_COLOR) # lava ball in hand
 	draw_set_transform(Vector2.ZERO, 0, Vector2.ONE)
 
-	if goblin.awake:
-		draw_rect(Rect2(x - 23, feet - goblin.h - 26, 46, 5), Color(0, 0, 0, 0.6))
-		draw_rect(Rect2(x - 23, feet - goblin.h - 26, 46 * goblin.hp / GOBLIN_MAX_HP, 5), HP_COLOR)
+
+func draw_unstable_core(b: Boss, x: float, flash: bool) -> void:
+	var cy := b.y - 60.0
+	draw_colored_polygon(blob_points(x - 6, cy, 62, b.t), Color(0.25, 0.95, 1.0, 0.35))
+	draw_colored_polygon(blob_points(x + 6, cy, 62, b.t), Color(1.0, 0.25, 0.82, 0.35))
+	glow(Vector2(x, cy), 50, UNSTABLE_COLOR, 0.12)
+	draw_colored_polygon(blob_points(x, cy, 62, b.t), Color.WHITE if flash else UNSTABLE_COLOR)
+	draw_circle(Vector2(x, cy - 6), 26, Color(Color("#f6d7ff"), 0.45))
+	# Three eyes, all watching Grave
+	var look := clampf((grave.x - b.x) / 200.0, -1.0, 1.0)
+	for off in [Vector2(-24, -16), Vector2(24, -16), Vector2(0, 14)]:
+		draw_circle(Vector2(x, cy) + off, 11, Color.WHITE)
+		draw_circle(Vector2(x, cy) + off + Vector2(look * 5, 1), 4, Color("#14051f"))
 
 
-func draw_lava(ball: LavaBall) -> void:
-	var p := ball.pos - Vector2(cam_x, 0)
-	glow(p, LAVA_RADIUS, LAVA_COLOR, 0.2)
-	draw_circle(p, LAVA_RADIUS, Color("#c4260a"))
-	draw_circle(p, LAVA_RADIUS * 0.7, Color("#ffa21a"))
-	draw_circle(p - Vector2(3, 3), LAVA_RADIUS * 0.3, Color("#fff3a0"))
+func draw_broodmother(b: Boss, flash: bool) -> void:
+	var c := Color.WHITE if flash else Color("#1d1424")
+	var step := sin(b.walk_time * 10.0) * 6.0
+	for i in 4:
+		for side in [-1.0, 1.0]:
+			var hip := Vector2(-20 + i * 14, -50)
+			var knee := Vector2(-50 + i * 34 + side * 8 + step * side, -95)
+			var foot := Vector2(-70 + i * 46 + side * 10 + step * side, 0)
+			draw_polyline(PackedVector2Array([hip, knee, foot]), c, 5.0)
+	ellipse(Vector2(-35, -55), 42, 34, c) # abdomen
+	draw_colored_polygon(PackedVector2Array([Vector2(-45, -70), Vector2(-25, -70), Vector2(-35, -56)]), Color("#c0262a")) # hourglass mark
+	draw_colored_polygon(PackedVector2Array([Vector2(-45, -42), Vector2(-25, -42), Vector2(-35, -56)]), Color("#c0262a"))
+	draw_circle(Vector2(30, -50), 22, c) # head
+	for eye in [Vector2(38, -58), Vector2(44, -52), Vector2(32, -62), Vector2(42, -62), Vector2(46, -46), Vector2(36, -48)]:
+		draw_circle(eye, 3, Color("#ff3030"))
+	draw_colored_polygon(PackedVector2Array([Vector2(44, -40), Vector2(50, -40), Vector2(46, -28)]), Color("#d9d2c0")) # fangs
+	draw_colored_polygon(PackedVector2Array([Vector2(36, -38), Vector2(42, -38), Vector2(38, -27)]), Color("#d9d2c0"))
+
+
+func draw_shot(s: Shot) -> void:
+	var p := s.pos - Vector2(cam_x, 0)
+	glow(p, s.radius, s.color, 0.2)
+	draw_circle(p, s.radius, s.color.darkened(0.35))
+	draw_circle(p, s.radius * 0.7, s.color)
+	draw_circle(p - Vector2(3, 3), s.radius * 0.3, s.color.lightened(0.6))
 
 
 # ---------- THE UNSTABLE ----------
@@ -1264,18 +2572,18 @@ func blob_points(cx: float, cy: float, r: float, seed_offset: float) -> PackedVe
 	return pts
 
 
-func draw_unstable(u: Unstable) -> void:
+func draw_unstable(u: Enemy) -> void:
 	var x := u.x - cam_x
 	var time := now()
 
 	# Glowing crack where it's coming out
-	if u.emerging:
+	if u.state == "emerging":
 		draw_polyline(PackedVector2Array([
 			Vector2(x - 30, FLOOR_Y + 2), Vector2(x - 12, FLOOR_Y - 2), Vector2(x, FLOOR_Y + 4),
 			Vector2(x + 14, FLOOR_Y - 1), Vector2(x + 30, FLOOR_Y + 3),
 		]), UNSTABLE_COLOR, 3.0)
 
-	var rise := minf(1.0, u.t / UNSTABLE_EMERGE_TIME) if u.emerging else 1.0
+	var rise := minf(1.0, u.t / EMERGE_TIME) if u.state == "emerging" else 1.0
 	var feet := u.y + (1.0 - rise) * (u.h + 10)
 	var r := u.w / 2
 	var cy := feet - r * 0.9
@@ -1296,7 +2604,7 @@ func draw_unstable(u: Unstable) -> void:
 	if cy - 4 < FLOOR_Y:
 		draw_circle(Vector2(x + gx, cy - 4), r * 0.45, Color(Color("#f6d7ff"), 0.5 * alpha)) # bright core
 
-	if not u.emerging:
+	if u.state != "emerging":
 		# Little feeler strands
 		for i in range(-2, 3):
 			var sx := x + gx + i * 7
@@ -1311,40 +2619,13 @@ func draw_unstable(u: Unstable) -> void:
 		draw_circle(Vector2.ZERO, 3, Color("#14051f"))
 		draw_set_transform(Vector2.ZERO, 0, Vector2.ONE)
 
-	if not u.emerging and u.hp < UNSTABLE_MAX_HP:
-		draw_rect(Rect2(x - 16, feet - u.h - 14, 32, 4), Color(0, 0, 0, 0.6))
-		draw_rect(Rect2(x - 16, feet - u.h - 14, 32 * u.hp / UNSTABLE_MAX_HP, 4), HP_COLOR)
 
-
-# ---------- HUD and screens ----------
+# ---------- HUD bits ----------
 
 func bar(x: float, y: float, w: float, h: float, frac: float, color: Color, label: String) -> void:
 	draw_rect(Rect2(x, y, w, h), Color(0, 0, 0, 0.6))
 	draw_rect(Rect2(x + 2, y + 2, maxf(0.0, (w - 4) * frac), h - 4), color)
 	text(label, x + 6, y + h - 5, 11, Color.WHITE, HORIZONTAL_ALIGNMENT_LEFT)
-
-
-func draw_hud() -> void:
-	draw_rect(Rect2(12, 12, 250, 98), Color(0.04, 0.05, 0.09, 0.7))
-	text("GRAVE", 22, 32, 16, ACCENT, HORIZONTAL_ALIGNMENT_LEFT)
-	bar(22, 40, 230, 18, grave.hp / GRAVE_MAX_HP, HP_COLOR, "HEALTH %d" % ceili(grave.hp))
-	if grave.battery > 0:
-		bar(22, 62, 230, 18, grave.battery / BATTERY_MAX, BATTERY_COLOR, "BATTERY %d%%" % ceili(grave.battery))
-	else:
-		bar(22, 62, 230, 18, 0.0, Color(0.33, 0.33, 0.33), "BATTERY EMPTY - NO CHARGING")
-	bar(22, 84, 230, 18, grave.charge / MAX_CHARGE, BEAM_COLOR, "CHARGE")
-
-	if level == 1 and goblin.awake and goblin.alive:
-		text(goblin.name, VIEW_W / 2, 30, 14, Color("#ff8a5a"))
-		bar((VIEW_W - 420) / 2, 36, 420, 16, goblin.hp / GOBLIN_MAX_HP, HP_COLOR, "")
-	if level == 2:
-		draw_rect(Rect2(VIEW_W - 262, 12, 250, 54), Color(0.04, 0.05, 0.09, 0.7))
-		text(LEVEL_NAMES[2], VIEW_W - 22, 32, 12, Color("#cfa8ff"), HORIZONTAL_ALIGNMENT_RIGHT)
-		text("UNSTABLE EVAPORATED %d/%d" % [unstable_evaporated, UNSTABLE_TOTAL], VIEW_W - 22, 56, 16, Color.WHITE, HORIZONTAL_ALIGNMENT_RIGHT)
-
-	text("A/D move   W/Space jump   Right-click (or F) shoot, hold to charge   M sound", VIEW_W - 14, VIEW_H - 12, 12, Color("#9aa3b5"), HORIZONTAL_ALIGNMENT_RIGHT)
-	if hint_time > 0:
-		text(hint, VIEW_W / 2, 150, 18, Color("#ffcf5a"))
 
 
 func draw_overlay(title: String, sub: String, color: Color, detail := "") -> void:
@@ -1353,35 +2634,6 @@ func draw_overlay(title: String, sub: String, color: Color, detail := "") -> voi
 	if detail != "":
 		text(detail, VIEW_W / 2, VIEW_H / 2 + 28, 16, Color("#e6e9ef"))
 	text(sub, VIEW_W / 2, VIEW_H / 2 + (60 if detail != "" else 30), 18, Color("#e6e9ef"))
-
-
-func draw_end_screens() -> void:
-	if status == "lost":
-		var where := "Press R or click to try again" if checkpoint == 1 else "Press R or click to restart from the van"
-		if level == 3:
-			draw_overlay("THE KEYS KEEPER GOT YOU", where, HP_COLOR, death_reason)
-		else:
-			draw_overlay("GRAVE WAS MELTED", where, HP_COLOR)
-	elif status == "won":
-		draw_overlay("YOU ESCAPED THE VAN", "To be continued...  Press R or click to play again", ACCENT)
-
-
-func draw_title_card() -> void:
-	draw_rect(Rect2(0, 0, VIEW_W, VIEW_H), Color("#07040d"))
-	var a := clampf(minf(phase_time / 0.6, (TITLE_TIME - phase_time) / 0.6), 0.0, 1.0)
-	var color := ACCENT
-	var line := ""
-	if next_level == 2:
-		color = Color("#cfa8ff")
-		line = "Something is moving under the ground..."
-	elif next_level == 3:
-		color = KEEPER_EYES
-		line = "*click* ... the van doors lock from the outside."
-		draw_keys_keeper(VIEW_W / 2, VIEW_H + 130, 1.6, a * 0.8, Color("#241a30"))
-	text("Checkpoint - health and battery refilled", VIEW_W / 2, VIEW_H / 2 - 70, 16, Color("#9aa3b5", a))
-	glow(Vector2(VIEW_W / 2, VIEW_H / 2 - 14), 60, color, 0.05 * a)
-	text(LEVEL_NAMES[next_level], VIEW_W / 2, VIEW_H / 2, 40, Color(color, a))
-	text(line, VIEW_W / 2, VIEW_H / 2 + 44, 18, Color("#e6e9ef", a))
 
 
 # ---------- inside the van ----------
@@ -1479,6 +2731,9 @@ func draw_back_door() -> void:
 	outside_view(x + 10, top + 20, w / 2 - 22, 50)
 	outside_view(x + w / 2 + 12, top + 20, w / 2 - 22, 50)
 
+	if scene != "keeper":
+		return # between trips the back door isn't locked
+
 	# Big padlock with three keyholes
 	var lx := x + w / 2
 	var ly := top + 140
@@ -1548,6 +2803,8 @@ func draw_van_room() -> void:
 	draw_back_door()
 	for i in DRAWERS.size():
 		draw_drawer(i)
+	if scene == "hub":
+		draw_map_board()
 
 	draw_rect(Rect2(0, FLOOR_Y, VIEW_W, VIEW_H - FLOOR_Y), Color("#1b1e24"))
 	for x in range(0, int(VIEW_W), 24):
@@ -1628,7 +2885,7 @@ var sfx_players: Array = []
 var next_player := 0
 var ambience_player := AudioStreamPlayer.new()
 var dread_player := AudioStreamPlayer.new()
-var current_mood := 0
+var current_mood := ""
 var spooky_timer := 4.0
 var heartbeat_timer := 0.0
 var charge_player := AudioStreamPlayer.new()
@@ -1849,6 +3106,20 @@ func build_sounds() -> void:
 		"unstable_emerge": make_wav(gen_unstable_emerge()),
 		"unstable_hurt": make_wav(gen_unstable_hurt()),
 		"unstable_death": make_wav(gen_unstable_death()),
+		# New places and monsters
+		"amb4": make_wav(gen_ambience([41.0, 41.25, 43.5], 0.6, 0.15), true), # dark cave
+		"amb5": make_wav(gen_ambience([52.0, 52.25, 55.25], 0.45, 0.25), true), # creepy warehouse
+		"amb6": make_wav(gen_ambience([36.0, 36.25, 38.5], 0.3, 0.9), true), # beach of doom (surf)
+		"howl": make_wav(gen_howl()),
+		"growl": make_wav(gen_growl()),
+		"cackle": make_wav(gen_cackle()),
+		"bones": make_wav(gen_bones()),
+		"monster_hurt": make_wav(gen_monster_hurt()),
+		"monster_death": make_wav(gen_monster_death()),
+		"boss_roar": make_wav(gen_boss_roar()),
+		"boss_hurt": make_wav(gen_tone("saw", 300, 150, 0.2, 0.35, 25.0)),
+		"magic": make_wav(gen_magic()),
+		"drip": make_wav(gen_drip()),
 	}
 	for i in 10:
 		var p := AudioStreamPlayer.new()
@@ -1876,14 +3147,23 @@ func play_sound(sound_name: String, volume := 1.0, pitch := 1.0) -> void:
 	p.play()
 
 
-const SPOOKY := {1: ["owl", "owl", "whisper"], 2: ["bell", "whisper", "whisper", "bell"], 3: ["creak", "creak", "whisper"]}
+const SPOOKY := {
+	"amb1": ["owl", "owl", "whisper", "howl"],
+	"amb2": ["bell", "whisper", "whisper", "bell"],
+	"amb3": ["creak", "creak", "whisper"],
+	"amb4": ["drip", "drip", "drip", "whisper"],
+	"amb5": ["creak", "whisper", "cackle"],
+	"amb6": ["whisper", "bell", "howl"],
+}
+const MOOD_OF := {"menu": "amb3", "forest": "amb1", "resting": "amb2", "hub": "amb3", "keeper": "amb3", "cave": "amb4", "warehouse": "amb5", "beach": "amb6"}
 
 
 # Called every frame. dread (0..1) = how close the Keys Keeper is.
-func update_audio(mood: int, dread: float, delta: float) -> void:
+func update_audio(scene_key: String, dread: float, delta: float) -> void:
+	var mood: String = MOOD_OF.get(scene_key, "amb3")
 	if mood != current_mood:
 		current_mood = mood
-		ambience_player.stream = sounds["amb%d" % mood]
+		ambience_player.stream = sounds[mood]
 		ambience_player.volume_db = -6.0
 		ambience_player.play()
 
@@ -2021,3 +3301,65 @@ func gen_unstable_death() -> PackedFloat32Array:
 	var s := gen_tone("sine", 520, 90, 0.7, 0.4, 90.0) # warbling dissolve
 	s = mix_into(s, gen_tone("square", 1200, 300, 0.25, 0.1), 0.05)
 	return mix_into(s, gen_hiss("high", 3500, 900, 0.8, 0.45), 0.05) # fizz
+
+
+# ---------- sounds for the new places and monsters ----------
+
+# Wolf howl: a rising and falling wail
+func gen_howl() -> PackedFloat32Array:
+	var s := samples_for(1.6)
+	var ph := 0.0
+	for i in s.size():
+		var t := float(i) / SR
+		var f := 380.0 + 300.0 * sin(PI * minf(t / 1.4, 1.0)) + sin(TAU * 5.0 * t) * 8.0
+		ph += TAU * f / SR
+		var env := minf(t / 0.2, 1.0) * clampf((1.6 - t) / 0.5, 0.0, 1.0)
+		s[i] = (sin(ph) + 0.3 * sin(ph * 2.0)) * env * 0.22
+	return s
+
+
+func gen_growl() -> PackedFloat32Array:
+	return mix_into(gen_tone("saw", 110, 70, 0.7, 0.3, 12.0), gen_hiss("low", 400, 150, 0.6, 0.5))
+
+
+# Witch cackle: quick falling "heh-heh-heh"
+func gen_cackle() -> PackedFloat32Array:
+	var s := PackedFloat32Array()
+	for k in 5:
+		s = mix_into(s, gen_tone("saw", 900 - k * 60, 600 - k * 40, 0.09, 0.18, 30.0), k * 0.11)
+	return s
+
+
+# Skeleton falling apart: a clatter of bones
+func gen_bones() -> PackedFloat32Array:
+	var s := PackedFloat32Array()
+	for k in 7:
+		s = mix_into(s, gen_hiss("band", 2600 - k * 150, 1400, 0.05, 0.6), k * 0.06 + randf() * 0.03)
+	return s
+
+
+# Shared by most monsters; play_sound's pitch makes each kind sound different
+func gen_monster_hurt() -> PackedFloat32Array:
+	return gen_tone("saw", 520, 260, 0.14, 0.28, 30.0)
+
+
+func gen_monster_death() -> PackedFloat32Array:
+	return mix_into(gen_tone("saw", 440, 70, 0.5, 0.28, 40.0), gen_hiss("high", 3000, 800, 0.6, 0.4), 0.05)
+
+
+func gen_boss_roar() -> PackedFloat32Array:
+	var s := gen_tone("saw", 140, 60, 1.4, 0.4, 18.0)
+	s = mix_into(s, gen_tone("square", 70, 40, 1.3, 0.2))
+	return mix_into(s, gen_hiss("low", 800, 200, 1.2, 0.5))
+
+
+func gen_magic() -> PackedFloat32Array:
+	var s := PackedFloat32Array()
+	for k in 3:
+		s = mix_into(s, gen_tone("square", 900 + k * 300, 1800 + k * 300, 0.08, 0.12), k * 0.04)
+	return s
+
+
+# Water dripping in the cave, with an echo
+func gen_drip() -> PackedFloat32Array:
+	return mix_into(gen_tone("sine", 1500, 700, 0.12, 0.35), gen_tone("sine", 1500, 700, 0.12, 0.12), 0.25)
