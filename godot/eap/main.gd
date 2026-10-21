@@ -1102,8 +1102,8 @@ func van_world_x() -> float:
 		return VAN_X + t * t * 400
 	if status == "arriving":
 		var k := minf(1.0, phase_time / ARRIVE_TIME)
-		var ease := 1.0 - pow(1.0 - k, 3)
-		return VAN_PARK_X - 700 * (1.0 - ease)
+		var eased := 1.0 - pow(1.0 - k, 3)
+		return VAN_PARK_X - 700 * (1.0 - eased)
 	return VAN_PARK_X
 
 
