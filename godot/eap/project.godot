@@ -1,0 +1,21 @@
+; Godot 4 project for EAP — Evaporate All Parasites.
+; Open it with Godot's Project Manager: Import -> pick this folder.
+
+config_version=5
+
+[application]
+
+config/name="EAP - Evaporate All Parasites"
+run/main_scene="res://main.tscn"
+config/features=PackedStringArray("4.7")
+
+[display]
+
+window/size/viewport_width=960
+window/size/viewport_height=540
+window/stretch/mode="canvas_items"
+
+[rendering]
+
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
