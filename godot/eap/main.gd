@@ -29,7 +29,7 @@ extends Node2D
 const QUOTA_SCALE := 1.0
 
 # Shown on the save screen so you can tell which copy of the script is running
-const VERSION := "VERSION 5 - LOADING SCREEN"
+const VERSION := "v1.0 - CHAPTER 1"
 
 const VIEW_W := 960.0
 const VIEW_H := 540.0
