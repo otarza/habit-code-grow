@@ -29,7 +29,7 @@ extends Node2D
 const QUOTA_SCALE := 1.0
 
 # Shown on the save screen so you can tell which copy of the script is running
-const VERSION := "VERSION 4 - INFECTED ATTACKS"
+const VERSION := "VERSION 5 - LOADING SCREEN"
 
 const VIEW_W := 960.0
 const VIEW_H := 540.0
@@ -337,8 +337,7 @@ var unlock_time := 0.0
 func _ready() -> void:
 	randomize()
 	build_sounds()
-	load_slots()
-	status = "menu"
+	status = "loading" # the loading screen makes the sounds, then opens the save files
 
 
 # ---------- save files ----------
@@ -540,6 +539,8 @@ func is_over() -> bool:
 # ---------- input ----------
 
 func _input(event: InputEvent) -> void:
+	if status == "loading":
+		return
 	if event is InputEventKey and event.pressed and not event.echo:
 		var k: Key = event.keycode
 		if k == KEY_M:
@@ -659,6 +660,11 @@ func _process(delta: float) -> void:
 		play_sound("heart_break", 0.8)
 	elif status != "lost":
 		game_over_sound = false
+
+	if status == "loading":
+		load_some_sounds()
+		queue_redraw()
+		return
 
 	if status == "menu":
 		# Hovering a save file selects it
@@ -1636,6 +1642,9 @@ func update_van_room(delta: float) -> void:
 # =====================================================================
 
 func _draw() -> void:
+	if status == "loading":
+		draw_loading()
+		return
 	if status == "menu":
 		draw_menu()
 		return
@@ -3011,6 +3020,8 @@ var current_mood := ""
 var spooky_timer := 4.0
 var heartbeat_timer := 0.0
 var charge_player := AudioStreamPlayer.new()
+var sound_queue: Array = [] # sounds still to be made: [name, maker]
+var sound_total := 0
 
 
 func make_wav(samples: PackedFloat32Array, loop := false) -> AudioStreamWAV:
@@ -3198,68 +3209,92 @@ func gen_dread() -> PackedFloat32Array:
 	return s
 
 
+# Sounds are made a few at a time while the loading screen shows (making them all at once
+# froze the browser version of Godot on a grey screen)
 func build_sounds() -> void:
-	sounds = {
-		"footstep": make_wav(gen_footstep()),
-		"jangle": make_wav(gen_jangle()),
-		"heartbeat": make_wav(gen_heartbeat()),
-		"sting": make_wav(gen_sting()),
-		"pickup": make_wav(gen_pickup()),
-		"clunk": make_wav(gen_clunk()),
-		"death": make_wav(gen_death()),
-		"owl": make_wav(gen_owl()),
-		"bell": make_wav(gen_bell()),
-		"whisper": make_wav(gen_whisper()),
-		"creak": make_wav(gen_creak()),
-		"amb1": make_wav(gen_ambience([55.0, 55.25, 58.25], 0.35, 0.5), true), # forest
-		"amb2": make_wav(gen_ambience([49.0, 49.25, 51.75], 0.6, 0.35), true), # resting of the unstable
-		"amb3": make_wav(gen_ambience([44.0, 44.25, 46.5], 0.55, 0.12), true), # van
-		"dread": make_wav(gen_dread(), true),
+	sound_queue = [
+		["footstep", func() -> AudioStreamWAV: return make_wav(gen_footstep())],
+		["jangle", func() -> AudioStreamWAV: return make_wav(gen_jangle())],
+		["heartbeat", func() -> AudioStreamWAV: return make_wav(gen_heartbeat())],
+		["sting", func() -> AudioStreamWAV: return make_wav(gen_sting())],
+		["pickup", func() -> AudioStreamWAV: return make_wav(gen_pickup())],
+		["clunk", func() -> AudioStreamWAV: return make_wav(gen_clunk())],
+		["death", func() -> AudioStreamWAV: return make_wav(gen_death())],
+		["owl", func() -> AudioStreamWAV: return make_wav(gen_owl())],
+		["bell", func() -> AudioStreamWAV: return make_wav(gen_bell())],
+		["whisper", func() -> AudioStreamWAV: return make_wav(gen_whisper())],
+		["creak", func() -> AudioStreamWAV: return make_wav(gen_creak())],
+		["amb1", func() -> AudioStreamWAV: return make_wav(gen_ambience([55.0, 55.25, 58.25], 0.35, 0.5), true)], # forest
+		["amb2", func() -> AudioStreamWAV: return make_wav(gen_ambience([49.0, 49.25, 51.75], 0.6, 0.35), true)], # resting of the unstable
+		["amb3", func() -> AudioStreamWAV: return make_wav(gen_ambience([44.0, 44.25, 46.5], 0.55, 0.12), true)], # van
+		["dread", func() -> AudioStreamWAV: return make_wav(gen_dread(), true)],
 		# Shooting and monsters
-		"shoot0": make_wav(gen_shoot(0.0)),
-		"shoot1": make_wav(gen_shoot(0.5)),
-		"shoot2": make_wav(gen_shoot(1.0)),
-		"charge_hum": make_wav(gen_charge_hum(), true),
-		"grave_hurt": make_wav(gen_grave_hurt()),
-		"lava_throw": make_wav(gen_hiss("band", 300, 1400, 0.35, 0.5)),
-		"lava_splat": make_wav(gen_lava_splat()),
-		"goblin_hurt": make_wav(gen_tone("saw", 620, 300, 0.16, 0.3, 40.0)),
-		"goblin_death": make_wav(gen_goblin_death()),
-		"unstable_emerge": make_wav(gen_unstable_emerge()),
-		"unstable_hurt": make_wav(gen_unstable_hurt()),
-		"unstable_death": make_wav(gen_unstable_death()),
+		["shoot0", func() -> AudioStreamWAV: return make_wav(gen_shoot(0.0))],
+		["shoot1", func() -> AudioStreamWAV: return make_wav(gen_shoot(0.5))],
+		["shoot2", func() -> AudioStreamWAV: return make_wav(gen_shoot(1.0))],
+		["charge_hum", func() -> AudioStreamWAV: return make_wav(gen_charge_hum(), true)],
+		["grave_hurt", func() -> AudioStreamWAV: return make_wav(gen_grave_hurt())],
+		["lava_throw", func() -> AudioStreamWAV: return make_wav(gen_hiss("band", 300, 1400, 0.35, 0.5))],
+		["lava_splat", func() -> AudioStreamWAV: return make_wav(gen_lava_splat())],
+		["goblin_hurt", func() -> AudioStreamWAV: return make_wav(gen_tone("saw", 620, 300, 0.16, 0.3, 40.0))],
+		["goblin_death", func() -> AudioStreamWAV: return make_wav(gen_goblin_death())],
+		["unstable_emerge", func() -> AudioStreamWAV: return make_wav(gen_unstable_emerge())],
+		["unstable_hurt", func() -> AudioStreamWAV: return make_wav(gen_unstable_hurt())],
+		["unstable_death", func() -> AudioStreamWAV: return make_wav(gen_unstable_death())],
 		# New places and monsters
-		"amb4": make_wav(gen_ambience([41.0, 41.25, 43.5], 0.6, 0.15), true), # dark cave
-		"amb5": make_wav(gen_ambience([52.0, 52.25, 55.25], 0.45, 0.25), true), # creepy warehouse
-		"amb6": make_wav(gen_ambience([36.0, 36.25, 38.5], 0.3, 0.9), true), # beach of doom (surf)
-		"howl": make_wav(gen_howl()),
-		"growl": make_wav(gen_growl()),
-		"cackle": make_wav(gen_cackle()),
-		"bones": make_wav(gen_bones()),
-		"monster_hurt": make_wav(gen_monster_hurt()),
-		"monster_death": make_wav(gen_monster_death()),
-		"boss_roar": make_wav(gen_boss_roar()),
-		"boss_hurt": make_wav(gen_tone("saw", 300, 150, 0.2, 0.35, 25.0)),
-		"magic": make_wav(gen_magic()),
-		"drip": make_wav(gen_drip()),
-		"blip": make_wav(gen_blip()),
-		"select": make_wav(gen_select()),
-		"heart_break": make_wav(gen_heart_break()),
-	}
+		["amb4", func() -> AudioStreamWAV: return make_wav(gen_ambience([41.0, 41.25, 43.5], 0.6, 0.15), true)], # dark cave
+		["amb5", func() -> AudioStreamWAV: return make_wav(gen_ambience([52.0, 52.25, 55.25], 0.45, 0.25), true)], # creepy warehouse
+		["amb6", func() -> AudioStreamWAV: return make_wav(gen_ambience([36.0, 36.25, 38.5], 0.3, 0.9), true)], # beach of doom (surf)
+		["howl", func() -> AudioStreamWAV: return make_wav(gen_howl())],
+		["growl", func() -> AudioStreamWAV: return make_wav(gen_growl())],
+		["cackle", func() -> AudioStreamWAV: return make_wav(gen_cackle())],
+		["bones", func() -> AudioStreamWAV: return make_wav(gen_bones())],
+		["monster_hurt", func() -> AudioStreamWAV: return make_wav(gen_monster_hurt())],
+		["monster_death", func() -> AudioStreamWAV: return make_wav(gen_monster_death())],
+		["boss_roar", func() -> AudioStreamWAV: return make_wav(gen_boss_roar())],
+		["boss_hurt", func() -> AudioStreamWAV: return make_wav(gen_tone("saw", 300, 150, 0.2, 0.35, 25.0))],
+		["magic", func() -> AudioStreamWAV: return make_wav(gen_magic())],
+		["drip", func() -> AudioStreamWAV: return make_wav(gen_drip())],
+		["blip", func() -> AudioStreamWAV: return make_wav(gen_blip())],
+		["select", func() -> AudioStreamWAV: return make_wav(gen_select())],
+		["heart_break", func() -> AudioStreamWAV: return make_wav(gen_heart_break())],
+	]
+	sound_total = sound_queue.size()
 	for i in 10:
 		var p := AudioStreamPlayer.new()
 		add_child(p)
 		sfx_players.append(p)
 	add_child(ambience_player)
 	add_child(dread_player)
-	dread_player.stream = sounds["dread"]
-	dread_player.volume_db = -80.0
-	dread_player.play()
 	add_child(charge_player)
-	charge_player.stream = sounds["charge_hum"]
-	charge_player.volume_db = -80.0
-	charge_player.play()
 
+
+# Make sounds for about 12 milliseconds each frame
+func load_some_sounds() -> void:
+	var started := Time.get_ticks_msec()
+	while not sound_queue.is_empty() and Time.get_ticks_msec() - started < 12:
+		var item: Array = sound_queue.pop_front()
+		var make: Callable = item[1]
+		sounds[item[0]] = make.call()
+	if sound_queue.is_empty():
+		dread_player.stream = sounds["dread"]
+		dread_player.volume_db = -80.0
+		dread_player.play()
+		charge_player.stream = sounds["charge_hum"]
+		charge_player.volume_db = -80.0
+		charge_player.play()
+		load_slots()
+		status = "menu"
+
+
+func draw_loading() -> void:
+	sky(Color("#02030a"), Color("#0b1a2a"))
+	title_text("EAP", VIEW_W / 2, 220, 72, Color("#d8ffc8"), INFECTED)
+	text("EVAPORATE ALL PARASITES", VIEW_W / 2, 252, 18, Color("#e6e9ef"))
+	var done := sound_total - sound_queue.size()
+	shiny_bar(Rect2(VIEW_W / 2 - 200, 300, 400, 14), float(done) / maxf(1.0, float(sound_total)), INFECTED)
+	text("Making the sounds... %d / %d" % [done, sound_total], VIEW_W / 2, 340, 14, Color("#b8c4e8"))
+	text(VERSION, 12, 22, 12, INFECTED, HORIZONTAL_ALIGNMENT_LEFT)
 
 func play_sound(sound_name: String, volume := 1.0, pitch := 1.0) -> void:
 	if volume <= 0.01 or not sounds.has(sound_name):
