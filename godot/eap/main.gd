@@ -151,6 +151,8 @@ const SHOT_STYLE := {
 	"bone": {"color": INFECTED, "r": 10, "dmg": 8}, # skeletons' green flying bones
 	"venom": {"color": INFECTED, "r": 8, "dmg": 5}, # spider spit
 	"bubble": {"color": Color("#b8ff9a"), "r": 11, "dmg": 6}, # crab bubbles
+	"howl": {"color": INFECTED, "r": 13, "dmg": 6}, # wolf howl-waves
+	"slime": {"color": Color("#6be04a"), "r": 15, "dmg": 10}, # bear slime
 }
 
 
@@ -954,7 +956,7 @@ func make_enemy(kind: String, minion: bool) -> Enemy:
 	e.minion = minion
 	e.seed_offset = randf() * 1000.0
 	e.hop_cooldown = randf_range(0.6, 1.6)
-	e.attack_cooldown = randf_range(1.5, 3.0)
+	e.attack_cooldown = randf_range(0.6, 1.6)
 	match kind:
 		"unstable", "skeleton":
 			e.state = "emerging" # out of the ground
@@ -1048,15 +1050,22 @@ func update_enemy(e: Enemy, delta: float) -> bool:
 			# Howls, then lunges
 			if e.attack_cooldown <= 0 and absf(dx) < 420:
 				play_limited("howl", 1.6, 0.6, randf_range(0.9, 1.15))
+				# The infected howl flies at Grave as a green wave
+				shoot_at(mouth, grave_chest(), 280.0, "howl")
 				e.attack_cooldown = randf_range(4.0, 7.0)
 		"bear":
 			# Growls, then charges
 			if e.attack_cooldown <= 0 and absf(dx) < 320:
 				play_limited("growl", 0.8, 0.9, randf_range(0.85, 1.1))
+				# Spits a glob of infected slime, then charges
+				lob(mouth, grave.x + randf_range(-30, 30), "slime")
+				burst(mouth, 10, INFECTED, 140.0, 3.0)
 				e.rage = 1.0
 				e.attack_cooldown = randf_range(4.0, 6.0)
 			if e.rage > 0:
 				speed *= 2.6
+				if randf() < 0.5: # green parasite trail while charging
+					burst(Vector2(e.x, e.y - 10), 1, INFECTED, 40.0, 4.0)
 		"crab":
 			move = dir + sin(e.t * 6.0 + e.seed_offset) * 0.9 # sideways scuttle
 			# Blows infected bubbles
@@ -2645,7 +2654,7 @@ func draw_broodmother(b: Boss, flash: bool) -> void:
 func draw_shot(s: Shot) -> void:
 	var p := s.pos - Vector2(cam_x, 0)
 	match s.kind:
-		"soundwave":
+		"soundwave", "howl":
 			# Rings of sound rolling forward
 			var a := s.vel.angle()
 			var dir := s.vel.normalized()
