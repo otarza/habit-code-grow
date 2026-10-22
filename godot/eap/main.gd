@@ -28,6 +28,9 @@ extends Node2D
 # Every monster count is multiplied by this. Set it to 0.1 to test quickly; 1.0 is the real game.
 const QUOTA_SCALE := 1.0
 
+# Shown on the save screen so you can tell which copy of the script is running
+const VERSION := "VERSION 4 - INFECTED ATTACKS"
+
 const VIEW_W := 960.0
 const VIEW_H := 540.0
 const WORLD_W := 2880.0
@@ -1727,6 +1730,7 @@ func draw_menu() -> void:
 		window_box(er, 0.9)
 		text("SURE?" if armed else "ERASE", er.get_center().x, er.position.y + 23, 13, Color("#ff6a5a") if armed else Color("#b8c4e8"))
 	text("1-3 or click: start     W/S: move     X twice: erase     M: sound", VIEW_W / 2, VIEW_H - 16, 12, Color("#8a94b0"))
+	text(VERSION, 12, 22, 12, INFECTED, HORIZONTAL_ALIGNMENT_LEFT)
 
 
 # ---------- the map inside the van ----------
