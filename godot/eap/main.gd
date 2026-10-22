@@ -67,7 +67,7 @@ const EMERGE_TIME := 0.9
 
 # Story timing
 const DRIVE_TIME := 2.0
-const TITLE_TIME := 3.2
+const TITLE_TIME := 4.5
 const ARRIVE_TIME := 1.5
 
 # Inside the van
@@ -92,20 +92,20 @@ const HP_COLOR := Color("#e74c3c")
 const BATTERY_COLOR := Color("#4ab8ff")
 const UNSTABLE_COLOR := Color("#b45cff")
 const INFECTED := Color("#8cff5a")
-const KEEPER_EYES := Color("#ffc94a")
+const KEEPER_EYES := Color("#8cff5a") # the Keys Keeper is infected too
 const KEY_COLORS := {"blue": Color("#3d8bff"), "green": Color("#35e05a"), "red": Color("#ff3030")}
 
 # Monster stats. pitch = how high their hurt/death sounds are.
 const ENEMY := {
-	"wolf": {"plural": "wolves", "hp": 16, "dmg": 10, "speed": 170, "w": 60, "h": 44, "color": Color("#5d6370"), "pitch": 1.25},
-	"bear": {"plural": "bears", "hp": 40, "dmg": 20, "speed": 70, "w": 70, "h": 66, "color": Color("#5a3a22"), "pitch": 0.6},
-	"unstable": {"plural": "unstable", "hp": 16, "dmg": 5, "speed": 90, "w": 40, "h": 40, "color": UNSTABLE_COLOR, "pitch": 1.0},
-	"spider": {"plural": "spiders", "hp": 8, "dmg": 5, "speed": 140, "w": 34, "h": 22, "color": Color("#2a2030"), "pitch": 1.7},
-	"witch": {"plural": "witches", "hp": 16, "dmg": 8, "speed": 110, "w": 44, "h": 70, "color": Color("#79c25a"), "pitch": 1.4, "fly": true},
-	"skeleton": {"plural": "skeletons", "hp": 16, "dmg": 10, "speed": 80, "w": 30, "h": 72, "color": Color("#e8e2cf"), "pitch": 1.1},
-	"crab": {"plural": "infected crabs", "hp": 12, "dmg": 8, "speed": 120, "w": 46, "h": 32, "color": Color("#c9452c"), "pitch": 1.5},
-	"shark": {"plural": "land sharks", "hp": 20, "dmg": 12, "speed": 160, "w": 90, "h": 40, "color": Color("#5d6b78"), "pitch": 0.8, "fly": true},
-	"octopus": {"plural": "infected octopuses", "hp": 16, "dmg": 8, "speed": 70, "w": 44, "h": 50, "color": Color("#6b3a8a"), "pitch": 1.0},
+	"wolf": {"plural": "wolves", "short": "WOLVES", "hp": 16, "dmg": 10, "speed": 170, "w": 60, "h": 44, "color": Color("#5d6370"), "pitch": 1.25},
+	"bear": {"plural": "bears", "short": "BEARS", "hp": 40, "dmg": 20, "speed": 70, "w": 70, "h": 66, "color": Color("#5a3a22"), "pitch": 0.6},
+	"unstable": {"plural": "unstable", "short": "UNSTABLE", "hp": 16, "dmg": 5, "speed": 90, "w": 40, "h": 40, "color": UNSTABLE_COLOR, "pitch": 1.0},
+	"spider": {"plural": "spiders", "short": "SPIDERS", "hp": 8, "dmg": 5, "speed": 140, "w": 34, "h": 22, "color": Color("#2a2030"), "pitch": 1.7},
+	"witch": {"plural": "witches", "short": "WITCHES", "hp": 16, "dmg": 8, "speed": 110, "w": 44, "h": 70, "color": Color("#79c25a"), "pitch": 1.4, "fly": true},
+	"skeleton": {"plural": "skeletons", "short": "SKELETONS", "hp": 16, "dmg": 10, "speed": 80, "w": 30, "h": 72, "color": Color("#e8e2cf"), "pitch": 1.1},
+	"crab": {"plural": "infected crabs", "short": "CRABS", "hp": 12, "dmg": 8, "speed": 120, "w": 46, "h": 32, "color": Color("#c9452c"), "pitch": 1.5},
+	"shark": {"plural": "land sharks", "short": "SHARKS", "hp": 20, "dmg": 12, "speed": 160, "w": 90, "h": 40, "color": Color("#5d6b78"), "pitch": 0.8, "fly": true},
+	"octopus": {"plural": "infected octopuses", "short": "OCTOPUSES", "hp": 16, "dmg": 8, "speed": 70, "w": 44, "h": 50, "color": Color("#6b3a8a"), "pitch": 1.0},
 }
 
 # The boss at the end of every place
@@ -119,7 +119,7 @@ const BOSSES := {
 
 const PLACES := {
 	"forest": {
-		"name": "THE SCARY FOREST", "line": "Wolves and bears are out tonight...", "color": Color("#ff6a5a"),
+		"name": "THE SCARY FOREST", "line": "The parasite virus got into the wolves and bears...", "color": Color("#ff6a5a"),
 		"quota": {"wolf": 50, "bear": 50}, "boss": "destruction_maker",
 	},
 	"resting": {
@@ -127,11 +127,11 @@ const PLACES := {
 		"quota": {"unstable": 100}, "boss": "unstable_core",
 	},
 	"cave": {
-		"name": "THE DARK CAVE", "line": "Thousands of little legs in the dark...", "color": Color("#3ff2d6"),
+		"name": "THE DARK CAVE", "line": "Thousands of infected little legs in the dark...", "color": Color("#3ff2d6"),
 		"quota": {"spider": 200}, "boss": "broodmother",
 	},
 	"warehouse": {
-		"name": "THE CREEPY WAREHOUSE", "line": "Witches above. Skeletons below.", "color": Color("#ffcf5a"),
+		"name": "THE CREEPY WAREHOUSE", "line": "Infected witches above. Infected skeletons below.", "color": Color("#ffcf5a"),
 		"quota": {"witch": 300, "skeleton": 300}, "boss": "grand_witch",
 	},
 	"beach": {
@@ -145,8 +145,12 @@ const SHOT_STYLE := {
 	"lava": {"color": LAVA_COLOR, "r": 18, "dmg": 20},
 	"orb": {"color": UNSTABLE_COLOR, "r": 16, "dmg": 15},
 	"web": {"color": Color("#e8e8f0"), "r": 14, "dmg": 12},
-	"ink": {"color": Color("#3b2b5a"), "r": 15, "dmg": 14},
+	"ink": {"color": Color("#3f8a2a"), "r": 15, "dmg": 14}, # infected green ink
 	"magic": {"color": Color("#7dff6a"), "r": 9, "dmg": 10},
+	"soundwave": {"color": INFECTED, "r": 16, "dmg": 8}, # witch cackles
+	"bone": {"color": INFECTED, "r": 10, "dmg": 8}, # skeletons' green flying bones
+	"venom": {"color": INFECTED, "r": 8, "dmg": 5}, # spider spit
+	"bubble": {"color": Color("#b8ff9a"), "r": 11, "dmg": 6}, # crab bubbles
 }
 
 
@@ -197,6 +201,7 @@ class Enemy:
 	var seed_offset := 0.0
 	var facing := 1
 	var minion := false # summoned by a boss: doesn't count toward the place's total
+	var rage := 0.0 # > 0 while a bear charges
 	var walk_time := 0.0
 
 
@@ -299,6 +304,11 @@ var jump_pressed := false
 var action_pressed := false
 var down_pressed := false
 var fire_block := false # ignore the click that picked a menu item until it's released
+var status_time := 0.0 # seconds since the status last changed (for text that types itself out)
+var last_status := ""
+var last_typed := 0
+var game_over_sound := false
+var sound_next := {} # earliest time each limited sound may play again
 
 # Inside the van (the Keys Keeper)
 var hiding_in := -1
@@ -375,6 +385,7 @@ func arm_or_erase(i: int) -> void:
 
 
 func start_slot(i: int) -> void:
+	play_sound("select", 0.7)
 	slot = i
 	erase_armed = -1
 	fire_block = true
@@ -565,9 +576,11 @@ func menu_key(k: Key) -> void:
 	match k:
 		KEY_W, KEY_UP:
 			menu_index = (menu_index + 2) % 3
+			play_sound("blip", 0.5)
 			erase_armed = -1
 		KEY_S, KEY_DOWN:
 			menu_index = (menu_index + 1) % 3
+			play_sound("blip", 0.5)
 			erase_armed = -1
 		KEY_1, KEY_2, KEY_3:
 			start_slot(k - KEY_1)
@@ -623,6 +636,24 @@ func _process(delta: float) -> void:
 	aim = get_local_mouse_position() + Vector2(cam_x, 0)
 	hint_time = maxf(0.0, hint_time - delta)
 	boss_banner = maxf(0.0, boss_banner - delta)
+
+	# Story screens type their text out with little blips
+	if status != last_status:
+		last_status = status
+		status_time = 0.0
+		last_typed = 0
+	status_time += delta
+	if status in ["title", "lost", "won"]:
+		var typed := typed_letters(0.3 if status == "title" else (0.9 if status == "lost" else 0.6))
+		if typed > last_typed and last_typed < current_dialog().length():
+			last_typed = typed
+			if typed % 2 == 0:
+				play_sound("blip", 0.35)
+	if status == "lost" and not game_over_sound and status_time > 0.6:
+		game_over_sound = true
+		play_sound("heart_break", 0.8)
+	elif status != "lost":
+		game_over_sound = false
 
 	if status == "menu":
 		# Hovering a save file selects it
@@ -964,13 +995,11 @@ func spawn_enemy(kind: String, minion: bool, near_x := -1.0) -> void:
 		"skeleton":
 			play_sound("unstable_emerge", 0.8, 1.4)
 		"wolf":
-			if randf() < 0.3:
-				play_sound("howl", 0.7, randf_range(0.9, 1.1))
+			play_limited("howl", 1.6, 0.7, randf_range(0.9, 1.1)) # every infected wolf howls as it arrives
 		"bear":
-			play_sound("growl", 0.8)
+			play_limited("growl", 0.8, 0.8, randf_range(0.85, 1.1))
 		"witch":
-			if randf() < 0.3:
-				play_sound("cackle", 0.7, randf_range(0.9, 1.15))
+			play_limited("cackle", 0.4, 0.7, randf_range(0.9, 1.15))
 		"shark":
 			play_sound("lava_throw", 0.7, 0.6)
 		"crab", "octopus":
@@ -1001,30 +1030,63 @@ func update_enemy(e: Enemy, delta: float) -> bool:
 	var dir := 1.0 if dx >= 0 else -1.0
 	e.facing = 1 if dx >= 0 else -1
 	e.walk_time += delta
+	e.rage = maxf(0.0, e.rage - delta)
+	e.attack_cooldown -= delta
 	var move := dir
+	var speed := e.speed
+	var mouth := Vector2(e.x + 14 * e.facing, e.y - e.h * 0.75)
 	match e.kind:
-		"unstable", "spider":
+		"unstable":
 			move = dir + sin(e.t * 9.0 + e.seed_offset) * 0.6 # jittery
+		"spider":
+			move = dir + sin(e.t * 9.0 + e.seed_offset) * 0.6
+			# Spits infected green venom
+			if e.attack_cooldown <= 0 and absf(dx) < 360:
+				lob(Vector2(e.x + 8 * e.facing, e.y - 12), grave.x + randf_range(-30, 30), "venom")
+				e.attack_cooldown = randf_range(3.0, 5.0)
+		"wolf":
+			# Howls, then lunges
+			if e.attack_cooldown <= 0 and absf(dx) < 420:
+				play_limited("howl", 1.6, 0.6, randf_range(0.9, 1.15))
+				e.attack_cooldown = randf_range(4.0, 7.0)
+		"bear":
+			# Growls, then charges
+			if e.attack_cooldown <= 0 and absf(dx) < 320:
+				play_limited("growl", 0.8, 0.9, randf_range(0.85, 1.1))
+				e.rage = 1.0
+				e.attack_cooldown = randf_range(4.0, 6.0)
+			if e.rage > 0:
+				speed *= 2.6
 		"crab":
 			move = dir + sin(e.t * 6.0 + e.seed_offset) * 0.9 # sideways scuttle
+			# Blows infected bubbles
+			if e.attack_cooldown <= 0 and absf(dx) < 420:
+				shoot_at(Vector2(e.x + 20 * e.facing, e.y - 22), grave_chest(), 170.0, "bubble")
+				e.attack_cooldown = randf_range(3.0, 4.5)
 		"witch":
-			# Hover at a distance and throw spells
+			# Hovers at a distance; her cackle throws soundwaves
 			var hover_x := grave.x - dir * 240.0
 			move = clampf((hover_x - e.x) / 60.0, -1.0, 1.0)
 			e.y = FLOOR_Y - 160.0 + sin(e.t * 2.0 + e.seed_offset) * 22.0
-			e.attack_cooldown -= delta
 			if e.attack_cooldown <= 0 and absf(dx) < 600:
-				shoot_at(Vector2(e.x + 12 * e.facing, e.y - 40), grave_chest(), 300.0, "magic")
-				e.attack_cooldown = randf_range(2.2, 3.4)
+				play_limited("cackle", 0.4, 0.75, randf_range(0.9, 1.15))
+				shoot_at(Vector2(e.x + 12 * e.facing, e.y - 40), grave_chest(), 260.0, "soundwave")
+				e.attack_cooldown = randf_range(2.4, 3.6)
+		"skeleton":
+			# Rattles its bones and throws green flying bones
+			if e.attack_cooldown <= 0 and absf(dx) < 560:
+				play_limited("bones", 0.3, 0.7, 1.2)
+				lob(mouth, grave.x + randf_range(-40, 40), "bone")
+				e.attack_cooldown = randf_range(2.5, 3.8)
 		"shark":
 			# No legs: it flies low, swooping up and down
 			e.y = FLOOR_Y - 40.0 - (sin(e.t * 2.4 + e.seed_offset) * 0.5 + 0.5) * 100.0
 		"octopus":
-			e.attack_cooldown -= delta
+			# Throws infected green ink
 			if e.attack_cooldown <= 0 and absf(dx) < 520:
 				lob(Vector2(e.x, e.y - e.h), grave.x + randf_range(-40, 40), "ink")
 				e.attack_cooldown = randf_range(2.6, 3.8)
-	e.x = clampf(e.x + move * e.speed * delta, min_x(), max_x())
+	e.x = clampf(e.x + move * speed * delta, min_x(), max_x())
 
 	if not e.flying:
 		e.hop_cooldown -= delta
@@ -1051,6 +1113,7 @@ func update_enemy(e: Enemy, delta: float) -> bool:
 	if touching:
 		# Bounce back after biting so it can't stay stuck on Grave
 		e.x = clampf(e.x - dir * (120.0 if e.flying else 70.0), min_x(), max_x())
+		e.rage = 0.0
 		if not e.flying:
 			e.vy = -360.0
 			e.hop_cooldown = 1.2
@@ -1132,15 +1195,20 @@ func lob(from: Vector2, target_x: float, kind: String) -> void:
 	s.gravity = LAVA_GRAVITY
 	s.vel = Vector2((target_x - from.x) / t, (FLOOR_Y - 30 - from.y - 0.5 * LAVA_GRAVITY * t * t) / t)
 	shots.append(s)
-	play_sound("lava_throw", 0.8, 1.0 if kind == "lava" else 0.75)
+	if kind != "bone": # skeletons already rattled
+		play_limited("lava_throw", 0.15, 0.8, 1.0 if kind == "lava" else 0.75)
 
 
-# Fire straight at a point (spells)
+# Fire straight at a point (spells, soundwaves, bubbles)
 func shoot_at(from: Vector2, target: Vector2, speed: float, kind: String, spread := 0.0) -> void:
 	var s := make_shot(kind, from)
 	s.vel = Vector2.from_angle((target - from).angle() + spread) * speed
 	shots.append(s)
-	play_sound("magic", 0.6, randf_range(0.9, 1.1))
+	match kind:
+		"magic":
+			play_limited("magic", 0.1, 0.6, randf_range(0.9, 1.1))
+		"bubble":
+			play_limited("lava_splat", 0.2, 0.35, 1.9)
 
 
 func update_shots(delta: float) -> void:
@@ -1238,8 +1306,9 @@ func update_boss(delta: float) -> void:
 			b.x += clampf(target_x - b.x, -200.0 * delta, 200.0 * delta)
 			b.y = FLOOR_Y - 230.0 + sin(b.t * 1.7) * 25.0
 			if b.attack_cooldown <= 0:
+				play_limited("cackle", 0.3, 1.0, 0.7)
 				for spread in [-0.25, 0.0, 0.25]:
-					shoot_at(Vector2(b.x + 20 * b.facing, b.y - 70), grave_chest(), 360.0, "magic", spread)
+					shoot_at(Vector2(b.x + 20 * b.facing, b.y - 70), grave_chest(), 300.0, "soundwave", spread)
 				b.attack_cooldown = 1.6 * rate
 			boss_summon(b, ["skeleton"], 2, 7.0, delta)
 		"kraken":
@@ -1352,6 +1421,7 @@ func update_hub(delta: float) -> void:
 		var choice := map_choice
 		map_choice = ""
 		if is_unlocked(choice):
+			play_sound("select", 0.7)
 			board_van(choice)
 		else:
 			var needed := "cave" if choice == "warehouse" else "warehouse"
@@ -1613,35 +1683,41 @@ func _draw() -> void:
 # ---------- save file chooser ----------
 
 func draw_menu() -> void:
-	sky(Color("#05070d"), Color("#122019"))
-	draw_tree_layer(0.35, 70, FLOOR_Y + 60, 140, 220, Color("#0c1a16"), Color("#0c1a16"), 7)
-	draw_rect(Rect2(0, FLOOR_Y + 60, VIEW_W, VIEW_H), Color("#080d0b"))
-	glow(Vector2(VIEW_W / 2, 80), 60, ACCENT, 0.05)
-	text("EAP", VIEW_W / 2, 92, 64, ACCENT)
-	text("EVAPORATE ALL PARASITES", VIEW_W / 2, 128, 18, Color("#e6e9ef"))
-	text("CHOOSE A SAVE FILE", VIEW_W / 2, 158, 13, Color("#9aa3b5"))
+	sky(Color("#02030a"), Color("#0b1a2a"))
+	draw_tree_layer(0.35, 70, FLOOR_Y + 60, 140, 220, Color("#06100d"), Color("#06100d"), 7)
+	draw_rect(Rect2(0, FLOOR_Y + 60, VIEW_W, VIEW_H), Color("#040806"))
+	for i in 10: # green parasite eyes in the dark
+		var ex := 60 + i * 92 + rand(i + 40) * 40
+		var ey := 330 + rand(i + 41) * 120
+		if sin(now() * (0.8 + rand(i + 42)) + i) < 0.9:
+			infected_eye(Vector2(ex, ey), 2.0)
+			infected_eye(Vector2(ex + 9, ey), 2.0)
+	glow(Vector2(VIEW_W / 2, 70), 90, INFECTED, 0.05)
+	title_text("EAP", VIEW_W / 2, 96, 72, Color("#d8ffc8"), INFECTED)
+	text("EVAPORATE ALL PARASITES", VIEW_W / 2, 126, 18, Color("#e6e9ef"))
+	text("A parasite virus has infected every creature.", VIEW_W / 2, 150, 13, INFECTED)
 	for i in 3:
 		var r := slot_rect(i)
 		var selected := i == menu_index
-		draw_rect(r, Color(0.06, 0.09, 0.13, 0.92))
-		draw_rect(r, ACCENT if selected else Color("#2a3a50"), false, 3.0 if selected else 2.0)
-		text("SAVE %d" % (i + 1), r.position.x + 20, r.position.y + 30, 18, ACCENT if selected else Color("#e6e9ef"), HORIZONTAL_ALIGNMENT_LEFT)
+		window_box(r, 0.95 if selected else 0.8)
+		if selected:
+			draw_pointer(Vector2(r.position.x - 8, r.get_center().y), 16.0)
+		var col := Color("#ffe58a") if selected else Color.WHITE
+		text("SAVE %d" % (i + 1), r.position.x + 20, r.position.y + 32, 20, col, HORIZONTAL_ALIGNMENT_LEFT)
 		var saved: Dictionary = slots[i]
 		if saved.is_empty():
-			text("Empty - start a new game", r.position.x + 20, r.position.y + 60, 14, Color("#9aa3b5"), HORIZONTAL_ALIGNMENT_LEFT)
+			text("Empty - new game", r.position.x + 140, r.position.y + 32, 18, col, HORIZONTAL_ALIGNMENT_LEFT)
 			continue
 		var cp: String = saved["checkpoint"]
 		var cleared: Array = saved["cleared"]
-		var line := "COMPLETED - Grave escaped the van!" if cp == "done" else "Continue at: " + scene_name(cp)
-		text(line, r.position.x + 20, r.position.y + 58, 14, Color("#e6e9ef"), HORIZONTAL_ALIGNMENT_LEFT)
-		text("Places cleared: %d/5" % cleared.size(), r.position.x + 20, r.position.y + 78, 12, Color("#9aa3b5"), HORIZONTAL_ALIGNMENT_LEFT)
+		text("GRAVE", r.position.x + 140, r.position.y + 32, 18, col, HORIZONTAL_ALIGNMENT_LEFT)
+		text("LV %d" % (cleared.size() + 1), r.position.x + 240, r.position.y + 32, 18, col, HORIZONTAL_ALIGNMENT_LEFT)
+		text("Completed!" if cp == "done" else scene_name(cp), r.position.x + 20, r.position.y + 66, 14, Color("#b8c4e8"), HORIZONTAL_ALIGNMENT_LEFT)
 		var er := erase_rect(i)
 		var armed := erase_armed == i
-		draw_rect(er, Color("#3a1414") if armed else Color("#1a2230"))
-		draw_rect(er, HP_COLOR if armed else Color("#3a4a60"), false, 2.0)
-		text("SURE?" if armed else "ERASE", er.get_center().x, er.position.y + 22, 13, HP_COLOR if armed else Color("#9aa3b5"))
-	text("Click a save file or press 1 / 2 / 3.   W/S and E work too.   X erases (press twice).   M sound",
-		VIEW_W / 2, VIEW_H - 20, 12, Color("#9aa3b5"))
+		window_box(er, 0.9)
+		text("SURE?" if armed else "ERASE", er.get_center().x, er.position.y + 23, 13, Color("#ff6a5a") if armed else Color("#b8c4e8"))
+	text("1-3 or click: start     W/S: move     X twice: erase     M: sound", VIEW_W / 2, VIEW_H - 16, 12, Color("#8a94b0"))
 
 
 # ---------- the map inside the van ----------
@@ -1663,7 +1739,7 @@ func draw_map_board() -> void:
 
 
 func draw_place_icon(place: String, c: Vector2, unlocked: bool) -> void:
-	var ink := Color("#3b2a1a") if unlocked else Color("#7a7262")
+	var ink := Color("#e8eefc") if unlocked else Color("#505870")
 	match place:
 		"cave":
 			var arch := PackedVector2Array()
@@ -1671,11 +1747,11 @@ func draw_place_icon(place: String, c: Vector2, unlocked: bool) -> void:
 				arch.append(c + Vector2.from_angle(PI + i * PI / 12.0) * 34.0 + Vector2(0, 16))
 			draw_colored_polygon(arch, ink)
 			for sx in [-14.0, 0.0, 14.0]:
-				draw_colored_polygon(PackedVector2Array([c + Vector2(sx - 5, -10), c + Vector2(sx + 5, -10), c + Vector2(sx, 4)]), Color("#d9c9a3"))
+				draw_colored_polygon(PackedVector2Array([c + Vector2(sx - 5, -10), c + Vector2(sx + 5, -10), c + Vector2(sx, 4)]), WIN_BOTTOM)
 		"warehouse":
 			draw_rect(Rect2(c.x - 34, c.y - 14, 68, 32), ink)
 			draw_colored_polygon(PackedVector2Array([c + Vector2(-40, -14), c + Vector2(40, -14), c + Vector2(0, -36)]), ink)
-			draw_rect(Rect2(c.x - 10, c.y, 20, 18), Color("#d9c9a3"))
+			draw_rect(Rect2(c.x - 10, c.y, 20, 18), WIN_BOTTOM)
 		"beach":
 			draw_circle(c + Vector2(14, -14), 14, ink)
 			for j in 3:
@@ -1686,111 +1762,116 @@ func draw_place_icon(place: String, c: Vector2, unlocked: bool) -> void:
 
 
 func draw_map_overlay() -> void:
-	draw_rect(Rect2(0, 0, VIEW_W, VIEW_H), Color(0, 0, 0, 0.55))
-	var panel := Rect2(VIEW_W / 2 - 390, 90, 780, 370)
-	draw_rect(panel, Color("#d9c9a3"))
-	draw_rect(panel, Color("#3b2a1a"), false, 6.0)
-	text("WHERE TO NEXT?", VIEW_W / 2, 128, 26, Color("#3b2a1a"))
+	draw_rect(Rect2(0, 0, VIEW_W, VIEW_H), Color(0, 0, 0, 0.6))
+	var panel := Rect2(VIEW_W / 2 - 390, 70, 780, 380)
+	window_box(panel)
+	text("Where to next?", panel.position.x + 30, panel.position.y + 42, 22, Color.WHITE, HORIZONTAL_ALIGNMENT_LEFT)
 	for i in 3:
 		var place: String = MAP_ORDER[i]
 		var r := map_card_rect(i)
 		var unlocked := is_unlocked(place)
-		var bg := Color("#efe3c4") if unlocked else Color("#bdb39b")
-		if map_index == i and unlocked:
-			bg = Color("#fff4d6")
-		draw_rect(r, bg)
-		draw_rect(r, Color("#3b2a1a"), false, 3.0)
-		text("[%d]" % (i + 1), r.position.x + 22, r.position.y + 24, 14, Color("#3b2a1a"))
-		draw_place_icon(place, Vector2(r.get_center().x, r.position.y + 66), unlocked)
-		text(PLACES[place]["name"], r.get_center().x, r.position.y + 128, 14, Color("#2a1d10"))
-		var y := r.position.y + 152
+		var selected := map_index == i and unlocked
+		window_box(r, 0.95 if selected else 0.75)
+		if selected:
+			draw_pointer(Vector2(r.position.x + 4, r.position.y + 22), 14.0)
+		var col := Color("#ffe58a") if selected else (Color.WHITE if unlocked else Color("#6a7290"))
+		text("[%d]" % (i + 1), r.position.x + 22, r.position.y + 28, 14, col, HORIZONTAL_ALIGNMENT_LEFT)
+		draw_place_icon(place, Vector2(r.get_center().x, r.position.y + 74), unlocked)
+		var y := r.position.y + 132
+		var place_name: String = PLACES[place]["name"]
+		for line in wrap_text(place_name, 15, r.size.x - 24):
+			text(line, r.get_center().x, y, 15, col)
+			y += 20
 		for k in PLACES[place]["quota"]:
-			text("%d %s" % [quota_of(place, k), ENEMY[k]["plural"]], r.get_center().x, y, 12, Color("#4a3a28"))
-			y += 18
-		text("Boss: " + BOSSES[PLACES[place]["boss"]]["name"], r.get_center().x, y + 4, 11, Color("#6a3a28"))
-		var state := "CLEARED - play again" if is_cleared(place) else ("GO!" if unlocked else "LOCKED")
-		var sc := Color("#2f8f5a") if is_cleared(place) else (Color("#b03a2e") if unlocked else Color("#6b6b6b"))
-		text(state, r.get_center().x, r.end.y - 14, 15, sc)
-	text("Press 1, 2 or 3, or click a place. Walk away to close the map.", VIEW_W / 2, panel.end.y - 12, 13, Color("#3b2a1a"))
+			text("%d %s" % [quota_of(place, k), ENEMY[k]["plural"]], r.get_center().x, y, 12, Color("#b8c4e8"))
+			y += 16
+		text("Boss: " + BOSSES[PLACES[place]["boss"]]["name"], r.get_center().x, y + 4, 12, Color("#ff8a7a"))
+		var state := "CLEARED" if is_cleared(place) else ("GO!" if unlocked else "LOCKED")
+		var sc := INFECTED if is_cleared(place) else (Color("#ffe58a") if unlocked else Color("#6a7290"))
+		text(state, r.get_center().x, r.end.y - 14, 16, sc)
+	text("Press 1, 2 or 3, or click a place. Walk away to close the map.", VIEW_W / 2, panel.end.y - 14, 12, Color("#b8c4e8"))
 
 
 func draw_hub_hud() -> void:
-	draw_rect(Rect2(VIEW_W / 2 - 230, 82, 460, 34), Color(0.04, 0.05, 0.09, 0.75))
-	text("THE EAP VAN - walk up to the map on the wall", VIEW_W / 2, 104, 14, Color("#9fd7ff"))
-	text("Esc: save files", VIEW_W - 14, VIEW_H - 12, 12, Color("#9aa3b5"), HORIZONTAL_ALIGNMENT_RIGHT)
+	dialog(VIEW_W / 2 - 300, 12, 600, "The EAP van. Walk up to the map on the wall.", 15)
+	text("Esc: save files   M: sound", VIEW_W - 12, VIEW_H - 12, 12, Color("#8a94b0"), HORIZONTAL_ALIGNMENT_RIGHT)
 	if map_open:
 		draw_map_overlay()
-	if hint_time > 0:
-		text(hint, VIEW_W / 2, VIEW_H - 50, 16, Color("#ffcf5a"))
+	if hint_time > 0 and not map_open:
+		dialog(VIEW_W / 2 - 300, VIEW_H - 100, 600, hint, 15)
 
 
 # ---------- HUD and screens ----------
 
 func draw_hud() -> void:
-	draw_rect(Rect2(12, 12, 250, 98), Color(0.04, 0.05, 0.09, 0.7))
-	text("GRAVE", 22, 32, 16, ACCENT, HORIZONTAL_ALIGNMENT_LEFT)
-	bar(22, 40, 230, 18, grave.hp / GRAVE_MAX_HP, HP_COLOR, "HEALTH %d" % ceili(grave.hp))
-	if grave.battery > 0:
-		bar(22, 62, 230, 18, grave.battery / BATTERY_MAX, BATTERY_COLOR, "BATTERY %d%%" % ceili(grave.battery))
-	else:
-		bar(22, 62, 230, 18, 0.0, Color(0.33, 0.33, 0.33), "BATTERY EMPTY - NO CHARGING")
-	bar(22, 84, 230, 18, grave.charge / MAX_CHARGE, BEAM_COLOR, "CHARGE")
+	# Status window along the bottom: name, level, HP, battery, charge
+	var sw := Rect2(8, VIEW_H - 50, VIEW_W - 16, 44)
+	window_box(sw, 0.88)
+	var y := sw.position.y + 29
+	text("GRAVE", 24, y, 18, Color.WHITE, HORIZONTAL_ALIGNMENT_LEFT)
+	text("LV %d" % level_number(), 104, y, 16, Color("#b8c4e8"), HORIZONTAL_ALIGNMENT_LEFT)
+	text("HP", 170, y, 14, Color("#ffe58a"), HORIZONTAL_ALIGNMENT_LEFT)
+	shiny_bar(Rect2(198, y - 13, 130, 14), grave.hp / GRAVE_MAX_HP, Color("#3ee07a") if grave.hp > 30 else Color("#ff4a3a"))
+	text("%d/%d" % [ceili(grave.hp), int(GRAVE_MAX_HP)], 338, y, 15, Color.WHITE, HORIZONTAL_ALIGNMENT_LEFT)
+	text("BATTERY", 420, y, 13, Color("#9fd7ff"), HORIZONTAL_ALIGNMENT_LEFT)
+	shiny_bar(Rect2(492, y - 13, 110, 14), grave.battery / BATTERY_MAX, BATTERY_COLOR)
+	if grave.battery <= 0:
+		text("EMPTY", 547, y - 1, 11, Color("#ff8a7a"))
+	text("CHARGE", 620, y, 13, Color("#ffe58a"), HORIZONTAL_ALIGNMENT_LEFT)
+	shiny_bar(Rect2(684, y - 13, 110, 14), grave.charge / MAX_CHARGE, BEAM_COLOR)
+	text("Esc: saves  M: sound", VIEW_W - 22, y, 11, Color("#8a94b0"), HORIZONTAL_ALIGNMENT_RIGHT)
 
-	# How many monsters are left in this place
+	# How many infected monsters are left here
 	var place: Dictionary = PLACES[scene]
-	draw_rect(Rect2(VIEW_W - 282, 12, 270, 36 + kills.size() * 20), Color(0.04, 0.05, 0.09, 0.7))
-	text(place["name"], VIEW_W - 22, 30, 12, place["color"], HORIZONTAL_ALIGNMENT_RIGHT)
-	var y := 52.0
+	var box := Rect2(VIEW_W - 300, 10, 290, 36 + kills.size() * 22)
+	window_box(box, 0.85)
+	text(place["name"], box.end.x - 16, box.position.y + 24, 13, place["color"], HORIZONTAL_ALIGNMENT_RIGHT)
+	var ky := box.position.y + 48
 	for k in kills:
 		var need := quota_of(scene, k)
 		var got := mini(int(kills[k]), need)
-		var plural: String = ENEMY[k]["plural"]
-		text("%s %d/%d" % [plural.to_upper(), got, need], VIEW_W - 22, y, 14, ACCENT if got >= need else Color.WHITE, HORIZONTAL_ALIGNMENT_RIGHT)
-		y += 20
+		var short: String = ENEMY[k]["short"]
+		text("%s  %d/%d" % [short, got, need], box.end.x - 16, ky, 15, INFECTED if got >= need else Color.WHITE, HORIZONTAL_ALIGNMENT_RIGHT)
+		ky += 22
 
 	if boss != null:
-		text(boss.name, VIEW_W / 2, 30, 14, Color("#ff8a5a"))
-		bar((VIEW_W - 380) / 2, 36, 380, 16, boss.hp / boss.max_hp, HP_COLOR, "")
+		var bb := Rect2(10, 10, 420, 54)
+		window_box(bb, 0.88)
+		text(boss.name, bb.position.x + 16, bb.position.y + 24, 15, Color("#ff8a7a"), HORIZONTAL_ALIGNMENT_LEFT)
+		shiny_bar(Rect2(bb.position.x + 16, bb.position.y + 32, 388, 12), boss.hp / boss.max_hp, Color("#e8344a"))
 		if boss_banner > 0:
-			text("BOSS: " + boss.name, VIEW_W / 2, 200, 34, Color(1.0, 0.4, 0.3, minf(1.0, boss_banner)))
+			var a := minf(1.0, boss_banner)
+			title_text("BOSS: " + boss.name, VIEW_W / 2, 220, 36, Color(1.0, 0.85, 0.6, a), Color(1.0, 0.3, 0.25, a))
 
-	text("A/D move   W/Space jump   Click or F shoot (hold to charge)   Esc save files   M sound", VIEW_W - 14, VIEW_H - 12, 12, Color("#9aa3b5"), HORIZONTAL_ALIGNMENT_RIGHT)
 	if hint_time > 0:
-		text(hint, VIEW_W / 2, 150, 18, Color("#ffcf5a"))
+		dialog(VIEW_W / 2 - 320, 124, 640, hint, 15)
 
 
 func draw_end_screens() -> void:
 	if status == "lost":
-		var where := "Press R or click to try again"
-		if scene == "keeper":
-			draw_overlay("THE KEYS KEEPER GOT YOU", where, HP_COLOR, death_reason)
-		else:
-			draw_overlay("GRAVE WAS MELTED", where + " (from the van)", HP_COLOR)
+		draw_rect(Rect2(0, 0, VIEW_W, VIEW_H), Color(0.05, 0, 0, minf(0.9, status_time * 2.0)))
+		title_text("GAME OVER", VIEW_W / 2, 200, 72, Color(1.0, 0.75, 0.7, minf(1.0, status_time)), Color(0.85, 0.1, 0.1, minf(1.0, status_time)))
+		dialog(VIEW_W / 2 - 340, 300, 680, current_dialog(), 17, typed_letters(0.9))
 	elif status == "won":
-		draw_overlay("YOU ESCAPED THE VAN", "To be continued...  Press R or click for the save files", ACCENT)
+		draw_rect(Rect2(0, 0, VIEW_W, VIEW_H), Color(0, 0, 0, minf(0.8, status_time * 2.0)))
+		glow(Vector2(VIEW_W / 2, 170), 120, INFECTED, 0.06)
+		title_text("YOU ESCAPED THE VAN", VIEW_W / 2, 200, 52, Color("#e8ffd8"), INFECTED)
+		dialog(VIEW_W / 2 - 340, 280, 680, current_dialog(), 17, typed_letters(0.6))
 
 
 func draw_title_card() -> void:
-	draw_rect(Rect2(0, 0, VIEW_W, VIEW_H), Color("#07040d"))
-	var a := clampf(minf(phase_time / 0.6, (TITLE_TIME - phase_time) / 0.6), 0.0, 1.0)
-	var color := ACCENT
-	var line := ""
+	sky(Color("#000000"), Color("#0a0f2a"))
+	var a := clampf(minf(phase_time / 0.4, (TITLE_TIME - phase_time) / 0.4), 0.0, 1.0)
+	var color := Color.WHITE
 	if PLACES.has(next_scene):
 		color = PLACES[next_scene]["color"]
-		line = PLACES[next_scene]["line"]
-	elif next_scene == "hub":
-		color = Color("#9fd7ff")
-		line = "Walk up to the map on the wall to choose where to go."
 	elif next_scene == "keeper":
 		color = KEEPER_EYES
-		line = "*click* ... the van doors lock from the outside."
-		draw_keys_keeper(VIEW_W / 2, VIEW_H + 130, 1.6, a * 0.8, Color("#241a30"))
-	text("Checkpoint - health and battery refilled - game saved", VIEW_W / 2, VIEW_H / 2 - 70, 16, Color("#9aa3b5", a))
-	glow(Vector2(VIEW_W / 2, VIEW_H / 2 - 14), 60, color, 0.05 * a)
-	text(scene_name(next_scene), VIEW_W / 2, VIEW_H / 2, 40, Color(color, a))
-	text(line, VIEW_W / 2, VIEW_H / 2 + 44, 18, Color("#e6e9ef", a))
-	if PLACES.has(next_scene):
-		text(place_goal(next_scene), VIEW_W / 2, VIEW_H / 2 + 80, 14, Color("#9aa3b5", a))
+		draw_keys_keeper(VIEW_W / 2, 360, 0.9, a, Color("#241a30"))
+	glow(Vector2(VIEW_W / 2, 100), 90, color, 0.05 * a)
+	title_text(scene_name(next_scene), VIEW_W / 2, 118, 44, Color(color.lightened(0.6), a), Color(color, a))
+	text("Health and battery refilled. Game saved.", VIEW_W / 2, 156, 13, Color(0.7, 0.75, 0.9, a))
+	dialog(VIEW_W / 2 - 380, 380, 760, title_line(), 17, typed_letters(0.3))
 
 
 # ---------- drawing helpers ----------
@@ -1816,14 +1897,17 @@ func darkness(center: Vector2, radius: float, alpha: float) -> void:
 		]), Color(0, 0, 0, alpha))
 
 
+# Text with a drop shadow. x is the centre (or the left / right edge), y is the baseline.
 func text(s: String, x: float, y: float, size: int, color: Color, align: HorizontalAlignment = HORIZONTAL_ALIGNMENT_CENTER) -> void:
 	var font := ThemeDB.fallback_font
+	var left := x
 	if align == HORIZONTAL_ALIGNMENT_CENTER:
-		draw_string(font, Vector2(x - 600, y), s, align, 1200, size, color)
+		left = x - text_width(s, size) / 2.0
 	elif align == HORIZONTAL_ALIGNMENT_RIGHT:
-		draw_string(font, Vector2(x - 1200, y), s, align, 1200, size, color)
-	else:
-		draw_string(font, Vector2(x, y), s, align, -1, size, color)
+		left = x - text_width(s, size)
+	var shadow := maxf(1.0, size / 9.0)
+	draw_string(font, Vector2(left + shadow, y + shadow), s, HORIZONTAL_ALIGNMENT_LEFT, -1, size, Color(0, 0, 0, 0.75 * color.a))
+	draw_string(font, Vector2(left, y), s, HORIZONTAL_ALIGNMENT_LEFT, -1, size, color)
 
 
 # Soft glow: a few see-through circles
@@ -2336,7 +2420,9 @@ func draw_wolf(e: Enemy, flash: bool) -> void:
 	draw_colored_polygon(PackedVector2Array([Vector2(23, -36), Vector2(26, -44), Vector2(29, -36)]), dark)
 	draw_rect(Rect2(28, -30, 10, 7), fur) # snout
 	draw_rect(Rect2(36, -31, 3, 3), Color("#111111"))
-	draw_rect(Rect2(24, -33, 3, 3), Color("#ff3030")) # red eye
+	infected_eye(Vector2(25.5, -31.5), 1.5) # glowing green eye
+	draw_rect(Rect2(-8, -26, 5, 2), INFECTED) # infection veins
+	draw_rect(Rect2(2, -22, 7, 2), INFECTED)
 	draw_rect(Rect2(30, -24, 2, 3), Color.WHITE) # fang
 
 
@@ -2355,7 +2441,9 @@ func draw_bear(e: Enemy, flash: bool) -> void:
 	draw_circle(Vector2(34, -59), 5, dark)
 	draw_circle(Vector2(40, -42), 7, Color.WHITE if flash else Color("#a07850")) # muzzle
 	draw_rect(Rect2(44, -46, 4, 4), Color("#111111"))
-	draw_rect(Rect2(30, -51, 3, 3), Color("#ff3030"))
+	infected_eye(Vector2(31.5, -49.5), 1.8) # glowing green eye
+	draw_rect(Rect2(-20, -44, 9, 3), INFECTED) # infection veins
+	draw_rect(Rect2(-4, -36, 7, 3), INFECTED)
 
 
 func draw_spider(walk_time: float, flash: bool, body: Color) -> void:
@@ -2365,8 +2453,9 @@ func draw_spider(walk_time: float, flash: bool, body: Color) -> void:
 		draw_polyline(PackedVector2Array([Vector2(-4 + i * 3, -10), Vector2(-14 + i * 7 + a, -18), Vector2(-18 + i * 10 + a, 0)]), c, 2.0)
 	draw_circle(Vector2(-5, -11), 9, c) # abdomen
 	draw_circle(Vector2(7, -9), 6, c) # head
-	draw_rect(Rect2(9, -12, 2, 2), Color("#ff3030"))
-	draw_rect(Rect2(11, -9, 2, 2), Color("#ff3030"))
+	infected_eye(Vector2(10, -11), 1.2)
+	infected_eye(Vector2(12, -8), 1.2)
+	draw_circle(Vector2(-6, -14), 2.5, INFECTED) # infection spot
 
 
 # Witches ride brooms; their feet (0, 0) is the broom
@@ -2381,7 +2470,7 @@ func draw_witch(flash: bool) -> void:
 	draw_rect(Rect2(-9, -45, 3, 12), Color("#2a1a2a")) # hair
 	draw_circle(Vector2(0, -40), 8, skin) # head
 	draw_colored_polygon(PackedVector2Array([Vector2(7, -41), Vector2(14, -37), Vector2(7, -37)]), skin) # nose
-	draw_rect(Rect2(3, -43, 2, 2), Color("#ffe24a")) # eye
+	infected_eye(Vector2(4, -42), 1.5) # glowing green eye
 	draw_rect(Rect2(-13, -48, 26, 3), Color("#16101c")) # hat brim
 	draw_colored_polygon(PackedVector2Array([Vector2(-9, -48), Vector2(9, -48), Vector2(-3, -70)]), Color("#16101c"))
 	draw_rect(Rect2(-8, -52, 16, 3), Color("#7a3aa8"))
@@ -2405,7 +2494,9 @@ func draw_skeleton(e: Enemy, flash: bool) -> void:
 	draw_rect(Rect2(-5, -56, 10, 4), bone) # jaw
 	draw_rect(Rect2(1, -66, 4, 4), dark) # eye sockets
 	draw_rect(Rect2(-5, -66, 4, 4), dark)
-	draw_rect(Rect2(2, -65, 2, 2), Color(1.0, 0.2, 0.2, a))
+	draw_rect(Rect2(2, -65, 2, 2), Color(INFECTED, a)) # glowing green eyes
+	draw_rect(Rect2(-4, -65, 2, 2), Color(INFECTED, a))
+	glow(Vector2(0, -63), 6, INFECTED, 0.12 * a)
 
 
 func draw_crab(e: Enemy, flash: bool) -> void:
@@ -2457,10 +2548,10 @@ func draw_octopus(flash: bool, t: float) -> void:
 	draw_circle(Vector2(-6, -38), 3, INFECTED)
 	draw_circle(Vector2(6, -44), 2.5, INFECTED)
 	draw_circle(Vector2(-9, -26), 2, INFECTED)
-	draw_circle(Vector2(6, -28), 4, Color.WHITE)
-	draw_circle(Vector2(-3, -28), 4, Color.WHITE)
-	draw_rect(Rect2(7, -29, 2, 3), Color("#111111"))
-	draw_rect(Rect2(-2, -29, 2, 3), Color("#111111"))
+	draw_circle(Vector2(6, -28), 4, Color("#1a0f22"))
+	draw_circle(Vector2(-3, -28), 4, Color("#1a0f22"))
+	infected_eye(Vector2(6.5, -28), 1.6) # glowing green eyes
+	infected_eye(Vector2(-2.5, -28), 1.6)
 
 
 # ---------- bosses ----------
@@ -2506,8 +2597,8 @@ func draw_destruction_maker(b: Boss, x: float, flash: bool) -> void:
 	draw_rect(Rect2(-10, -42, 20, 15), skin) # head
 	draw_colored_polygon(PackedVector2Array([Vector2(-10, -38), Vector2(-20, -44), Vector2(-10, -32)]), skin) # ears
 	draw_colored_polygon(PackedVector2Array([Vector2(10, -38), Vector2(20, -44), Vector2(10, -32)]), skin)
-	draw_rect(Rect2(1, -38, 4, 3), Color("#ffd23a")) # glowing eyes
-	draw_rect(Rect2(-5, -38, 3, 3), Color("#ffd23a"))
+	infected_eye(Vector2(3, -36.5), 1.6) # glowing green eyes
+	infected_eye(Vector2(-3.5, -36.5), 1.5)
 	draw_rect(Rect2(-3, -31, 9, 2), Color("#1a1a1a")) # grin
 	if b.throw_anim > 0:
 		draw_rect(Rect2(8, -48, 5, 22), skin) # arm raised to throw
@@ -2528,7 +2619,8 @@ func draw_unstable_core(b: Boss, x: float, flash: bool) -> void:
 	var look := clampf((grave.x - b.x) / 200.0, -1.0, 1.0)
 	for off in [Vector2(-24, -16), Vector2(24, -16), Vector2(0, 14)]:
 		draw_circle(Vector2(x, cy) + off, 11, Color.WHITE)
-		draw_circle(Vector2(x, cy) + off + Vector2(look * 5, 1), 4, Color("#14051f"))
+		draw_circle(Vector2(x, cy) + off + Vector2(look * 5, 1), 5, INFECTED) # green iris
+		draw_circle(Vector2(x, cy) + off + Vector2(look * 6, 1), 2, Color("#0a1a05"))
 
 
 func draw_broodmother(b: Boss, flash: bool) -> void:
@@ -2545,17 +2637,34 @@ func draw_broodmother(b: Boss, flash: bool) -> void:
 	draw_colored_polygon(PackedVector2Array([Vector2(-45, -42), Vector2(-25, -42), Vector2(-35, -56)]), Color("#c0262a"))
 	draw_circle(Vector2(30, -50), 22, c) # head
 	for eye in [Vector2(38, -58), Vector2(44, -52), Vector2(32, -62), Vector2(42, -62), Vector2(46, -46), Vector2(36, -48)]:
-		draw_circle(eye, 3, Color("#ff3030"))
+		infected_eye(eye, 2.2)
 	draw_colored_polygon(PackedVector2Array([Vector2(44, -40), Vector2(50, -40), Vector2(46, -28)]), Color("#d9d2c0")) # fangs
 	draw_colored_polygon(PackedVector2Array([Vector2(36, -38), Vector2(42, -38), Vector2(38, -27)]), Color("#d9d2c0"))
 
 
 func draw_shot(s: Shot) -> void:
 	var p := s.pos - Vector2(cam_x, 0)
-	glow(p, s.radius, s.color, 0.2)
-	draw_circle(p, s.radius, s.color.darkened(0.35))
-	draw_circle(p, s.radius * 0.7, s.color)
-	draw_circle(p - Vector2(3, 3), s.radius * 0.3, s.color.lightened(0.6))
+	match s.kind:
+		"soundwave":
+			# Rings of sound rolling forward
+			var a := s.vel.angle()
+			var dir := s.vel.normalized()
+			for i in 3:
+				var r := s.radius * (0.6 + i * 0.45) + fposmod(s.life * 40.0, 8.0)
+				draw_arc(p - dir * i * 7.0, r, a - 0.9, a + 0.9, 12, Color(INFECTED, 0.9 - i * 0.25), 3.0)
+		"bone":
+			# A spinning green bone
+			draw_set_transform(p, s.life * 14.0, Vector2.ONE)
+			glow(Vector2.ZERO, 9, INFECTED, 0.15)
+			draw_rect(Rect2(-9, -2, 18, 4), Color("#d8ffc8"))
+			for k in [Vector2(-9, -2), Vector2(-9, 2), Vector2(9, -2), Vector2(9, 2)]:
+				draw_circle(k, 3, Color("#d8ffc8"))
+			draw_set_transform(Vector2.ZERO, 0, Vector2.ONE)
+		_:
+			glow(p, s.radius, s.color, 0.2)
+			draw_circle(p, s.radius, s.color.darkened(0.35))
+			draw_circle(p, s.radius * 0.7, s.color)
+			draw_circle(p - Vector2(3, 3), s.radius * 0.3, s.color.lightened(0.6))
 
 
 # ---------- THE UNSTABLE ----------
@@ -2616,7 +2725,7 @@ func draw_unstable(u: Enemy) -> void:
 		draw_set_transform(Vector2(x + gx + look * 4, cy - 3), 0, Vector2(1, 9.0 / 8.0))
 		draw_circle(Vector2.ZERO, 8, Color.WHITE)
 		draw_set_transform(Vector2(x + gx + look * 7, cy - 2), 0, Vector2(1, 2))
-		draw_circle(Vector2.ZERO, 3, Color("#14051f"))
+		draw_circle(Vector2.ZERO, 3, INFECTED) # green slit pupil
 		draw_set_transform(Vector2.ZERO, 0, Vector2.ONE)
 
 
@@ -2739,14 +2848,14 @@ func draw_back_door() -> void:
 	var ly := top + 140
 	draw_arc(Vector2(lx, ly - 14), 16, PI, TAU, 16, Color("#b9bec9"), 6.0)
 	draw_rect(Rect2(lx - 30, ly - 14, 60, 48), Color("#c9a227"))
-	var slots := [
+	var lock_slots := [
 		outside_keys[0] if outside_keys.size() > 0 else "",
 		inside_key,
 		outside_keys[1] if outside_keys.size() > 1 else "",
 	]
 	for i in 3:
 		var sx := lx - 18 + i * 18
-		var c: Color = KEY_COLORS[slots[i]] if slots[i] != "" else Color("#3a2c08")
+		var c: Color = KEY_COLORS[lock_slots[i]] if lock_slots[i] != "" else Color("#3a2c08")
 		draw_circle(Vector2(sx, ly + 4), 4, c)
 		draw_rect(Rect2(sx - 1.5, ly + 4, 3, 10), c)
 	text("UNLOCKED" if unlock_time > 0 else "LOCKED", lx, top + 210, 11, Color("#e6e9ef"))
@@ -2844,34 +2953,34 @@ func van_prompt() -> String:
 
 func draw_van_hud() -> void:
 	# Keys
-	draw_rect(Rect2(VIEW_W - 262, 12, 250, 92), Color(0.04, 0.05, 0.09, 0.75))
-	text("KEYS %d/3" % key_count(), VIEW_W - 250, 32, 13, Color("#e6e9ef"), HORIZONTAL_ALIGNMENT_LEFT)
-	text("outside %d/2   inside %d/1" % [outside_keys.size(), 1 if inside_key != "" else 0], VIEW_W - 250, 50, 11, Color("#9aa3b5"), HORIZONTAL_ALIGNMENT_LEFT)
-	var slots := [
+	var kb := Rect2(VIEW_W - 272, 10, 262, 96)
+	window_box(kb, 0.9)
+	text("KEYS %d/3" % key_count(), kb.position.x + 16, kb.position.y + 26, 16, Color.WHITE, HORIZONTAL_ALIGNMENT_LEFT)
+	text("outside %d/2   inside %d/1" % [outside_keys.size(), 1 if inside_key != "" else 0], kb.position.x + 16, kb.position.y + 44, 12, Color("#b8c4e8"), HORIZONTAL_ALIGNMENT_LEFT)
+	var slots_keys := [
 		outside_keys[0] if outside_keys.size() > 0 else "",
 		outside_keys[1] if outside_keys.size() > 1 else "",
 		inside_key,
 	]
 	for i in 3:
-		if slots[i] != "":
-			draw_key(Vector2(VIEW_W - 220 + i * 70, 78), slots[i])
+		if slots_keys[i] != "":
+			draw_key(Vector2(kb.position.x + 48 + i * 76, kb.position.y + 72), slots_keys[i])
 		else:
-			draw_rect(Rect2(VIEW_W - 240 + i * 70, 66, 46, 24), Color("#444b58"), false, 2.0)
+			draw_rect(Rect2(kb.position.x + 24 + i * 76, kb.position.y + 60, 52, 24), Color("#505870"), false, 2.0)
 
 	# Footsteps meter
 	var vol := footstep_volume()
-	draw_rect(Rect2(VIEW_W / 2 - 160, 82, 320, 34), Color(0.04, 0.05, 0.09, 0.75))
-	draw_rect(Rect2(VIEW_W / 2 - 150, 98, 300, 10), Color("#3a2f1a"))
-	draw_rect(Rect2(VIEW_W / 2 - 150, 98, 300 * vol, 10), HP_COLOR if vol > 0.75 else Color("#ffcf5a"))
-	text("FOOTSTEPS - HIDE!" if vol > 0 else "QUIET - safe to open a door", VIEW_W / 2, 94, 11,
-		Color("#ffcf5a") if vol > 0 else Color("#6f7686"))
+	var fb := Rect2(VIEW_W / 2 - 170, 10, 340, 50)
+	window_box(fb, 0.9)
+	text("FOOTSTEPS - HIDE!" if vol > 0 else "Quiet - safe to open a door", VIEW_W / 2, fb.position.y + 24, 13,
+		Color("#ffe58a") if vol > 0 else Color("#b8c4e8"))
+	shiny_bar(Rect2(fb.position.x + 16, fb.position.y + 31, fb.size.x - 32, 9), vol, Color("#ff4a3a") if vol > 0.75 else Color("#ffd23a"))
 
 	if message_time > 0:
-		text(message, VIEW_W / 2, 150, 16, Color("#e6e9ef", minf(1.0, message_time)))
+		dialog(VIEW_W / 2 - 300, 120, 600, message, 15)
 	var p := van_prompt()
 	if p != "":
-		draw_rect(Rect2(VIEW_W / 2 - 250, VIEW_H - 40, 500, 26), Color(0.04, 0.05, 0.09, 0.75))
-		text(p, VIEW_W / 2, VIEW_H - 22, 13, ACCENT)
+		dialog(VIEW_W / 2 - 280, VIEW_H - 60, 560, p, 15)
 
 
 # =====================================================================
@@ -3120,6 +3229,9 @@ func build_sounds() -> void:
 		"boss_hurt": make_wav(gen_tone("saw", 300, 150, 0.2, 0.35, 25.0)),
 		"magic": make_wav(gen_magic()),
 		"drip": make_wav(gen_drip()),
+		"blip": make_wav(gen_blip()),
+		"select": make_wav(gen_select()),
+		"heart_break": make_wav(gen_heart_break()),
 	}
 	for i in 10:
 		var p := AudioStreamPlayer.new()
@@ -3363,3 +3475,153 @@ func gen_magic() -> PackedFloat32Array:
 # Water dripping in the cave, with an echo
 func gen_drip() -> PackedFloat32Array:
 	return mix_into(gen_tone("sine", 1500, 700, 0.12, 0.35), gen_tone("sine", 1500, 700, 0.12, 0.12), 0.25)
+
+
+# ---------- 32-bit style screens and infected monsters ----------
+
+const WIN_TOP := Color("#2b3f9e")
+
+
+const WIN_BOTTOM := Color("#0a1238")
+
+
+const WIN_EDGE := Color("#dfe6f5")
+
+
+const POINTER := Color("#ffd23a")
+
+
+func text_width(s: String, size: int) -> float:
+	return ThemeDB.fallback_font.get_string_size(s, HORIZONTAL_ALIGNMENT_LEFT, -1, size).x
+
+
+# Big title text: shadow, then a top-to-bottom two-colour shine
+func title_text(s: String, x: float, y: float, size: int, top: Color, bottom: Color) -> void:
+	text(s, x, y, size, bottom)
+	var font := ThemeDB.fallback_font
+	var left := x - text_width(s, size) / 2.0
+	# A lighter copy nudged up gives the letters a shine
+	draw_string(font, Vector2(left, y - size * 0.06), s, HORIZONTAL_ALIGNMENT_LEFT, -1, size, Color(top, top.a * 0.55))
+
+
+# A gradient window with a silver border
+func window_box(r: Rect2, alpha := 0.95) -> void:
+	draw_polygon(
+		PackedVector2Array([r.position, Vector2(r.end.x, r.position.y), r.end, Vector2(r.position.x, r.end.y)]),
+		PackedColorArray([Color(WIN_TOP, alpha), Color(WIN_TOP, alpha), Color(WIN_BOTTOM, alpha), Color(WIN_BOTTOM, alpha)]))
+	draw_rect(r.grow(-1.0), Color(0.05, 0.05, 0.12, alpha), false, 2.0)
+	draw_rect(r.grow(-3.0), WIN_EDGE, false, 2.0)
+	draw_line(r.position + Vector2(5, 5), Vector2(r.end.x - 5, r.position.y + 5), Color(1, 1, 1, 0.35), 1.0) # top shine
+
+
+# Shiny bar: dark back, fill, a highlight along the top and a shade along the bottom
+func shiny_bar(r: Rect2, frac: float, fill: Color, back := Color("#141428")) -> void:
+	draw_rect(r.grow(1.0), Color(0, 0, 0, 0.8))
+	draw_rect(r, back)
+	var w := r.size.x * clampf(frac, 0.0, 1.0)
+	if w > 0:
+		draw_rect(Rect2(r.position, Vector2(w, r.size.y)), fill)
+		draw_rect(Rect2(r.position, Vector2(w, maxf(1.0, r.size.y * 0.3))), fill.lightened(0.45))
+		draw_rect(Rect2(r.position.x, r.end.y - maxf(1.0, r.size.y * 0.25), w, maxf(1.0, r.size.y * 0.25)), fill.darkened(0.35))
+	draw_rect(r, Color(1, 1, 1, 0.25), false, 1.0)
+
+
+# Golden menu pointer, bobbing a little
+func draw_pointer(tip: Vector2, size := 12.0) -> void:
+	var bob := sin(now() * 6.0) * 2.0
+	var t := tip + Vector2(bob, 0)
+	draw_colored_polygon(PackedVector2Array([t + Vector2(2, 2), t + Vector2(-size + 2, -size * 0.6 + 2), t + Vector2(-size + 2, size * 0.6 + 2)]), Color(0, 0, 0, 0.6))
+	draw_colored_polygon(PackedVector2Array([t, t + Vector2(-size, -size * 0.6), t + Vector2(-size, size * 0.6)]), POINTER)
+	draw_colored_polygon(PackedVector2Array([t, t + Vector2(-size, -size * 0.6), t + Vector2(-size * 0.5, 0)]), POINTER.lightened(0.5))
+
+
+func wrap_text(s: String, size: int, max_width: float) -> PackedStringArray:
+	var out := PackedStringArray()
+	var line := ""
+	for word in s.split(" "):
+		var attempt := word if line == "" else line + " " + word
+		if line != "" and text_width(attempt, size) > max_width:
+			out.append(line)
+			line = word
+		else:
+			line = attempt
+	if line != "":
+		out.append(line)
+	return out
+
+
+# A message window whose text types itself out (reveal = how many letters to show)
+func dialog(x: float, y: float, w: float, s: String, size: int, reveal := 100000, color := Color.WHITE) -> void:
+	var lines := wrap_text(s, size, w - 40)
+	var line_h := size * 1.35
+	window_box(Rect2(x, y, w, 22 + lines.size() * line_h))
+	var shown := reveal
+	var ty := y + 11 + size
+	for line in lines:
+		if shown <= 0:
+			break
+		text(line.substr(0, shown), x + 20, ty, size, color, HORIZONTAL_ALIGNMENT_LEFT)
+		shown -= line.length() + 1
+		ty += line_h
+
+
+# Letters shown so far for text that types itself out
+func typed_letters(delay := 0.0) -> int:
+	return maxi(0, int((status_time - delay) * 40.0))
+
+
+# The text the current story screen is typing out (for the blip sounds)
+func current_dialog() -> String:
+	match status:
+		"title":
+			return title_line()
+		"lost":
+			if scene == "keeper":
+				return death_reason + " Don't give up! Press R to try again."
+			return "Grave... the parasite virus got you this time. Don't give up! Press R to try again from the van."
+		"won":
+			return "Grave escaped the van! The parasites aren't finished yet... To be continued. Press R for the save files."
+	return ""
+
+
+func title_line() -> String:
+	if PLACES.has(next_scene):
+		return PLACES[next_scene]["line"] + " " + place_goal(next_scene)
+	match next_scene:
+		"hub":
+			return "The EAP van. Walk up to the map on the wall to choose where to go."
+		"keeper":
+			return "*click* ... The van doors lock from the outside. Somebody is jingling keys."
+	return ""
+
+
+func level_number() -> int:
+	var cleared: Array = progress["cleared"]
+	return cleared.size() + 1
+
+
+# Some sounds (howls, cackles...) would pile up with many monsters, so they wait a little between plays
+func play_limited(sound_name: String, gap: float, volume := 1.0, pitch := 1.0) -> void:
+	var t := now()
+	if t < float(sound_next.get(sound_name, 0.0)):
+		return
+	sound_next[sound_name] = t + gap
+	play_sound(sound_name, volume, pitch)
+
+
+# A glowing green eye: the sign of the parasite virus
+func infected_eye(c: Vector2, r: float) -> void:
+	glow(c, r * 1.6, INFECTED, 0.25)
+	draw_rect(Rect2(c.x - r, c.y - r, r * 2, r * 2), INFECTED)
+
+
+func gen_blip() -> PackedFloat32Array:
+	return gen_tone("square", 520, 500, 0.035, 0.16)
+
+
+func gen_select() -> PackedFloat32Array:
+	return mix_into(gen_tone("square", 660, 660, 0.07, 0.2), gen_tone("square", 990, 990, 0.09, 0.2), 0.06)
+
+
+func gen_heart_break() -> PackedFloat32Array:
+	return mix_into(gen_hiss("band", 2400, 900, 0.15, 0.8), gen_tone("square", 220, 110, 0.35, 0.25), 0.05)
