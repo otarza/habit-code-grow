@@ -27,6 +27,15 @@ export type CheckoutOverride = {
   savingsLabel?: string;
 };
 
+// From Nov 1 the Starter sells at a permanent ₾149 (no promo, no strike-through price).
+// Own Flitt product (btcp-ai-3m-149) + button; the webhook maps both to AI Starter.
+export const STARTER_EVERGREEN = {
+  from: Date.parse("2026-11-01T00:00:00+04:00"),
+  value: 149,
+  buttonId: (import.meta.env.VITE_AI_STARTER_149_FLITT_BUTTON_ID as string | undefined) ?? "5fd5468dc15516804904fdb9e1ce52d946210745",
+};
+const starterEvergreen = !!STARTER_EVERGREEN.buttonId && Date.now() >= STARTER_EVERGREEN.from;
+
 // Per-product checkout config.
 export const PRODUCTS: Record<CheckoutProduct, ProductConfig> = {
   bootcamp: {
@@ -44,9 +53,11 @@ export const PRODUCTS: Record<CheckoutProduct, ProductConfig> = {
   starter: {
     mode: "embed",
     // Public Flitt button ID supplied by the owner for the ₾249 Starter product.
-    buttonId: import.meta.env.VITE_AI_STARTER_FLITT_BUTTON_ID ?? "8dd7438a4579ed39bd7ae731fb8b6f359a2aae58",
+    buttonId: starterEvergreen
+      ? STARTER_EVERGREEN.buttonId!
+      : import.meta.env.VITE_AI_STARTER_FLITT_BUTTON_ID ?? "8dd7438a4579ed39bd7ae731fb8b6f359a2aae58",
     name: "AI Starter — 3 ვიდეომოდული",
-    value: 249,
+    value: starterEvergreen ? STARTER_EVERGREEN.value : 249,
   },
 };
 
@@ -58,7 +69,7 @@ export type StarterPromoPhase = CheckoutOverride & {
   endDay: string; // "სრულდება …"
 };
 
-// Starter promo phases, in order; after the last one the page shows the full ₾249 price.
+// Starter promo phases, in order; after the last one the page shows the full price (₾149 from Nov 1).
 // Button IDs are public Flitt identifiers, not API secrets.
 export const STARTER_PROMO_PHASES: StarterPromoPhase[] = [
   {
