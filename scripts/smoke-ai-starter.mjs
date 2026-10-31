@@ -157,7 +157,7 @@ try {
   await ext.close();
   console.log('Phase 3: Halloween extension 00:00–03:00 Nov 1 — extra timer, skin, same ₾99 flow');
 
-  // After the extension (Nov 1 03:00) the page must fall back to the plain permanent ₾149 offer.
+  // After the extension (Nov 1 03:00) the page shows the open-ended ₾249 → ₾149 standing discount: no timers, no deadline copy.
   const expired = await browser.newPage();
   await expired.setRequestInterception(true);
   expired.on('request', r => r.url().startsWith(origin + '/') || r.url().startsWith('data:') ? r.continue() : r.abort());
@@ -171,20 +171,32 @@ try {
   await expired.goto(`${origin}/ai-starter`, { waitUntil: 'networkidle0' });
   const card = '.campaign-buy-anchor[data-slot="desktop"]';
   const state = await expired.evaluate(c => ({
-    promoBar: !!document.querySelector('.campaign-promo-bar'),
-    promoRow: !!document.querySelector(`${c} .campaign-offer-promo`),
-    countdowns: document.querySelectorAll('.starter-countdown').length,
+    promoBar: (document.querySelector('.campaign-promo-bar')?.textContent ?? '').replace(/\s+/g, ' ').trim(),
+    promoRow: (document.querySelector(`${c} .campaign-offer-promo`)?.textContent ?? '').replace(/\s+/g, ' ').trim(),
+    countdowns: document.querySelectorAll('.starter-countdown, [role=timer]').length,
+    halloween: !!document.querySelector('.campaign-page--halloween, .starter-extension'),
     price: document.querySelector(`${c} .campaign-price__current .sr-only`).textContent,
     secondary: document.querySelector(`${c} button[type=submit]`).classList.contains('starter-cta--secondary'),
-    faq79: /როგორ მივიღო (79|99)₾/.test(document.body.innerText),
+    faqOld: /როგორ მივიღო (79|99)₾/.test(document.body.innerText),
+    faq149: document.body.innerText.includes('როგორ მივიღო 149₾'),
+    deadlineCopy: /დარჩა|ჩათვლით|სრულდება|03:00-მდე|მოქმედებს/.test(document.body.innerText),
     curriculumCta: document.querySelector('.starter-curriculum__cta button').innerText.trim(),
   }), card);
-  assert.deepEqual(state, { promoBar: false, promoRow: false, countdowns: 0, price: '₾149', secondary: false, faq79: false, curriculumCta: 'შეიძინე AI Starter — ₾149' });
+  // textContent joins sibling elements without spaces; compare whitespace-free.
+  assert.equal(state.promoBar.replace(/\s+/g, ''), 'AIStarter·ფასდაკლება249₾→149₾·გააქტიურეფასდაკლებაერთიკლიკითგააქტიურე100₾ფასდაკლება');
+  assert.equal(state.promoRow.replace(/\s+/g, ''), 'პირველინაბიჯიAI-ში—100₾ფასდაკლებითგააქტიურე100₾ფასდაკლება');
+  assert.deepEqual({ ...state, promoBar: 1, promoRow: 1 }, { promoBar: 1, promoRow: 1, countdowns: 0, halloween: false, price: '₾249', secondary: true, faqOld: false, faq149: true, deadlineCopy: false, curriculumCta: 'გააქტიურე 100₾ ფასდაკლება' });
+  await expired.$eval(`${card} .starter-promo-call`, b => b.click());
+  await expired.waitForSelector(`${card} .starter-promo-applied`);
+  assert.equal((await expired.$eval(`${card} .starter-promo-applied`, el => el.textContent)).replace(/\s+/g, ''), 'ფასდაკლებაგააქტიურებულია₾249→₾149·დაზოგე₾100');
+  assert.equal(await expired.$eval(`${card} .campaign-price__current .sr-only`, el => el.textContent), '₾149');
+  assert.equal(await expired.$eval(`${card} .starter-price-save`, el => el.textContent), 'შენ ზოგავ ₾100-ს');
+  assert.equal(await expired.$(`${card} .starter-countdown`), null, 'no countdown after activation either');
+  assert(!(await expired.evaluate(() => /79₾|₾79|99₾|₾99|170₾|₾170|150₾|₾150/.test(document.body.innerText))), 'no earlier promo prices left');
   await expired.$eval(`${card} button[type=submit]`, b => b.click());
   await expired.waitForSelector(`${card} input[type=email]`);
-  assert.equal(await expired.$(`${card} .starter-nudge`), null, 'no discount prompt after deadline');
   await expired.close();
-  console.log('After deadline: no promo bar/row/countdown/FAQ, plain 249 checkout without discount prompt');
+  console.log('After 03:00 Nov 1: open-ended ₾249 → ₾149 discount — promo bar/row/FAQ, no timers or deadline copy, activation + savings');
 
   // Learning page with soft access; Pro stays gated.
   await page.goto(`${origin}/learn/ai-starter`, { waitUntil: 'networkidle0' });

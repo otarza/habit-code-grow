@@ -13,7 +13,7 @@ import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/compone
 import { aiStarterTestimonials } from "@/data/aiStarterTestimonials";
 import { SEO } from "@/components/SEO";
 import { rememberAttributionRef } from "@/lib/attribution";
-import { PRODUCTS, STARTER_PROMO_PHASES, isHalloweenTheme, starterPromoPhase, trackInitiateCheckout } from "@/lib/checkout";
+import { PRODUCTS, STARTER_LAST_DEADLINE, STARTER_PROMO_PHASES, isHalloweenTheme, starterPromoPhase, trackInitiateCheckout } from "@/lib/checkout";
 import { HalloweenDecor } from "@/components/campaign/HalloweenDecor";
 import { EMAIL_RE, loadFlitt } from "@/lib/flitt";
 
@@ -27,8 +27,8 @@ if (import.meta.env.DEV) {
     Date.now = () => realNow() + offset;
   }
 }
-// Real promo deadlines live in STARTER_PROMO_PHASES (₾79, then ₾99). The page switches
-// phase by itself at each deadline and back to the full price after the last one.
+// Real promo deadlines live in STARTER_PROMO_PHASES (₾79, ₾99, 3-hour extension, then the open-ended
+// ₾249 → ₾149 standing discount). The page switches phase by itself at each deadline.
 const LAST_PROMO_PHASE = STARTER_PROMO_PHASES[STARTER_PROMO_PHASES.length - 1];
 type OfferSlot = "inline" | "desktop" | "final";
 const modules = [
@@ -42,7 +42,7 @@ const modules = [
 // Placeholder replaced with the current phase's question when rendering.
 const PROMO_FAQ = ["promo", ""];
 const promoFaq = (price: number, endLabel: string) => [`როგორ მივიღო ${price}₾-იანი ფასი?`,
-  `დააჭირე ღილაკს „გააქტიურე ${FULL_PRICE - price}₾ ფასდაკლება“. გვერდზე ფასი ${FULL_PRICE}₾-დან ${price}₾-მდე შემცირდება. კოდის დამახსოვრება ან ხელით შეყვანა არ გჭირდება. ფასდაკლება მოქმედებს ${endLabel}.`];
+  `დააჭირე ღილაკს „გააქტიურე ${FULL_PRICE - price}₾ ფასდაკლება“. გვერდზე ფასი ${FULL_PRICE}₾-დან ${price}₾-მდე შემცირდება. კოდის დამახსოვრება ან ხელით შეყვანა არ გჭირდება.${endLabel ? ` ფასდაკლება მოქმედებს ${endLabel}.` : ""}`];
 const faqs = [
   ["ვისთვისაა ეს კურსი?", "მათთვის, ვისაც AI-სთან შეხება ჯერ არ ჰქონია და სურს პირველი ნაბიჯები გასაგები ვიდეოგაკვეთილებით გადადგას."],
   ["მჭირდება პროგრამირების ცოდნა?", "არა. კურსი იწყება საფუძვლებით და პრომპტების შესაქმნელად პროგრამირების ცოდნა არ გჭირდება."],
@@ -167,7 +167,7 @@ export default function AIStarter() {
   }, []);
   const emailInputs = useRef<Partial<Record<OfferSlot, HTMLInputElement | null>>>({});
   const [openFaq, setOpenFaq] = useState<number | null>(0);
-  const now = useNow(LAST_PROMO_PHASE.endsAt);
+  const now = useNow(STARTER_LAST_DEADLINE);
   const phase = starterPromoPhase(now);
   const promoAvailable = !!phase;
   // A visitor who activated the promo keeps the latest phase price if the last deadline passes mid-visit.
@@ -178,6 +178,8 @@ export default function AIStarter() {
   const countdown = formatCountdown(promo.endsAt - now);
   // Extra 3-hour timer after the Oct 31 deadline; the Halloween skin covers Oct 31 and the extension.
   const extension = promoAvailable && !!promo.extension;
+  // Open-ended standing discount (₾249 → ₾149): no countdown or deadline copy anywhere.
+  const openEnded = !!promo.open;
   const halloween = isHalloweenTheme(now);
   const price = promoActive ? PROMO_PRICE : FULL_PRICE;
   const priceLabel = `₾${price}`;
@@ -324,8 +326,8 @@ export default function AIStarter() {
   const purchase = (slot: OfferSlot) => nudgeSlot === slot ? <div className="starter-nudge" role="alertdialog" aria-labelledby={`starter-nudge-${slot}`}>
     <Gift aria-hidden="true" size={28} />
     <strong id={`starter-nudge-${slot}`}>მოიცა! შენ გაქვს ₾{SAVINGS} ფასდაკლება</strong>
-    <p>ერთი კლიკით ფასი ₾{FULL_PRICE}-დან ₾{PROMO_PRICE}-მდე შემცირდება. ფასდაკლება მოქმედებს {PROMO_END_LABEL}.</p>
-    <span className="starter-countdown" role="timer" aria-live="off">დარჩა {countdown}</span>
+    <p>ერთი კლიკით ფასი ₾{FULL_PRICE}-დან ₾{PROMO_PRICE}-მდე შემცირდება.{openEnded ? "" : ` ფასდაკლება მოქმედებს ${PROMO_END_LABEL}.`}</p>
+    {!openEnded && <span className="starter-countdown" role="timer" aria-live="off">დარჩა {countdown}</span>}
     <button type="button" className="campaign-cta starter-nudge__activate" onClick={() => activatePromo(slot, "nudge")}>
       <span>გააქტიურე და გადაიხადე ₾{PROMO_PRICE}</span><ArrowRight aria-hidden="true" size={18} />
     </button>
@@ -367,10 +369,10 @@ export default function AIStarter() {
       ? <div className="starter-promo-applied" role="status">
         <CheckCircle2 aria-hidden="true" size={22} />
         <div><strong>ფასდაკლება გააქტიურებულია</strong><span>₾{FULL_PRICE} → ₾{PROMO_PRICE} · დაზოგე ₾{SAVINGS}</span>
-          {promoAvailable && <small className="starter-countdown" role="timer" aria-live="off">ფასი მოქმედებს {PROMO_END_LABEL} · დარჩა {countdown}</small>}</div>
+          {promoAvailable && !openEnded && <small className="starter-countdown" role="timer" aria-live="off">ფასი მოქმედებს {PROMO_END_LABEL} · დარჩა {countdown}</small>}</div>
       </div>
       : promoAvailable && <div className="campaign-offer-promo"><span>პირველი ნაბიჯი AI-ში — {SAVINGS}₾ ფასდაკლებით
-        <small className="starter-countdown" role="timer" aria-live="off">{promo.endDay} · დარჩა {countdown}</small></span>{promoButton(true, slot)}</div>}
+        {!openEnded && <small className="starter-countdown" role="timer" aria-live="off">{promo.endDay} · დარჩა {countdown}</small>}</span>{promoButton(true, slot)}</div>}
     <div className="campaign-final__price-row"><div className="campaign-price-stack">
       <span>ერთჯერადი ფასი</span>
       {promoActive && <span className="campaign-price__old starter-price-old">₾{FULL_PRICE}</span>}
@@ -400,7 +402,7 @@ export default function AIStarter() {
       <span className="starter-extension__pumpkin starter-extension__pumpkin--right" aria-hidden="true">🎃</span>
     </div></div>}
     {(promoAvailable || promoActive) && <div className={`campaign-promo-bar${promoActive ? " is-active" : ""}`}><div className="campaign-shell campaign-promo-bar__inner">
-      <div><span>{extension ? "🦇 AI Starter · ფასდაკლება გაგრძელდა" : "AI Starter · ფასდაკლება"} {PROMO_END_LABEL}{promoAvailable ? ` · დარჩა ${countdown}` : ""}</span><strong aria-live="polite">{promoActive ? `ფასდაკლება აქტიურია — 3 მოდული ${PROMO_PRICE}₾-ად` : `${FULL_PRICE}₾ → ${PROMO_PRICE}₾ · გააქტიურე ფასდაკლება ერთი კლიკით`}</strong></div>{promoButton()}
+      <div><span>{extension ? "🦇 AI Starter · ფასდაკლება გაგრძელდა" : "AI Starter · ფასდაკლება"}{openEnded ? "" : ` ${PROMO_END_LABEL}${promoAvailable ? ` · დარჩა ${countdown}` : ""}`}</span><strong aria-live="polite">{promoActive ? `ფასდაკლება აქტიურია — 3 მოდული ${PROMO_PRICE}₾-ად` : `${FULL_PRICE}₾ → ${PROMO_PRICE}₾ · გააქტიურე ფასდაკლება ერთი კლიკით`}</strong></div>{promoButton()}
     </div></div>}
     {showPromoConfetti && <CampaignPromoConfetti />}
     <main>

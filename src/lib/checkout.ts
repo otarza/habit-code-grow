@@ -27,14 +27,10 @@ export type CheckoutOverride = {
   savingsLabel?: string;
 };
 
-// From Nov 1 03:00 (after the 3-hour Halloween extension) the Starter sells at a permanent ₾149
-// (no promo, no strike-through price). Own Flitt product (btcp-ai-3m-149) + button; the webhook maps both to AI Starter.
-export const STARTER_EVERGREEN = {
-  from: Date.parse("2026-11-01T03:00:00+04:00"),
-  value: 149,
-  buttonId: (import.meta.env.VITE_AI_STARTER_149_FLITT_BUTTON_ID as string | undefined) ?? "5fd5468dc15516804904fdb9e1ce52d946210745",
-};
-const starterEvergreen = !!STARTER_EVERGREEN.buttonId && Date.now() >= STARTER_EVERGREEN.from;
+// From Nov 1 03:00 (after the 3-hour Halloween extension) the Starter sells at ₾149 as a standing
+// discount from the ₾249 list price (owner decision Oct 31): see the open-ended last entry of STARTER_PROMO_PHASES.
+// Own Flitt product (btcp-ai-3m-149) + button; the webhook maps both to AI Starter.
+export const STARTER_149_BUTTON_ID = (import.meta.env.VITE_AI_STARTER_149_FLITT_BUTTON_ID as string | undefined) ?? "5fd5468dc15516804904fdb9e1ce52d946210745";
 
 // Per-product checkout config.
 export const PRODUCTS: Record<CheckoutProduct, ProductConfig> = {
@@ -53,22 +49,23 @@ export const PRODUCTS: Record<CheckoutProduct, ProductConfig> = {
   starter: {
     mode: "embed",
     // Public Flitt button ID supplied by the owner for the ₾249 Starter product.
-    buttonId: starterEvergreen
-      ? STARTER_EVERGREEN.buttonId!
-      : import.meta.env.VITE_AI_STARTER_FLITT_BUTTON_ID ?? "8dd7438a4579ed39bd7ae731fb8b6f359a2aae58",
+    // ₾249 list price stays genuinely purchasable (the "continue at full price" path) so the ₾149 strike-through is real.
+    buttonId: import.meta.env.VITE_AI_STARTER_FLITT_BUTTON_ID ?? "8dd7438a4579ed39bd7ae731fb8b6f359a2aae58",
     name: "AI Starter — 3 ვიდეომოდული",
-    value: starterEvergreen ? STARTER_EVERGREEN.value : 249,
+    value: 249,
   },
 };
 
 export type StarterPromoPhase = CheckoutOverride & {
   value: number;
-  // Last moment the phase price is offered (Tbilisi time).
+  // Last moment the phase price is offered (Tbilisi time); Infinity for an open-ended standing discount.
   endsAt: number;
-  endLabel: string; // "… ჩათვლით"
-  endDay: string; // "სრულდება …"
+  endLabel: string; // "… ჩათვლით" (empty when open-ended)
+  endDay: string; // "სრულდება …" (empty when open-ended)
   // Last-minute extension after the announced deadline: same price/button, Halloween-themed extra timer.
   extension?: boolean;
+  // Standing discount with no deadline: no countdown, no "ends …" copy anywhere.
+  open?: boolean;
 };
 
 // Halloween skin for /ai-starter: Oct 31 through the end of the 3-hour extension.
@@ -78,7 +75,8 @@ export const HALLOWEEN_THEME = {
 };
 export const isHalloweenTheme = (now: number) => now >= HALLOWEEN_THEME.from && now < HALLOWEEN_THEME.until;
 
-// Starter promo phases, in order; after the last one the page shows the full price (₾149 from Nov 1).
+// Starter promo phases, in order. The last one is open-ended (₾249 → ₾149 standing discount from Nov 1 03:00),
+// so the page never falls back to the plain ₾249 unless that entry is removed.
 // Button IDs are public Flitt identifiers, not API secrets.
 export const STARTER_PROMO_PHASES: StarterPromoPhase[] = [
   {
@@ -110,7 +108,20 @@ export const STARTER_PROMO_PHASES: StarterPromoPhase[] = [
     endDay: "ფასდაკლება გაგრძელდა მხოლოდ 3 საათით",
     extension: true,
   },
+  {
+    // Nov 1 03:00 onwards: ₾149 shown as a discount from the ₾249 list price, no deadline, no timer.
+    buttonId: STARTER_149_BUTTON_ID,
+    name: "AI Starter — 3 ვიდეომოდული",
+    value: 149,
+    savingsLabel: "შენ ზოგავ ₾100-ს",
+    endsAt: Number.POSITIVE_INFINITY,
+    endLabel: "",
+    endDay: "",
+    open: true,
+  },
 ];
+// Last real deadline — the page's clock stops ticking after it.
+export const STARTER_LAST_DEADLINE = Math.max(...STARTER_PROMO_PHASES.map(p => p.endsAt).filter(Number.isFinite));
 
 export const starterPromoPhase = (now: number) => STARTER_PROMO_PHASES.find(p => now < p.endsAt);
 
