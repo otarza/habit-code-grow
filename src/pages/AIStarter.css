@@ -851,3 +851,371 @@ button.starter-curriculum__lesson.is-locked:hover .starter-curriculum__lock {
 .starter-curriculum__lessons li {
   scroll-margin-top: 90px;
 }
+
+/* ---------- Halloween skin (Oct 31 + 3-hour extension) ---------- */
+.campaign-page--halloween {
+  --cp-bg: #0a0612;
+  --cp-surface: #140b20;
+  --cp-surface-elevated: #1c1030;
+  --cp-border: #2f1c48;
+  --cp-border-strong: #4a2d6b;
+  --cp-accent: #ff7a1a;
+  --cp-accent-soft: rgba(255, 122, 26, 0.16);
+  --cp-accent-line: rgba(255, 122, 26, 0.4);
+  --cp-accent-text: #ffa24d;
+  --cp-cta-bg: #ff7a1a;
+  --cp-cta-text: #140b20;
+  position: relative;
+  isolation: isolate;
+}
+
+.campaign-page--halloween .campaign-hero {
+  background-image:
+    radial-gradient(ellipse at 82% 12%, rgba(255, 170, 70, 0.22), transparent 28%),
+    radial-gradient(ellipse at 10% 90%, rgba(120, 60, 200, 0.28), transparent 45%),
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(255, 122, 26, 0.14), transparent 40%);
+  background-size: 100% 100%, 100% 100%, 48px 48px, 48px 48px, 100% 100%;
+}
+
+.campaign-page--halloween .campaign-final {
+  background-image:
+    radial-gradient(ellipse at 50% 100%, rgba(255, 122, 26, 0.18), transparent 55%),
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 100% 100%, 48px 48px, 48px 48px;
+}
+
+.campaign-page--halloween .campaign-promo-bar {
+  border-bottom-color: rgba(255, 162, 77, 0.35);
+  background:
+    linear-gradient(90deg, rgba(255, 122, 26, 0.22), rgba(120, 60, 200, 0.12)),
+    rgba(10, 6, 18, 0.96);
+}
+
+.campaign-page--halloween .campaign-cta,
+.campaign-page--halloween .campaign-promo-button:not([disabled]) {
+  box-shadow: 0 0 0 1px rgba(255, 162, 77, 0.35), 0 10px 30px rgba(255, 122, 26, 0.22);
+}
+
+.campaign-page--halloween .campaign-hero__offer,
+.campaign-page--halloween .campaign-final__panel {
+  border-color: rgba(255, 162, 77, 0.3);
+  box-shadow: 0 0 0 1px rgba(255, 122, 26, 0.08), 0 24px 60px rgba(60, 20, 110, 0.45);
+}
+
+.campaign-page--halloween .campaign-eyebrow::before {
+  content: "🎃 ";
+}
+
+.campaign-page--halloween .starter-countdown {
+  color: #ffb547;
+}
+
+/* Decorative layer */
+.starter-halloween {
+  position: fixed;
+  inset: 0;
+  z-index: 3;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* Moon, cobweb and spider sit behind the content; bats and pumpkins fly over it. */
+.starter-halloween--back {
+  z-index: -1;
+}
+
+.starter-halloween__moon {
+  position: absolute;
+  top: 70px;
+  right: 6%;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 38% 36%, #fff6d6, #ffd98a 55%, #f0b24a 100%);
+  box-shadow: 0 0 60px 18px rgba(255, 200, 110, 0.35), 0 0 140px 50px rgba(255, 160, 60, 0.14);
+  opacity: 0.85;
+}
+
+.starter-halloween__moon::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 28% 58%, rgba(170, 110, 40, 0.22) 0 10px, transparent 11px),
+    radial-gradient(circle at 62% 30%, rgba(170, 110, 40, 0.2) 0 7px, transparent 8px),
+    radial-gradient(circle at 66% 70%, rgba(170, 110, 40, 0.18) 0 13px, transparent 14px);
+}
+
+.starter-halloween__web {
+  position: absolute;
+  top: 0;
+  width: 150px;
+  height: 150px;
+  color: rgba(255, 255, 255, 0.28);
+}
+
+.starter-halloween__web--left { left: 0; }
+
+.starter-halloween__spider {
+  position: absolute;
+  top: 70px;
+  left: 118px;
+  font-size: 22px;
+  transform-origin: top center;
+  animation: starter-spider 9s ease-in-out infinite;
+}
+
+.starter-halloween__spider::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 100%;
+  width: 1px;
+  height: 70px;
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.starter-halloween__bat {
+  position: absolute;
+  left: -12%;
+  width: var(--bat-size);
+  height: calc(var(--bat-size) * 0.6);
+  color: #15091f;
+  filter: drop-shadow(0 0 6px rgba(255, 162, 77, 0.35));
+  animation: starter-bat-fly var(--bat-dur) linear infinite;
+  animation-delay: var(--bat-delay);
+}
+
+.starter-halloween__bat svg {
+  width: 100%;
+  height: 100%;
+  animation: starter-bat-flap var(--bat-flap) ease-in-out infinite alternate;
+}
+
+.starter-halloween__pumpkin {
+  position: absolute;
+  display: inline-block;
+  line-height: 1;
+  filter: drop-shadow(0 0 14px rgba(255, 140, 30, 0.55));
+  transform-origin: 50% 100%;
+  animation: starter-pumpkin-bounce 1.6s cubic-bezier(0.34, 1.56, 0.64, 1) infinite, starter-pumpkin-wobble 0.18s ease-in-out infinite alternate;
+  animation-delay: var(--pumpkin-delay), 0s;
+}
+
+/* Spiders: one sneaks down from the web on its thread (see __spider), these crawl along the edges */
+.starter-halloween__crawler {
+  position: absolute;
+  line-height: 1;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.6));
+  animation: var(--crawl-dur) linear infinite;
+  animation-delay: var(--crawl-delay);
+}
+
+.starter-halloween__crawler i {
+  display: inline-block;
+  font-style: normal;
+  animation: starter-crawl-legs 0.22s steps(2) infinite;
+}
+
+.starter-halloween__crawler--bottom { bottom: 2px; left: -40px; animation-name: starter-crawl-x; }
+.starter-halloween__crawler--top { top: 2px; left: -40px; animation-name: starter-crawl-x-back; transform: rotate(180deg); }
+.starter-halloween__crawler--right { right: 2px; top: -40px; animation-name: starter-crawl-y; transform: rotate(-90deg); }
+
+/* Crawl, pause as if sneaking, crawl again */
+@keyframes starter-crawl-x {
+  0% { transform: translateX(0) rotate(90deg); }
+  38% { transform: translateX(40vw) rotate(90deg); }
+  46% { transform: translateX(41vw) rotate(70deg); }
+  54% { transform: translateX(41vw) rotate(110deg); }
+  100% { transform: translateX(calc(100vw + 80px)) rotate(90deg); }
+}
+
+@keyframes starter-crawl-x-back {
+  0% { transform: translateX(calc(100vw + 80px)) rotate(-90deg); }
+  42% { transform: translateX(52vw) rotate(-90deg); }
+  50% { transform: translateX(51vw) rotate(-70deg); }
+  58% { transform: translateX(51vw) rotate(-110deg); }
+  100% { transform: translateX(0) rotate(-90deg); }
+}
+
+@keyframes starter-crawl-y {
+  0% { transform: translateY(0) rotate(180deg); }
+  30% { transform: translateY(34vh) rotate(180deg); }
+  38% { transform: translateY(35vh) rotate(160deg); }
+  46% { transform: translateY(35vh) rotate(200deg); }
+  100% { transform: translateY(calc(100vh + 80px)) rotate(180deg); }
+}
+
+@keyframes starter-crawl-legs {
+  from { transform: scaleX(0.92) translateY(0); }
+  to { transform: scaleX(1.08) translateY(-1px); }
+}
+
+/* Extension strip: the extra 3-hour timer that starts at 00:00:00 */
+.starter-extension {
+  position: relative;
+  z-index: 4;
+  border-bottom: 1px solid rgba(255, 162, 77, 0.45);
+  background:
+    radial-gradient(ellipse at 50% 120%, rgba(255, 122, 26, 0.35), transparent 60%),
+    linear-gradient(90deg, #2a0f3f, #140b20 50%, #2a0f3f);
+  overflow: hidden;
+}
+
+.starter-extension::before,
+.starter-extension::after {
+  content: "🦇";
+  position: absolute;
+  top: 10px;
+  font-size: 22px;
+  opacity: 0.85;
+  animation: starter-bat-hop 2.4s ease-in-out infinite;
+}
+
+.starter-extension::before { left: 18%; }
+.starter-extension::after { right: 20%; animation-delay: -1.2s; }
+
+.starter-extension__inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  min-height: 92px;
+  padding-top: 14px;
+  padding-bottom: 14px;
+}
+
+.starter-extension__pumpkin {
+  font-size: 44px;
+  line-height: 1;
+  display: inline-block;
+  transform-origin: 50% 100%;
+  filter: drop-shadow(0 0 16px rgba(255, 140, 30, 0.6));
+  animation: starter-pumpkin-bounce 1.4s cubic-bezier(0.34, 1.56, 0.64, 1) infinite, starter-pumpkin-wobble 0.16s ease-in-out infinite alternate;
+}
+
+.starter-extension__pumpkin--right { animation-delay: -0.7s, -0.08s; }
+
+.starter-extension__copy {
+  display: grid;
+  gap: 4px;
+  max-width: 560px;
+}
+
+.starter-extension__copy strong {
+  color: #ffb547;
+  font-size: 20px;
+  line-height: 1.25;
+  text-shadow: 0 0 18px rgba(255, 140, 30, 0.45);
+}
+
+.starter-extension__copy span {
+  color: var(--cp-text-secondary);
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.starter-extension__timer {
+  display: grid;
+  justify-items: center;
+  gap: 2px;
+  padding: 8px 18px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 162, 77, 0.55);
+  background: rgba(10, 6, 18, 0.7);
+  box-shadow: 0 0 0 1px rgba(255, 122, 26, 0.1), 0 0 30px rgba(255, 122, 26, 0.25) inset;
+  animation: starter-timer-pulse 1s ease-in-out infinite;
+}
+
+.starter-extension__timer small {
+  color: var(--cp-accent-text);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.starter-extension__timer strong {
+  color: #fff;
+  font-size: 26px;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+@keyframes starter-bat-fly {
+  0% { transform: translateX(0) translateY(0) scaleX(1); }
+  25% { transform: translateX(30vw) translateY(-28px) scaleX(1); }
+  50% { transform: translateX(60vw) translateY(14px) scaleX(1); }
+  75% { transform: translateX(90vw) translateY(-36px) scaleX(1); }
+  100% { transform: translateX(125vw) translateY(0) scaleX(1); }
+}
+
+@keyframes starter-bat-flap {
+  from { transform: scaleY(1) rotate(-4deg); }
+  to { transform: scaleY(0.55) rotate(4deg); }
+}
+
+@keyframes starter-bat-hop {
+  0%, 100% { transform: translateY(0) rotate(-8deg); }
+  50% { transform: translateY(-10px) rotate(8deg); }
+}
+
+@keyframes starter-pumpkin-bounce {
+  0%, 100% { transform: translateY(0) scale(1, 1); }
+  30% { transform: translateY(-22px) scale(0.96, 1.06); }
+  55% { transform: translateY(0) scale(1.08, 0.9); }
+  70% { transform: translateY(-8px) scale(0.98, 1.02); }
+}
+
+@keyframes starter-pumpkin-wobble {
+  from { rotate: -4deg; }
+  to { rotate: 4deg; }
+}
+
+@keyframes starter-spider {
+  0% { transform: translateY(0) rotate(-3deg); }
+  35% { transform: translateY(120px) rotate(3deg); }
+  45% { transform: translateY(126px) rotate(-6deg); }
+  55% { transform: translateY(120px) rotate(6deg); }
+  70% { transform: translateY(10px) rotate(-2deg); }
+  100% { transform: translateY(0) rotate(-3deg); }
+}
+
+@keyframes starter-timer-pulse {
+  0%, 100% { box-shadow: 0 0 0 1px rgba(255, 122, 26, 0.1), 0 0 30px rgba(255, 122, 26, 0.25) inset; }
+  50% { box-shadow: 0 0 0 3px rgba(255, 122, 26, 0.25), 0 0 40px rgba(255, 122, 26, 0.4) inset; }
+}
+
+@media (max-width: 760px) {
+  .starter-halloween__moon { width: 90px; height: 90px; top: 110px; right: 4%; }
+  .starter-halloween__web { width: 96px; height: 96px; }
+  .starter-halloween__spider { left: 74px; top: 50px; font-size: 18px; }
+  .starter-halloween__pumpkin { font-size: 30px !important; bottom: 84px !important; }
+  .starter-extension__inner { flex-wrap: wrap; gap: 12px; text-align: center; justify-content: center; }
+  .starter-extension__pumpkin { font-size: 34px; }
+  .starter-extension__pumpkin--right { display: none; }
+  .starter-extension__copy strong { font-size: 17px; }
+  .starter-extension__timer strong { font-size: 22px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .starter-halloween__bat,
+  .starter-halloween__bat svg,
+  .starter-halloween__pumpkin,
+  .starter-halloween__spider,
+  .starter-halloween__crawler,
+  .starter-halloween__crawler i,
+  .starter-extension::before,
+  .starter-extension::after,
+  .starter-extension__pumpkin,
+  .starter-extension__timer {
+    animation: none;
+  }
+  .starter-halloween__bat { left: auto; right: 10%; }
+  .starter-halloween__crawler { display: none; }
+}

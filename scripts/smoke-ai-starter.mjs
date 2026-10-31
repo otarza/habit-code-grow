@@ -131,7 +131,33 @@ try {
   await phase2.close();
   console.log('Phase 2: ₾99 until Oct 31 — countdown, promo bar, nudge, activation, savings, FAQ; no ₾79/₾170 left');
 
-  // After the last promo deadline the page must fall back to a plain 249 offer.
+  // Phase 3 (Nov 1 00:00–03:00): 3-hour Halloween extension at the same ₾99 button, extra timer + skin.
+  const ext = await browser.newPage();
+  await ext.setRequestInterception(true);
+  ext.on('request', r => r.url().startsWith(origin + '/') || r.url().startsWith('data:') ? r.continue() : r.abort());
+  ext.on('pageerror', error => errors.push(error.message));
+  await clockAt(ext, '2026-11-01T00:00:30+04:00');
+  await ext.emulateMediaFeatures([{ name: 'prefers-reduced-motion', value: 'reduce' }]);
+  await ext.setViewport({ width: 1440, height: 1000 });
+  await ext.goto(`${origin}/ai-starter`, { waitUntil: 'networkidle0' });
+  const t3 = sel => ext.$eval(sel, el => el.textContent);
+  assert(await ext.$('.campaign-page--halloween.campaign-page--extension'), 'halloween + extension classes');
+  assert(await ext.$('.starter-halloween__bat'), 'bats rendered');
+  assert(await ext.$('.starter-halloween__pumpkin'), 'pumpkins rendered');
+  assert((await t3('.starter-extension')).includes('ფასდაკლება გაგრძელდა მხოლოდ 3 საათით'));
+  assert(/დარჩა02:59:[0-5]\dსაათი/.test((await t3('.starter-extension__timer')).replace(/\s+/g, '')), 'extension timer counts down from 3h');
+  assert((await t3('.campaign-promo-bar')).includes('249₾ → 99₾'));
+  assert((await t3('.campaign-promo-bar')).includes('ღამის 03:00-მდე'));
+  const c3 = '.campaign-buy-anchor[data-slot="desktop"]';
+  assert((await t3(`${c3} .campaign-offer-promo .starter-countdown`)).includes('ფასდაკლება გაგრძელდა მხოლოდ 3 საათით · დარჩა '));
+  await ext.$eval(`${c3} .starter-promo-call`, b => b.click());
+  await ext.waitForSelector(`${c3} .starter-promo-applied`);
+  assert((await t3(`${c3} .starter-promo-applied`)).includes('₾249 → ₾99 · დაზოგე ₾150'));
+  assert(!(await ext.evaluate(() => /79₾|₾79|170₾|₾170|149₾|₾149/.test(document.body.innerText))), 'no other prices in the extension');
+  await ext.close();
+  console.log('Phase 3: Halloween extension 00:00–03:00 Nov 1 — extra timer, skin, same ₾99 flow');
+
+  // After the extension (Nov 1 03:00) the page must fall back to the plain permanent ₾149 offer.
   const expired = await browser.newPage();
   await expired.setRequestInterception(true);
   expired.on('request', r => r.url().startsWith(origin + '/') || r.url().startsWith('data:') ? r.continue() : r.abort());
@@ -153,7 +179,7 @@ try {
     faq79: /როგორ მივიღო (79|99)₾/.test(document.body.innerText),
     curriculumCta: document.querySelector('.starter-curriculum__cta button').innerText.trim(),
   }), card);
-  assert.deepEqual(state, { promoBar: false, promoRow: false, countdowns: 0, price: '₾249', secondary: false, faq79: false, curriculumCta: 'შეიძინე AI Starter — ₾249' });
+  assert.deepEqual(state, { promoBar: false, promoRow: false, countdowns: 0, price: '₾149', secondary: false, faq79: false, curriculumCta: 'შეიძინე AI Starter — ₾149' });
   await expired.$eval(`${card} button[type=submit]`, b => b.click());
   await expired.waitForSelector(`${card} input[type=email]`);
   assert.equal(await expired.$(`${card} .starter-nudge`), null, 'no discount prompt after deadline');

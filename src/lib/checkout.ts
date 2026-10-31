@@ -27,10 +27,10 @@ export type CheckoutOverride = {
   savingsLabel?: string;
 };
 
-// From Nov 1 the Starter sells at a permanent ₾149 (no promo, no strike-through price).
-// Own Flitt product (btcp-ai-3m-149) + button; the webhook maps both to AI Starter.
+// From Nov 1 03:00 (after the 3-hour Halloween extension) the Starter sells at a permanent ₾149
+// (no promo, no strike-through price). Own Flitt product (btcp-ai-3m-149) + button; the webhook maps both to AI Starter.
 export const STARTER_EVERGREEN = {
-  from: Date.parse("2026-11-01T00:00:00+04:00"),
+  from: Date.parse("2026-11-01T03:00:00+04:00"),
   value: 149,
   buttonId: (import.meta.env.VITE_AI_STARTER_149_FLITT_BUTTON_ID as string | undefined) ?? "5fd5468dc15516804904fdb9e1ce52d946210745",
 };
@@ -67,7 +67,16 @@ export type StarterPromoPhase = CheckoutOverride & {
   endsAt: number;
   endLabel: string; // "… ჩათვლით"
   endDay: string; // "სრულდება …"
+  // Last-minute extension after the announced deadline: same price/button, Halloween-themed extra timer.
+  extension?: boolean;
 };
+
+// Halloween skin for /ai-starter: Oct 31 through the end of the 3-hour extension.
+export const HALLOWEEN_THEME = {
+  from: Date.parse("2026-10-31T00:00:00+04:00"),
+  until: Date.parse("2026-11-01T03:00:00+04:00"),
+};
+export const isHalloweenTheme = (now: number) => now >= HALLOWEEN_THEME.from && now < HALLOWEEN_THEME.until;
 
 // Starter promo phases, in order; after the last one the page shows the full price (₾149 from Nov 1).
 // Button IDs are public Flitt identifiers, not API secrets.
@@ -89,6 +98,17 @@ export const STARTER_PROMO_PHASES: StarterPromoPhase[] = [
     endsAt: Date.parse("2026-10-31T23:59:59+04:00"),
     endLabel: "31 ოქტომბრის ჩათვლით",
     endDay: "სრულდება 31 ოქტომბერს",
+  },
+  {
+    // Starts the moment the Oct 31 timer hits 00:00:00 — same ₾99 button, 3 extra hours for late comers.
+    buttonId: "fe99a05bc8302656378089f4f0e8c854c3fc6e51",
+    name: "AI Starter — 3 ვიდეომოდული",
+    value: 99,
+    savingsLabel: "შენ ზოგავ ₾150-ს",
+    endsAt: Date.parse("2026-11-01T03:00:00+04:00"),
+    endLabel: "ღამის 03:00-მდე",
+    endDay: "ფასდაკლება გაგრძელდა მხოლოდ 3 საათით",
+    extension: true,
   },
 ];
 

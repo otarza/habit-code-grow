@@ -13,10 +13,20 @@ import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/compone
 import { aiStarterTestimonials } from "@/data/aiStarterTestimonials";
 import { SEO } from "@/components/SEO";
 import { rememberAttributionRef } from "@/lib/attribution";
-import { PRODUCTS, STARTER_PROMO_PHASES, starterPromoPhase, trackInitiateCheckout } from "@/lib/checkout";
+import { PRODUCTS, STARTER_PROMO_PHASES, isHalloweenTheme, starterPromoPhase, trackInitiateCheckout } from "@/lib/checkout";
+import { HalloweenDecor } from "@/components/campaign/HalloweenDecor";
 import { EMAIL_RE, loadFlitt } from "@/lib/flitt";
 
 const FULL_PRICE = PRODUCTS.starter.value;
+// Dev-only preview of a future phase: /ai-starter?at=2026-11-01T00:30:00+04:00 pins the page clock.
+if (import.meta.env.DEV) {
+  const at = new URLSearchParams(window.location.search).get("at");
+  if (at && !Number.isNaN(Date.parse(at))) {
+    const offset = Date.parse(at) - Date.now();
+    const realNow = Date.now.bind(Date);
+    Date.now = () => realNow() + offset;
+  }
+}
 // Real promo deadlines live in STARTER_PROMO_PHASES (₾79, then ₾99). The page switches
 // phase by itself at each deadline and back to the full price after the last one.
 const LAST_PROMO_PHASE = STARTER_PROMO_PHASES[STARTER_PROMO_PHASES.length - 1];
@@ -166,6 +176,9 @@ export default function AIStarter() {
   const SAVINGS = FULL_PRICE - PROMO_PRICE;
   const PROMO_END_LABEL = promo.endLabel;
   const countdown = formatCountdown(promo.endsAt - now);
+  // Extra 3-hour timer after the Oct 31 deadline; the Halloween skin covers Oct 31 and the extension.
+  const extension = promoAvailable && !!promo.extension;
+  const halloween = isHalloweenTheme(now);
   const price = promoActive ? PROMO_PRICE : FULL_PRICE;
   const priceLabel = `₾${price}`;
   const displayedPrice = useAnimatedNumber(price);
@@ -221,9 +234,10 @@ export default function AIStarter() {
 
   const config = PRODUCTS.starter;
   const buttonId = promoActive ? promo.buttonId : config.mode === "embed" ? config.buttonId : "";
-  // At a phase deadline the promo button changes; close a checkout opened at the old price.
-  const phaseEndsAt = promo.endsAt;
-  useEffect(() => { setCheckoutSlot(null); }, [phaseEndsAt]);
+  // When a phase deadline changes the promo button, close a checkout opened at the old price
+  // (the extension keeps the same button, so a late buyer mid-checkout is not interrupted).
+  const promoButtonId = promo.buttonId;
+  useEffect(() => { setCheckoutSlot(null); }, [promoButtonId]);
 
   const buy = (slot: OfferSlot) => {
     if (!buttonId) {
@@ -373,12 +387,20 @@ export default function AIStarter() {
     </ul>
   </div>;
 
-  return <div className={`campaign-page campaign-page--pro campaign-page--starter${promoActive ? " campaign-page--promo-active" : ""}`}>
+  return <div className={`campaign-page campaign-page--pro campaign-page--starter${promoActive ? " campaign-page--promo-active" : ""}${halloween ? " campaign-page--halloween" : ""}${extension ? " campaign-page--extension" : ""}`}>
     <SEO title="AI Starter — პირველი ნაბიჯები AI-ში | BitCamp"
       description={`AI ვიდეოკურსი დამწყებთათვის: პრომპტები, ბრენდის ხმა და კონტენტის კალენდარი. 3 მოდული — ${FULL_PRICE}₾${promoAvailable ? "; ფასდაკლების გააქტიურებით ნაკლებ ფასად." : "."}`}
       url="https://www.bitcamp.ge/ai-starter" />
+    {halloween && <HalloweenDecor />}
+    {extension && <div className="starter-extension" role="status"><div className="campaign-shell starter-extension__inner">
+      <span className="starter-extension__pumpkin" aria-hidden="true">🎃</span>
+      <div className="starter-extension__copy"><strong>ფასდაკლება გაგრძელდა მხოლოდ 3 საათით</strong>
+        <span>შუაღამე დადგა, მაგრამ დაგვაგვიანდა? ₾99 ფასი ჯერ კიდევ შენია — {PROMO_END_LABEL}.</span></div>
+      <div className="starter-extension__timer" role="timer" aria-live="off"><small>დარჩა</small><strong>{countdown}</strong></div>
+      <span className="starter-extension__pumpkin starter-extension__pumpkin--right" aria-hidden="true">🎃</span>
+    </div></div>}
     {(promoAvailable || promoActive) && <div className={`campaign-promo-bar${promoActive ? " is-active" : ""}`}><div className="campaign-shell campaign-promo-bar__inner">
-      <div><span>AI Starter · ფასდაკლება {PROMO_END_LABEL}{promoAvailable ? ` · დარჩა ${countdown}` : ""}</span><strong aria-live="polite">{promoActive ? `ფასდაკლება აქტიურია — 3 მოდული ${PROMO_PRICE}₾-ად` : `${FULL_PRICE}₾ → ${PROMO_PRICE}₾ · გააქტიურე ფასდაკლება ერთი კლიკით`}</strong></div>{promoButton()}
+      <div><span>{extension ? "🦇 AI Starter · ფასდაკლება გაგრძელდა" : "AI Starter · ფასდაკლება"} {PROMO_END_LABEL}{promoAvailable ? ` · დარჩა ${countdown}` : ""}</span><strong aria-live="polite">{promoActive ? `ფასდაკლება აქტიურია — 3 მოდული ${PROMO_PRICE}₾-ად` : `${FULL_PRICE}₾ → ${PROMO_PRICE}₾ · გააქტიურე ფასდაკლება ერთი კლიკით`}</strong></div>{promoButton()}
     </div></div>}
     {showPromoConfetti && <CampaignPromoConfetti />}
     <main>
