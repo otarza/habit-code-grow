@@ -84,6 +84,9 @@ const SIDE_DOOR_W := 110.0
 const RED_CHANCE := 0.35
 const STEP_INTERVAL := 0.55
 const MAP_X := 190.0 # the map on the van wall
+const HOLE_X := 690.0 # the hole the Keys Keeper throws Grave into
+const ENDING_FADE := 5.2 # the screen is black from here
+const ENDING_BLACK := 5.0 # seconds of black before YOU WIN
 const MAP_W := 250.0
 
 const SAVE_PATH := "user://eap_saves.cfg"
@@ -269,7 +272,7 @@ class Thud:
 # ---------- game state ----------
 
 var scene := "forest" # forest, resting, cave, warehouse, beach, hub (inside the van), keeper
-var status := "menu" # menu, playing, driving, title, arriving, won, lost
+var status := "menu" # menu, playing, driving, title, arriving, ending, won, lost
 var phase_time := 0.0
 var next_scene := "forest" # where the title card leads
 var death_reason := ""
@@ -549,6 +552,11 @@ func _input(event: InputEvent) -> void:
 		if status == "menu":
 			menu_key(k)
 			return
+		if status == "won":
+			if k == KEY_ENTER or k == KEY_KP_ENTER:
+				fire_block = true
+				go_to_menu()
+			return
 		match k:
 			KEY_W, KEY_UP, KEY_SPACE:
 				jump_pressed = true
@@ -569,7 +577,7 @@ func _input(event: InputEvent) -> void:
 		if status == "menu":
 			if event.button_index == MOUSE_BUTTON_LEFT:
 				menu_click(m)
-		elif is_over():
+		elif status == "lost":
 			restart()
 		elif scene == "hub" and map_open and status == "playing":
 			for i in 3:
@@ -649,8 +657,8 @@ func _process(delta: float) -> void:
 		status_time = 0.0
 		last_typed = 0
 	status_time += delta
-	if status in ["title", "lost", "won"]:
-		var typed := typed_letters(0.3 if status == "title" else (0.9 if status == "lost" else 0.6))
+	if status in ["title", "lost"]:
+		var typed := typed_letters(0.3 if status == "title" else 0.9)
 		if typed > last_typed and last_typed < current_dialog().length():
 			last_typed = typed
 			if typed % 2 == 0:
@@ -690,6 +698,8 @@ func _process(delta: float) -> void:
 		show_title(next_scene)
 	elif status == "title" and phase_time > TITLE_TIME:
 		start_scene(next_scene)
+	elif status == "ending":
+		update_ending(delta)
 	elif status == "arriving" and phase_time > ARRIVE_TIME:
 		status = "playing"
 		phase_time = 0.0
@@ -699,7 +709,7 @@ func _process(delta: float) -> void:
 		match scene:
 			"keeper":
 				update_van_room(delta)
-				if status == "won" and progress["checkpoint"] != "done":
+				if status == "ending" and progress["checkpoint"] != "done":
 					progress["checkpoint"] = "done"
 					save_progress()
 			"hub":
@@ -1555,8 +1565,10 @@ func update_van_room(delta: float) -> void:
 	if unlock_time > 0:
 		unlock_time += delta
 		if unlock_time > 1.6:
-			status = "won"
+			status = "ending"
 			phase_time = 0.0
+			grave.x = 160.0
+			grave.facing = 1
 		return
 
 	advance_keeper(delta)
@@ -1650,6 +1662,9 @@ func _draw() -> void:
 		return
 	if status == "title":
 		draw_title_card()
+		return
+	if status == "ending" or status == "won":
+		draw_ending()
 		return
 	if scene == "keeper":
 		draw_van_room()
@@ -1874,11 +1889,6 @@ func draw_end_screens() -> void:
 		draw_rect(Rect2(0, 0, VIEW_W, VIEW_H), Color(0.05, 0, 0, minf(0.9, status_time * 2.0)))
 		title_text("GAME OVER", VIEW_W / 2, 200, 72, Color(1.0, 0.75, 0.7, minf(1.0, status_time)), Color(0.85, 0.1, 0.1, minf(1.0, status_time)))
 		dialog(VIEW_W / 2 - 340, 300, 680, current_dialog(), 17, typed_letters(0.9))
-	elif status == "won":
-		draw_rect(Rect2(0, 0, VIEW_W, VIEW_H), Color(0, 0, 0, minf(0.8, status_time * 2.0)))
-		glow(Vector2(VIEW_W / 2, 170), 120, INFECTED, 0.06)
-		title_text("YOU ESCAPED THE VAN", VIEW_W / 2, 200, 52, Color("#e8ffd8"), INFECTED)
-		dialog(VIEW_W / 2 - 340, 280, 680, current_dialog(), 17, typed_letters(0.6))
 
 
 func draw_title_card() -> void:
@@ -2323,6 +2333,113 @@ func draw_van_exterior(x: float) -> void:
 		draw_circle(Vector2(wx, y - 14), 16, Color("#151515"))
 		draw_circle(Vector2(wx, y - 14), 6, Color("#888888"))
 	draw_rect(Rect2(x + VAN_W - 6, y - 46, 6, 8), Color("#ffe9a0"))
+
+
+# ---------- the ending: the Keys Keeper was waiting outside ----------
+
+# Seconds into the ending when each thing happens
+func ending_keeper_x() -> float:
+	return lerpf(1010.0, 470.0, clampf((phase_time - 1.4) / 1.2, 0.0, 1.0))
+
+
+func update_ending(delta: float) -> void:
+	var t := phase_time
+	var before := t - delta
+	if before < 1.4 and t >= 1.4:
+		play_sound("sting")
+	if t < 2.0:
+		# Grave walks out of the van
+		grave.x = lerpf(160.0, 400.0, t / 2.0)
+		grave.walk_time += delta
+	else:
+		grave.walk_time = 0.0
+	if t >= 1.4 and t < 2.6 and int(t / STEP_INTERVAL) != int(before / STEP_INTERVAL):
+		play_sound("footstep", 1.0)
+		play_sound("jangle", 0.7)
+	if before < 2.6 and t >= 2.6:
+		play_sound("grave_hurt") # grabbed
+	if before < 3.1 and t >= 3.1:
+		play_sound("lava_throw", 1.0, 0.6) # thrown
+	if before < 4.0 and t >= 4.0:
+		play_sound("clunk", 1.0, 0.5) # down the hole
+		play_sound("clunk", 0.4, 0.4)
+	if before < 4.3 and t >= 4.3:
+		play_sound("cackle", 0.8, 0.5) # the Keys Keeper laughs
+	if t > ENDING_FADE + ENDING_BLACK:
+		status = "won"
+		phase_time = 0.0
+		play_sound("select", 0.8)
+
+
+# Where Grave is while he's grabbed and thrown (feet position)
+func ending_grave_pos() -> Vector2:
+	var t := phase_time
+	var hand := Vector2(ending_keeper_x() - 40.0, FLOOR_Y - 70.0)
+	if t < 2.6:
+		return Vector2(grave.x, FLOOR_Y)
+	if t < 3.1:
+		return Vector2(grave.x, FLOOR_Y).lerp(hand, (t - 2.6) / 0.5)
+	# Thrown in an arc, then down into the hole
+	var k := clampf((t - 3.1) / 0.9, 0.0, 1.0)
+	var x := lerpf(hand.x, HOLE_X, k)
+	var y := lerpf(hand.y, FLOOR_Y, k) - sin(k * PI) * 160.0
+	if t > 4.0:
+		y = FLOOR_Y + minf(200.0, (t - 4.0) * 500.0)
+	return Vector2(x, y)
+
+
+func draw_ending() -> void:
+	if status == "won":
+		draw_win_screen()
+		return
+	var t := phase_time
+	if t >= ENDING_FADE:
+		draw_rect(Rect2(0, 0, VIEW_W, VIEW_H), Color.BLACK)
+		return
+	cam_x = 0.0
+	sky(Color("#04030a"), Color("#141026"))
+	glow(Vector2(820, 90), 30, Color("#d8e0ff"), 0.12)
+	draw_circle(Vector2(820, 90), 24, Color("#e8ecff"))
+	draw_tree_layer(0.0, 70.0, FLOOR_Y, 120.0, 220.0, Color("#0b0a16"), Color("#0b0a16"), 9)
+	draw_van_exterior(10.0)
+
+	# The Keys Keeper steps out of the dark
+	if t >= 1.4:
+		draw_keys_keeper(ending_keeper_x(), FLOOR_Y, 1.1, 1.0, Color("#3a2c52"))
+
+	# Grave
+	var g := ending_grave_pos()
+	if t < 4.6:
+		grave.x = g.x
+		grave.y = g.y
+		grave.invuln = 0.0
+		grave.facing = 1
+		aim = Vector2(g.x + 200.0, g.y - 60.0)
+		draw_grave()
+	grave.y = FLOOR_Y
+
+	# The ground and the hole (drawn last so Grave falls into it)
+	draw_rect(Rect2(0, FLOOR_Y, VIEW_W, VIEW_H - FLOOR_Y), Color("#14111c"))
+	for x in range(0, int(VIEW_W), 24):
+		draw_rect(Rect2(x, FLOOR_Y, 12, 3), Color("#221d2e"))
+	ellipse(Vector2(HOLE_X, FLOOR_Y + 6), 72, 17, Color("#4a3e5e"))
+	ellipse(Vector2(HOLE_X, FLOOR_Y + 8), 60, 12, Color("#000000"))
+
+	if t >= 1.4 and t < 3.6:
+		dialog(VIEW_W / 2 - 300, 40, 600, "The Keys Keeper was waiting outside...", 17, int((t - 1.4) * 40.0))
+
+	# Fade to black
+	if t > ENDING_FADE - 1.0:
+		draw_rect(Rect2(0, 0, VIEW_W, VIEW_H), Color(0, 0, 0, clampf(t - (ENDING_FADE - 1.0), 0.0, 1.0)))
+
+
+func draw_win_screen() -> void:
+	draw_rect(Rect2(0, 0, VIEW_W, VIEW_H), Color.BLACK)
+	var a := clampf(status_time / 1.2, 0.0, 1.0)
+	glow(Vector2(VIEW_W / 2, 230), 140, INFECTED, 0.06 * a)
+	title_text("YOU WIN", VIEW_W / 2, 260, 96, Color(Color("#e8ffd8"), a), Color(INFECTED, a))
+	if status_time > 1.5 and fmod(status_time, 1.0) < 0.7:
+		text("Press ENTER to go back to the save files", VIEW_W / 2, 360, 20, Color.WHITE)
 
 
 # ---------- Grave ----------
@@ -3627,8 +3744,6 @@ func current_dialog() -> String:
 			if scene == "keeper":
 				return death_reason + " Don't give up! Press R to try again."
 			return "Grave... the parasite virus got you this time. Don't give up! Press R to try again from the van."
-		"won":
-			return "Grave escaped the van! The parasites aren't finished yet... To be continued. Press R for the save files."
 	return ""
 
 
