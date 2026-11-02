@@ -27,8 +27,8 @@ export type CheckoutOverride = {
   savingsLabel?: string;
 };
 
-// From Nov 1 03:00 (after the 3-hour Halloween extension) the Starter sells at ₾149 as a standing
-// discount from the ₾249 list price (owner decision Oct 31): see the open-ended last entry of STARTER_PROMO_PHASES.
+// From Nov 1 03:00 (after the 3-hour Halloween extension) the Starter sells at ₾149 as a discount from the
+// ₾249 list price; since Nov 2 this is framed as the მე-19 ნაკადი window ending Nov 15 (see STARTER_PROMO_PHASES).
 // Own Flitt product (btcp-ai-3m-149) + button; the webhook maps both to AI Starter.
 export const STARTER_149_BUTTON_ID = (import.meta.env.VITE_AI_STARTER_149_FLITT_BUTTON_ID as string | undefined) ?? "5fd5468dc15516804904fdb9e1ce52d946210745";
 
@@ -64,7 +64,7 @@ export type StarterPromoPhase = CheckoutOverride & {
   endDay: string; // "სრულდება …" (empty when open-ended)
   // Last-minute extension after the announced deadline: same price/button, Halloween-themed extra timer.
   extension?: boolean;
-  // Standing discount with no deadline: no countdown, no "ends …" copy anywhere.
+  // Standing discount with no deadline: no countdown, no "ends …" copy anywhere (unused since Nov 2; kept for reuse).
   open?: boolean;
 };
 
@@ -75,8 +75,8 @@ export const HALLOWEEN_THEME = {
 };
 export const isHalloweenTheme = (now: number) => now >= HALLOWEEN_THEME.from && now < HALLOWEEN_THEME.until;
 
-// Starter promo phases, in order. The last one is open-ended (₾249 → ₾149 standing discount from Nov 1 03:00),
-// so the page never falls back to the plain ₾249 unless that entry is removed.
+// Starter promo phases, in order. When the last deadline passes, starterPromoPhase() returns undefined and the
+// page sells at the plain ₾249 list price (no timer, no discount copy).
 // Button IDs are public Flitt identifiers, not API secrets.
 export const STARTER_PROMO_PHASES: StarterPromoPhase[] = [
   {
@@ -109,15 +109,15 @@ export const STARTER_PROMO_PHASES: StarterPromoPhase[] = [
     extension: true,
   },
   {
-    // Nov 1 03:00 onwards: ₾149 shown as a discount from the ₾249 list price, no deadline, no timer.
+    // Nov 1 03:00 – Nov 15 23:59 (Tbilisi): მე-19 ნაკადი registration window — ₾149 shown as a discount
+    // from the ₾249 list price, with a countdown. After Nov 15 the page falls back to the plain ₾249.
     buttonId: STARTER_149_BUTTON_ID,
     name: "AI Starter — 3 ვიდეომოდული",
     value: 149,
     savingsLabel: "შენ ზოგავ ₾100-ს",
-    endsAt: Number.POSITIVE_INFINITY,
-    endLabel: "",
-    endDay: "",
-    open: true,
+    endsAt: Date.parse("2026-11-15T23:59:59+04:00"),
+    endLabel: "15 ნოემბრის ჩათვლით",
+    endDay: "სრულდება 15 ნოემბერს",
   },
 ];
 // Last real deadline — the page's clock stops ticking after it.

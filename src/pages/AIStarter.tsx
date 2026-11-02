@@ -27,8 +27,12 @@ if (import.meta.env.DEV) {
     Date.now = () => realNow() + offset;
   }
 }
-// Real promo deadlines live in STARTER_PROMO_PHASES (₾79, ₾99, 3-hour extension, then the open-ended
-// ₾249 → ₾149 standing discount). The page switches phase by itself at each deadline.
+// Real promo deadlines live in STARTER_PROMO_PHASES (₾79, ₾99, 3-hour extension, then the მე-19 ნაკადი
+// ₾249 → ₾149 window until Nov 15). The page switches phase by itself at each deadline; after the last one it sells at ₾249.
+const COHORT_NAME = "მე-19 ნაკადი";
+const COHORT_DEADLINE_SHORT = "15 ნოემბრამდე";
+// Figures the owner states in the launch video.
+const COHORT_PROOF = { last: 134, october: 306 };
 const LAST_PROMO_PHASE = STARTER_PROMO_PHASES[STARTER_PROMO_PHASES.length - 1];
 type OfferSlot = "inline" | "desktop" | "final";
 const modules = [
@@ -41,10 +45,13 @@ const modules = [
 ];
 // Placeholder replaced with the current phase's question when rendering.
 const PROMO_FAQ = ["promo", ""];
+// Shown only while cohort registration is open.
+const COHORT_FAQ = ["რას ნიშნავს „ნაკადი“, თუ ეს ვიდეოკურსია?", `ნაკადი რეგისტრაციის ფანჯარაა: ${COHORT_NAME}ში შემოერთება 15 ნოემბრის ჩათვლით შეიძლება. თავად კურსი ვიდეოგაკვეთილებისგან შედგება — უყურებ, როდესაც გინდა, შენთვის სასურველი ტემპით. დღეში დაახლოებით 30 წუთი საკმარისია.`];
 const promoFaq = (price: number, endLabel: string) => [`როგორ მივიღო ${price}₾-იანი ფასი?`,
   `დააჭირე ღილაკს „გააქტიურე ${FULL_PRICE - price}₾ ფასდაკლება“. გვერდზე ფასი ${FULL_PRICE}₾-დან ${price}₾-მდე შემცირდება. კოდის დამახსოვრება ან ხელით შეყვანა არ გჭირდება.${endLabel ? ` ფასდაკლება მოქმედებს ${endLabel}.` : ""}`];
 const faqs = [
-  ["ვისთვისაა ეს კურსი?", "მათთვის, ვისაც AI-სთან შეხება ჯერ არ ჰქონია და სურს პირველი ნაბიჯები გასაგები ვიდეოგაკვეთილებით გადადგას."],
+  ["ვისთვისაა ეს კურსი?", "მათთვის, ვისაც AI-სთან შეხება ჯერ არ ჰქონია და სურს პირველი ნაბიჯები გასაგები ვიდეოგაკვეთილებით გადადგას. თუ ფიქრობ, რომ ტექნოლოგიებისგან შორს ხარ — ეს კურსი სწორედ შენთვისაა."],
+  COHORT_FAQ,
   ["მჭირდება პროგრამირების ცოდნა?", "არა. კურსი იწყება საფუძვლებით და პრომპტების შესაქმნელად პროგრამირების ცოდნა არ გჭირდება."],
   PROMO_FAQ,
   ["რა მოხდება, თუ კურსი არ მომეწონა?", "გაქვს 5-დღიანი გარანტია: შეძენიდან 5 დღის განმავლობაში მოგვწერე hello@bitcamp.ge-ზე შეკვეთის ელ. ფოსტიდან და თანხას სრულად დაგიბრუნებთ — მაშინაც, თუ უკვე დაიწყე გაკვეთილების ყურება. თანხა ბრუნდება იმავე ბარათზე, 7 სამუშაო დღეში."],
@@ -178,8 +185,10 @@ export default function AIStarter() {
   const countdown = formatCountdown(promo.endsAt - now);
   // Extra 3-hour timer after the Oct 31 deadline; the Halloween skin covers Oct 31 and the extension.
   const extension = promoAvailable && !!promo.extension;
-  // Open-ended standing discount (₾249 → ₾149): no countdown or deadline copy anywhere.
+  // Open-ended standing discount (no countdown or deadline copy); not used by the current phases.
   const openEnded = !!promo.open;
+  // Cohort framing is shown only while registration is open.
+  const cohortOpen = promoAvailable && !openEnded;
   const halloween = isHalloweenTheme(now);
   const price = promoActive ? PROMO_PRICE : FULL_PRICE;
   const priceLabel = `₾${price}`;
@@ -364,7 +373,7 @@ export default function AIStarter() {
   </form>;
   const offer = (className: string, slot: OfferSlot, id?: string) => <div id={id} data-slot={slot}
     className={`campaign-hero__offer campaign-hero__offer--pro campaign-buy-anchor ${className}${showPromoConfetti || highlightSlot === slot ? " starter-offer--celebrate" : ""}`}>
-    <div className="campaign-offer-heading"><span>AI Starter</span><strong>3 მოდული · 31 ვიდეო გაკვეთილი</strong></div>
+    <div className="campaign-offer-heading"><span>{cohortOpen ? `AI Starter · ${COHORT_NAME}` : "AI Starter"}</span><strong>3 მოდული · 31 ვიდეო გაკვეთილი</strong></div>
     {promoActive
       ? <div className="starter-promo-applied" role="status">
         <CheckCircle2 aria-hidden="true" size={22} />
@@ -391,7 +400,7 @@ export default function AIStarter() {
 
   return <div className={`campaign-page campaign-page--pro campaign-page--starter${promoActive ? " campaign-page--promo-active" : ""}${halloween ? " campaign-page--halloween" : ""}${extension ? " campaign-page--extension" : ""}`}>
     <SEO title="AI Starter — პირველი ნაბიჯები AI-ში | BitCamp"
-      description={`AI ვიდეოკურსი დამწყებთათვის: პრომპტები, ბრენდის ხმა და კონტენტის კალენდარი. 3 მოდული — ${FULL_PRICE}₾${promoAvailable ? "; ფასდაკლების გააქტიურებით ნაკლებ ფასად." : "."}`}
+      description={`AI ვიდეოკურსი დამწყებთათვის: პრომპტები, ბრენდის ხმა და კონტენტის კალენდარი. 3 მოდული — ${FULL_PRICE}₾${cohortOpen ? `; ${COHORT_NAME} — რეგისტრაცია ${COHORT_DEADLINE_SHORT}, ფასდაკლებით ${PROMO_PRICE}₾.` : promoAvailable ? "; ფასდაკლების გააქტიურებით ნაკლებ ფასად." : "."}`}
       url="https://www.bitcamp.ge/ai-starter" />
     {halloween && <HalloweenDecor />}
     {extension && <div className="starter-extension" role="status"><div className="campaign-shell starter-extension__inner">
@@ -402,14 +411,19 @@ export default function AIStarter() {
       <span className="starter-extension__pumpkin starter-extension__pumpkin--right" aria-hidden="true">🎃</span>
     </div></div>}
     {(promoAvailable || promoActive) && <div className={`campaign-promo-bar${promoActive ? " is-active" : ""}`}><div className="campaign-shell campaign-promo-bar__inner">
-      <div><span>{extension ? "🦇 AI Starter · ფასდაკლება გაგრძელდა" : "AI Starter · ფასდაკლება"}{openEnded ? "" : ` ${PROMO_END_LABEL}${promoAvailable ? ` · დარჩა ${countdown}` : ""}`}</span><strong aria-live="polite">{promoActive ? `ფასდაკლება აქტიურია — 3 მოდული ${PROMO_PRICE}₾-ად` : `${FULL_PRICE}₾ → ${PROMO_PRICE}₾ · გააქტიურე ფასდაკლება ერთი კლიკით`}</strong></div>{promoButton()}
+      <div><span>{extension ? "🦇 AI Starter · ფასდაკლება გაგრძელდა" : cohortOpen ? `AI Starter · ${COHORT_NAME} · რეგისტრაცია` : "AI Starter · ფასდაკლება"}{openEnded ? "" : ` ${PROMO_END_LABEL}${promoAvailable ? ` · დარჩა ${countdown}` : ""}`}</span><strong aria-live="polite">{promoActive ? `ფასდაკლება აქტიურია — 3 მოდული ${PROMO_PRICE}₾-ად` : `${FULL_PRICE}₾ → ${PROMO_PRICE}₾ · გააქტიურე ფასდაკლება ერთი კლიკით`}</strong></div>{promoButton()}
     </div></div>}
     {showPromoConfetti && <CampaignPromoConfetti />}
     <main>
       <section className="campaign-hero"><div className="campaign-shell campaign-hero__grid">
         <div className="campaign-hero__copy"><p className="campaign-eyebrow">AI ვიდეოკურსი ნულიდან</p>
+          {cohortOpen && <div className="starter-cohort" role="status">
+            <span className="starter-cohort__badge">{COHORT_NAME}</span>
+            <span className="starter-cohort__text">რეგისტრაცია {COHORT_DEADLINE_SHORT} · <span className="starter-countdown" role="timer" aria-live="off">დარჩა {countdown}</span></span>
+          </div>}
           <h1>შენი პირველი პრაქტიკული ნაბიჯი AI სამყაროში</h1>
-          <p className="campaign-lead">0 - დან იწყებ და ფიქრობ, რომ შეიძლება პირველი ნაბიჯების გადადგმა გერთულოს? ამ კურსის გავლის შემდეგ დარწმუნდები, რომ იმაზე გაცილებით მარტივად შეძლებ ყველაფერს, ვიდრე გეგონა. შენი ხელით შექმნილი პრაქტიკული შედეგი ამის ნათელი დასტური იქნება.</p>
+          <p className="campaign-lead">თუ ფიქრობ, რომ ტექნოლოგიებისგან და ხელოვნური ინტელექტისგან შორს ხარ — ეს კურსი შენთვისაა. ამ კურსის გავლის შემდეგ დარწმუნდები, რომ იმაზე გაცილებით მარტივად შეძლებ ყველაფერს, ვიდრე გეგონა. შენი ხელით შექმნილი პრაქტიკული შედეგი ამის ნათელი დასტური იქნება.</p>
+          <p className="starter-pace">ვიდეოკურსია — უყურებ, როდესაც გინდა, შენი ტემპით. დღეში ~30 წუთი საკმარისია.</p>
           <button type="button" className="starter-preview-link" onClick={() => openPreview("hero")}>
             <PlayCircle aria-hidden="true" size={18} />ნახე 3 უფასო გაკვეთილი
           </button>
@@ -418,13 +432,14 @@ export default function AIStarter() {
           <div className="campaign-hero__facts"><span><BookOpen size={16} />3 მოდული · 31 გაკვეთილი</span><span><Video size={16} aria-hidden="true" />~7 საათი ვიდეო</span><span><CheckCircle2 size={16} />ნულიდან</span><span><GeorgianFlag />ქართულად</span></div>
           <div className="campaign-author-card"><div className="campaign-author-card__top">
             <img src="/media/external/images/otar-profile-photo.png" alt="ოთარ ზაკალაშვილი" />
-            <div><span>კურსს უძღვება</span><strong>ოთარ ზაკალაშვილი</strong><small>BitCamp-ის დამფუძნებელი და AI კურსის ავტორი</small><small className="starter-author-students"><Users aria-hidden="true" size={14} />3500+ სტუდენტი BitCamp-ის კურსებზე</small></div>
+            <div><span>კურსს უძღვება</span><strong>ოთარ ზაკალაშვილი</strong><small>BitCamp-ის დამფუძნებელი და AI კურსის ავტორი</small><small className="starter-author-students"><Users aria-hidden="true" size={14} />3500+ სტუდენტი BitCamp-ის კურსებზე</small>
+              {cohortOpen && <small className="starter-author-cohort">ოქტომბრის ნაკადებს {COHORT_PROOF.october} ადამიანი შემოუერთდა · ბოლო ნაკადს — {COHORT_PROOF.last}</small>}</div>
           </div></div>
           {offer("campaign-hero__offer--inline", "inline")}
         </div>
         <div className="campaign-hero__visual"><CampaignHeroVideo className="campaign-hero-video--desktop" title="BitCamp-ის AI კურსის ვიდეო" />{offer("campaign-hero__offer--desktop", "desktop", "purchase")}</div>
       </div></section>
-      <CampaignStickyCta eyebrow="AI Starter · 3 მოდული" price={priceLabel} label="შეიძინე კურსი" onClick={buyFromStickyBar} />
+      <CampaignStickyCta eyebrow={cohortOpen ? `${COHORT_NAME} · ${COHORT_DEADLINE_SHORT}` : "AI Starter · 3 მოდული"} price={priceLabel} label="შეიძინე კურსი" onClick={buyFromStickyBar} />
       <section className="campaign-section campaign-section--surface"><div className="campaign-shell campaign-decision-grid">
         <div className="campaign-fit-copy"><p className="campaign-kicker">შენი პირველი შეხება AI-სთან</p><h2>დაიწყე იმ საქმით, რომელიც უკვე ნაცნობია.</h2>
           <p className="campaign-lead">არ გჭირდება წინასწარი ტექნიკური ცოდნა. კურსზე ისწავლი, როგორ აუხსნა AI-ს შენი ამოცანა, შეაფასო პასუხი და გააუმჯობესო შედეგი.</p>
@@ -446,7 +461,7 @@ export default function AIStarter() {
       </div></section>
       <section id="starter-testimonials" className="campaign-section campaign-section--surface"><div className="campaign-shell"><div className="campaign-section-heading">
         <p className="campaign-kicker">სტუდენტების გამოცდილება</p><h2>გასაგები ახსნა პირველი ნაბიჯისთვის.</h2>
-        <p>3500+ სტუდენტი BitCamp-ის კურსებზე. უკუკავშირი AI კურსის მონაწილეებისგან.</p>
+        <p>3500+ სტუდენტი BitCamp-ის კურსებზე{cohortOpen ? ` — მხოლოდ ოქტომბრის ნაკადებში ${COHORT_PROOF.october} ადამიანი შემოგვიერთდა` : ""}. უკუკავშირი AI კურსის მონაწილეებისგან.</p>
       </div><div className="campaign-testimonial-grid">
         {aiStarterTestimonials.map(({ name, quote }) => <figure className="campaign-testimonial" key={name}>
           <TestimonialStars />
@@ -463,13 +478,13 @@ export default function AIStarter() {
         </div>
       </div></div></section>
       <section className="campaign-section"><div className="campaign-shell campaign-faq-grid"><div><p className="campaign-kicker">კითხვები</p><h2>სანამ დაიწყებ</h2></div>
-        <div className="campaign-faq">{faqs.flatMap(f => f !== PROMO_FAQ ? [f] : promoAvailable ? [promoFaq(PROMO_PRICE, PROMO_END_LABEL)] : []).map(([q, a], i) => <div className="campaign-faq__item" key={q}>
+        <div className="campaign-faq">{faqs.flatMap(f => f === COHORT_FAQ ? (cohortOpen ? [f] : []) : f !== PROMO_FAQ ? [f] : promoAvailable ? [promoFaq(PROMO_PRICE, PROMO_END_LABEL)] : []).map(([q, a], i) => <div className="campaign-faq__item" key={q}>
           <button type="button" aria-expanded={openFaq === i} aria-controls={`starter-faq-${i}`} onClick={() => setOpenFaq(openFaq === i ? null : i)}><span>{q}</span><span aria-hidden="true">{openFaq === i ? "−" : "+"}</span></button>
           <div id={`starter-faq-${i}`} hidden={openFaq !== i} className="campaign-faq__answer">{a}</div>
         </div>)}</div>
       </div></section>
       <section className="campaign-final"><div className="campaign-shell campaign-final__inner"><div className="campaign-final__copy">
-        <p className="campaign-kicker">დაიწყე პირველი ნაბიჯით</p><h2>გაიცანი AI შენი საკუთარი ამოცანებით.</h2><p>პრომპტები, ბრენდის ხმა და კონტენტის კალენდარი — სამ ვიდეომოდულში, ნულიდან.</p>
+        <p className="campaign-kicker">{cohortOpen ? `${COHORT_NAME} · რეგისტრაცია ${COHORT_DEADLINE_SHORT}` : "დაიწყე პირველი ნაბიჯით"}</p><h2>გაიცანი AI შენი საკუთარი ამოცანებით.</h2><p>პრომპტები, ბრენდის ხმა და კონტენტის კალენდარი — სამ ვიდეომოდულში, ნულიდან.</p>
       </div>{offer("campaign-final__panel", "final")}</div></section>
     </main>
     <Dialog open={Boolean(checkoutMessage)} onOpenChange={open => { if (!open) setCheckoutMessage(""); }}>

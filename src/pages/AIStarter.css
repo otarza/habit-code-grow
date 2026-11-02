@@ -1219,3 +1219,54 @@ button.starter-curriculum__lesson.is-locked:hover .starter-curriculum__lock {
   .starter-halloween__bat { left: auto; right: 10%; }
   .starter-halloween__crawler { display: none; }
 }
+
+/* მე-19 ნაკადი — registration-window framing (Nov 2–15, 2026). Not the Halloween skin. */
+.starter-cohort {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin: -6px 0 14px;
+  padding: 6px 12px 6px 6px;
+  border: 1px solid rgba(96, 165, 250, 0.35);
+  border-radius: 999px;
+  background: rgba(96, 165, 250, 0.1);
+  font-size: 0.9rem;
+  color: #dbe7ff;
+}
+.starter-cohort__badge {
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #60a5fa;
+  color: #0a0a0b;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+}
+.starter-cohort__text {
+  font-weight: 600;
+}
+.starter-cohort .starter-countdown {
+  font-variant-numeric: tabular-nums;
+  color: #fff;
+}
+.starter-pace {
+  margin: -8px 0 18px;
+  color: #b5b5be;
+  font-size: 0.98rem;
+}
+.starter-author-cohort {
+  display: block !important;
+  margin-top: 4px;
+  color: #93c5fd !important;
+  font-weight: 600;
+}
+@media (max-width: 640px) {
+  .starter-cohort {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 6px;
+    border-radius: 14px;
+    padding: 10px 12px;
+  }
+}
