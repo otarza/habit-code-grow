@@ -46,7 +46,7 @@ const modules = [
 // Placeholder replaced with the current phase's question when rendering.
 const PROMO_FAQ = ["promo", ""];
 // Shown only while cohort registration is open.
-const COHORT_FAQ = ["რამდენ ხანს მოქმედებს Black Friday-ის ფასი?", `₾149-იანი ფასი მოქმედებს 27 ნოემბრის შუაღამემდე, თბილისის დროით. შემდეგ კურსი ისევ ₾249 ღირს. თავად კურსი ვიდეოგაკვეთილებისგან შედგება — უყურებ, როდესაც გინდა, შენთვის სასურველი ტემპით. დღეში დაახლოებით 30 წუთი საკმარისია.`];
+const COHORT_FAQ = ["რამდენ ხანს მოქმედებს Black Friday-ის ფასი?", `₾149 27 ნოემბრის შუაღამემდე მოქმედებს, თბილისის დროით. მერე კურსი ისევ ₾249 ღირს. კურსი ვიდეოგაკვეთილებია — უყურებ, როცა გცალია, შენი ტემპით. დღეში დაახლოებით 30 წუთი საკმარისია.`];
 const promoFaq = (price: number, endLabel: string) => [`როგორ მივიღო ${price}₾-იანი ფასი?`,
   `დააჭირე ღილაკს „გააქტიურე ${FULL_PRICE - price}₾ ფასდაკლება“. გვერდზე ფასი ${FULL_PRICE}₾-დან ${price}₾-მდე შემცირდება. კოდის დამახსოვრება ან ხელით შეყვანა არ გჭირდება.${endLabel ? ` ფასდაკლება მოქმედებს ${endLabel}.` : ""}`];
 const faqs = [
@@ -392,7 +392,7 @@ export default function AIStarter() {
     {promoActive
       ? <div className="starter-promo-applied" role="status">
         <CheckCircle2 aria-hidden="true" size={22} />
-        <div><strong>ფასდაკლება გააქტიურებულია</strong><span>₾{FULL_PRICE} → ₾{PROMO_PRICE} · დაზოგე ₾{SAVINGS}</span>
+        <div><strong>{blackFriday ? "Black Friday ფასი" : "ფასდაკლება გააქტიურებულია"}</strong><span>₾{FULL_PRICE} → ₾{PROMO_PRICE} · დაზოგე ₾{SAVINGS}</span>
           {promoAvailable && !openEnded && <small className="starter-countdown" role="timer" aria-live="off">ფასი მოქმედებს {PROMO_END_LABEL} · დარჩა {countdown}</small>}</div>
       </div>
       : promoAvailable && <div className="campaign-offer-promo"><span>პირველი ნაბიჯი AI-ში — {SAVINGS}₾ ფასდაკლებით
@@ -423,7 +423,7 @@ export default function AIStarter() {
 
   if (blackFriday) return <div className={`campaign-page campaign-page--pro campaign-page--starter campaign-page--blackfriday bf${promoActive ? " campaign-page--promo-active" : ""}`}>
     <SEO title="Black Friday — AI Starter ₾149 | BitCamp"
-      description={`Black Friday: AI Starter ₾${FULL_PRICE}-ის ნაცვლად ₾${PROMO_PRICE}, 27 ნოემბრის შუაღამემდე. 31 ვიდეოგაკვეთილი ქართულად, ნულიდან: პრომპტები, ბრენდის ხმა, კონტენტის კალენდარი.`}
+      description={`Black Friday: AI Starter ₾${FULL_PRICE}-ის ნაცვლად ₾${PROMO_PRICE}, 27 ნოემბრის შუაღამემდე. 31 ვიდეოგაკვეთილი ქართულად, ნულიდან — პრომპტები, ბრენდის ხმა, კონტენტ-კალენდარი.`}
       url="https://www.bitcamp.ge/ai-starter" />
     {showPromoConfetti && <CampaignPromoConfetti />}
     <div className="bf-tape" aria-hidden="true"><span>{Array(16).fill("BLACK FRIDAY ✦ AI STARTER ✦ ").join("")}</span></div>
@@ -432,13 +432,13 @@ export default function AIStarter() {
         <div className="bf-hero__copy">
           <p className="bf-kicker">BLACK FRIDAY · AI STARTER</p>
           <h1>ChatGPT-ს ისევ Google‑ივით იყენებ?</h1>
-          <p className="bf-hero__lead">ისწავლე, როგორ <mark>გააკეთებინო AI-ს შენი საქმე</mark> — 31 მოკლე ვიდეოგაკვეთილში, ქართულად, ნულიდან.</p>
+          <p className="bf-hero__lead">სუპერ მარტივი ახსნით გასწავლი, <mark>როგორ ამუშაო AI შენთვის</mark> — 31 მოკლე გაკვეთილში, ქართულად, ნულიდან.</p>
           <div className="bf-price"><s>₾{FULL_PRICE}</s><strong>₾{PROMO_PRICE}</strong><em>-{PCT}%</em></div>
-          <p className="bf-deadline">ფასი მოქმედებს 27 ნოემბრის შუაღამემდე</p>
+          <p className="bf-deadline">ეს ფასი 27 ნოემბრის შუაღამემდე მოქმედებს</p>
           {timer()}
           {bfCta()}
-          <ul className="bf-trust"><li><ShieldCheck size={16} aria-hidden="true" />5-დღიანი გარანტია</li><li><InfinityIcon size={16} aria-hidden="true" />უვადო წვდომა</li><li><Mail size={16} aria-hidden="true" />წვდომა წუთებში</li></ul>
-          <div className="bf-byline"><img src="/media/external/images/otar-profile-photo.png" alt="" /><div><strong>ოთარ ზაკალაშვილი</strong><span>3500+ სტუდენტი · პროგრამისტი 2010-დან</span></div></div>
+          <ul className="bf-trust"><li><ShieldCheck size={16} aria-hidden="true" />5-დღიანი გარანტია</li><li><InfinityIcon size={16} aria-hidden="true" />უვადო წვდომა</li><li><Mail size={16} aria-hidden="true" />წვდომა მაშინვე</li></ul>
+          <div className="bf-byline"><img src="/media/external/images/otar-profile-photo.png" alt="" /><div><strong>ოთარ ზაკალაშვილი</strong><span>პროგრამისტი 2010 წლიდან · 3500+ სტუდენტი</span></div></div>
         </div>
         <div className="bf-hero__visual">
           <img src="/media/external/images/otar-profile-photo.png" alt="ოთარ ზაკალაშვილი" />
@@ -447,35 +447,36 @@ export default function AIStarter() {
       </div></section>
 
       <section className="bf-stats" aria-label="კურსი ციფრებში"><div className="campaign-shell bf-stats__grid">
-        {[["31", "ვიდეოგაკვეთილი"], ["6 სთ 46 წთ", "ვიდეო"], ["3", "მოდული ნულიდან"], ["5 დღე", "გარანტია"]].map(([n, l]) => <div key={l}><strong>{n}</strong><span>{l}</span></div>)}
+        {[["31", "ვიდეოგაკვეთილი"], ["6 სთ 46 წთ", "სულ ვიდეო"], ["3", "მოდული, ნულიდან"], ["5 დღე", "გარანტია"]].map(([n, l]) => <div key={l}><strong>{n}</strong><span>{l}</span></div>)}
       </div></section>
 
       <section className="bf-section"><div className="campaign-shell bf-video">
-        <div><p className="bf-kicker">ნახე, როგორ ვასწავლი</p><h2>ჯერ ნახე. მერე გადაწყვიტე.</h2>
-          <p className="bf-muted">3 გაკვეთილი უფასოდაა გახსნილი — გაიგე, გესმის თუ არა ჩემი ახსნა, სანამ რამეს გადაიხდი.</p>
+        <div><p className="bf-kicker">როგორ ვასწავლი</p><h2>ჯერ ნახე, მერე გადაწყვიტე.</h2>
+          <p className="bf-muted">3 გაკვეთილი უფასოა. ნახე, როგორ ვხსნი, და მხოლოდ მერე გადაწყვიტე, გინდა თუ არა გაგრძელება.</p>
           <button type="button" className="bf-ghost" onClick={() => openPreview("hero")}><PlayCircle aria-hidden="true" size={20} />ნახე 3 უფასო გაკვეთილი</button></div>
         <CampaignHeroVideo className="bf-video__player" title="BitCamp-ის AI კურსის ვიდეო" />
       </div></section>
 
       <section className="bf-section bf-section--surface"><div className="campaign-shell">
-        <div className="bf-heading"><p className="bf-kicker">პრობლემა AI-ში არ არის</p><h2>კითხვას სვამ, ზოგად პასუხს იღებ — და იქ ჩერდები.</h2></div>
+        <div className="bf-heading"><p className="bf-kicker">ადამიანების 99% AI-ს არასწორად იყენებს</p><h2>ჯადოქრობას ელოდები, ზოგად პასუხს იღებ — და იმედი გიცრუვდება.</h2></div>
         <div className="bf-vs">
           <div className="bf-vs__col bf-vs__col--before"><h3>ახლა</h3><ul>
-            {["წერ ერთ წინადადებას და იღებ ზოგად, „უსულო“ ტექსტს", "ყოველ ჯერზე თავიდან უხსნი, ვინ ხარ და რა გინდა", "პასუხს ბოლოს მაინც ხელით ასწორებ", "რთულ საქმეზე AI „არ გამოდის“ და თავს ანებებ"].map(t => <li key={t}><X aria-hidden="true" size={18} />{t}</li>)}
+            {["ერთ წინადადებას წერ და მშრალ, ზოგად ტექსტს იღებ", "ყოველ ჯერზე თავიდან უხსნი, ვინ ხარ და რა გინდა", "ბოლოს პასუხს მაინც ხელით ასწორებ", "საქმე როცა რთულდება, გგონია, რომ AI-ს ეს არ შეუძლია"].map(t => <li key={t}><X aria-hidden="true" size={18} />{t}</li>)}
           </ul></div>
           <div className="bf-vs__col bf-vs__col--after"><h3>კურსის შემდეგ</h3><ul>
-            {["პრომპტს აწყობ სისტემით: ამოცანა, როლი, ფორმატი, კონტექსტი", "AI წერს შენი ბრენდის ხმით — შენნაირად", "პასუხს აფასებ და აუმჯობესებ, სანამ შედეგი არ მოგეწონება", "რთულ საქმეს ნაბიჯებად შლი და AI ბოლომდე მიჰყავს"].map(t => <li key={t}><CheckCircle2 aria-hidden="true" size={18} />{t}</li>)}
+            {["პრომპტს სისტემით წერ: დავალება, როლი, კონტექსტი, ფორმატი", "AI შენი ბრენდის ხმით წერს — ისე, როგორც შენ დაწერდი", "პასუხს აფასებ და ხვეწ, სანამ ზუსტად ის არ გამოვა, რაც გინდა", "რთულ საქმეს ნაბიჯებად ყოფ და AI მას ბოლომდე ასრულებს"].map(t => <li key={t}><CheckCircle2 aria-hidden="true" size={18} />{t}</li>)}
           </ul></div>
         </div>
+        <p className="bf-muted bf-center-text">ეს შენი ბრალი არ არის — AI-სთან მუშაობა უბრალოდ არავის უსწავლებია. ეს კურსი ზუსტად ამას გასწავლის.</p>
       </div></section>
 
       <section className="bf-section"><div className="campaign-shell">
-        <div className="bf-heading"><p className="bf-kicker">რას შეძლებ</p><h2>3 მოდული — 3 უნარი, რომელსაც ხვალვე გამოიყენებ.</h2></div>
+        <div className="bf-heading"><p className="bf-kicker">რას ისწავლი</p><h2>3 მოდული — 3 უნარი, რომელსაც ხვალვე გამოიყენებ.</h2></div>
         <div className="bf-modules">
           {[
-            { n: "01", meta: "14 გაკვეთილი · 1 სთ 53 წთ", t: "AI-მ პირველივე ცდაზე გაგიგოს", items: ["Task, Persona, Format — პრომპტის ჩონჩხი", "კონტექსტი, რეფერენსები და მაგალითები", "შეფასება და გაუმჯობესება (T.C.R.E.I.)"] },
-            { n: "02", meta: "11 გაკვეთილი · 2 სთ 56 წთ", t: "რთული ამოცანა — ნაბიჯ-ნაბიჯ", items: ["Chain of Thought: AI ფიქრობს ხმამაღლა", "Prompt Chaining: ერთი დიდი საქმე — რამდენიმე ნაბიჯად", "CSV და JSON: პასუხი ცხრილად და სტრუქტურით"] },
-            { n: "03", meta: "6 გაკვეთილი · 1 სთ 57 წთ", t: "შენი ბრენდი, შენი ხმით", items: ["შენი ბრენდის ხმისა და სტილის დოკუმენტი", "კონტენტი, რომელიც შენნაირად ჟღერს", "კონტენტის კალენდარი — მზად გამოსაყენებლად"] },
+            { n: "01", meta: "14 გაკვეთილი · 1 სთ 53 წთ", t: "AI პირველივე ცდაზე მიხვდება, რა გინდა", items: ["Task, Persona, Format — სწორი პრომპტის ჩონჩხი", "კონტექსტი, მაგალითები და რეფერენსები", "შედეგის შეფასება და გაუმჯობესება (T.C.R.E.I.)"] },
+            { n: "02", meta: "11 გაკვეთილი · 2 სთ 56 წთ", t: "რთული ამოცანა — ნაბიჯ-ნაბიჯ", items: ["Chain of Thought: AI ნაბიჯ-ნაბიჯ ფიქრობს", "Prompt Chaining: დიდ საქმეს პატარა ნაწილებად ყოფ", "CSV და JSON: პასუხს ცხრილად და მოწესრიგებულად იღებ"] },
+            { n: "03", meta: "6 გაკვეთილი · 1 სთ 57 წთ", t: "შენი ბრენდი, შენი ხმით", items: ["შენი ბრენდის ხმისა და სტილის აღწერა", "კონტენტი, რომელიც შენნაირად ჟღერს", "მზა კონტენტ-კალენდარი"] },
           ].map(m => <article className="bf-module" key={m.n}>
             <div className="bf-module__top"><span className="bf-module__n">{m.n}</span><span className="bf-module__meta">{m.meta}</span></div>
             <h3>{m.t}</h3>
@@ -486,49 +487,50 @@ export default function AIStarter() {
       </div></section>
 
       <section className="bf-section bf-section--surface"><div className="campaign-shell">
-        <div className="bf-heading"><p className="bf-kicker">ვისთვისაა</p><h2>თუ ფიქრობ, რომ ტექნოლოგიებისგან შორს ხარ — სწორედ შენთვის.</h2></div>
-        <div className="bf-chips">{["ბიზნესის მფლობელი", "მარკეტერი / SMM", "ფრილანსერი", "ოფისის თანამშრომელი", "მასწავლებელი", "სტუდენტი", "ვინც AI-ს პირველად ეხება"].map(c => <span key={c}>{c}</span>)}</div>
-        <p className="bf-muted bf-center-text">პროგრამირება არ გჭირდება. დღეში ~30 წუთი საკმარისია — უყურებ, როცა გინდა, შენი ტემპით.</p>
+        <div className="bf-heading"><p className="bf-kicker">ვისთვისაა</p><h2>თუ ფიქრობ, რომ ტექნოლოგიებისგან შორს ხარ — ეს კურსი შენთვის შევქმენი.</h2></div>
+        <div className="bf-chips">{["ბიზნესის მფლობელი", "მარკეტერი / SMM", "ფრილანსერი", "ოფისში მომუშავე", "მასწავლებელი", "სტუდენტი", "ვინც AI-ს ახლა იწყებს"].map(c => <span key={c}>{c}</span>)}</div>
+        <p className="bf-muted bf-center-text">პროგრამირება არ გჭირდება. დღეში 30 წუთი საკმარისია — კუს ნაბიჯებით, მაგრამ ყოველდღე. უყურებ, როცა გცალია.</p>
       </div></section>
 
       <section className="bf-section"><div className="campaign-shell bf-author">
         <img src="/media/external/images/otar-profile-photo.png" alt="ოთარ ზაკალაშვილი" />
-        <div><p className="bf-kicker">კურსს უძღვება</p><h2>ოთარ ზაკალაშვილი</h2>
-          <p className="bf-muted">პროგრამისტი 2010 წლიდან და BitCamp-ის დამფუძნებელი. 3500+ სტუდენტი ჩემს კურსებზე — მათ შორის მხოლოდ ოქტომბრის ნაკადებში {COHORT_PROOF.october} ადამიანი.</p></div>
+        <div><p className="bf-kicker">ვინ გასწავლის</p><h2>ოთარ ზაკალაშვილი</h2>
+          <p className="bf-muted">2010 წლიდან პროგრამისტი ვარ და BitCamp-ის დამფუძნებელი. ჩემს კურსებზე 3500-ზე მეტმა ადამიანმა ისწავლა — მარტო ოქტომბრის ნაკადებში {COHORT_PROOF.october}-მა.</p>
+          <p className="bf-muted">რთულ საკითხებს სუპერ მარტივად და გასაგებ ენაზე ვხსნი. ამ კურსში შენი გზამკვლევი ვიქნები AI სამყაროში.</p></div>
       </div></section>
 
       <section className="bf-section bf-section--surface"><div className="campaign-shell">
-        <div className="bf-heading"><p className="bf-kicker">სტუდენტები</p><h2>რას ამბობენ ჩემი AI კურსის მონაწილეები</h2></div>
+        <div className="bf-heading"><p className="bf-kicker">სტუდენტები</p><h2>რას მწერენ ჩემი AI კურსის სტუდენტები</h2></div>
         <div className="bf-reviews">{aiStarterTestimonials.map(({ name, quote }) => <figure key={name}>
           <TestimonialStars /><blockquote>„{quote}“</blockquote><figcaption>{name}</figcaption>
         </figure>)}</div>
       </div></section>
 
       <section className="bf-section"><div className="campaign-shell bf-math">
-        <p className="bf-kicker">მარტივი მათემატიკა</p>
+        <p className="bf-kicker">მოდი, დავითვალოთ</p>
         <h2>₾{PROMO_PRICE} ბევრია?</h2>
         <div className="bf-math__row">
           <div><strong>2 სთ</strong><span>თუ AI კვირაში მხოლოდ 2 საათს დაგიზოგავს</span></div>
-          <div><strong>× ₾15</strong><span>და შენი ერთი საათი ₾15 ღირს</span></div>
-          <div><strong>= ₾120</strong><span>თვეში დაზოგილი დრო</span></div>
+          <div><strong>× ₾15</strong><span>და შენი საათი ₾15 ღირს</span></div>
+          <div><strong>= ₾120</strong><span>თვეში ამდენ დროს იბრუნებ</span></div>
         </div>
-        <p className="bf-muted">კურსი თავს დაახლოებით 5 კვირაში იხდის — და უნარი სამუდამოდ შენთან რჩება.</p>
+        <p className="bf-muted">კურსი თავს 5 კვირაში იმართლებს. უნარი კი სამუდამოდ შენთან რჩება.</p>
       </div></section>
 
       <section id="bf-offer" className="bf-section bf-section--offer"><div className="campaign-shell bf-offer">
         <div className="bf-offer__stack">
-          <p className="bf-kicker">BLACK FRIDAY შეთავაზება</p><h2>რას იღებ ₾{PROMO_PRICE}-ად</h2>
+          <p className="bf-kicker">Black Friday შეთავაზება</p><h2>რას იღებ ₾{PROMO_PRICE}-ად</h2>
           <ul>
-            {[["31 ვიდეოგაკვეთილი", "6 სთ 46 წთ, მოკლე და კონკრეტული"], ["3 მოდული ნულიდან", "პრომპტინგი, შაბლონები, ბიზნესი"], ["უვადო წვდომა", "დაუბრუნდი ნებისმიერ დროს"], ["წვდომა წუთებში", "ბმული ელ. ფოსტაზე გადახდისთანავე"], ["5-დღიანი გარანტია", "არ მოგეწონა — თანხას სრულად დაგიბრუნებ"]].map(([t, d]) => <li key={t}><CheckCircle2 aria-hidden="true" size={20} /><div><strong>{t}</strong><span>{d}</span></div></li>)}
+            {[["31 ვიდეოგაკვეთილი", "სულ 6 სთ 46 წთ — მოკლედ და საქმეზე"], ["3 მოდული ნულიდან", "პრომპტინგი, შაბლონები, ბიზნესი"], ["უვადო წვდომა", "დაუბრუნდი, როცა მოგინდება"], ["წვდომა მაშინვე", "ბმულს გადახდისთანავე ელფოსტაზე მიიღებ"], ["5-დღიანი გარანტია", "თუ არ მოგეწონა, ფულს სრულად დაგიბრუნებ"]].map(([t, d]) => <li key={t}><CheckCircle2 aria-hidden="true" size={20} /><div><strong>{t}</strong><span>{d}</span></div></li>)}
           </ul>
-          <div className="bf-offer__price"><span>ჩვეულებრივ</span><s>₾{FULL_PRICE}</s><span>Black Friday</span><strong>₾{PROMO_PRICE}</strong></div>
+          <div className="bf-offer__price"><span>ჩვეულებრივ</span><s>₾{FULL_PRICE}</s><span>Black Friday-ზე</span><strong>₾{PROMO_PRICE}</strong></div>
           {timer("bf-timer--small")}
         </div>
         {offer("bf-offer__card campaign-final__panel", "final", "purchase")}
       </div></section>
 
       <section id="starter-curriculum" className="bf-section bf-section--surface"><div className="campaign-shell">
-        <div className="bf-heading"><p className="bf-kicker">სრული პროგრამა</p><h2>ყველა 31 გაკვეთილი</h2></div>
+        <div className="bf-heading"><p className="bf-kicker">სრული პროგრამა</p><h2>31-ვე გაკვეთილი</h2></div>
         <StarterCurriculum modules={modules} ctaLabel={`შეიძინე AI Starter — ${priceLabel}`} onCta={buyFromStickyBar}
           previewRequest={previewRequest} onPreview={(lesson, source) => trackStarter("StarterPreviewPlay", { lesson, source })}
           onLockedLesson={goToOfferFromLesson} />
@@ -548,12 +550,12 @@ export default function AIStarter() {
       </div></section>
 
       <section className="bf-final"><div className="campaign-shell">
-        <p className="bf-kicker">ბოლო შანსი</p>
+        <p className="bf-kicker">მოდი, დავიწყოთ უმარტივესი პირველი ნაბიჯით 👇</p>
         <h2>27 ნოემბრის შუაღამეს ფასი ისევ ₾{FULL_PRICE} გახდება.</h2>
         {timer()}
-        {bfCta(`დაიწყე დღეს — ₾${PROMO_PRICE}`)}
+        {bfCta(`დაიწყე დღესვე — ₾${PROMO_PRICE}`)}
       </div></section>
-      <CampaignStickyCta eyebrow={`Black Friday · ${PCT}% ფასდაკლება`} price={priceLabel} label="დაიწყე" onClick={buyFromStickyBar} />
+      <CampaignStickyCta eyebrow={`Black Friday · -${PCT}%`} price={priceLabel} label="დაიწყე" onClick={buyFromStickyBar} />
     </main>
     <Dialog open={Boolean(checkoutMessage)} onOpenChange={open => { if (!open) setCheckoutMessage(""); }}>
       <DialogContent><DialogTitle>კურსის შეძენა</DialogTitle><DialogDescription>{checkoutMessage}</DialogDescription>
