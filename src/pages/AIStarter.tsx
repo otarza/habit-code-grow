@@ -1,6 +1,6 @@
 import "./AIStarter.css";
 import { useEffect, useRef, useState } from "react";
-import { ArrowRight, BookOpen, Gift, PlayCircle, Brain, Briefcase, CheckCircle2, Infinity as InfinityIcon, Lock, Mail, MessageSquareText, ShieldCheck, Users, Video } from "lucide-react";
+import { ArrowRight, X, BookOpen, Gift, PlayCircle, Brain, Briefcase, CheckCircle2, Infinity as InfinityIcon, Lock, Mail, MessageSquareText, ShieldCheck, Users, Video } from "lucide-react";
 import { CampaignPromoConfetti } from "@/components/campaign/CampaignPromoConfetti";
 import { TestimonialStars } from "@/components/campaign/TestimonialStars";
 import { StarterTestimonialCarousel } from "@/components/campaign/StarterTestimonialCarousel";
@@ -13,7 +13,7 @@ import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/compone
 import { aiStarterTestimonials } from "@/data/aiStarterTestimonials";
 import { SEO } from "@/components/SEO";
 import { rememberAttributionRef } from "@/lib/attribution";
-import { PRODUCTS, STARTER_LAST_DEADLINE, STARTER_PROMO_PHASES, isHalloweenTheme, starterPromoPhase, trackInitiateCheckout } from "@/lib/checkout";
+import { PRODUCTS, STARTER_LAST_DEADLINE, STARTER_PROMO_PHASES, isBlackFridayTheme, isHalloweenTheme, starterPromoPhase, trackInitiateCheckout } from "@/lib/checkout";
 import { HalloweenDecor } from "@/components/campaign/HalloweenDecor";
 import { EMAIL_RE, loadFlitt } from "@/lib/flitt";
 
@@ -112,6 +112,17 @@ function useNow(until: number) {
   return now;
 }
 
+function countdownParts(ms: number) {
+  const total = Math.max(0, Math.floor(ms / 1000));
+  const pad = (n: number) => String(n).padStart(2, "0");
+  return [
+    [String(Math.floor(total / 86400)), "დღე"],
+    [pad(Math.floor((total % 86400) / 3600)), "სთ"],
+    [pad(Math.floor((total % 3600) / 60)), "წთ"],
+    [pad(total % 60), "წმ"],
+  ];
+}
+
 function formatCountdown(ms: number) {
   const total = Math.max(0, Math.floor(ms / 1000));
   const days = Math.floor(total / 86400);
@@ -146,12 +157,14 @@ function useAnimatedNumber(target: number, duration = 900) {
 }
 
 export default function AIStarter() {
-  const [promoActive, setPromoActive] = useState(false);
+  // Black Friday sells at the promo price by default: no "activate the discount" step.
+  const [promoActive, setPromoActive] = useState(() => !!starterPromoPhase(Date.now()) && isBlackFridayTheme(Date.now()));
+  const silentPromo = useRef(promoActive);
   const [showPromoConfetti, setShowPromoConfetti] = useState(false);
   const [checkoutMessage, setCheckoutMessage] = useState("");
   const [email, setEmail] = useState("");
   // The email field stays hidden until the visitor shows intent (promo or buy click).
-  const [emailVisible, setEmailVisible] = useState(false);
+  const [emailVisible, setEmailVisible] = useState(promoActive);
   const [emailError, setEmailError] = useState<OfferSlot | null>(null);
   // The offer card whose inline Flitt checkout is open (one at a time).
   const [checkoutSlot, setCheckoutSlot] = useState<OfferSlot | null>(null);
@@ -190,6 +203,7 @@ export default function AIStarter() {
   // Cohort framing is shown only while registration is open.
   const cohortOpen = promoAvailable && !openEnded;
   const halloween = isHalloweenTheme(now);
+  const blackFriday = promoAvailable && isBlackFridayTheme(now);
   const price = promoActive ? PROMO_PRICE : FULL_PRICE;
   const priceLabel = `₾${price}`;
   const displayedPrice = useAnimatedNumber(price);
@@ -200,6 +214,7 @@ export default function AIStarter() {
   // Match /ai: reveal the updated offer after React paints, then clear the burst.
   useEffect(() => {
     if (!promoActive) return;
+    if (silentPromo.current) { silentPromo.current = false; return; }
     const scrollTimer = window.setTimeout(() => {
       const slot = promoSlotRef.current;
       const target = (slot && document.querySelector<HTMLElement>(`.campaign-buy-anchor[data-slot="${slot}"]`)) || nearestOfferCard();
@@ -398,6 +413,156 @@ export default function AIStarter() {
     </ul>
   </div>;
 
+
+  const timer = (cls = "") => <div className={`bf-timer ${cls}`} role="timer" aria-live="off" aria-label={`ფასდაკლება სრულდება 27 ნოემბრის შუაღამეს, დარჩა ${countdown}`}>
+    {countdownParts(promo.endsAt - now).map(([n, u]) => <span key={u}><b>{n}</b><small>{u}</small></span>)}
+  </div>;
+  const bfCta = (label = `დაიწყე ₾${PROMO_PRICE}-ად`) => <button type="button" className="bf-cta" onClick={buyFromStickyBar}><span>{label}</span><ArrowRight aria-hidden="true" size={20} /></button>;
+  const PCT = Math.round((SAVINGS / FULL_PRICE) * 100);
+  const bfFaqs = faqs.filter(f => f !== PROMO_FAQ);
+
+  if (blackFriday) return <div className={`campaign-page campaign-page--pro campaign-page--starter campaign-page--blackfriday bf${promoActive ? " campaign-page--promo-active" : ""}`}>
+    <SEO title="Black Friday — AI Starter ₾149 | BitCamp"
+      description={`Black Friday: AI Starter ₾${FULL_PRICE}-ის ნაცვლად ₾${PROMO_PRICE}, 27 ნოემბრის შუაღამემდე. 31 ვიდეოგაკვეთილი ქართულად, ნულიდან: პრომპტები, ბრენდის ხმა, კონტენტის კალენდარი.`}
+      url="https://www.bitcamp.ge/ai-starter" />
+    {showPromoConfetti && <CampaignPromoConfetti />}
+    <div className="bf-tape" aria-hidden="true"><span>{Array(16).fill("BLACK FRIDAY ✦ AI STARTER ✦ ").join("")}</span></div>
+    <main>
+      <section className="bf-hero"><div className="campaign-shell bf-hero__grid">
+        <div className="bf-hero__copy">
+          <p className="bf-kicker">BLACK FRIDAY · AI STARTER</p>
+          <h1>ChatGPT-ს ისევ Google‑ივით იყენებ?</h1>
+          <p className="bf-hero__lead">ისწავლე, როგორ <mark>გააკეთებინო AI-ს შენი საქმე</mark> — 31 მოკლე ვიდეოგაკვეთილში, ქართულად, ნულიდან.</p>
+          <div className="bf-price"><s>₾{FULL_PRICE}</s><strong>₾{PROMO_PRICE}</strong><em>-{PCT}%</em></div>
+          <p className="bf-deadline">ფასი მოქმედებს 27 ნოემბრის შუაღამემდე</p>
+          {timer()}
+          {bfCta()}
+          <ul className="bf-trust"><li><ShieldCheck size={16} aria-hidden="true" />5-დღიანი გარანტია</li><li><InfinityIcon size={16} aria-hidden="true" />უვადო წვდომა</li><li><Mail size={16} aria-hidden="true" />წვდომა წუთებში</li></ul>
+          <div className="bf-byline"><img src="/media/external/images/otar-profile-photo.png" alt="" /><div><strong>ოთარ ზაკალაშვილი</strong><span>3500+ სტუდენტი · პროგრამისტი 2010-დან</span></div></div>
+        </div>
+        <div className="bf-hero__visual">
+          <img src="/media/external/images/otar-profile-photo.png" alt="ოთარ ზაკალაშვილი" />
+          <div className="bf-hero__badge"><strong>3500+</strong><span>სტუდენტი BitCamp-ზე</span></div>
+        </div>
+      </div></section>
+
+      <section className="bf-stats" aria-label="კურსი ციფრებში"><div className="campaign-shell bf-stats__grid">
+        {[["31", "ვიდეოგაკვეთილი"], ["6 სთ 46 წთ", "ვიდეო"], ["3", "მოდული ნულიდან"], ["5 დღე", "გარანტია"]].map(([n, l]) => <div key={l}><strong>{n}</strong><span>{l}</span></div>)}
+      </div></section>
+
+      <section className="bf-section"><div className="campaign-shell bf-video">
+        <div><p className="bf-kicker">ნახე, როგორ ვასწავლი</p><h2>ჯერ ნახე. მერე გადაწყვიტე.</h2>
+          <p className="bf-muted">3 გაკვეთილი უფასოდაა გახსნილი — გაიგე, გესმის თუ არა ჩემი ახსნა, სანამ რამეს გადაიხდი.</p>
+          <button type="button" className="bf-ghost" onClick={() => openPreview("hero")}><PlayCircle aria-hidden="true" size={20} />ნახე 3 უფასო გაკვეთილი</button></div>
+        <CampaignHeroVideo className="bf-video__player" title="BitCamp-ის AI კურსის ვიდეო" />
+      </div></section>
+
+      <section className="bf-section bf-section--surface"><div className="campaign-shell">
+        <div className="bf-heading"><p className="bf-kicker">პრობლემა AI-ში არ არის</p><h2>კითხვას სვამ, ზოგად პასუხს იღებ — და იქ ჩერდები.</h2></div>
+        <div className="bf-vs">
+          <div className="bf-vs__col bf-vs__col--before"><h3>ახლა</h3><ul>
+            {["წერ ერთ წინადადებას და იღებ ზოგად, „უსულო“ ტექსტს", "ყოველ ჯერზე თავიდან უხსნი, ვინ ხარ და რა გინდა", "პასუხს ბოლოს მაინც ხელით ასწორებ", "რთულ საქმეზე AI „არ გამოდის“ და თავს ანებებ"].map(t => <li key={t}><X aria-hidden="true" size={18} />{t}</li>)}
+          </ul></div>
+          <div className="bf-vs__col bf-vs__col--after"><h3>კურსის შემდეგ</h3><ul>
+            {["პრომპტს აწყობ სისტემით: ამოცანა, როლი, ფორმატი, კონტექსტი", "AI წერს შენი ბრენდის ხმით — შენნაირად", "პასუხს აფასებ და აუმჯობესებ, სანამ შედეგი არ მოგეწონება", "რთულ საქმეს ნაბიჯებად შლი და AI ბოლომდე მიჰყავს"].map(t => <li key={t}><CheckCircle2 aria-hidden="true" size={18} />{t}</li>)}
+          </ul></div>
+        </div>
+      </div></section>
+
+      <section className="bf-section"><div className="campaign-shell">
+        <div className="bf-heading"><p className="bf-kicker">რას შეძლებ</p><h2>3 მოდული — 3 უნარი, რომელსაც ხვალვე გამოიყენებ.</h2></div>
+        <div className="bf-modules">
+          {[
+            { n: "01", meta: "14 გაკვეთილი · 1 სთ 53 წთ", t: "AI-მ პირველივე ცდაზე გაგიგოს", items: ["Task, Persona, Format — პრომპტის ჩონჩხი", "კონტექსტი, რეფერენსები და მაგალითები", "შეფასება და გაუმჯობესება (T.C.R.E.I.)"] },
+            { n: "02", meta: "11 გაკვეთილი · 2 სთ 56 წთ", t: "რთული ამოცანა — ნაბიჯ-ნაბიჯ", items: ["Chain of Thought: AI ფიქრობს ხმამაღლა", "Prompt Chaining: ერთი დიდი საქმე — რამდენიმე ნაბიჯად", "CSV და JSON: პასუხი ცხრილად და სტრუქტურით"] },
+            { n: "03", meta: "6 გაკვეთილი · 1 სთ 57 წთ", t: "შენი ბრენდი, შენი ხმით", items: ["შენი ბრენდის ხმისა და სტილის დოკუმენტი", "კონტენტი, რომელიც შენნაირად ჟღერს", "კონტენტის კალენდარი — მზად გამოსაყენებლად"] },
+          ].map(m => <article className="bf-module" key={m.n}>
+            <div className="bf-module__top"><span className="bf-module__n">{m.n}</span><span className="bf-module__meta">{m.meta}</span></div>
+            <h3>{m.t}</h3>
+            <ul>{m.items.map(i => <li key={i}><CheckCircle2 aria-hidden="true" size={16} />{i}</li>)}</ul>
+          </article>)}
+        </div>
+        <div className="bf-center">{bfCta(`მინდა ეს უნარები — ₾${PROMO_PRICE}`)}</div>
+      </div></section>
+
+      <section className="bf-section bf-section--surface"><div className="campaign-shell">
+        <div className="bf-heading"><p className="bf-kicker">ვისთვისაა</p><h2>თუ ფიქრობ, რომ ტექნოლოგიებისგან შორს ხარ — სწორედ შენთვის.</h2></div>
+        <div className="bf-chips">{["ბიზნესის მფლობელი", "მარკეტერი / SMM", "ფრილანსერი", "ოფისის თანამშრომელი", "მასწავლებელი", "სტუდენტი", "ვინც AI-ს პირველად ეხება"].map(c => <span key={c}>{c}</span>)}</div>
+        <p className="bf-muted bf-center-text">პროგრამირება არ გჭირდება. დღეში ~30 წუთი საკმარისია — უყურებ, როცა გინდა, შენი ტემპით.</p>
+      </div></section>
+
+      <section className="bf-section"><div className="campaign-shell bf-author">
+        <img src="/media/external/images/otar-profile-photo.png" alt="ოთარ ზაკალაშვილი" />
+        <div><p className="bf-kicker">კურსს უძღვება</p><h2>ოთარ ზაკალაშვილი</h2>
+          <p className="bf-muted">პროგრამისტი 2010 წლიდან და BitCamp-ის დამფუძნებელი. 3500+ სტუდენტი ჩემს კურსებზე — მათ შორის მხოლოდ ოქტომბრის ნაკადებში {COHORT_PROOF.october} ადამიანი.</p></div>
+      </div></section>
+
+      <section className="bf-section bf-section--surface"><div className="campaign-shell">
+        <div className="bf-heading"><p className="bf-kicker">სტუდენტები</p><h2>რას ამბობენ ჩემი AI კურსის მონაწილეები</h2></div>
+        <div className="bf-reviews">{aiStarterTestimonials.map(({ name, quote }) => <figure key={name}>
+          <TestimonialStars /><blockquote>„{quote}“</blockquote><figcaption>{name}</figcaption>
+        </figure>)}</div>
+      </div></section>
+
+      <section className="bf-section"><div className="campaign-shell bf-math">
+        <p className="bf-kicker">მარტივი მათემატიკა</p>
+        <h2>₾{PROMO_PRICE} ბევრია?</h2>
+        <div className="bf-math__row">
+          <div><strong>2 სთ</strong><span>თუ AI კვირაში მხოლოდ 2 საათს დაგიზოგავს</span></div>
+          <div><strong>× ₾15</strong><span>და შენი ერთი საათი ₾15 ღირს</span></div>
+          <div><strong>= ₾120</strong><span>თვეში დაზოგილი დრო</span></div>
+        </div>
+        <p className="bf-muted">კურსი თავს დაახლოებით 5 კვირაში იხდის — და უნარი სამუდამოდ შენთან რჩება.</p>
+      </div></section>
+
+      <section id="bf-offer" className="bf-section bf-section--offer"><div className="campaign-shell bf-offer">
+        <div className="bf-offer__stack">
+          <p className="bf-kicker">BLACK FRIDAY შეთავაზება</p><h2>რას იღებ ₾{PROMO_PRICE}-ად</h2>
+          <ul>
+            {[["31 ვიდეოგაკვეთილი", "6 სთ 46 წთ, მოკლე და კონკრეტული"], ["3 მოდული ნულიდან", "პრომპტინგი, შაბლონები, ბიზნესი"], ["უვადო წვდომა", "დაუბრუნდი ნებისმიერ დროს"], ["წვდომა წუთებში", "ბმული ელ. ფოსტაზე გადახდისთანავე"], ["5-დღიანი გარანტია", "არ მოგეწონა — თანხას სრულად დაგიბრუნებ"]].map(([t, d]) => <li key={t}><CheckCircle2 aria-hidden="true" size={20} /><div><strong>{t}</strong><span>{d}</span></div></li>)}
+          </ul>
+          <div className="bf-offer__price"><span>ჩვეულებრივ</span><s>₾{FULL_PRICE}</s><span>Black Friday</span><strong>₾{PROMO_PRICE}</strong></div>
+          {timer("bf-timer--small")}
+        </div>
+        {offer("bf-offer__card campaign-final__panel", "final", "purchase")}
+      </div></section>
+
+      <section id="starter-curriculum" className="bf-section bf-section--surface"><div className="campaign-shell">
+        <div className="bf-heading"><p className="bf-kicker">სრული პროგრამა</p><h2>ყველა 31 გაკვეთილი</h2></div>
+        <StarterCurriculum modules={modules} ctaLabel={`შეიძინე AI Starter — ${priceLabel}`} onCta={buyFromStickyBar}
+          previewRequest={previewRequest} onPreview={(lesson, source) => trackStarter("StarterPreviewPlay", { lesson, source })}
+          onLockedLesson={goToOfferFromLesson} />
+      </div></section>
+
+      <section className="bf-section"><div className="campaign-shell"><div className="starter-guarantee">
+        <ShieldCheck aria-hidden="true" size={44} />
+        <div><p className="campaign-kicker">რისკის გარეშე</p><h2>5-დღიანი თანხის დაბრუნების გარანტია</h2>
+          <p>დაიწყე კურსი და ნახე გაკვეთილები. თუ 5 დღის განმავლობაში მიხვდები, რომ კურსი შენთვის არ არის, მოგვწერე hello@bitcamp.ge-ზე და თანხას სრულად დაგიბრუნებთ — დამატებითი კითხვების გარეშე.</p></div>
+      </div></div></section>
+
+      <section className="bf-section bf-section--surface"><div className="campaign-shell campaign-faq-grid"><div><p className="campaign-kicker">კითხვები</p><h2>სანამ დაიწყებ</h2></div>
+        <div className="campaign-faq">{bfFaqs.map(([q, a], i) => <div className="campaign-faq__item" key={q}>
+          <button type="button" aria-expanded={openFaq === i} aria-controls={`starter-faq-${i}`} onClick={() => setOpenFaq(openFaq === i ? null : i)}><span>{q}</span><span aria-hidden="true">{openFaq === i ? "−" : "+"}</span></button>
+          <div id={`starter-faq-${i}`} hidden={openFaq !== i} className="campaign-faq__answer">{a}</div>
+        </div>)}</div>
+      </div></section>
+
+      <section className="bf-final"><div className="campaign-shell">
+        <p className="bf-kicker">ბოლო შანსი</p>
+        <h2>27 ნოემბრის შუაღამეს ფასი ისევ ₾{FULL_PRICE} გახდება.</h2>
+        {timer()}
+        {bfCta(`დაიწყე დღეს — ₾${PROMO_PRICE}`)}
+      </div></section>
+      <CampaignStickyCta eyebrow={`Black Friday · ${PCT}% ფასდაკლება`} price={priceLabel} label="დაიწყე" onClick={buyFromStickyBar} />
+    </main>
+    <Dialog open={Boolean(checkoutMessage)} onOpenChange={open => { if (!open) setCheckoutMessage(""); }}>
+      <DialogContent><DialogTitle>კურსის შეძენა</DialogTitle><DialogDescription>{checkoutMessage}</DialogDescription>
+        <a className="underline" href="mailto:hello@bitcamp.ge">მოგვწერე ელფოსტაზე</a>
+      </DialogContent>
+    </Dialog>
+    <CampaignFooter />
+  </div>;
+
   return <div className={`campaign-page campaign-page--pro campaign-page--starter${promoActive ? " campaign-page--promo-active" : ""}${halloween ? " campaign-page--halloween" : ""}${extension ? " campaign-page--extension" : ""}`}>
     <SEO title="AI Starter — პირველი ნაბიჯები AI-ში | BitCamp"
       description={`AI ვიდეოკურსი დამწყებთათვის: პრომპტები, ბრენდის ხმა და კონტენტის კალენდარი. 3 მოდული — ${FULL_PRICE}₾${cohortOpen ? `; ${COHORT_NAME} — ${COHORT_DEADLINE_SHORT} ფასდაკლებით ${PROMO_PRICE}₾.` : promoAvailable ? "; ფასდაკლების გააქტიურებით ნაკლებ ფასად." : "."}`}
@@ -410,13 +575,14 @@ export default function AIStarter() {
       <div className="starter-extension__timer" role="timer" aria-live="off"><small>დარჩა</small><strong>{countdown}</strong></div>
       <span className="starter-extension__pumpkin starter-extension__pumpkin--right" aria-hidden="true">🎃</span>
     </div></div>}
-    {(promoAvailable || promoActive) && <div className={`campaign-promo-bar${promoActive ? " is-active" : ""}`}><div className="campaign-shell campaign-promo-bar__inner">
+    {(promoAvailable || promoActive) && !blackFriday && <div className={`campaign-promo-bar${promoActive ? " is-active" : ""}`}><div className="campaign-shell campaign-promo-bar__inner">
       <div><span>{extension ? "🦇 AI Starter · ფასდაკლება გაგრძელდა" : cohortOpen ? `AI Starter · ${COHORT_NAME}` : "AI Starter · ფასდაკლება"}{openEnded ? "" : ` ${PROMO_END_LABEL}${promoAvailable ? ` · დარჩა ${countdown}` : ""}`}</span><strong aria-live="polite">{promoActive ? `ფასდაკლება აქტიურია — 3 მოდული ${PROMO_PRICE}₾-ად` : `${FULL_PRICE}₾ → ${PROMO_PRICE}₾ · გააქტიურე ფასდაკლება ერთი კლიკით`}</strong></div>{promoButton()}
     </div></div>}
     {showPromoConfetti && <CampaignPromoConfetti />}
     <main>
       <section className="campaign-hero"><div className="campaign-shell campaign-hero__grid">
-        <div className="campaign-hero__copy"><p className="campaign-eyebrow">AI ვიდეოკურსი ნულიდან</p>
+        <div className="campaign-hero__copy">
+          <p className="campaign-eyebrow">AI ვიდეოკურსი ნულიდან</p>
           {cohortOpen && <div className="starter-cohort" role="status">
             <span className="starter-cohort__badge">{COHORT_NAME}</span>
             <span className="starter-cohort__text">ფასდაკლება {COHORT_DEADLINE_SHORT} · <span className="starter-countdown" role="timer" aria-live="off">დარჩა {countdown}</span></span>

@@ -75,6 +75,13 @@ export const HALLOWEEN_THEME = {
 };
 export const isHalloweenTheme = (now: number) => now >= HALLOWEEN_THEME.from && now < HALLOWEEN_THEME.until;
 
+// Black Friday skin for /ai-starter (black + yellow, matches the BF ad creatives): until the ₾149 deadline.
+export const BLACK_FRIDAY_THEME = {
+  from: Date.parse("2026-11-09T00:00:00+04:00"),
+  until: Date.parse("2026-11-28T00:00:00+04:00"),
+};
+export const isBlackFridayTheme = (now: number) => now >= BLACK_FRIDAY_THEME.from && now < BLACK_FRIDAY_THEME.until;
+
 // Starter promo phases, in order. When the last deadline passes, starterPromoPhase() returns undefined and the
 // page sells at the plain ₾249 list price (no timer, no discount copy).
 // Button IDs are public Flitt identifiers, not API secrets.
