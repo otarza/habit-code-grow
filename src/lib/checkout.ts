@@ -28,7 +28,7 @@ export type CheckoutOverride = {
 };
 
 // From Nov 1 03:00 (after the 3-hour Halloween extension) the Starter sells at ₾149 as a discount from the
-// ₾249 list price; since Nov 2 this is framed as the მე-19 ნაკადი window ending Nov 15 (see STARTER_PROMO_PHASES).
+// ₾249 list price; ₾149 window framed as მე-19 ნაკადი (Nov 2–8), then Black Friday until Nov 27 (see STARTER_PROMO_PHASES).
 // Own Flitt product (btcp-ai-3m-149) + button; the webhook maps both to AI Starter.
 export const STARTER_149_BUTTON_ID = (import.meta.env.VITE_AI_STARTER_149_FLITT_BUTTON_ID as string | undefined) ?? "5fd5468dc15516804904fdb9e1ce52d946210745";
 
@@ -109,15 +109,15 @@ export const STARTER_PROMO_PHASES: StarterPromoPhase[] = [
     extension: true,
   },
   {
-    // Nov 1 03:00 – Nov 15 23:59 (Tbilisi): მე-19 ნაკადი registration window — ₾149 shown as a discount
-    // from the ₾249 list price, with a countdown. After Nov 15 the page falls back to the plain ₾249.
+    // Nov 1 03:00 – Nov 27 23:59 (Tbilisi): ₾149 shown as a discount from the ₾249 list price, with a countdown.
+    // Framed as Black Friday since Nov 9 (was the მე-19 ნაკადი window until Nov 15). After it the page sells at ₾249.
     buttonId: STARTER_149_BUTTON_ID,
     name: "AI Starter — 3 ვიდეომოდული",
     value: 149,
     savingsLabel: "შენ ზოგავ ₾100-ს",
-    endsAt: Date.parse("2026-11-15T23:59:59+04:00"),
-    endLabel: "15 ნოემბრის ჩათვლით",
-    endDay: "სრულდება 15 ნოემბერს",
+    endsAt: Date.parse("2026-11-27T23:59:59+04:00"),
+    endLabel: "27 ნოემბრის ჩათვლით",
+    endDay: "სრულდება 27 ნოემბერს",
   },
 ];
 // Last real deadline — the page's clock stops ticking after it.
