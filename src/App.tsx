@@ -7,6 +7,7 @@ import Index from "./pages/Index";
 import FullStackAI from "./pages/FullStackAI";
 import AIPromptEngineering from "./pages/AIPromptEngineering";
 import AIStarter from "./pages/AIStarter";
+import { STARTER_PRICE_TESTS } from "@/lib/checkout";
 import PythonSQL from "./pages/PythonSQL";
 import CoursePage from "./pages/CoursePage";
 import CoursesIndex from "./pages/CoursesIndex";
@@ -40,6 +41,8 @@ const App = () => (
           <Route path="/fullstack-ai" element={<FullStackAI />} />
           <Route path="/ai" element={<AIPromptEngineering />} />
           <Route path="/ai-starter" element={<AIStarter />} />
+          {/* Fixed-price test routes (Nov 2026): same page, own Flitt button per price */}
+          {Object.values(STARTER_PRICE_TESTS).map(v => <Route key={v.path} path={v.path} element={<AIStarter variant={v} />} />)}
           <Route path="/python-sql" element={<PythonSQL />} />
           {/* Legal pages (Flitt compliance) */}
           <Route path="/terms" element={<Terms />} />

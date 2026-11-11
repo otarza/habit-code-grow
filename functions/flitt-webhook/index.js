@@ -49,6 +49,11 @@ const PRODUCT_MAP = {
   // Starter evergreen (₾149, from Nov 1) — own Flitt product + button
   "btcp-ai-3m-149": STARTER_PRODUCT,
   "5fd5468dc15516804904fdb9e1ce52d946210745": STARTER_PRODUCT,
+  // Starter price tests (Nov 11 2026): /ai-starter-99, -59, -39 — buttons duplicated from the ₾149 one in the Flitt portal,
+  // each with its own product_id so sales per price point can be told apart. Button hashes are added once known.
+  "btcp-ai-3m-99": STARTER_PRODUCT,
+  "btcp-ai-3m-59": STARTER_PRODUCT,
+  "btcp-ai-3m-39": STARTER_PRODUCT,
   // Bootcamp (₾99 self-paced) — both the dashboard product_id and button hash
   "btcp-ai-bootcamp": BOOTCAMP_PRODUCT,
   "74de94a0a998fdf3f37f433e90448cd5dd11ee97": BOOTCAMP_PRODUCT,

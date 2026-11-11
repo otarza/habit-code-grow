@@ -13,7 +13,7 @@ import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/compone
 import { aiStarterTestimonials } from "@/data/aiStarterTestimonials";
 import { SEO } from "@/components/SEO";
 import { rememberAttributionRef } from "@/lib/attribution";
-import { PRODUCTS, STARTER_LAST_DEADLINE, STARTER_PROMO_PHASES, isBlackFridayTheme, isHalloweenTheme, starterPromoPhase, trackInitiateCheckout } from "@/lib/checkout";
+import { PRODUCTS, STARTER_LAST_DEADLINE, STARTER_PROMO_PHASES, type StarterPriceTest, isBlackFridayTheme, isHalloweenTheme, starterPromoPhase, trackInitiateCheckout } from "@/lib/checkout";
 import { HalloweenDecor } from "@/components/campaign/HalloweenDecor";
 import { EMAIL_RE, loadFlitt } from "@/lib/flitt";
 
@@ -35,6 +35,7 @@ const COHORT_DEADLINE_SHORT = "27 ნოემბრამდე";
 const COHORT_PROOF = { last: 134, october: 306 };
 const LAST_PROMO_PHASE = STARTER_PROMO_PHASES[STARTER_PROMO_PHASES.length - 1];
 type OfferSlot = "inline" | "desktop" | "final";
+type StarterPromoPhaseLike = typeof STARTER_PROMO_PHASES[number];
 const modules = [
   { n: "01", title: "ფუნდამენტური პრომპტინგი", subtitle: "AI-სთან ეფექტური კომუნიკაცია", icon: MessageSquareText,
     goal: "გაიგებ, როგორ ჩამოაყალიბო მოთხოვნა და მიაწოდო AI-ს საჭირო კონტექსტი." },
@@ -46,7 +47,8 @@ const modules = [
 // Placeholder replaced with the current phase's question when rendering.
 const PROMO_FAQ = ["promo", ""];
 // Shown only while cohort registration is open.
-const COHORT_FAQ = ["რამდენ ხანს მოქმედებს Black Friday-ის ფასი?", `₾149 27 ნოემბრის შუაღამემდე მოქმედებს, თბილისის დროით. მერე კურსი ისევ ₾249 ღირს. კურსი ვიდეოგაკვეთილებია — უყურებ, როცა გცალია, შენი ტემპით. დღეში დაახლოებით 30 წუთი საკმარისია.`];
+const cohortFaq = (price: number) => ["რამდენ ხანს მოქმედებს Black Friday-ის ფასი?", `₾${price} 27 ნოემბრის შუაღამემდე მოქმედებს, თბილისის დროით. მერე კურსი ისევ ₾${FULL_PRICE} ღირს. კურსი ვიდეოგაკვეთილებია — უყურებ, როცა გცალია, შენი ტემპით. დღეში დაახლოებით 30 წუთი საკმარისია.`];
+const COHORT_FAQ = cohortFaq(149);
 const promoFaq = (price: number, endLabel: string) => [`როგორ მივიღო ${price}₾-იანი ფასი?`,
   `დააჭირე ღილაკს „გააქტიურე ${FULL_PRICE - price}₾ ფასდაკლება“. გვერდზე ფასი ${FULL_PRICE}₾-დან ${price}₾-მდე შემცირდება. კოდის დამახსოვრება ან ხელით შეყვანა არ გჭირდება.${endLabel ? ` ფასდაკლება მოქმედებს ${endLabel}.` : ""}`];
 const faqs = [
@@ -78,10 +80,12 @@ type Analytics = Window & {
 };
 
 // Funnel events between PageView and Purchase, so drop-off is measurable.
+// Set per render by the component: "starter" on /ai-starter, "starter-99" etc. on the price-test routes.
+let activeVariant = "starter";
 function trackStarter(name: string, params: Record<string, unknown> = {}, standard = false) {
   const win = window as Analytics;
-  win.fbq?.(standard ? "track" : "trackCustom", name, { content_ids: ["starter"], currency: "GEL", ...params });
-  win.gtag?.("event", name, { item_id: "starter", currency: "GEL", ...params });
+  win.fbq?.(standard ? "track" : "trackCustom", name, { content_ids: ["starter"], content_name: activeVariant, currency: "GEL", ...params });
+  win.gtag?.("event", name, { item_id: "starter", item_variant: activeVariant, currency: "GEL", ...params });
 }
 
 const prefersReducedMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -156,7 +160,9 @@ function useAnimatedNumber(target: number, duration = 900) {
   return value;
 }
 
-export default function AIStarter() {
+// `variant`: a fixed-price test route (see STARTER_PRICE_TESTS); without it the page follows the dated promo phases.
+export default function AIStarter({ variant }: { variant?: StarterPriceTest } = {}) {
+  activeVariant = variant?.slug ?? "starter";
   // Black Friday sells at the promo price by default: no "activate the discount" step.
   const [promoActive, setPromoActive] = useState(() => !!starterPromoPhase(Date.now()) && isBlackFridayTheme(Date.now()));
   const silentPromo = useRef(promoActive);
@@ -191,7 +197,11 @@ export default function AIStarter() {
   const phase = starterPromoPhase(now);
   const promoAvailable = !!phase;
   // A visitor who activated the promo keeps the latest phase price if the last deadline passes mid-visit.
-  const promo = phase ?? LAST_PROMO_PHASE;
+  const basePromo = phase ?? LAST_PROMO_PHASE;
+  const promo: StarterPromoPhaseLike = variant
+    ? { ...basePromo, value: variant.value, buttonId: variant.buttonId, savingsLabel: `შენ ზოგავ ₾${FULL_PRICE - variant.value}-ს` }
+    : basePromo;
+  const pageUrl = `https://www.bitcamp.ge${variant?.path ?? "/ai-starter"}`;
   const PROMO_PRICE = promo.value;
   const SAVINGS = FULL_PRICE - PROMO_PRICE;
   const PROMO_END_LABEL = promo.endLabel;
@@ -419,12 +429,12 @@ export default function AIStarter() {
   </div>;
   const bfCta = (label = `დაიწყე ₾${PROMO_PRICE}-ად`) => <button type="button" className="bf-cta" onClick={buyFromStickyBar}><span>{label}</span><ArrowRight aria-hidden="true" size={20} /></button>;
   const PCT = Math.round((SAVINGS / FULL_PRICE) * 100);
-  const bfFaqs = faqs.filter(f => f !== PROMO_FAQ);
+  const bfFaqs = faqs.filter(f => f !== PROMO_FAQ).map(f => f === COHORT_FAQ ? cohortFaq(PROMO_PRICE) : f);
 
   if (blackFriday) return <div className={`campaign-page campaign-page--pro campaign-page--starter campaign-page--blackfriday bf${promoActive ? " campaign-page--promo-active" : ""}`}>
-    <SEO title="Black Friday — AI Starter ₾149 | BitCamp"
+    <SEO title={`Black Friday — AI Starter ₾${PROMO_PRICE} | BitCamp`}
       description={`Black Friday: AI Starter ₾${FULL_PRICE}-ის ნაცვლად ₾${PROMO_PRICE}, 27 ნოემბრის შუაღამემდე. 31 ვიდეოგაკვეთილი ქართულად, ნულიდან — პრომპტები, ბრენდის ხმა, კონტენტ-კალენდარი.`}
-      url="https://www.bitcamp.ge/ai-starter" />
+      url={pageUrl} />
     {showPromoConfetti && <CampaignPromoConfetti />}
     <div className="bf-tape" aria-hidden="true"><span>{Array(16).fill("BLACK FRIDAY ✦ AI STARTER ✦ ").join("")}</span></div>
     <main>
@@ -568,7 +578,7 @@ export default function AIStarter() {
   return <div className={`campaign-page campaign-page--pro campaign-page--starter${promoActive ? " campaign-page--promo-active" : ""}${halloween ? " campaign-page--halloween" : ""}${extension ? " campaign-page--extension" : ""}`}>
     <SEO title="AI Starter — პირველი ნაბიჯები AI-ში | BitCamp"
       description={`AI ვიდეოკურსი დამწყებთათვის: პრომპტები, ბრენდის ხმა და კონტენტის კალენდარი. 3 მოდული — ${FULL_PRICE}₾${cohortOpen ? `; ${COHORT_NAME} — ${COHORT_DEADLINE_SHORT} ფასდაკლებით ${PROMO_PRICE}₾.` : promoAvailable ? "; ფასდაკლების გააქტიურებით ნაკლებ ფასად." : "."}`}
-      url="https://www.bitcamp.ge/ai-starter" />
+      url={pageUrl} />
     {halloween && <HalloweenDecor />}
     {extension && <div className="starter-extension" role="status"><div className="campaign-shell starter-extension__inner">
       <span className="starter-extension__pumpkin" aria-hidden="true">🎃</span>
@@ -646,7 +656,7 @@ export default function AIStarter() {
         </div>
       </div></div></section>
       <section className="campaign-section"><div className="campaign-shell campaign-faq-grid"><div><p className="campaign-kicker">კითხვები</p><h2>სანამ დაიწყებ</h2></div>
-        <div className="campaign-faq">{faqs.flatMap(f => f === COHORT_FAQ ? (cohortOpen ? [f] : []) : f !== PROMO_FAQ ? [f] : promoAvailable ? [promoFaq(PROMO_PRICE, PROMO_END_LABEL)] : []).map(([q, a], i) => <div className="campaign-faq__item" key={q}>
+        <div className="campaign-faq">{faqs.flatMap(f => f === COHORT_FAQ ? (cohortOpen ? [cohortFaq(PROMO_PRICE)] : []) : f !== PROMO_FAQ ? [f] : promoAvailable ? [promoFaq(PROMO_PRICE, PROMO_END_LABEL)] : []).map(([q, a], i) => <div className="campaign-faq__item" key={q}>
           <button type="button" aria-expanded={openFaq === i} aria-controls={`starter-faq-${i}`} onClick={() => setOpenFaq(openFaq === i ? null : i)}><span>{q}</span><span aria-hidden="true">{openFaq === i ? "−" : "+"}</span></button>
           <div id={`starter-faq-${i}`} hidden={openFaq !== i} className="campaign-faq__answer">{a}</div>
         </div>)}</div>
