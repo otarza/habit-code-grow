@@ -134,15 +134,15 @@ export const starterPromoPhase = (now: number) => STARTER_PROMO_PHASES.find(p =>
 
 // Price-test variants (Nov 11 2026): /ai-starter-99, /ai-starter-59, /ai-starter-39 sell the same Starter at a fixed price,
 // each with its own Flitt button (duplicated from the ₾149 button) and product_id btcp-ai-3m-<price>, which the webhook maps
-// to Starter access. An empty buttonId keeps that page's checkout closed ("not available yet" dialog) until the button exists.
+// to Starter access. Flitt portal links 1274090 / 1274091 / 1274092 (cloned from the ₾149 link on Nov 11 2026).
 export type StarterPriceTest = { slug: string; path: string; value: number; buttonId: string; productId: string };
 export const STARTER_PRICE_TESTS: Record<"99" | "59" | "39", StarterPriceTest> = {
   "99": { slug: "starter-99", path: "/ai-starter-99", value: 99, productId: "btcp-ai-3m-99",
-    buttonId: (import.meta.env.VITE_AI_STARTER_99_FLITT_BUTTON_ID as string | undefined) ?? "" },
+    buttonId: (import.meta.env.VITE_AI_STARTER_99_FLITT_BUTTON_ID as string | undefined) ?? "03ea1e9971846fbf1b6672e04241b09e567eaa12" },
   "59": { slug: "starter-59", path: "/ai-starter-59", value: 59, productId: "btcp-ai-3m-59",
-    buttonId: (import.meta.env.VITE_AI_STARTER_59_FLITT_BUTTON_ID as string | undefined) ?? "" },
+    buttonId: (import.meta.env.VITE_AI_STARTER_59_FLITT_BUTTON_ID as string | undefined) ?? "f21b30ce25b581a62f84fd0ce1248b8a3fdc9f1e" },
   "39": { slug: "starter-39", path: "/ai-starter-39", value: 39, productId: "btcp-ai-3m-39",
-    buttonId: (import.meta.env.VITE_AI_STARTER_39_FLITT_BUTTON_ID as string | undefined) ?? "" },
+    buttonId: (import.meta.env.VITE_AI_STARTER_39_FLITT_BUTTON_ID as string | undefined) ?? "70bb97f13822dcd123dedde8380c89683b083f5f" },
 };
 
 export type PromoCode = {

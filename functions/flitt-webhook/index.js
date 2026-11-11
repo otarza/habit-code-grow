@@ -50,10 +50,13 @@ const PRODUCT_MAP = {
   "btcp-ai-3m-149": STARTER_PRODUCT,
   "5fd5468dc15516804904fdb9e1ce52d946210745": STARTER_PRODUCT,
   // Starter price tests (Nov 11 2026): /ai-starter-99, -59, -39 — buttons duplicated from the ₾149 one in the Flitt portal,
-  // each with its own product_id so sales per price point can be told apart. Button hashes are added once known.
+  // each with its own product_id so sales per price point can be told apart (Flitt links 1274090/1274091/1274092).
   "btcp-ai-3m-99": STARTER_PRODUCT,
+  "03ea1e9971846fbf1b6672e04241b09e567eaa12": STARTER_PRODUCT,
   "btcp-ai-3m-59": STARTER_PRODUCT,
+  "f21b30ce25b581a62f84fd0ce1248b8a3fdc9f1e": STARTER_PRODUCT,
   "btcp-ai-3m-39": STARTER_PRODUCT,
+  "70bb97f13822dcd123dedde8380c89683b083f5f": STARTER_PRODUCT,
   // Bootcamp (₾99 self-paced) — both the dashboard product_id and button hash
   "btcp-ai-bootcamp": BOOTCAMP_PRODUCT,
   "74de94a0a998fdf3f37f433e90448cd5dd11ee97": BOOTCAMP_PRODUCT,
